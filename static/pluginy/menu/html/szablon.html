@@ -1,25 +1,25 @@
 
 <li>
-  <a class="pole_menu link {{ css_menu.o_firmie }}" href="/o_nas/">
+  <a class="pole_menu link" href="/wizytowka/">
+    Produkty
+  </a>
+</li>
+
+<li>
+  <a class="pole_menu link" href="/o_nas/">
     O nas
   </a>
 </li>
 
 <li>
-  <a class="pole_menu link {{ css_menu.wizytowka }}" href="/wizytowka/">
-    Wizytówka
-  </a>
-</li>
-
-<li>
-  <a class="pole_menu link {{ css_menu.kontakt }}" href="/kontakt/">
+  <a class="pole_menu link" href="/kontakt/">
     Kontakt
   </a>
 </li>
 
-{% if request.session.zalogowany %}
+{% if request.session.uzytkownik_zalogowany %}
 <li>
-  <a class="pole_menu link {{ css_menu.edytuj }}" href="/edytuj/">
+  <a class="pole_menu link}}" href="/edytuj/">
     Edytuj
   </a>
 </li>

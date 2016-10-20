@@ -10,94 +10,112 @@
 }
 
 
+  #TRESC > div
+  {
+    position: relative;
+      display: inline-block;
+      padding-top: 0px;
+      margin: 0px;
 
-#TRESC > div
-{
-  position: relative;
-    display: inline-block;
-    padding-top: 0px;
-    margin: 0px;
-
-  width: 100%;
-    min-height: 500px;
-}
-
+    width: 100%;
+      min-height: 500px;
+  }
 
 
-#TRESC > div > .tresc
-{
-  position: relative;
-    z-index:12;
+    #TRESC > div > .tytul
+    {
+      position: relative;
+        z-index:12;
 
-  color: #333;
-    opacity: 0.4;
-}
+      margin-top: 15px;
+        padding-left: 30px;
 
-
-
-#TRESC > div > .tlo
-{
-  z-index: 10;
-
-  background-color: #e9ebee;
-}
+      color: #333;
+        font-size: 18px;
+        font-weight: bold;
+    }
 
 
+    #TRESC > div > .tresc
+    {
+      position: relative;
+        z-index:12;
 
-.fragment.RWD > div > .tresc
-{
-  margin: 10px auto 30px auto;
-		padding: 10px;
-		padding-left: 15px;
-		padding-right: 15px;
-}
+      color: #333;
+        opacity: 0.4;
+        font-size: 16px;
+    }
+
+
+    #TRESC > div > .tlo
+    {
+      z-index: 10;
+
+      background-color: #e9ebee;
+    }
+
+
+    .fragment.RWD > div > .tresc
+    {
+      margin: 10px auto 30px auto;
+        padding: 10px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
 
 
 /*-----------------------------------------*\
 							EKRAN KOMPUTERA
 \*-----------------------------------------*/
 
-@media (min-width: 768px)
-{
-
-  .fragment.RWD > div > .tresc
+  @media (min-width: 768px)
   {
-    width: 650px;
+
+    #TRESC > div > .tytul
+    {
+      margin-top: 15px;
+        padding-right: 300px;
+      text-align: center;
+    }
+
+
+    .fragment.RWD > div > .tresc
+    {
+      width: 650px;
+    }
+
   }
 
-}
 
-
-
-@media (min-width: 870px)
-{
-
-  .fragment.RWD > div > .tresc
+  @media (min-width: 870px)
   {
-    margin: 50px auto;
+
+    .fragment.RWD > div > .tresc
+    {
+      margin: 50px auto;
+    }
+
   }
 
-}
 
-
-
-@media (min-width: 992px)
-{
-
-  .fragment.RWD > div > .tresc
+  @media (min-width: 992px)
   {
-    width: 800px;
+
+    .fragment.RWD > div > .tresc
+    {
+      width: 800px;
+    }
+
   }
 
-}
 
-@media (min-width: 1200px)
-{
-
-  .fragment.RWD > div > .tresc
+  @media (min-width: 1200px)
   {
-    width: 970px;
+
+    .fragment.RWD > div > .tresc
+    {
+      width: 970px;
+    }
+    
   }
-  
-}
 
