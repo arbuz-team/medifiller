@@ -12,34 +12,34 @@ class Wyswietl_Start(Dynamiczna_Obsluga_Zdarzen):
         return Wyswietl_Start(request).HTML
 
 
-class Wyswietl_O_Nas(Dynamiczna_Obsluga_Zdarzen):
+class Wyswietl_Products(Dynamiczna_Obsluga_Zdarzen):
 
     def Zdarzenie_Dynamiczne(self):
-        return self.Renderuj_HTML('stronka/o_nas.html')
+        return self.Renderuj_HTML('stronka/products.html')
 
     @staticmethod
     def Uruchom(request):
-        return Wyswietl_O_Nas(request).HTML
+        return Wyswietl_Products(request).HTML
 
 
-class Wyswietl_Wizytowka(Dynamiczna_Obsluga_Zdarzen):
+class Wyswietl_About_Us(Dynamiczna_Obsluga_Zdarzen):
 
     def Zdarzenie_Dynamiczne(self):
-        return self.Renderuj_HTML('stronka/wizytowka.html')
+        return self.Renderuj_HTML('stronka/about_us.html')
 
     @staticmethod
     def Uruchom(request):
-        return Wyswietl_Wizytowka(request).HTML
+        return Wyswietl_About_Us(request).HTML
 
 
-class Wyswietl_Kontakt(Dynamiczna_Obsluga_Zdarzen):
+class Wyswietl_Contact_Us(Dynamiczna_Obsluga_Zdarzen):
 
     def Zdarzenie_Dynamiczne(self):
-        return self.Renderuj_HTML('stronka/kontakt.html')
+        return self.Renderuj_HTML('stronka/contact_us.html')
 
     @staticmethod
     def Uruchom(request):
-        return Wyswietl_Kontakt(request).HTML
+        return Wyswietl_Contact_Us(request).HTML
 
 
 class Wyswietl_Edycja(Dynamiczna_Obsluga_Zdarzen):

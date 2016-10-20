@@ -3,8 +3,8 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.Wyswietl_Start.Uruchom),
-    url(r'^o_nas/$', views.Wyswietl_O_Nas.Uruchom),
-    url(r'^wizytowka/$', views.Wyswietl_Wizytowka.Uruchom),
-    url(r'^kontakt/$', views.Wyswietl_Kontakt.Uruchom),
+    url(r'^about_us/$', views.Wyswietl_About_Us.Uruchom),
+    url(r'^products/$', views.Wyswietl_Products.Uruchom),
+    url(r'^contact_us/$', views.Wyswietl_Contact_Us.Uruchom),
     url(r'^edycja/$', views.Wyswietl_Edycja.Uruchom),
 ]
