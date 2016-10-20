@@ -37,7 +37,7 @@
 				position: relative;
 				z-index: 38;
 
-			width: 150px;
+			min-width: 150px;
 				height: 90px;
 				min-height: 90px;
 				max-height: 90px;
@@ -52,8 +52,8 @@
 		#NAGLOWEK .menu .pole_menu.wybrany,
 		#NAGLOWEK .menu .pole_menu:hover
 		{
-			border-bottom: 4px #127CC1 solid;
-				color: #DDD;
+			border-bottom: 4px #ba8748 solid;
+				color: #333;
 		}
 
 
