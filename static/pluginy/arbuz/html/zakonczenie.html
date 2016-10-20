@@ -1,0 +1,139 @@
+{% load staticfiles %}
+      </div>
+
+    </div>
+
+    <script>
+
+      "use strict";
+      
+      
+      (function(){
+
+        var Uruchom_Ladowanie_Skryptow = function()
+        {
+          var linki_do_skryptow = [
+            /* ---------------------- Zewnętrzne aplikacje ---------------------- */
+            '{% static "js/jquery-3.1.0.min.js" %}'
+            , '{% static "js/autosize-master/dist/autosize.js" %}'
+
+            /* ---------------------- Interfejsy zewnetrznych aplikacji ---------------------- */
+            , '{% static "pluginy/arbuz/js/interfejs_f-k_podst.js" %}'
+            , '{% static "pluginy/arbuz/js/konsola/interfejs_konsoli.js" %}'
+
+            /* ---------------------- Główne aplikacje ---------------------- */
+            , '{% static "pluginy/arbuz/js/komunikat/podstawa.js" %}'
+            , '{% static "pluginy/arbuz/js/sprawdz/podstawa.js" %}'
+            , '{% static "pluginy/arbuz/js/kanar/podstawa.js" %}'
+            , '{% static "pluginy/arbuz/js/dane_strony/struktura.js" %}'
+            
+            , '{% static "pluginy/tresc/js/podstawa.js" %}'
+            , '{% static "pluginy/menu/js/podstawa.js" %}'
+
+            /* ---------------------- Wydarzenia ---------------------- */
+            , '{% static "pluginy/arbuz/js/wydarzenia.js" %}'
+            , '{% static "pluginy/tresc/js/wydarzenia/podstawa.js" %}'
+            , '{% static "pluginy/menu/js/wydarzenia/podstawa.js" %}'
+
+            /* ---------------------- Testy interfejsów ---------------------- */
+            , '{% static "pluginy/arbuz/js/interfejs_f-k_podst_test.js" %}'
+
+            /* ---------------------- Testy aplikacji ---------------------- */
+            , '{% static "pluginy/arbuz/js/komunikat/test.js" %}'
+            , '{% static "pluginy/arbuz/js/sprawdz/test.js" %}'
+            , '{% static "pluginy/arbuz/js/kanar/test.js" %}'
+            , '{% static "pluginy/arbuz/js/dane_strony/test.js" %}'
+            , '{% static "pluginy/tresc/js/test.js" %}'
+
+            /* ---------------------- Testy wydarzeń ---------------------- */
+            , '{% static "pluginy/tresc/js/wydarzenia/test.js" %}'
+            , '{% static "pluginy/menu/js/wydarzenia/test.js" %}'
+
+            /* ---------------------- Test strony ---------------------- */
+            , '{% static "pluginy/arbuz/js/testy.js" %}'
+
+            ];
+        
+          var TEST = false;
+
+          var Dodaj_Skrypty = function( adresy, funkcja )
+          {
+
+            if( !adresy instanceof Array || adresy.length < 1 )
+            {
+              if( TEST ) console.log( 'Błąd wczytywania skryptów' );
+
+              return false;
+            }
+
+            
+            var Poinformuj_Po_Zaladowaniu = 
+              function( skrypt, adres )
+              {
+                skrypt.onload = 
+                  function()
+                  {
+                    console.log( 'Załadowano: "'+ adres +'"' );
+                  }
+              }
+
+
+            var Dodaj = 
+              function( numer )
+              {
+                var adres = adresy[ numer ] 
+                  , skrypt = document.createElement( 'script' )
+
+                skrypt.src = adres;
+                skrypt.type = 'text/javascript';
+
+                document.body.appendChild( skrypt );
+
+                if( adresy[ ++numer ] )
+                  skrypt.onload = 
+                    function()
+                    {
+                      if( TEST ) console.log( 'Załadowano: "'+ adres +'"' );
+                      Dodaj( numer );
+                    }
+
+                else if( typeof funkcja === 'function' )
+                {
+                  if( TEST ) 
+                    Poinformuj_Po_Zaladowaniu( skrypt, adres );
+
+                  skrypt.onload = funkcja;
+                }
+
+                else
+                  if( TEST )
+                    Poinformuj_Po_Zaladowaniu( skrypt, adres );
+              };
+
+            Dodaj(0);
+          }
+
+
+          var Uruchom_Strone = function()
+          {
+            if( TEST )
+              console.log( 'Zakończone ładowanie skryptów' );
+
+            Kontroler_Tresci.Uruchom();
+          }
+
+          window.onload = Dodaj_Skrypty( linki_do_skryptow, Uruchom_Strone );
+        }
+        
+        Uruchom_Ladowanie_Skryptow();
+
+        //window.onload = Kontroler_Tresci.Uruchom();
+
+      })();
+
+    </script>
+
+  </body>
+
+</html>
+

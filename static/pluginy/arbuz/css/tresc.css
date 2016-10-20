@@ -1,0 +1,103 @@
+
+/*-----------------------------------------*\
+							ELEMENTY TREŚCI
+\*-----------------------------------------*/
+
+
+#TRESC
+{
+  position: relative;
+}
+
+
+
+#TRESC > div
+{
+  position: relative;
+    display: inline-block;
+    padding-top: 0px;
+    margin: 0px;
+
+  width: 100%;
+    min-height: 500px;
+}
+
+
+
+#TRESC > div > .tresc
+{
+  position: relative;
+    z-index:12;
+
+  color: #333;
+    opacity: 0.4;
+}
+
+
+
+#TRESC > div > .tlo
+{
+  z-index: 10;
+
+  background-color: #e9ebee;
+}
+
+
+
+.fragment.RWD > div > .tresc
+{
+  margin: 10px auto 30px auto;
+		padding: 10px;
+		padding-left: 15px;
+		padding-right: 15px;
+}
+
+
+/*-----------------------------------------*\
+							EKRAN KOMPUTERA
+\*-----------------------------------------*/
+
+@media (min-width: 768px)
+{
+
+  .fragment.RWD > div > .tresc
+  {
+    width: 650px;
+  }
+
+}
+
+
+
+@media (min-width: 870px)
+{
+
+  .fragment.RWD > div > .tresc
+  {
+    margin: 50px auto;
+  }
+
+}
+
+
+
+@media (min-width: 992px)
+{
+
+  .fragment.RWD > div > .tresc
+  {
+    width: 800px;
+  }
+
+}
+
+@media (min-width: 1200px)
+{
+
+  .fragment.RWD > div > .tresc
+  {
+    width: 970px;
+  }
+  
+}
+

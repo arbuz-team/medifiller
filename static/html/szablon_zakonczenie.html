@@ -1,0 +1,121 @@
+{% load staticfiles %}
+      </div>
+
+    </div>
+
+    <script>
+
+      "use strict";
+      
+      
+      (function(){
+
+        var linki_do_skryptow = [
+          //---------------------- Zewnętrzne aplikacje ----------------------
+          '{% static "js/Zewnetrzne_Aplikacje/jquery-3.1.0.min.js" %}'
+          , '{% static "js/Zewnetrzne_Aplikacje/autosize-master/dist/autosize.js" %}'
+
+          //---------------------- Podstawa Strony ----------------------
+          //, '{% static "js/Aplikacje/Podstawa_Strony.js" %}'
+
+          //---------------------- Interfejsy zewnetrznych aplikacji ----------------------
+          , '{% static "js/Aplikacje/Interfejs_Funkcji_Standardowych.js" %}'
+          , '{% static "js/Aplikacje/Konsola/Interfejs_Konsoli.js" %}'
+
+          //---------------------- Główne aplikacje ----------------------
+          , '{% static "js/Aplikacje/Komunikat/Podstawa.js" %}'
+          , '{% static "js/Aplikacje/Sprawdz/Podstawa.js" %}'
+          , '{% static "js/Aplikacje/Kanar/Podstawa.js" %}'
+          , '{% static "js/Aplikacje/Tresc/Podstawa.js" %}'
+
+          //---------------------- Interfejsy wewnetrznych aplikacji ----------------------
+
+
+          //---------------------- Testy interfejsów ----------------------
+          , '{% static "js/Aplikacje/Interfejs_Funkcji_Standardowych_Test.js" %}'
+
+          //---------------------- Testy aplikacji ----------------------
+          , '{% static "js/Aplikacje/Komunikat/Test.js" %}'
+          , '{% static "js/Aplikacje/Sprawdz/Test.js" %}'
+          , '{% static "js/Aplikacje/Kanar/Test.js" %}'
+          , '{% static "js/Aplikacje/Tresc/Test.js" %}'
+
+          //---------------------- Test strony ----------------------
+          , '{% static "js/Aplikacje/Testy.js" %}'
+
+          ];
+      
+        var TEST = false;
+
+        var Dodaj_Skrypty = function(adresy, funkcja)
+        {
+          
+
+          if(!adresy instanceof Array || adresy.length<1)
+          {
+            if( TEST ) console.log( 'Błąd wczytywania skryptów' );
+
+            return false;
+          }
+
+          
+          var Poinformuj_Po_Zaladowaniu = 
+            function( skrypt, adres )
+            {
+              skrypt.onload = 
+                function()
+                {
+                  console.log( 'Załadowano: "'+ adres +'"' );
+                }
+            }
+
+
+          var Dodaj = 
+            function( numer )
+            {
+              var adres = adresy[ numer ] 
+                , skrypt = document.createElement( 'script' )
+
+              skrypt.src = adres;
+
+              document.body.appendChild( skrypt );
+
+              if( adresy[ ++numer ] )
+                skrypt.onload = 
+                  function()
+                  {
+                    if( TEST ) console.log( 'Załadowano: "'+ adres +'"' );
+                    Dodaj( numer );
+                  }
+
+              else if( typeof funkcja === 'function' )
+              {
+                if( TEST ) 
+                  Poinformuj_Po_Zaladowaniu( skrypt, adres );
+
+                skrypt.onload = funkcja;
+              }
+
+              else
+                if( TEST )
+                  Poinformuj_Po_Zaladowaniu( skrypt, adres );
+            };
+
+          Dodaj(0);
+        }
+
+        window.onload = Dodaj_Skrypty( linki_do_skryptow, 
+          function()
+          {
+            if( TEST )
+              console.log( 'Zakończone ładowanie skryptów' );
+          });
+      
+      })();
+
+    </script>
+
+  </body>
+
+</html>
+

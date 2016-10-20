@@ -1,0 +1,62 @@
+
+#TRESC .tresc > .tytul
+{
+  font-size: 18px;
+    font-weight: bold;
+}
+
+#TRESC .tresc > .akapit
+{
+  margin-bottom: 15px;
+  margin-left: 15px;
+}
+
+
+  .otoczka_pola {
+    min-width: 200px;
+      width: 600px;
+      max-width: 100%;
+      min-height: 36px;
+
+    margin: 5px auto;
+
+    color: #333;
+      font-family: inherit;
+      font-size: 18px;
+
+    box-sizing: border-box;
+      background-color: #fff;
+      border: 1px solid #bbb;
+      outline: none;
+      border-radius: 2px;
+      -webkit-box-shadow: 1px 1px 2px 0 rgba(238,238,238,1);
+      -moz-box-shadow: 1px 1px 2px 0 rgba(238,238,238,1);
+      box-shadow: 1px 1px 2px 0 rgba(238,238,238,1);
+  }
+
+
+  input[type=text]
+  , input[type=email]
+  , input[type=password]
+  , input[type=number]
+  , select
+  , button
+  , textarea {
+    min-width: 100%;
+      width: 100%;
+      max-width: 100%;
+      min-height: 34px;
+
+    padding: 2px 5px;
+
+    color: #333;
+      font-family: inherit;
+      font-size: 18px;
+
+    border: 0;
+      background-color: transparent;
+      outline: none;
+      -webkit-box-shadow: inset 1px 2px 3px 0 #f8f8f8;
+      -moz-box-shadow: inset 1px 2px 3px 0 #f8f8f8;
+      box-shadow: inset 1px 2px 3px 0 #f8f8f8;
+  }

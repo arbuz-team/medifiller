@@ -1,0 +1,54 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="pl">
+
+  <head>
+
+    <title> {{ tytul_strony }} </title>
+
+    <meta name="viewport" content="minimum-scale=0" />
+    <meta name="viewport" content="user-scalable=yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="description" content="{{ request.session.meta_tag.description }}" />
+
+    <meta property="og:title"           content="As BHP - Odzież robocza"/>
+    <meta property="fb:app_id"          content="654466434707159" /> 
+    <meta property="og:type"            content="{{ request.session.meta_tag.og_type }}" />
+    <meta property="og:url"             content="{{ request.session.meta_tag.og_url }}" />
+    <meta property="og:image"           content="{{ request.session.meta_tag.og_image }}" />
+    <meta property="og:description"     content="http://asbhp.arbuz.team/o_firmie" />
+
+    <link rel="author" href="https://www.facebook.com/AsBhp/?fref=ts" />
+    <!--<link rel="shortcut icon" href="" />-->
+
+    <link rel="stylesheet" href="{% static 'pluginy/arbuz/css/podstawa.css' %}"/>
+    <link rel="stylesheet" href="{% static 'pluginy/arbuz/css/formularze.css' %}" />
+    <link rel="stylesheet" href="{% static 'pluginy/arbuz/css/naglowek.css' %}" />
+    <link rel="stylesheet" href="{% static 'pluginy/arbuz/css/tresc.css' %}" />
+    <link rel="stylesheet" href="{% static 'pluginy/arbuz/css/stopka.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'pluginy/menu/css/menu.css' %}" />
+    <link rel="stylesheet" href="{% static 'pluginy/tresc/css/tresc.css' %}" />
+
+    <!--<link rel="stylesheet" href="{% static 'css/css.css' %}" />
+
+    <script src="{% static "js/jquery-3.1.0.min.js" %}"></script>
+    <script src="{% static 'js/js.js' %}"> </script>-->
+
+</head>
+
+<body>
+
+  {% csrf_token %}
+
+  <div id="NIEWIDZIALNY_OPIS">
+        <strong>{{ o_nas.tekst | linebreaksbr }}</strong>
+  </div>
+
+  <div id="LADOWANIE" class="abs_pelny"></div>
+
+  <div id="BLOK_GLOWNY" class="abs_pelny">
+    
+    <div class="abs_pelny">
+

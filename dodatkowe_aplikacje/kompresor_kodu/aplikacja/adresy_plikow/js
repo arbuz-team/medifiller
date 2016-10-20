@@ -1,0 +1,15 @@
+pluginy/arbuz/js/interfejs_funkcji_standardowych.js
+pluginy/arbuz/js/konsola/interfejs_konsoli.js
+pluginy/arbuz/js/komunikat/podstawa.js
+pluginy/arbuz/js/sprawdz/podstawa.js
+pluginy/arbuz/js/kanar/podstawa.js
+pluginy/tresc/js/podstawa.js
+pluginy/arbuz/js/dane_strony/struktura.js
+pluginy/arbuz/js/wydarzenia/podstawa.js
+pluginy/arbuz/js/interfejs_funkcji_standardowych_test.js
+pluginy/arbuz/js/komunikat/test.js
+pluginy/arbuz/js/sprawdz/test.js
+pluginy/arbuz/js/kanar/test.js
+pluginy/arbuz/js/wydarzenia/test.js
+pluginy/tresc/js/test.js
+pluginy/arbuz/js/testy.js
