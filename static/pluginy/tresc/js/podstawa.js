@@ -32,7 +32,7 @@ var Kontroler_Tresci = (function()
   {
     if( status !== 'success' )
     {
-      Zmien_Adres( '/komunikat/404/' )
+      Zmien_Tresc( '/komunikat/404/' )
     }
 
     _Odswiez_Wydarzenia();

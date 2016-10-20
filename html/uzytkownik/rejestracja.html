@@ -12,9 +12,10 @@
 
   <div class="tresc">
   
-    Blok 2
+    Rejestracja
 
-    <form method="post" action="/">
+    <form method="post" action="">
+
       {% for i in formularz %}
 
         {{ i.errors }}
@@ -27,6 +28,7 @@
       {% endfor %}
 
       <div class="otoczka_pola"><button type="submit"> Zarejestruj </button></div>
+
     </form>
   
   </div>

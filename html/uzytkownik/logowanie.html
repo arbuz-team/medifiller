@@ -12,16 +12,30 @@
 
   <div class="tresc">
   
-      {% for i in formularz %}
+    {% if request.session.uzytkownik_zalogowany %}
+      Witamy!<br />
+      <a href="/uzytkownik/wyloguj/">Wyloguj</a>.
+    {% else %}
+      Logowanie
 
-        {{ i.errors }}
-        <div class="otoczka_pola">
+      <form method="post" action="">
 
-          {{ i }}
+        {% for i in formularz %}
 
-        </div>
+          {{ i.errors }}
+          <div class="otoczka_pola">
 
-      {% endfor %}
+            {{ i }}
+
+          </div>
+
+        {% endfor %}
+
+        <div class="otoczka_pola"><button type="submit"> Zarejestruj </button></div>
+
+      </form>
+
+    {% endif %}
   
   </div>
 
