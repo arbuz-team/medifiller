@@ -32,7 +32,8 @@ var Kontroler_Tresci = (function()
   {
     if( status !== 'success' )
     {
-      Zmien_Tresc( '/komunikat/404/' )
+      _Pobierz_Tresc( '/komunikat/404/' )
+      return false;
     }
 
     _Odswiez_Wydarzenia();
@@ -42,10 +43,10 @@ var Kontroler_Tresci = (function()
   }
 
 
-  var _Pobierz_Tresc = function()
+  var _Pobierz_Tresc = function( adres )
   {
-    var adres = Kontroler_Danych.Daj( 'sciezka' )
-      , Dane_post = Kontroler_Danych.Daj( 'Dane_post' );
+    adres = _Przetworz_Adres( adres );
+    var Dane_post = Kontroler_Danych.Daj( 'Dane_post' );
 
     $( Kontroler_Danych.Daj( 'kontener' ) )
       .load( adres, Dane_post, _Pokaz_Tresc )
