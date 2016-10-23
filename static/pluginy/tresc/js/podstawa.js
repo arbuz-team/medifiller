@@ -71,6 +71,8 @@ var Kontroler_Tresci = (function()
       Obiekt = {};
       Obiekt.__esencja__ = 'true';
     }
+    else
+      Obiekt.__formularz__ = 'true';
 
     Obiekt.csrfmiddlewaretoken = Kontroler_Danych.Daj( 'csrf_token' );
 
