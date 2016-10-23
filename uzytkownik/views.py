@@ -10,15 +10,19 @@ class Logowanie(Dynamiczna_Obsluga_Zdarzen):
 
     def Zdarzenie_Formularz(self):
 
+        informacja_zwrotna = {}
         self.kontent['formularz'] = \
             Formularz_Logowania(self.request.POST)
 
         if self.kontent['formularz'].is_valid():
             self.request.session['uzytkownik_zalogowany'] = True
-            self.request.session['tu_logowanie'] = True
-            return redirect('/')
+            informacja_zwrotna['__formularz__'] = 'true'
+            informacja_zwrotna['__url__'] = '/komunikat/logowanie_ok/'
+            return JsonResponse(informacja_zwrotna)
 
-        return self.Zdarzenie_Esencja()
+        informacja_zwrotna['__formularz__'] = 'false'
+        informacja_zwrotna['__url__'] = '/komunikat/logowanie_nok/'
+        return JsonResponse(informacja_zwrotna)
 
     @staticmethod
     def Uruchom(request):
@@ -33,16 +37,19 @@ class Rejestracja(Dynamiczna_Obsluga_Zdarzen):
 
     def Zdarzenie_Formularz(self):
 
+        informacja_zwrotna = {}
         self.kontent['formularz'] = \
             Formularz_Rejestracji(self.request.POST)
 
         if self.kontent['formularz'].is_valid():
-            self.request.session['tu_rejestracja'] = True
-
             self.kontent['formularz'].save()
-            return redirect('/komunikat/')
+            informacja_zwrotna['__formularz__'] = 'true'
+            informacja_zwrotna['__url__'] = '/komunikat/rejestracja_ok/'
+            return JsonResponse(informacja_zwrotna)
 
-        return self.Zdarzenie_Esencja()
+        informacja_zwrotna['__formularz__'] = 'false'
+        informacja_zwrotna['__url__'] = '/komunikat/rejestracja_nok/'
+        return JsonResponse(informacja_zwrotna)
 
     def Zdarzenie_Istnieje(self):
 
@@ -60,7 +67,8 @@ class Rejestracja(Dynamiczna_Obsluga_Zdarzen):
 class Wyloguj(Dynamiczna_Obsluga_Zdarzen):
 
     def Zdarzenie_Esencja(self):
-        return redirect('/komunikat/')
+        self.request.session['uzytkownik_zalogowany'] = False
+        return self.Renderuj_HTML('uzytkownik/wyloguj.html')
 
     @staticmethod
     def Uruchom(request):

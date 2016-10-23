@@ -19,6 +19,10 @@ class Dynamiczna_Obsluga_Zdarzen(metaclass=ABCMeta):
     def Zdarzenie_Istnieje(self):
         pass
 
+    @staticmethod
+    def Zdarzenie_Problem():
+        return redirect('/komunikat/zdarzenia/')
+
     def Zdarzenie_Index(self):
         Sprawdz_Sesje(self.request)
         return render(self.request, 'index.html', {})
@@ -35,6 +39,8 @@ class Dynamiczna_Obsluga_Zdarzen(metaclass=ABCMeta):
 
             if '__istnieje__' in self.request.POST:
                 return self.Zdarzenie_Istnieje()
+
+            return self.Zdarzenie_Problem()
 
         return self.Zdarzenie_Index()
 
