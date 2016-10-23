@@ -69,7 +69,7 @@ var Kontroler_Tresci = (function()
     if( !Obiekt )
     {
       Obiekt = {};
-      Obiekt.__arbuz__ = 'true';
+      Obiekt.__esencja__ = 'true';
     }
 
     Obiekt.csrfmiddlewaretoken = Kontroler_Danych.Daj( 'csrf_token' );
