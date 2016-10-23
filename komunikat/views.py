@@ -3,7 +3,7 @@ from arbuz.views import *
 
 class Komunikat(Dynamiczna_Obsluga_Zdarzen):
 
-    def Zdarzenie_Dynamiczne(self):
+    def Zdarzenie_Esencja(self):
         self.kontent['komunikat'] = 'Obsługa komunikatów strony.'
         return self.Renderuj_HTML('komunikat/komunikat.html')
 
@@ -15,7 +15,7 @@ class Komunikat(Dynamiczna_Obsluga_Zdarzen):
 
 class Komunikat_404(Dynamiczna_Obsluga_Zdarzen):
 
-    def Zdarzenie_Dynamiczne(self):
+    def Zdarzenie_Esencja(self):
         self.kontent['komunikat'] = '404 - Nie znaleziono pliku.'
         return self.Renderuj_HTML('komunikat/komunikat.html')
 

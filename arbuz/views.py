@@ -9,10 +9,10 @@ class Dynamiczna_Obsluga_Zdarzen(metaclass=ABCMeta):
         return render(self.request, szablon_html, self.kontent)
 
     @abstractmethod
-    def Zdarzenie_Dynamiczne(self):
+    def Zdarzenie_Esencja(self):
         pass
 
-    def Zdarzenie_POST(self):
+    def Zdarzenie_Formularz(self):
         pass
 
     def Zdarzenie_Index(self):
@@ -23,11 +23,14 @@ class Dynamiczna_Obsluga_Zdarzen(metaclass=ABCMeta):
 
         if self.request.method == 'POST':
 
-            if '__arbuz__' in self.request.POST:
-                return self.Zdarzenie_Dynamiczne()
+            if '__esencja__' in self.request.POST:
+                return self.Zdarzenie_Esencja()
 
-            else:
-                return self.Zdarzenie_POST()
+            if '__formularz__' in self.request.POST:
+                return self.Zdarzenie_Formularz()
+
+            if '__istnieje__' in self.request.POST:
+                pass
 
         return self.Zdarzenie_Index()
 

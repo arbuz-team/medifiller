@@ -4,11 +4,11 @@ from .forms import *
 
 class Logowanie(Dynamiczna_Obsluga_Zdarzen):
 
-    def Zdarzenie_Dynamiczne(self):
+    def Zdarzenie_Esencja(self):
         self.kontent['formularz'] = Formularz_Logowania()
         return self.Renderuj_HTML('uzytkownik/logowanie.html')
 
-    def Zdarzenie_POST(self):
+    def Zdarzenie_Formularz(self):
 
         self.kontent['formularz'] = \
             Formularz_Logowania(self.request.POST)
@@ -18,7 +18,7 @@ class Logowanie(Dynamiczna_Obsluga_Zdarzen):
             self.request.session['tu_logowanie'] = True
             return redirect('/')
 
-        return self.Zdarzenie_Dynamiczne()
+        return self.Zdarzenie_Esencja()
 
     @staticmethod
     def Uruchom(request):
@@ -27,11 +27,11 @@ class Logowanie(Dynamiczna_Obsluga_Zdarzen):
 
 class Rejestracja(Dynamiczna_Obsluga_Zdarzen):
 
-    def Zdarzenie_Dynamiczne(self):
+    def Zdarzenie_Esencja(self):
         self.kontent['formularz'] = Formularz_Rejestracji()
         return self.Renderuj_HTML('uzytkownik/rejestracja.html')
 
-    def Zdarzenie_POST(self):
+    def Zdarzenie_Formularz(self):
 
         self.kontent['formularz'] = \
             Formularz_Rejestracji(self.request.POST)
@@ -42,7 +42,7 @@ class Rejestracja(Dynamiczna_Obsluga_Zdarzen):
             self.kontent['formularz'].save()
             return redirect('/komunikat/')
 
-        return self.Zdarzenie_Dynamiczne()
+        return self.Zdarzenie_Esencja()
 
     @staticmethod
     def Uruchom(request):
@@ -51,7 +51,7 @@ class Rejestracja(Dynamiczna_Obsluga_Zdarzen):
 
 class Wyloguj(Dynamiczna_Obsluga_Zdarzen):
 
-    def Zdarzenie_Dynamiczne(self):
+    def Zdarzenie_Esencja(self):
         return redirect('/komunikat/')
 
     @staticmethod

@@ -4,7 +4,7 @@ from arbuz.views import *
 
 class Wyswietl_Start(Dynamiczna_Obsluga_Zdarzen):
 
-    def Zdarzenie_Dynamiczne(self):
+    def Zdarzenie_Esencja(self):
         return self.Renderuj_HTML('stronka/start.html')
 
     @staticmethod
@@ -14,7 +14,7 @@ class Wyswietl_Start(Dynamiczna_Obsluga_Zdarzen):
 
 class Wyswietl_Products(Dynamiczna_Obsluga_Zdarzen):
 
-    def Zdarzenie_Dynamiczne(self):
+    def Zdarzenie_Esencja(self):
         return self.Renderuj_HTML('stronka/products.html')
 
     @staticmethod
@@ -24,7 +24,7 @@ class Wyswietl_Products(Dynamiczna_Obsluga_Zdarzen):
 
 class Wyswietl_About_Us(Dynamiczna_Obsluga_Zdarzen):
 
-    def Zdarzenie_Dynamiczne(self):
+    def Zdarzenie_Esencja(self):
         return self.Renderuj_HTML('stronka/about_us.html')
 
     @staticmethod
@@ -34,7 +34,7 @@ class Wyswietl_About_Us(Dynamiczna_Obsluga_Zdarzen):
 
 class Wyswietl_Contact_Us(Dynamiczna_Obsluga_Zdarzen):
 
-    def Zdarzenie_Dynamiczne(self):
+    def Zdarzenie_Esencja(self):
         return self.Renderuj_HTML('stronka/contact_us.html')
 
     @staticmethod
@@ -44,7 +44,7 @@ class Wyswietl_Contact_Us(Dynamiczna_Obsluga_Zdarzen):
 
 class Wyswietl_Edycja(Dynamiczna_Obsluga_Zdarzen):
 
-    def Zdarzenie_Dynamiczne(self):
+    def Zdarzenie_Esencja(self):
         return self.Renderuj_HTML('stronka/edycja.html')
 
     @staticmethod
