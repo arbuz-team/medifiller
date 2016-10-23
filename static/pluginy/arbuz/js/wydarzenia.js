@@ -16,6 +16,7 @@ var Wydarzenia = (function()
 
     Wydarzenia_Kontrolera_Tresci.Definiuj();
     Wydarzenia_Menu.Definiuj();
+    Wydarzenia_Kontrolera_Formularzy.Definiuj();
   }
 
 //------------------------------------------

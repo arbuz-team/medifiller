@@ -67,13 +67,9 @@ var Kontroler_Tresci = (function()
   var _Wygeneruj_Dane_Post = function( Obiekt )
   {
     if( !Obiekt )
-    {
       Obiekt = {};
-      Obiekt.__esencja__ = 'true';
-    }
-    else
-      Obiekt.__formularz__ = 'true';
 
+    Obiekt.__esencja__ = 'true';
     Obiekt.csrfmiddlewaretoken = Kontroler_Danych.Daj( 'csrf_token' );
 
     return Obiekt;
@@ -95,7 +91,7 @@ var Kontroler_Tresci = (function()
   }
 
 
-  var Zmien_Adres = function( adres )
+  var _Zmien_Adres = function( adres )
   {
     history.pushState( '', adres, adres );
   }
@@ -104,7 +100,7 @@ var Kontroler_Tresci = (function()
   var Zmien_Tresc = function( adres, Dane_post )
   {
     adres = _Przetworz_Adres( adres );
-    Zmien_Adres( adres );
+    _Zmien_Adres( adres );
     _Odswiez_Dane();
 
     Dane_post = _Wygeneruj_Dane_Post( Dane_post );

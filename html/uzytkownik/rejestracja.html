@@ -19,15 +19,25 @@
       {% for i in formularz %}
 
         {{ i.errors }}
-        <div class="otoczka_pola">
+        {% if i.name == 'login' %}
+          <div class="otoczka_pola sprawdz_pole">
 
-          {{ i }}
+            {{ i }}
 
-        </div>
+            <div class="komunikat"></div>
+
+          </div>
+        {% else %}
+          <div class="otoczka_pola">
+
+            {{ i }}
+
+          </div>
+        {% endif %}
 
       {% endfor %}
 
-      <div class="otoczka_pola"><button type="submit"> Zarejestruj </button></div>
+      <div class="otoczka_pola"><button disabled type="submit"> Zarejestruj </button></div>
 
     </form>
   
