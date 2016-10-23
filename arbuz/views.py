@@ -21,7 +21,7 @@ class Dynamiczna_Obsluga_Zdarzen(metaclass=ABCMeta):
 
     @staticmethod
     def Zdarzenie_Problem():
-        return redirect('/komunikat/zdarzenia/')
+        return redirect('/komunikat/zdarzenia_nok/')
 
     def Zdarzenie_Index(self):
         Sprawdz_Sesje(self.request)
@@ -44,10 +44,13 @@ class Dynamiczna_Obsluga_Zdarzen(metaclass=ABCMeta):
 
         return self.Zdarzenie_Index()
 
-    def __init__(self, request):
+    def __init__(self, request, automat=True):
+
         self.request = request
         self.kontent = {}
-        self.HTML = self.Zarzadzaj()
+
+        if automat:
+            self.HTML = self.Zarzadzaj()
 
     @staticmethod
     @abstractmethod
