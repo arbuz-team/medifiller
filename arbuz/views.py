@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from abc import ABCMeta, abstractmethod
 from sesja.views import *
 
@@ -13,6 +14,9 @@ class Dynamiczna_Obsluga_Zdarzen(metaclass=ABCMeta):
         pass
 
     def Zdarzenie_Formularz(self):
+        pass
+
+    def Zdarzenie_Istnieje(self):
         pass
 
     def Zdarzenie_Index(self):
@@ -30,7 +34,7 @@ class Dynamiczna_Obsluga_Zdarzen(metaclass=ABCMeta):
                 return self.Zdarzenie_Formularz()
 
             if '__istnieje__' in self.request.POST:
-                pass
+                return self.Zdarzenie_Istnieje()
 
         return self.Zdarzenie_Index()
 

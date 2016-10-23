@@ -44,6 +44,14 @@ class Rejestracja(Dynamiczna_Obsluga_Zdarzen):
 
         return self.Zdarzenie_Esencja()
 
+    def Zdarzenie_Istnieje(self):
+
+        if 'login' in self.request.POST:
+            if Uzytkownik.objects.filter(login=self.request.POST['login']):
+                return JsonResponse({'__istnieje__': 'true'})
+
+        return JsonResponse({'__istnieje__': 'false'})
+
     @staticmethod
     def Uruchom(request):
         return Rejestracja(request).HTML
