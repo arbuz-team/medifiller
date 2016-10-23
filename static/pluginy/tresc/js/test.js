@@ -1,7 +1,7 @@
 /*    JavaScript    */
 
 
-/*---------------- TESTY - Zmiana treści ----------------*/
+/*---------------- TESTY - Kontroler Treści ----------------*/
 
 "use strict"; 
 
