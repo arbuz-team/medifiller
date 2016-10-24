@@ -4,15 +4,29 @@ from .models import *
 
 class Formularz_Logowania(forms.Form):
 
-    login = forms.CharField(max_length=50)
-    haslo = forms.CharField(max_length=100)
+    login = forms.CharField\
+    (
+        widget=forms.TextInput(attrs={'placeholder': 'Login'}),
+        max_length=50
+    )
+
+    haslo = forms.CharField\
+    (
+        widget=forms.PasswordInput(attrs={'placeholder': 'Hasło'}),
+        max_length=100
+    )
 
 
 class Formularz_Rejestracji(forms.ModelForm):
 
-    powtorz_haslo = forms.CharField(max_length=100)
+    powtorz_haslo = forms.CharField\
+    (
+        widget=forms.PasswordInput(attrs={'placeholder': 'Powtórz hasło'}),
+        max_length=100
+    )
 
     class Meta:
+
         model = Uzytkownik
         fields = \
         (
@@ -20,3 +34,12 @@ class Formularz_Rejestracji(forms.ModelForm):
             'haslo',
             'powtorz_haslo',
         )
+
+        widgets = \
+        {
+            'login': forms.TextInput(
+                attrs={'placeholder': 'Login'}),
+
+            'haslo': forms.PasswordInput(
+                attrs={'placeholder': 'Hasło'}),
+        }

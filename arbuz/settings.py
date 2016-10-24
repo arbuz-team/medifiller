@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'komunikat',
     'uzytkownik',
     'meta_tag',
+    'produkt',
 ]
 
 MIDDLEWARE_CLASSES = [
