@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from arbuz.views import *
+from produkt.forms import *
 
 
 class Wyswietl_Start(Dynamiczna_Obsluga_Zdarzen):
 
     def Zdarzenie_Esencja(self):
+        self.kontent['polecany'] = Polecany.objects.all()
         return self.Renderuj_HTML('stronka/start.html')
 
     @staticmethod

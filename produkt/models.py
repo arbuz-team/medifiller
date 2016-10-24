@@ -7,3 +7,14 @@ class Produkt(models.Model):
     opis = models.TextField()
     cena = models.IntegerField()
     zdjecie = models.ImageField(null=True, blank=True)
+
+    def __str__(self):
+        return self.nazwa
+
+
+class Polecany(models.Model):
+
+    produkt = models.ForeignKey(Produkt, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.produkt)

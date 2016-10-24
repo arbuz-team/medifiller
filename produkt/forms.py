@@ -23,7 +23,4 @@ class Formularz_Produkt(forms.ModelForm):
             'opis': forms.Textarea(
                 attrs={'placeholder': 'Wpisz opis',
                        'rows': 'none', 'cols': 'none'}),
-
-            'cena': forms.IntegerField(
-                attrs={'placeholder': 'Wpisz cenę'}),
         }
