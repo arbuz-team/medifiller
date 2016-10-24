@@ -61,7 +61,7 @@ class Rejestracja(Dynamiczna_Obsluga_Zdarzen):
 
     @staticmethod
     def Uruchom(request):
-        return Rejestracja(request).HTML
+        return Rejestracja(request, wymagaj_logowania=True).HTML
 
 
 class Wyloguj(Dynamiczna_Obsluga_Zdarzen):

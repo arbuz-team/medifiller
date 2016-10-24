@@ -20,36 +20,56 @@ class Dynamiczna_Obsluga_Zdarzen(metaclass=ABCMeta):
         pass
 
     @staticmethod
-    def Zdarzenie_Problem():
-        return redirect('/komunikat/zdarzenia_nok/')
+    def Zdarzenie_Brak_Instrukcji():
+        komunikat = 'POST - brak zmiennej określającej instrukcję.'
+        return JsonResponse({'__problem__': komunikat})
+
+    @staticmethod
+    def Zdarzenie_Nieuprawniony():
+        komunikat = 'Próba nieautoryzowanego dostępu.'
+        return JsonResponse({'__problem__': komunikat})
 
     def Zdarzenie_Index(self):
         Sprawdz_Sesje(self.request)
         return render(self.request, 'index.html', {})
 
+    def Sprawdz_Czy_Zalogowany(self):
+        if self.wymagaj_logowania:
+            if self.request.session['uzytkownik_zalogowany']:
+                return True
+
+        else: return True
+        return False
+
     def Zarzadzaj(self):
 
         if self.request.method == 'POST':
+            if self.Sprawdz_Czy_Zalogowany():
 
-            if '__esencja__' in self.request.POST:
-                return self.Zdarzenie_Esencja()
+                if '__esencja__' in self.request.POST:
+                    return self.Zdarzenie_Esencja()
 
-            if '__formularz__' in self.request.POST:
-                return self.Zdarzenie_Formularz()
+                if '__formularz__' in self.request.POST:
+                    return self.Zdarzenie_Formularz()
 
-            if '__istnieje__' in self.request.POST:
-                return self.Zdarzenie_Istnieje()
+                if '__istnieje__' in self.request.POST:
+                    return self.Zdarzenie_Istnieje()
 
-            return self.Zdarzenie_Problem()
+                return self.Zdarzenie_Brak_Instrukcji()
+            return self.Zdarzenie_Nieuprawniony()
 
-        return self.Zdarzenie_Index()
+        if self.request.method == 'GET':
+            return self.Zdarzenie_Index()
 
-    def __init__(self, request, automat=True):
+    def __init__(self, request,
+                 automatyczne_uruchamianie=True,
+                 wymagaj_logowania=False):
 
         self.request = request
+        self.wymagaj_logowania = wymagaj_logowania
         self.kontent = {}
 
-        if automat:
+        if automatyczne_uruchamianie:
             self.HTML = self.Zarzadzaj()
 
     @staticmethod

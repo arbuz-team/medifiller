@@ -4,7 +4,6 @@ from . import views
 urlpatterns = [
     url(r'^$', views.Komunikat.Uruchom),
     url(r'^404/$', views.Komunikat_404.Uruchom),
-    url(r'^zdarzenia_nok/$', views.Komunikat_Zdarzenia.Uruchom),
 
     url(r'^rejestracja_ok/$', views.Komunikat_Rejestracja.Uruchom_OK),
     url(r'^rejestracja_nok/$', views.Komunikat_Rejestracja.Uruchom_NOK),
