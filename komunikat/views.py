@@ -50,13 +50,13 @@ class Komunikat_Rejestracja(Dynamiczna_Obsluga_Zdarzen):
     def Uruchom_OK(request):
         komunikat = Komunikat_Rejestracja(request, False)
         komunikat.kontent['komunikat'] = 'Użytkownik został poprawnie zarejestrowany.'
-        return komunikat.Zdarzenie_Esencja()
+        return komunikat.Zarzadzaj()
 
     @staticmethod
     def Uruchom_NOK(request):
         komunikat = Komunikat_Rejestracja(request, False)
         komunikat.kontent['komunikat'] = 'Wystąpił wyjątkowy błąd podczas rejestracji.'
-        return komunikat.Zdarzenie_Esencja()
+        return komunikat.Zarzadzaj()
 
 
 
@@ -73,10 +73,10 @@ class Komunikat_Logowanie(Dynamiczna_Obsluga_Zdarzen):
     def Uruchom_OK(request):
         komunikat = Komunikat_Logowanie(request, False)
         komunikat.kontent['komunikat'] = 'Użytkownik został poprawnie zalogowany.'
-        return komunikat.Zdarzenie_Esencja()
+        return komunikat.Zarzadzaj()
 
     @staticmethod
     def Uruchom_NOK(request):
         komunikat = Komunikat_Logowanie(request, False)
         komunikat.kontent['komunikat'] = 'Wystąpił wyjątkowy błąd podczas logowaniu.'
-        return komunikat.Zdarzenie_Esencja()
+        return komunikat.Zarzadzaj()
