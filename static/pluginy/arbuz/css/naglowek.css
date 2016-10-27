@@ -24,7 +24,7 @@
 			right: 0px;
 			top: 0px;
 			z-index: 35;
-			overflow: hidden;
+			overflow: visible;
 
 		height: 70px;
 			min-height: 70px;
@@ -37,84 +37,140 @@
   }
 
 
-		#NAGLOWEK .logo
-		{
-			position: absolute;
-				bottom: -10px;
-				left: 10px;
-				z-index: 38;
+    #NAGLOWEK > div > div
+    {
+      position: relative;
 
-			width: 65px;
-				height: 70px;
-				min-height: 80px;
+      margin: 0px auto;
+        padding-left: 15px;
+        padding-right: 15px;
 
-      background-image: url( '../img/logo.png' );
-				background-size: 100% auto;
-        background-repeat: no-repeat;
-		}
+      width: 100%;
+        height: 100%;
+    }
 
 
-      #NAGLOWEK .logo > a
+      #NAGLOWEK .logo
       {
         position: absolute;
-          top: 0px;
-          right: 0px;
-          bottom: 0px;
-          left: 0px;
+          bottom: -10px;
+          left: 10px;
+          z-index: 38;
+
+        width: 65px;
+          height: 70px;
+          min-height: 80px;
+
+        background-image: url( '../img/logo.png' );
+          background-size: 100% auto;
+          background-repeat: no-repeat;
       }
 
 
+        #NAGLOWEK .logo > a
+        {
+          position: absolute;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+        }
+
+
+
 /*-----------------------------------------*\
-									MOBILE
+							EKRAN KOMPUTERA
 \*-----------------------------------------*/
 
-@media screen and (min-width: 1000px)
-{
-
-  #NAGLOWEK 
+  @media screen and (min-width: 1000px)
   {
-    height: 100px;
-    	max-height: 100px;
+
+    #NAGLOWEK 
+    {
+      height: 100px;
+        max-height: 100px;
+    }
+
+
+
+    #NAGLOWEK > div
+    {
+      height: 100px;
+        max-height: 100px;
+    }
+
+
+
+    #NAGLOWEK .logo
+    {
+      left: 30px;
+
+      width: 80px;
+        height: 100px;
+        max-height: 100px;
+    }
+
+
+
+    #NAGLOWEK .logo > a > div
+    {
+      display: block;
+        position: absolute;
+        bottom: 10px;
+        left: 110px;
+        z-index: 38;
+
+      width: 180px;
+        height: 100px;
+        max-height: 100px;
+
+      background-image: none;
+        background-position: center;
+        background-size: 130px auto;
+        background-repeat: no-repeat;
+    }
+
+  }
+
+  @media (min-width: 768px)
+  {
+
+    #NAGLOWEK > div > div
+    {
+      width: 650px;
+    }
+
   }
 
 
-
-  #NAGLOWEK > div
+  @media (min-width: 870px)
   {
-    height: 100px;
-    	max-height: 100px;
+
+    #NAGLOWEK > div > div
+    {
+    }
+
   }
 
 
-
-  #NAGLOWEK .logo
+  @media (min-width: 992px)
   {
-    left: 30px;
 
-    width: 80px;
-		  height: 100px;
-		  max-height: 100px;
+    #NAGLOWEK > div > div
+    {
+      width: 800px;
+    }
+
   }
 
 
-
-  #NAGLOWEK .logo > a > div
+  @media (min-width: 1200px)
   {
-    display: block;
-		  position: absolute;
-		  bottom: 10px;
-		  left: 110px;
-    	z-index: 38;
 
-    width: 180px;
-		  height: 100px;
-		  max-height: 100px;
-
-    background-image: none;
-		  background-position: center;
-		  background-size: 130px auto;
-		  background-repeat: no-repeat;
+    #NAGLOWEK > div > div
+    {
+      width: 970px;
+    }
+    
   }
-
-}
 

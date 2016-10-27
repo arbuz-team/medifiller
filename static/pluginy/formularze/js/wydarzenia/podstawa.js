@@ -13,7 +13,7 @@ var Wydarzenia_Kontrolera_Formularzy = (function()
   {
     $( 'form' ).submit( Przygotuj_Formularz_Do_Wyslania );
 
-    $( '.sprawdz_pole > input' ).focusout( _Sprawdz_Pole );
+    $( '.sprawdz_pole > *' ).focusout( _Sprawdz_Pole );
   }
 
 //////////////////////////////////////////////////////////

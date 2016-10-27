@@ -10,10 +10,17 @@
 
   <div class="tlo abs_pelny"></div>
 
-  {% include 'posty/html/szablon_lista.html' %}
+  <div class="tresc">
+    {% include 'produkty/html/blok_wyszukiwarki.html' %}
+  </div>
 
-  {% for produkt in polecany %}
-    {{ produkt }}
-  {% endfor %}
+</div>
+
+
+<div class="BLOK2">
+
+  <div class="tlo abs_pelny"></div>
+
+  {% include 'produkty/html/szablon_lista.html' %}
 
 </div>

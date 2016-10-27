@@ -1,0 +1,81 @@
+
+#TRESC[data-url='/'] > .BLOK1
+{
+  min-height: 115px;
+}
+
+
+  #TRESC[data-url='/'] > .BLOK1 > .tlo
+  {
+  }
+
+
+  #TRESC[data-url='/'] > .BLOK1 > .tresc
+  {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+/* -------------------------------- */
+
+#BLOK_WYSZUKAJ > .naglowek
+{
+  padding: 10px 15px;
+  padding-bottom: 3px;
+}
+
+
+    #BLOK_WYSZUKAJ > .naglowek .otoczka_pola
+    {
+      border-radius: 5px;
+      border: none;
+    }
+
+
+      #BLOK_WYSZUKAJ > .naglowek .otoczka_pola > *
+      {
+        background-color: #fbfbfb;
+      }
+
+
+      #BLOK_WYSZUKAJ > .naglowek > .kategorie button
+      {
+        display: none;
+      }
+
+/* -------------------------------------------- */
+
+  @media (min-width: 630px)
+  {
+
+    #BLOK_WYSZUKAJ > .naglowek > *
+    {
+      display: inline-block;
+      width: 38%;
+      float: right;
+    }
+
+    #BLOK_WYSZUKAJ > .naglowek > *:first-child
+    {
+      width: 58%;
+      float: none;
+    }
+
+  }
+
+
+  @media (min-width: 768px)
+  {
+
+    #BLOK_WYSZUKAJ > .naglowek > .kategorie button
+    {
+      display: block;
+    }
+
+
+    #BLOK_WYSZUKAJ > .naglowek > .kategorie select
+    {
+      display: none;
+    }
+
+  }

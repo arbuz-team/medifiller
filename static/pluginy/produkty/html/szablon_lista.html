@@ -1,0 +1,12 @@
+<ul class="tresc posty">
+
+  <li class="tytul">
+    Produkty!
+  </li>
+
+  {% for klucz_obcy in polecany %}
+    {% include 'produkty/html/szablon_produktu.html' %}
+  {% endfor %}
+
+</ul>
+

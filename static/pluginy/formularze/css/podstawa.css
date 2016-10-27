@@ -7,7 +7,7 @@
     min-width: 200px;
       width: 600px;
       max-width: 100%;
-      min-height: 36px;
+      min-height: 38px;
 
     margin: 5px auto;
 
@@ -20,9 +20,9 @@
       border: 1px solid #bbb;
       outline: none;
       border-radius: 2px;
-      -webkit-box-shadow: 1px 1px 2px 0 rgba(238,238,238,1);
-         -moz-box-shadow: 1px 1px 2px 0 rgba(238,238,238,1);
-              box-shadow: 1px 1px 2px 0 rgba(238,238,238,1);
+      -webkit-box-shadow: inset 1px 1px 2px 0 rgba(238,238,238,1);
+         -moz-box-shadow: inset 1px 1px 2px 0 rgba(238,238,238,1);
+              box-shadow: inset 1px 1px 2px 0 rgba(238,238,238,1);
   }
 
 
