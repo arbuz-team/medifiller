@@ -1,0 +1,104 @@
+
+//-----------------------------------------
+//						ELEMENTY TREŚCI
+//-----------------------------------------
+
+
+#TRESC
+  position: relative
+
+
+  >div.BLOK1
+    border-bottom: 1px solid #d8d8d8
+
+
+  >div
+    position: relative
+    display: inline-block
+    padding-top: 0px
+    margin: 0px
+
+    width: 100%
+    min-height: 550px
+
+
+    >.tytul
+      position: relative
+      z-index: 12
+
+      margin-top: 15px
+      padding-left: 30px
+
+      color: #333
+      font-size: 18px
+      font-weight: bold
+
+
+    >.tresc
+      position: relative
+      z-index: 12
+
+      color: #333
+      opacity: 0.4
+      font-size: 16px
+
+
+    >.tlo
+      z-index: 10
+      background-color: #f2f1ed
+
+
+  >div.BLOK2 > .tlo
+    background-color: #fff
+
+
+  .tresc
+    >.tytul
+      font-size: 18px
+      font-weight: bold
+
+
+    >.akapit
+      margin-bottom: 15px
+      margin-left: 15px
+
+.fragment.RWD > div > .tresc
+  margin: 10px auto 30px auto
+  padding: 10px
+  padding-left: 15px
+  padding-right: 15px
+
+
+
+//-----------------------------------------
+//						 EKRAN KOMPUTERA
+//-----------------------------------------
+
+@media (min-width: 768px)
+
+  #TRESC > div > .tytul
+    margin-top: 15px
+    padding-right: 300px
+    text-align: center
+
+
+  .fragment.RWD > div > .tresc
+    width: 650px
+
+
+@media (min-width: 870px)
+
+  .fragment.RWD > div > .tresc
+    margin: 50px auto
+
+
+@media (min-width: 992px)
+
+  .fragment.RWD > div > .tresc
+    width: 800px
+
+
+@media (min-width: 1200px)
+
+  .fragment.RWD > div > .tresc
+    width: 970px

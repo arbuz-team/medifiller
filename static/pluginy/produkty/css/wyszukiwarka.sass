@@ -1,0 +1,57 @@
+
+#TRESC[data-url='/']
+  >.BLOK1
+    min-height: 115px
+
+  //
+    >.tlo
+  
+  
+    >.tresc
+      margin:
+        top: 10px
+        bottom: 10px
+
+/* -------------------------------- */
+
+#BLOK_WYSZUKAJ > .naglowek
+  padding: 10px 15px
+    bottom: 3px
+
+
+  .otoczka_pola
+    border: none
+      radius: 5px
+
+
+    >*
+      background-color: #fbfbfb
+
+
+  > .kategorie button
+    display: none
+
+/* -------------------------------------------- */
+
+@media (min-width: 630px)
+
+  #BLOK_WYSZUKAJ > .naglowek
+    >*
+      display: inline-block
+      width: 38%
+      float: right
+
+    >*:first-child
+      width: 58%
+      float: none
+
+
+@media (min-width: 768px)
+
+  #BLOK_WYSZUKAJ > .naglowek > .kategorie
+    button
+      display: block
+
+
+    select
+      display: none

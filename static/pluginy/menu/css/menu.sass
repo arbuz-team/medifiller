@@ -1,0 +1,148 @@
+//--------------------------------------
+//              STYLE NAGŁÓWKA
+//--------------------------------------
+
+#NAGLOWEK
+  .menu
+    float: right
+    display: inline-block
+    position: relative
+    top: -20px
+    z-index: 38
+
+    height: 90px
+    min-height: 90px
+    max-height: 90px
+
+    font-size: 20px
+    text-align: center
+    line-height: 130px
+
+    >li
+      display: inline-block
+
+      height: 60px
+      min-height: 60px
+      max-height: 60px
+
+
+    .pole_menu
+      display: none
+      position: relative
+      z-index: 38
+
+      min-width: 150px
+      height: 90px
+      min-height: 90px
+      max-height: 90px
+
+      font-size: 20px
+      text-align: center
+      line-height: 130px
+      color: #888
+
+
+    .pole_menu.wybrany,
+    .pole_menu:hover
+      border-bottom: 4px #ba8748 solid
+      color: #333
+
+
+    .guzik_menu
+      float: right
+      display: inline-block
+      position: relative
+
+      min-width: 40px !important
+      width: 40px !important
+      height: 34px
+
+      margin: 0 30px
+        top: 30px
+
+      background:
+        image: url( '../img/menu_b64.png' )
+        size: 100% 100%
+        position: center bottom
+        repeat: no-repeat
+
+
+@media (min-width: 750px)
+
+  #NAGLOWEK .menu .pole_menu
+    display: inline-block
+
+
+  #NAGLOWEK .menu .guzik_menu
+    display: none
+
+
+@media (min-width: 1000px)
+
+  #NAGLOWEK .menu
+    top: 0
+
+
+//--------------------------------------
+//       STYLE PRZESUWANEGO MENU
+//--------------------------------------
+
+#MENU
+  display: block
+  position: fixed !important
+  top: 0
+  right: -250px
+  z-index: 60 !important
+
+  min-width: 249px
+  width: 249px
+  min-height: 100%
+  max-height: 100%
+  height: 100%
+
+  border-left: solid 1px #d8d8d8
+  background-color: #fbfbfb
+
+
+  .nakladka
+    display: none
+    position: fixed
+    left: 0
+    right: 250px
+    top: 0
+    bottom: 0
+    z-index: 61
+
+    border: 0
+
+
+  li
+    height: 45px
+    border-bottom: solid #ddd 1px
+
+
+  li:first-child
+    height: 70px
+
+
+  .menu
+    .guzik_menu
+      //@extend #NAGLOWEK .menu .guzik_menu
+      margin: 0 30px
+        top: 20px
+
+
+  >li
+    >a
+      display: inline-block
+
+      width: 100%
+      margin: 0 20px
+      line-height: 45px
+
+      color: #888
+
+
+    >a:hover
+      color: #333
+

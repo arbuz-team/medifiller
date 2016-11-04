@@ -5,90 +5,38 @@
 
 "use strict"; 
 
-
-var Test_Interfejs_Funkcji_Standardowych = (function()
+describe( 'Interfejs funkcji standardowych:', function()
 {
-
-  var Blad_Testu = 
-    function( tresc )
-    {
-      console.group( 'Błąd testu:' );
-      console.error( tresc );
-      console.trace();
-      console.groupEnd();
-    }
-
-
-  var Uruchom = function()
-  {
-//    Test_Dziedzicz_Po();
-    Test_Dodaj_Metode();
-  }
-
-
-  var Test_Dodaj_Metode = function()
+  it( 'Metoda została poprawnie dodana.', function()
   {
     var wynik;
 
     Function.Dodaj_Metode( 'Funkcja_Testowa', function()
-      {
-        return 5;
-      });
+    {
+      return 5;
+    });
 
     wynik = Function.Funkcja_Testowa();
 
-    if( wynik !== 5 )
-      Blad_Testu();
+    delete Function.Funkcja_Testowa;
 
-    delete Function.Funkcja_Testowa();
-  }
-
-
-/*  var Test_Dziedzicz_Po = function()
-  {
-    var osoba = {
-      "imię": "Jan",
-      "nazwisko": "Nowak",
-      "nick": "Janek"
-    };
-
-    var ja = Object.Dziedzicz_Po(osoba);
-
-      if( ja.nick !== 'Janek' )
-        Blad_Testu();
+    expect( wynik ).toBe( 5 );
+  })
 
 
-    ja.nick = "Włodek";
 
-      if( ja.nick !== 'Włodek' )
-        Blad_Testu();
-    
-    delete ja.nick;
-
-      if( ja.nick !== 'Janek' )
-        Blad_Testu();
-  }
-*/
-
-  var Test_Usun_Puste = function()
+  it('Puste pola zostały usunięte z tablicy.', function()
   {
     var tablica = [ '', 'o_nas', '', 'nic' ];
 
     tablica = tablica.Usun_Puste();
 
-    Kanar.Czy_Rowne( tablica[ 0 ], 'o_nas' );
-    Kanar.Czy_Rowne( tablica[ 1 ], 'nic' );
-    Kanar.Czy_Nie_Rowne( tablica[ 0 ], 'xd' );
-    Kanar.Czy_Nie_Rowne( tablica[ 2 ], 'xd' );
-  }
+    expect( tablica[ 0 ] ).toBe( 'o_nas' );
+    expect( tablica[ 1 ] ).toBe( 'nic' );
+    expect( tablica[ 0 ] ).not.toBe( '' );
+    expect( tablica[ 2 ] ).not.toBe( 'xd' );
+  })
 
-//------------------------------------------
+});
 
-  var udostepnione = 
-  {
-    Uruchom : Uruchom
-  }
-
-  return udostepnione;
-})();
 

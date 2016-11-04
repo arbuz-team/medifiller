@@ -37,35 +37,36 @@ var Kontroler_Danych = (function()
   }
   Resetuj();
 
+
   var Daj = function( nazwa )
   {
-    if( Prywatne_Dane[ nazwa ] )
+    if( typeof  Prywatne_Dane[ nazwa ] !== 'undefined' )
       return Prywatne_Dane[ nazwa ];
 
-    else if( Publiczne_Dane[ nazwa ] )
+    else if( typeof Publiczne_Dane[ nazwa ] !== 'undefined' )
         return Publiczne_Dane[ nazwa ];
       else
-        Komunikat.Blad( 'Błędne wywołanie', 'Nie ma takiej zmiennej.' );
+        console.warn( 'Błędne wywołanie! Nie ma takiej zmiennej.'+ nazwa );
   }
 
 
   var Zmien = function( nazwa, wartosc )
   {
-    if( Publiczne_Dane[ nazwa ] || Publiczne_Dane[ nazwa ] )
+    if( typeof Publiczne_Dane[ nazwa ] !== 'undefined' )
       Publiczne_Dane[ nazwa ] = wartosc;
-    else if( Prywatne_Dane[ nazwa ] )
-      Komunikat.Blad( 'Brak dostępu', 'Zmienna prywatna.' );
+    else if( typeof Prywatne_Dane[ nazwa ] !== 'undefined' )
+      console.warn( 'Brak dostępu! Zmienna prywatna.' );
     else
-      Komunikat.Blad( 'Błędne wywołanie', 'Nie ma takiej zmiennej.' );
+      console.warn( 'Błędne wywołanie! Nie ma takiej zmiennej. Z' );
   }
 
 
   var Zmien_Wiele = function( Obiekt )
   {
     for( var nazwa in Obiekt )
-      if( nazwa = 'tytul')
+      if( nazwa === 'tytul')
       {
-        if( Obiekt[ nazwa ] != '' )
+        if( Obiekt[ nazwa ] !== '' )
           Zmien( nazwa, Obiekt[ nazwa ] +' - '+ Publiczne_Dane.nazwa_strony );
         else
           Zmien( nazwa, Publiczne_Dane.nazwa_strony );

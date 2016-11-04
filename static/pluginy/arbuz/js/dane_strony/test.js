@@ -6,25 +6,17 @@
 "use strict"; 
 
 
-var Test_Kontroler_Danych = (function()
+describe( 'W strukturze Dane_Strony', function()
 {
-  var Uruchom = function()
+  it( 'dane zostały dobrze pobrane,', function()
   {
-    Test_Daj();
-    Test_Zmien()
-    Test_Zmien_Wiele();
-  }
+    expect( Kontroler_Danych.Daj( 'protokol' ) ).toBe( location.protocol );
+    expect( Kontroler_Danych.Daj( 'nazwa_strony' ) ).toBe( 'Arbuz Team' );
+    expect( Kontroler_Danych.Daj( 'kontener' ) ).not.toBe( 'xd' );
+  })
 
 
-  var Test_Daj = function()
-  {
-    Kanar.Czy_Rowne( Kontroler_Danych.Daj( 'protokol' ), location.protocol );
-    Kanar.Czy_Rowne( Kontroler_Danych.Daj( 'nazwa_strony' ), 'Arbuz Team' );
-    Kanar.Czy_Nie_Rowne( Kontroler_Danych.Daj( 'kontener' ), 'xd' );
-  }
-
-
-  var Test_Zmien = function()
+  it( 'pojedyncze dane zostały dobrze dodane,', function()
   {
     Kontroler_Danych.Zmien( 'kontener', 'body' );
     Kontroler_Danych.Zmien( 'protokol', 'body' );
@@ -32,24 +24,29 @@ var Test_Kontroler_Danych = (function()
     var komunikaty = Komunikat.Zwroc_Ostatni();
 
     Kanar.Czy_Rowne( Kontroler_Danych.Daj( 'kontener' ), 'body' );
-    Kanar.Czy_Rowne( komunikaty[0], 'Brak dostępu' )
-    Kanar.Czy_Rowne( komunikaty[1], 'Zmienna prywatna.' )
-    Konsola.Wyczysc();
-    Komunikat.Wyczysc_Tablice_Komunikatow();
-  }
+
+    expect( Kontroler_Danych.Daj( 'kontener' ) ).toBe( 'body' );
+    expect( Kontroler_Danych.Daj( 'protokol' ) ).not.toBe( 'body' );
+  })
 
 
-  var Test_Zmien_Wiele = function()
+  it( 'wiele danych zostało zmienionych na raz', function()
   {
-  }
+    Kontroler_Danych.Zmien_Wiele({
+      tytul : 'Wizytówka'
+      , opis : 'Ta strona opowiada o nas. ;)'
+    });
 
-//------------------------------------------
+    Kontroler_Danych.Zmien_Wiele({
+      protokol : 'Wizytówka'
+      , csrf_token : 'foijsaoifjsi'
+    });
 
-  var udostepnione = 
-  {
-    Uruchom : Uruchom
-  }
+    expect( Kontroler_Danych.Daj( 'tytul' ) ).toBe( 'Wizytówka - '+ Kontroler_Danych.Daj( 'nazwa_strony' ) );
+    expect( Kontroler_Danych.Daj( 'opis' ) ).toBe( 'Ta strona opowiada o nas. ;)' );
+    expect( Kontroler_Danych.Daj( 'protokol' ) ).not.toBe( 'Wizytówka' );
+    expect( Kontroler_Danych.Daj( 'csrf_token' ) ).not.toBe( 'foijsaoifjsi' );
+  })
 
-  return udostepnione;
-})();
+});
 
