@@ -1,70 +1,79 @@
-/*    JavaScript    */
+/**
+ * Created by mrskull on 24.11.16.
+ */
 
+import {Kontroler_Danych, EVENTS} from '../../arbuz/js/dane_strony/struktura';
+export {Kontroler_Danych, EVENTS} from '../../arbuz/js/dane_strony/struktura';
 
 /*---------------- Kontroler Treści ----------------*/
 
-"use strict"; 
-
-
-var Kontroler_Tresci = (function()
+export function Kontroler_Tresci()
 {
 
-  var _Odswiez_Dane = function()
+//// PUBLICZNA ----
+  this.Uruchom = function()
+  {
+    this.Zmien_Tresc();
+  };
+
+
+  let _Odswiez_Dane = function()
   {
     Kontroler_Danych.Resetuj();
-  }
+  };
 
 
-  var _Odswiez_Wydarzenia = function()
+  let _Odswiez_Wydarzenia = function()
   {
-    Wydarzenia.Definiuj();
-  }
+    window.dispatchEvent( EVENTS.define );
+  };
 
 
-  var _Ukryj_Tresc = function()
+  let _Ukryj_Tresc = function()
   {
     $( Kontroler_Danych.Daj( 'kontener' ) +' > div > .tresc' )
     .animate( { opacity: 0.4 }, 100, _Pobierz_Tresc );
-  }
+  };
 
 
-  var _Pokaz_Tresc = function( response, status )
+  let _Pokaz_Tresc = function( response, status )
   {
     if( status !== 'success' )
     {
-      _Pobierz_Tresc( '/komunikat/404/' )
+      _Pobierz_Tresc( '/komunikat/404/' );
       return false;
     }
 
     _Odswiez_Wydarzenia();
+    Wklej_Dane( window.APP );
 
     $( Kontroler_Danych.Daj( 'kontener' ) +' > div > .tresc' )
-    .animate( { opacity: 1 }, 150, Kontroler_Menu.Zaznacz_Zakladke() );
-  }
+    .animate( { opacity: 1 }, 150, () => { window.dispatchEvent( EVENTS.changed_adres ) } );
+  };
 
 
-  var _Pobierz_Tresc = function( adres )
+  let _Pobierz_Tresc = function( adres )
   {
     adres = _Przetworz_Adres( adres );
-    var Dane_post = Kontroler_Danych.Daj( 'Dane_post' );
+    let Dane_post = Kontroler_Danych.Daj( 'Dane_post' );
 
     $( Kontroler_Danych.Daj( 'kontener' ) )
       .load( adres, Dane_post, _Pokaz_Tresc )
       .Dodaj_Dane( 'url', adres )
-  }
+  };
 
-/////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////
 
-  var _Przetworz_Adres = function( adres )
+  let _Przetworz_Adres = function( adres )
   {
     if( !adres )
       adres = Kontroler_Danych.Daj( 'sciezka' );
 
     return adres;
-  }
+  };
 
 
-  var _Wygeneruj_Dane_Post = function( Obiekt )
+  let _Wygeneruj_Dane_Post = function( Obiekt )
   {
     if( !Obiekt )
       Obiekt = {};
@@ -73,31 +82,27 @@ var Kontroler_Tresci = (function()
     Obiekt.csrfmiddlewaretoken = Kontroler_Danych.Daj( 'csrf_token' );
 
     return Obiekt;
-  }
+  };
 
 
-  var Wklej_Dane = function( Obiekt )
+//// PUBLICZNA ----
+  let Wklej_Dane = function( Obiekt )
   {
     Kontroler_Danych.Zmien_Wiele( Obiekt );
 
     $( 'title' ).html( Kontroler_Danych.Daj( 'tytul' ) );
     $( 'meta[ name="description" ]' ).attr( 'content', Kontroler_Danych.Daj( 'opis' ) );
-  }
+  };
 
 
-  var Uruchom = function()
-  {
-    Zmien_Tresc();
-  }
-
-
-  var _Zmien_Adres = function( adres )
+  let _Zmien_Adres = function( adres )
   {
     history.pushState( '', adres, adres );
-  }
+  };
 
 
-  var Zmien_Tresc = function( adres, Dane_post )
+//// PUBLICZNA ----
+  this.Zmien_Tresc = function( adres, Dane_post )
   {
     adres = _Przetworz_Adres( adres );
     _Zmien_Adres( adres );
@@ -107,20 +112,5 @@ var Kontroler_Tresci = (function()
     Kontroler_Danych.Zmien( 'Dane_post', Dane_post );
 
     _Ukryj_Tresc();
-  }
-
-//------------------------------------------
-
-  var udostepnione = 
-  {
-    Uruchom : Uruchom
-    , Wklej_Dane : Wklej_Dane
-    , Zmien_Tresc : Zmien_Tresc
-  }
-
-  return udostepnione;
-})();
-
-
-
-
+  };
+}

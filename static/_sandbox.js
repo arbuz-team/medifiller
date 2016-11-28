@@ -1,8 +1,8 @@
 //noinspection JSUnresolvedFunction
-var Style = require( './style.sass' );
-var style = new Style();
+require( './style/style.sass' );
 
+//noinspection JSUnresolvedFunction
 window.viewability = (
-  () => require( './core.js' )
+  () => require( './js/core.js' )
 )();
 

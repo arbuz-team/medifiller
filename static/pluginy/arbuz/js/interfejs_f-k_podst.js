@@ -3,8 +3,6 @@
 
 /*---------------- Interfejs funkcji standardowych ----------------*/
 
-"use strict"; 
-
 
 /*Object.prototype.Dziedzicz_Po = function( rodzic )
 {
@@ -13,12 +11,11 @@
   return new dziecko();
 }*/
 
-
 Function.prototype.Dodaj_Metode = function( nazwa, funkcja )
 {
   this.prototype[ nazwa ] = funkcja;
   return this;
-}
+};
 
 
 $.prototype.Dodaj_Dane = function( nazwa, wartosc )
@@ -26,7 +23,7 @@ $.prototype.Dodaj_Dane = function( nazwa, wartosc )
   $( this ).attr( 'data-'+ nazwa, wartosc );
   $( this ).data( nazwa, wartosc );
   return this;
-}
+};
 
 
 $.prototype.Usun_Dane = function( nazwa )
@@ -34,7 +31,7 @@ $.prototype.Usun_Dane = function( nazwa )
   $( this ).removeAttr( 'data-'+ nazwa );
   $( this ).removeData( nazwa );
   return this;
-}
+};
 
 
 Array.prototype.Usun_Puste = function()
@@ -51,7 +48,7 @@ Array.prototype.Usun_Puste = function()
   }
 
   return tablica_adresu;
-}
+};
 
 
 /*

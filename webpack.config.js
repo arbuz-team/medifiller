@@ -1,10 +1,12 @@
-'use strict';
+"use strict";
+
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
   entry: './static/_sandbox.js',
   output: { 
     path: __dirname, 
-    filename: './static/bundle.js' 
+    filename: './static/js/bundle.js'
   },
   devtool: "source-map",
   module: {
@@ -19,16 +21,15 @@ module.exports = {
       },
       {
         test: /\.sass$/,
-        loaders: ['style', 'css?-url', 'sass']
-      },
-      {
-        test: /\.scss$/,
-        loaders: ['style', 'css?-url', 'sass']
-      },
-      {
-        test: /\.css$/,
-        loaders: ['style', 'css?-url']
+        loader: ExtractTextPlugin.extract(
+          "style",
+          "css?-url&minimize!sass"
+        )
       }
+
     ]
-  }
+  },
+  plugins: [
+    new ExtractTextPlugin("./static/style/app.css")
+  ]
 };
