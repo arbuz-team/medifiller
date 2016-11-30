@@ -45,10 +45,12 @@ export function Kontroler_Tresci()
     }
 
     _Odswiez_Wydarzenia();
-    Wklej_Dane( window.APP );
 
     $( Kontroler_Danych.Daj( 'kontener' ) +' > div > .tresc' )
-    .animate( { opacity: 1 }, 150, () => { window.dispatchEvent( EVENTS.changed_adres ) } );
+    .animate( { opacity: 1 }, 150, () => {
+      window.dispatchEvent( EVENTS.changed_adres )
+      Wklej_Dane( window.APP );
+    });
   };
 
 

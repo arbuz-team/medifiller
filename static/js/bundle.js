@@ -319,10 +319,10 @@
 	    }
 	
 	    _Odswiez_Wydarzenia();
-	    Wklej_Dane(window.APP);
 	
 	    $(_struktura.Kontroler_Danych.Daj('kontener') + ' > div > .tresc').animate({ opacity: 1 }, 150, function () {
 	      window.dispatchEvent(_struktura.EVENTS.changed_adres);
+	      Wklej_Dane(window.APP);
 	    });
 	  };
 	
@@ -437,7 +437,7 @@
 	
 	  this.Zmien_Wiele = function (Obiekt) {
 	    for (var nazwa in Obiekt) {
-	      if (Obiekt.hasOwnProperty('nazwa')) {
+	      if (Obiekt.hasOwnProperty(nazwa)) {
 	        if (nazwa === 'tytul') {
 	          if (Obiekt[nazwa] !== '') this.Zmien(nazwa, Obiekt[nazwa] + ' - ' + Publiczne_Dane.nazwa_strony);else this.Zmien(nazwa, Publiczne_Dane.nazwa_strony);
 	        } else this.Zmien(nazwa, Obiekt[nazwa]);

@@ -65,7 +65,7 @@ let Kontroler_Danych = function()
   this.Zmien_Wiele = function( Obiekt )
   {
     for( let nazwa in Obiekt )
-      if( Obiekt.hasOwnProperty( 'nazwa' ) )
+      if( Obiekt.hasOwnProperty( nazwa ) )
       {
         if( nazwa === 'tytul' )
         {
