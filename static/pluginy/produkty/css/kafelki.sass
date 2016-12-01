@@ -1,0 +1,79 @@
+
+.fragment.RWD > div > .produkty.tresc
+  padding:
+    left: 0
+    right: 0
+
+
+.produkty.kafelki > .produkt
+  width: auto
+  max-width: 400px
+  height: 300px
+  margin:
+    left: auto
+    right: auto
+
+  >a
+    >.zdjecie
+      position: relative
+      width: 100%
+      height: 200px
+      overflow: hidden
+      text-align: center
+
+      //>img
+
+    >.tytul
+      margin:
+        top: 10px
+        bottom: 10px
+      font-weight: bold
+      padding-left: 30px
+
+    >.tresc
+      max-width: 300px
+      margin: 0 auto
+      padding: 0
+
+
+//-----------------------------------------
+//					  	EKRAN KOMPUTERA
+//-----------------------------------------
+
+@media (min-width: 768px)
+  .produkty.kafelki
+    >.produkt
+      display: inline-block
+      width: 285px
+      max-width: none
+
+      >a
+        >.zdjecie
+          height: 200px
+          overflow: hidden
+
+        >.tresc
+          padding:
+            left: 20px
+            right: 20px
+
+    >.produkt:nth-child(2n)
+      margin-right: 5px
+
+    >.produkt:nth-child(2n+1)
+      margin-left: 5px
+
+
+@media (min-width: 870px)
+  .produkty.kafelki > .produkt
+    width: 285px
+
+
+@media (min-width: 992px)
+  .produkty.kafelki > .produkt
+    width: 360px
+
+
+@media (min-width: 1200px)
+  .produkty.kafelki > .produkt
+    width: 445px

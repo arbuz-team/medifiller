@@ -23,7 +23,7 @@ module.exports = {
         test: /\.sass$/,
         loader: ExtractTextPlugin.extract(
           "style",
-          "css?-url&minimize!sass"
+          "css?-url!sass" // &minimize
         )
       }
 
