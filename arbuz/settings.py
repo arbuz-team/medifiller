@@ -25,12 +25,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'stronka',
-    'sesja',
-    'komunikat',
-    'uzytkownik',
-    'meta_tag',
-    'produkt',
+
+    'main',
+    'session',
+    'statement',
+    'user',
+    'sender',
+    'product',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -126,3 +127,11 @@ STATICFILES_DIRS = (
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
+# Email settings
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.zoho.com'
+EMAIL_HOST_PASSWORD = 'koperkowe7ASBHP'
+EMAIL_HOST_USER = 'asbhp@asbhp.pl'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

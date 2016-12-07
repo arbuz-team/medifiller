@@ -1,78 +1,80 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from abc import ABCMeta, abstractmethod
-from sesja.views import *
+from session.views import *
 
 
-class Dynamiczna_Obsluga_Zdarzen(metaclass=ABCMeta):
+class Manage_Dynamic_Event(metaclass=ABCMeta):
 
-    def Renderuj_HTML(self, szablon_html):
-        return render(self.request, szablon_html, self.kontent)
+    def Render_HTML(self, file_name):
+        return render(self.request, file_name, self.kontent)
 
     @abstractmethod
-    def Zdarzenie_Esencja(self):
+    def Manage_Content(self):
         pass
 
-    def Zdarzenie_Formularz(self):
+    def Manage_Form(self):
         pass
 
-    def Zdarzenie_Istnieje(self):
+    def Manage_Exist(self):
         pass
 
     @staticmethod
-    def Zdarzenie_Brak_Instrukcji():
-        komunikat = 'POST - brak zmiennej określającej instrukcję.'
-        return JsonResponse({'__problem__': komunikat})
+    def Manage_No_Event():
+        message = 'Manage_Dynamic_Event:' \
+                  ' no variable defining instruction.'
+        return JsonResponse({'__error__': message})
 
     @staticmethod
-    def Zdarzenie_Nieuprawniony():
-        komunikat = 'Próba nieautoryzowanego dostępu.'
-        return JsonResponse({'__problem__': komunikat})
+    def Manage_Unauthorized():
+        message = 'Manage_Dynamic_Event:' \
+                  ' detecting unauthorized access.'
+        return JsonResponse({'__error__': message})
 
-    def Zdarzenie_Index(self):
-        Sprawdz_Sesje(self.request)
+    def Manage_Index(self):
+        Check_Session(self.request)
         return render(self.request, 'index.html', {})
 
-    def Sprawdz_Czy_Zalogowany(self):
-        if self.wymagaj_logowania:
-            if self.request.session['uzytkownik_zalogowany']:
+    def Check_Authorization(self):
+        if self.authorization:
+            if self.request.session['user_login']:
                 return True
 
         else: return True
         return False
 
-    def Zarzadzaj(self):
+    def Manage(self):
 
         if self.request.method == 'POST':
-            if self.Sprawdz_Czy_Zalogowany():
+            if self.Check_Authorization():
 
-                if '__esencja__' in self.request.POST:
-                    return self.Zdarzenie_Esencja()
+                if '__content__' in self.request.POST:
+                    return self.Manage_Content()
 
-                if '__formularz__' in self.request.POST:
-                    return self.Zdarzenie_Formularz()
+                if '__form__' in self.request.POST:
+                    return self.Manage_Form()
 
-                if '__istnieje__' in self.request.POST:
-                    return self.Zdarzenie_Istnieje()
+                if '__exist__' in self.request.POST:
+                    return self.Manage_Exist()
 
-                return self.Zdarzenie_Brak_Instrukcji()
-            return self.Zdarzenie_Nieuprawniony()
+                return self.Manage_No_Event()
+            return self.Manage_Unauthorized()
 
         if self.request.method == 'GET':
-            return self.Zdarzenie_Index()
+            return self.Manage_Index()
 
     def __init__(self, request,
-                 automatyczne_uruchamianie=True,
-                 wymagaj_logowania=False):
+                 autostart=True,
+                 authorization=False):
 
         self.request = request
-        self.wymagaj_logowania = wymagaj_logowania
-        self.kontent = {}
+        self.authorization = authorization
+        self.content = {}
 
-        if automatyczne_uruchamianie:
-            self.HTML = self.Zarzadzaj()
+        if autostart:
+            self.HTML = self.Manage()
 
     @staticmethod
     @abstractmethod
-    def Uruchom(request):
-        return Dynamiczna_Obsluga_Zdarzen(request)
+    def Launch(request):
+        return Manage_Dynamic_Event(request)
