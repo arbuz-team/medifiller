@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'session',
     'statement',
     'user',
+    'root',
     'sender',
     'product',
 ]

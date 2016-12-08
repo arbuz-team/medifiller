@@ -1,0 +1,42 @@
+<script>
+  Kontroler_Tresci.Wklej_Dane({
+    tytul : 'Logowanie'
+    , opis : 'Na tej stronie możesz się zalogować.'
+  });
+</script>
+
+
+<div class="BLOK1">
+
+  <div class="tlo abs_pelny"></div>
+
+  <div class="tresc">
+  
+    {% if request.session.uzytkownik_zalogowany %}
+      Witamy!<br />
+      <a href="/uzytkownik/wyloguj/">Wyloguj</a>.
+    {% else %}
+      Logowanie
+
+      <form method="post" action="">
+
+        {% for i in formularz %}
+
+          {{ i.errors }}
+          <div class="otoczka_pola">
+
+            {{ i }}
+
+          </div>
+
+        {% endfor %}
+
+        <div class="otoczka_pola"><button type="submit"> Zarejestruj </button></div>
+
+      </form>
+
+    {% endif %}
+  
+  </div>
+
+</div>

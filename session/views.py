@@ -9,6 +9,11 @@ class Session_Controller:
         if 'user_login' not in self.request.session:
             self.request.session['user_login'] = False
 
+    def Check_Session_Root(self):
+
+        if 'root_login' not in self.request.session:
+            self.request.session['root_login'] = False
+
     def Check_Session(self):
 
         methods = getmembers(self, predicate=ismethod)
