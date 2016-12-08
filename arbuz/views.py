@@ -7,7 +7,7 @@ from session.views import *
 class Manage_Dynamic_Event(metaclass=ABCMeta):
 
     def Render_HTML(self, file_name):
-        return render(self.request, file_name, self.kontent)
+        return render(self.request, file_name, self.content)
 
     @abstractmethod
     def Manage_Content(self):
