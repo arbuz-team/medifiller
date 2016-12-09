@@ -6,7 +6,7 @@
 
 export let EVENTS = {
   define: new Event('define'),
-  changed_adres: new Event('change_adres'),
+  change_url: new Event('change_url')
 };
 
 

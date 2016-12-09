@@ -2,34 +2,36 @@
  * Created by mrskull on 24.11.16.
  */
 
-import {Wydarzenia_Kontrolera_Tresci, EVENTS} from '../../tresc/js/wydarzenia/podstawa';
-import {Wydarzenia_Kontrolera_Menu} from '../../menu/js/wydarzenia/podstawa';
+import {Content_Controller_Events, EVENTS} from '../../tresc/js/wydarzenia/podstawa'
+import {Menu_Controller_Events} from '../../menu/js/wydarzenia/podstawa'
+import {Form_Controller_Events} from '../../formularze/js/wydarzenia/podstawa'
 
-export {Wydarzenia_Kontrolera_Tresci, EVENTS} from '../../tresc/js/wydarzenia/podstawa';
-export {Wydarzenia_Kontrolera_Menu} from '../../menu/js/wydarzenia/podstawa';
+export {Content_Controller_Events, EVENTS} from '../../tresc/js/wydarzenia/podstawa'
+export {Menu_Controller_Events} from '../../menu/js/wydarzenia/podstawa'
+export {Form_Controller_Events} from '../../formularze/js/wydarzenia/podstawa'
 
 /*---------------- Wydarzenia na stronie ----------------*/
 
-'use strict';
 
-let Wydarzenia_Tresci = new Wydarzenia_Kontrolera_Tresci()
-  , Wydarzenia_Menu = new Wydarzenia_Kontrolera_Menu();
+let content_controller_events = new Content_Controller_Events()
+  , menu_controller_events = new Menu_Controller_Events()
+  , form_controller_events = new Form_Controller_Events();
 
 
-let Definiuj = function()
+let define = function()
 {
   // Usuń wszystkie wydarzenia ze wszystkich elementów
   $( '*' ).off();
 
-  Wydarzenia_Tresci.Definiuj();
-  Wydarzenia_Menu.Definiuj();
-  // Wydarzenia_Kontrolera_Formularzy.Definiuj();
+  content_controller_events.define();
+  menu_controller_events.define();
+  form_controller_events.define();
 };
 
 
-export let Uruchom = function()
+export let start = function()
 {
-  Definiuj();
+  define();
 
-  window.addEventListener('define', Definiuj, false);
+  window.addEventListener('define', define, false);
 };

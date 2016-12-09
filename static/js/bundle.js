@@ -73,7 +73,7 @@
 	
 	var _wydarzenia = __webpack_require__(7);
 	
-	var Kontroler_Strony = _interopRequireWildcard(_wydarzenia);
+	var page_controller = _interopRequireWildcard(_wydarzenia);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -81,7 +81,7 @@
 	 * Created by mrskull on 24.11.16.
 	 */
 	
-	Kontroler_Strony.Uruchom();
+	page_controller.start();
 	
 	// import './autosize-master/dist/autosize';
 
@@ -102,34 +102,34 @@
 	  return new dziecko();
 	}*/
 	
-	Function.prototype.Dodaj_Metode = function (nazwa, funkcja) {
-	  this.prototype[nazwa] = funkcja;
+	Function.prototype.add_method = function (name, callback) {
+	  this.prototype[name] = callback;
 	  return this;
 	};
 	
-	$.prototype.Dodaj_Dane = function (nazwa, wartosc) {
-	  $(this).attr('data-' + nazwa, wartosc);
-	  $(this).data(nazwa, wartosc);
+	$.prototype.add_data = function (name, value) {
+	  $(this).attr('data-' + name, value);
+	  $(this).data(name, value);
 	  return this;
 	};
 	
-	$.prototype.Usun_Dane = function (nazwa) {
-	  $(this).removeAttr('data-' + nazwa);
-	  $(this).removeData(nazwa);
+	$.prototype.delete_data = function (name) {
+	  $(this).removeAttr('data-' + name);
+	  $(this).removeData(name);
 	  return this;
 	};
 	
-	Array.prototype.Usun_Puste = function () {
-	  var tablica_adresu = [];
+	Array.prototype.delete_empty = function () {
+	  var url_array = [];
 	
 	  for (var j = 0, i = 0; this.length > i; i++) {
 	    if (this[i]) {
-	      tablica_adresu[j] = this[i];
+	      url_array[j] = this[i];
 	      j++;
 	    }
 	  }
 	
-	  return tablica_adresu;
+	  return url_array;
 	};
 	
 	/*
@@ -149,14 +149,14 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Uruchom = exports.Wydarzenia_Kontrolera_Menu = exports.EVENTS = exports.Wydarzenia_Kontrolera_Tresci = undefined;
+	exports.start = exports.Form_Controller_Events = exports.Menu_Controller_Events = exports.EVENTS = exports.Content_Controller_Events = undefined;
 	
 	var _podstawa = __webpack_require__(8);
 	
-	Object.defineProperty(exports, 'Wydarzenia_Kontrolera_Tresci', {
+	Object.defineProperty(exports, 'Content_Controller_Events', {
 	  enumerable: true,
 	  get: function get() {
-	    return _podstawa.Wydarzenia_Kontrolera_Tresci;
+	    return _podstawa.Content_Controller_Events;
 	  }
 	});
 	Object.defineProperty(exports, 'EVENTS', {
@@ -168,57 +168,61 @@
 	
 	var _podstawa2 = __webpack_require__(12);
 	
-	Object.defineProperty(exports, 'Wydarzenia_Kontrolera_Menu', {
+	Object.defineProperty(exports, 'Menu_Controller_Events', {
 	  enumerable: true,
 	  get: function get() {
-	    return _podstawa2.Wydarzenia_Kontrolera_Menu;
+	    return _podstawa2.Menu_Controller_Events;
+	  }
+	});
+	
+	var _podstawa3 = __webpack_require__(14);
+	
+	Object.defineProperty(exports, 'Form_Controller_Events', {
+	  enumerable: true,
+	  get: function get() {
+	    return _podstawa3.Form_Controller_Events;
 	  }
 	});
 	
 	
 	/*---------------- Wydarzenia na stronie ----------------*/
 	
-	'use strict';
+	var content_controller_events = new _podstawa.Content_Controller_Events(),
+	    menu_controller_events = new _podstawa2.Menu_Controller_Events(),
+	    form_controller_events = new _podstawa3.Form_Controller_Events();
 	
-	var Wydarzenia_Tresci = new _podstawa.Wydarzenia_Kontrolera_Tresci(),
-	    Wydarzenia_Menu = new _podstawa2.Wydarzenia_Kontrolera_Menu();
-	
-	var Definiuj = function Definiuj() {
+	var define = function define() {
 	  // Usuń wszystkie wydarzenia ze wszystkich elementów
 	  $('*').off();
 	
-	  Wydarzenia_Tresci.Definiuj();
-	  Wydarzenia_Menu.Definiuj();
-	  // Wydarzenia_Kontrolera_Formularzy.Definiuj();
+	  content_controller_events.define();
+	  menu_controller_events.define();
+	  form_controller_events.define();
 	};
 	
-	var Uruchom = exports.Uruchom = function Uruchom() {
-	  Definiuj();
+	var start = exports.start = function start() {
+	  define();
 	
-	  window.addEventListener('define', Definiuj, false);
+	  window.addEventListener('define', define, false);
 	};
 
 /***/ },
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Created by mrskull on 24.11.16.
-	 */
-	
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.EVENTS = exports.Kontroler_Danych = undefined;
+	exports.EVENTS = exports.data_controller = undefined;
 	
 	var _podstawa = __webpack_require__(9);
 	
-	Object.defineProperty(exports, 'Kontroler_Danych', {
+	Object.defineProperty(exports, 'data_controller', {
 	  enumerable: true,
 	  get: function get() {
-	    return _podstawa.Kontroler_Danych;
+	    return _podstawa.data_controller;
 	  }
 	});
 	Object.defineProperty(exports, 'EVENTS', {
@@ -227,39 +231,46 @@
 	    return _podstawa.EVENTS;
 	  }
 	});
-	exports.Wydarzenia_Kontrolera_Tresci = Wydarzenia_Kontrolera_Tresci;
+	exports.Content_Controller_Events = Content_Controller_Events;
 	
 	
-	var Tresc = new _podstawa.Kontroler_Tresci();
+	var content_controller = new _podstawa.Content_Controller();
 	
 	/*---------------- Wydarzenia Kontrolera Treści ----------------*/
 	
-	function Wydarzenia_Kontrolera_Tresci() {
+	function Content_Controller_Events() {
 	
-	  this.Definiuj = function () {
-	    $('a').click(Zmien_Adres);
+	  this.define = function () {
+	    $('a').click(start_link);
 	
-	    window.addEventListener("popstate", Cofnij_Adres);
+	    window.addEventListener('popstate', back_url);
+	
+	    window.addEventListener('change_url', change_url, false);
 	
 	    window.onload = function () {
-	      Tresc.Uruchom();
+	      content_controller.start();
 	    };
 	  };
 	
 	  //////////////////////////////////////////////////////////
 	
-	  var Zmien_Adres = function Zmien_Adres(event) {
+	  var start_link = function start_link(event) {
 	    event.preventDefault();
-	    var adres = $(this).attr('href');
+	    var url = $(this).attr('href');
 	
 	    if (event.which === 1) {
-	      if (_podstawa.Kontroler_Danych.Daj('sciezka') !== adres) Tresc.Zmien_Tresc(adres);
+	      if (_podstawa.data_controller.get('path') !== url) content_controller.change_content(url);
 	    }
 	  };
 	
-	  var Cofnij_Adres = function Cofnij_Adres() {
+	  var change_url = function change_url() {
+	    var url = _podstawa.data_controller.Generuj_Adres_Do_Zmiany();
+	    content_controller.change_content(url);
+	  };
+	
+	  var back_url = function back_url() {
 	    event.preventDefault();
-	    Tresc.Uruchom();
+	    content_controller.start();
 	  };
 	}
 
@@ -272,14 +283,14 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.EVENTS = exports.Kontroler_Danych = undefined;
+	exports.EVENTS = exports.data_controller = undefined;
 	
 	var _struktura = __webpack_require__(10);
 	
-	Object.defineProperty(exports, 'Kontroler_Danych', {
+	Object.defineProperty(exports, 'data_controller', {
 	  enumerable: true,
 	  get: function get() {
-	    return _struktura.Kontroler_Danych;
+	    return _struktura.data_controller;
 	  }
 	});
 	Object.defineProperty(exports, 'EVENTS', {
@@ -288,90 +299,108 @@
 	    return _struktura.EVENTS;
 	  }
 	});
-	exports.Kontroler_Tresci = Kontroler_Tresci;
+	exports.Content_Controller = Content_Controller;
 	
 	
 	/*---------------- Kontroler Treści ----------------*/
 	
-	function Kontroler_Tresci() {
+	function Content_Controller() {
 	
-	  //// PUBLICZNA ----
-	  this.Uruchom = function () {
-	    this.Zmien_Tresc();
+	  ///////////////////////////////////////////////////////////////////////////
+	
+	  var _refresh_data = function _refresh_data() {
+	    _struktura.data_controller.reset();
 	  };
 	
-	  var _Odswiez_Dane = function _Odswiez_Dane() {
-	    _struktura.Kontroler_Danych.Resetuj();
-	  };
-	
-	  var _Odswiez_Wydarzenia = function _Odswiez_Wydarzenia() {
+	  var _refresh_events = function _refresh_events() {
 	    window.dispatchEvent(_struktura.EVENTS.define);
 	  };
 	
-	  var _Ukryj_Tresc = function _Ukryj_Tresc() {
-	    $(_struktura.Kontroler_Danych.Daj('kontener') + ' > div > .tresc').animate({ opacity: 0.4 }, 100, _Pobierz_Tresc);
-	  };
+	  var _show_content = function _show_content(response, status, error) {
+	    var $kontener = $(_struktura.data_controller.get('container') + ' > div > .tresc');
 	
-	  var _Pokaz_Tresc = function _Pokaz_Tresc(response, status) {
-	    if (status !== 'success') {
-	      _Pobierz_Tresc('/komunikat/404/');
-	      return false;
+	    if (error) {
+	      if (status !== 'success') {
+	        $kontener.html('An error has occurred while connecting to server. Please, refresh website.');
+	      }
+	    } else {
+	      if (status !== 'success') {
+	        _download_content('/statementa/404/', 'yes');
+	        return false;
+	      }
 	    }
 	
-	    _Odswiez_Wydarzenia();
+	    _refresh_events();
 	
-	    $(_struktura.Kontroler_Danych.Daj('kontener') + ' > div > .tresc').animate({ opacity: 1 }, 150, function () {
-	      window.dispatchEvent(_struktura.EVENTS.changed_adres);
-	      Wklej_Dane(window.APP);
+	    $kontener.animate({ opacity: 1 }, 150, function () {
+	      if (window.APP) paste_data(window.APP);
 	    });
 	  };
 	
-	  var _Pobierz_Tresc = function _Pobierz_Tresc(adres) {
-	    adres = _Przetworz_Adres(adres);
-	    var Dane_post = _struktura.Kontroler_Danych.Daj('Dane_post');
+	  var _download_content = function _download_content(url, error) {
+	    url = _preprocess_url(url);
+	    var post_data = _struktura.data_controller.get('post_data');
 	
-	    $(_struktura.Kontroler_Danych.Daj('kontener')).load(adres, Dane_post, _Pokaz_Tresc).Dodaj_Dane('url', adres);
+	    $(_struktura.data_controller.get('container')).load(url, post_data, function (response, status) {
+	      if (error) _show_content(response, status, error);else _show_content(response, status);
+	    }).add_data('url', url);
 	  };
 	
-	  /////////////////////////////////////////////////////////
-	
-	  var _Przetworz_Adres = function _Przetworz_Adres(adres) {
-	    if (!adres) adres = _struktura.Kontroler_Danych.Daj('sciezka');
-	
-	    return adres;
+	  var _hide_content = function _hide_content() {
+	    $(_struktura.data_controller.get('container') + ' > div > .tresc').animate({ opacity: 0.4 }, 100, function () {
+	      _download_content();
+	    });
 	  };
 	
-	  var _Wygeneruj_Dane_Post = function _Wygeneruj_Dane_Post(Obiekt) {
-	    if (!Obiekt) Obiekt = {};
+	  ///////////////////////////////////////////////////////////////////////////
 	
-	    Obiekt.__esencja__ = 'true';
-	    Obiekt.csrfmiddlewaretoken = _struktura.Kontroler_Danych.Daj('csrf_token');
+	  this.change_content = function (url, post_data) {
+	    url = _preprocess_url(url);
+	    console.log(url);
+	    _change_url(url);
+	    _refresh_data();
 	
-	    return Obiekt;
+	    post_data = _prepare_post_data(post_data);
+	    _struktura.data_controller.change('post_data', post_data);
+	
+	    _hide_content();
 	  };
 	
-	  //// PUBLICZNA ----
-	  var Wklej_Dane = function Wklej_Dane(Obiekt) {
-	    _struktura.Kontroler_Danych.Zmien_Wiele(Obiekt);
+	  this.start = function () {
+	    _refresh_data();
 	
-	    $('title').html(_struktura.Kontroler_Danych.Daj('tytul'));
-	    $('meta[ name="description" ]').attr('content', _struktura.Kontroler_Danych.Daj('opis'));
+	    var post_data = _prepare_post_data();
+	    _struktura.data_controller.change('post_data', post_data);
+	
+	    _hide_content();
 	  };
 	
-	  var _Zmien_Adres = function _Zmien_Adres(adres) {
-	    history.pushState('', adres, adres);
+	  ///////////////////////////////////////////////////////////////////////////
+	
+	  var _preprocess_url = function _preprocess_url(url) {
+	    if (!url) url = _struktura.data_controller.get('path');
+	
+	    return url;
 	  };
 	
-	  //// PUBLICZNA ----
-	  this.Zmien_Tresc = function (adres, Dane_post) {
-	    adres = _Przetworz_Adres(adres);
-	    _Zmien_Adres(adres);
-	    _Odswiez_Dane();
+	  var _prepare_post_data = function _prepare_post_data(object) {
+	    if (!object) object = {};
 	
-	    Dane_post = _Wygeneruj_Dane_Post(Dane_post);
-	    _struktura.Kontroler_Danych.Zmien('Dane_post', Dane_post);
+	    object.__content__ = 'true';
+	    object.csrfmiddlewaretoken = _struktura.data_controller.get('csrf_token');
 	
-	    _Ukryj_Tresc();
+	    return object;
+	  };
+	
+	  var paste_data = function paste_data(object) {
+	    _struktura.data_controller.change_much(object);
+	
+	    $('title').html(_struktura.data_controller.get('title'));
+	    $('meta[ name="description" ]').attr('content', _struktura.data_controller.get('description'));
+	  };
+	
+	  var _change_url = function _change_url(url) {
+	    history.pushState('', url, url);
 	  };
 	}
 
@@ -384,7 +413,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Kontroler_Danych = exports.EVENTS = undefined;
+	exports.data_controller = exports.EVENTS = undefined;
 	
 	var _kreator_wydarzen = __webpack_require__(11);
 	
@@ -398,57 +427,71 @@
 	
 	/*---------------- Struktura Dane_Strony ----------------*/
 	
-	var Kontroler_Danych = function Kontroler_Danych() {
-	  var Prywatne_Dane = void 0,
-	      Publiczne_Dane = void 0;
+	var Data_Controller = function Data_Controller() {
+	  var private_data = void 0,
+	      public_data = void 0;
 	
-	  this.Resetuj = function () {
-	    Prywatne_Dane = {
-	      protokol: location.protocol,
-	      nazwa_hosta: location.hostname,
-	      pelna_nazwa_hosta: location.host,
+	  this.reset = function () {
+	    private_data = {
+	      protocol: location.protocol,
+	      host_name: location.hostname,
+	      all_hosta_name: location.host,
 	      port: location.port,
 	      domena: location.protocol + '://' + location.host,
-	      sciezka: location.pathname,
-	      pelny_adres: location.href,
-	      historia: [],
+	      path: location.pathname,
+	      all_url: location.href,
+	      history: [],
 	      csrf_token: $('input[ name=csrfmiddlewaretoken ]').val() || ''
 	    };
 	
-	    Publiczne_Dane = {
-	      nazwa_strony: 'Arbuz Team',
-	      tytul: 'Ładuję... - Arbuz Team',
-	      opis: 'To jest opis',
-	      tresc_komunikatu: 'Pusty komunikat.',
-	      kontener: '#TRESC',
-	      Dane_post: {}
+	    public_data = {
+	      url_to_change: '',
+	      page_name: 'Spasungate',
+	      title: 'Loading... - Spasungate',
+	      description: 'This page is shop, which is ownership Spasungate.',
+	      statement_content: 'Empty statement.',
+	      container: '#TRESC',
+	      post_data: {}
 	    };
 	  };
 	
-	  this.Resetuj();
+	  this.reset();
 	
-	  this.Daj = function (nazwa) {
-	    if (typeof Prywatne_Dane[nazwa] !== 'undefined') return Prywatne_Dane[nazwa];else if (typeof Publiczne_Dane[nazwa] !== 'undefined') return Publiczne_Dane[nazwa];else console.warn('Błędne wywołanie! Nie ma takiej zmiennej.' + nazwa);
+	  this.get = function (name) {
+	    if (typeof private_data[name] !== 'undefined') return private_data[name];else if (typeof public_data[name] !== 'undefined') return public_data[name];else {
+	      console.warn('Wrong call! Veriable with this name doesn\'t exist.');
+	      console.trace();
+	    }
 	  };
 	
-	  this.Zmien = function (nazwa, wartosc) {
-	    if (typeof Publiczne_Dane[nazwa] !== 'undefined') Publiczne_Dane[nazwa] = wartosc;else if (typeof Prywatne_Dane[nazwa] !== 'undefined') console.warn('Brak dostępu! Zmienna prywatna.');else console.warn('Błędne wywołanie! Nie ma takiej zmiennej. Z');
+	  this.change = function (name, wartosc) {
+	    if (typeof public_data[name] !== 'undefined') public_data[name] = wartosc;else if (typeof private_data[name] !== 'undefined') {
+	      console.warn('Wrong call! Veriable with this name doesn\'t exist.');
+	      console.trace();
+	    } else {
+	      console.warn('Wrong call! Veriable with this name doesn\'t exist.');
+	      console.trace();
+	    }
 	  };
 	
-	  this.Zmien_Wiele = function (Obiekt) {
-	    for (var nazwa in Obiekt) {
-	      if (Obiekt.hasOwnProperty(nazwa)) {
-	        if (nazwa === 'tytul') {
-	          if (Obiekt[nazwa] !== '') this.Zmien(nazwa, Obiekt[nazwa] + ' - ' + Publiczne_Dane.nazwa_strony);else this.Zmien(nazwa, Publiczne_Dane.nazwa_strony);
-	        } else this.Zmien(nazwa, Obiekt[nazwa]);
+	  this.change_much = function (object) {
+	    for (var name in object) {
+	      if (object.hasOwnProperty(name)) {
+	        if (name === 'title') {
+	          if (object[name] !== '') this.change(name, object[name] + ' - ' + public_data.page_name);else this.change(name, public_data.page_name);
+	        } else this.change(name, object[name]);
 	      }
 	    }
 	  };
+	
+	  this.Generuj_Adres_Do_Zmiany = function () {
+	    if (public_data.url_to_change !== '') return public_data.url_to_change;else return private_data.domena;
+	  };
 	};
 	
-	var Dane = new Kontroler_Danych();
+	var data = new Data_Controller();
 	
-	exports.Kontroler_Danych = Dane;
+	exports.data_controller = data;
 
 /***/ },
 /* 11 */
@@ -464,7 +507,7 @@
 	});
 	var EVENTS = exports.EVENTS = {
 	  define: new Event('define'),
-	  changed_adres: new Event('change_adres')
+	  change_url: new Event('change_url')
 	};
 
 /***/ },
@@ -476,14 +519,14 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.EVENTS = exports.Kontroler_Danych = undefined;
+	exports.EVENTS = exports.data_controller = undefined;
 	
 	var _podstawa = __webpack_require__(13);
 	
-	Object.defineProperty(exports, 'Kontroler_Danych', {
+	Object.defineProperty(exports, 'data_controller', {
 	  enumerable: true,
 	  get: function get() {
-	    return _podstawa.Kontroler_Danych;
+	    return _podstawa.data_controller;
 	  }
 	});
 	Object.defineProperty(exports, 'EVENTS', {
@@ -492,42 +535,40 @@
 	    return _podstawa.EVENTS;
 	  }
 	});
-	exports.Wydarzenia_Kontrolera_Menu = Wydarzenia_Kontrolera_Menu;
+	exports.Menu_Controller_Events = Menu_Controller_Events;
 	
 	
 	/*---------------- Wydarzenia kontrolera Menu ----------------*/
 	
-	"use strict";
+	function Menu_Controller_Events() {
 	
-	function Wydarzenia_Kontrolera_Menu() {
+	  this.define = function () {
+	    $('.guzik_menu').click(this.show_hide_menu);
+	    $('#MENU .nakladka').click(this.show_hide_menu);
+	    $('#MENU > .menu a').click(this.show_hide_menu);
 	
-	  this.Definiuj = function () {
-	    $('.guzik_menu').click(this.Pokaz_Ukryj_Menu);
-	    $('#MENU .nakladka').click(this.Pokaz_Ukryj_Menu);
-	    $('#MENU > .menu a').click(this.Pokaz_Ukryj_Menu);
-	
-	    window.addEventListener('changed_adres', _podstawa.Kontroler_Menu.Zaznacz_Zakladke(), false);
+	    window.addEventListener('changed_url', _podstawa.menu_controller.select_overlap(), false);
 	  };
 	
-	  var Czy_Istnieje_Element = function Czy_Istnieje_Element(id) {
-	    if ($(id).length) return true;
+	  var is_exist = function is_exist(element) {
+	    if ($(element).length) return true;
 	
 	    return false;
 	  };
 	
-	  var Sprawdz_Atrybut_Data = function Sprawdz_Atrybut_Data(element, nazwa, wartosc) {
-	    if (Czy_Istnieje_Element(element)) {
-	      return $(element).data(nazwa) === wartosc;
+	  var check_atribute_data = function check_atribute_data(element, name, value) {
+	    if (is_exist(element)) {
+	      return $(element).data(name) === value;
 	    }
 	
 	    return false;
 	  };
 	
-	  this.Pokaz_Ukryj_Menu = function (event) {
+	  this.show_hide_menu = function (event) {
 	    if (event.which === 1) {
 	      var menu = '#MENU';
 	
-	      if (Sprawdz_Atrybut_Data(menu, 'wysuniete', 'nie')) _podstawa.Kontroler_Menu.Pokaz();else if (Sprawdz_Atrybut_Data(menu, 'wysuniete', 'tak')) _podstawa.Kontroler_Menu.Ukryj();
+	      if (check_atribute_data(menu, 'wysuniete', 'nie')) _podstawa.menu_controller.show();else if (check_atribute_data(menu, 'wysuniete', 'tak')) _podstawa.menu_controller.hide();
 	
 	      return false;
 	    }
@@ -543,14 +584,14 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Kontroler_Menu = exports.EVENTS = exports.Kontroler_Danych = undefined;
+	exports.menu_controller = exports.EVENTS = exports.data_controller = undefined;
 	
 	var _struktura = __webpack_require__(10);
 	
-	Object.defineProperty(exports, 'Kontroler_Danych', {
+	Object.defineProperty(exports, 'data_controller', {
 	  enumerable: true,
 	  get: function get() {
-	    return _struktura.Kontroler_Danych;
+	    return _struktura.data_controller;
 	  }
 	});
 	Object.defineProperty(exports, 'EVENTS', {
@@ -563,38 +604,499 @@
 	
 	/*---------------- Kontroler Menu ----------------*/
 	
-	function Kontroler_Menu() {
+	function Menu_Controller() {
 	  var $menu = $('#MENU'),
-	      $nakladka = $menu.children('.nakladka');
+	      $overlay = $menu.children('.overlay');
 	
-	  this.Pokaz = function () {
+	  this.show = function () {
 	    $menu.animate({ 'right': '0px' }, 200);
-	    $nakladka.show();
-	    $menu.Dodaj_Dane('wysuniete', 'tak');
+	    $overlay.show();
+	    $menu.add_data('wysuniete', 'tak');
 	  };
 	
-	  this.Ukryj = function () {
-	    $nakladka.hide();
+	  this.hide = function () {
+	    $overlay.hide();
 	
 	    $menu.animate({ right: '-250px' }, 200);
-	    $menu.Dodaj_Dane('wysuniete', 'nie');
+	    $menu.add_data('wysuniete', 'nie');
 	  };
 	
-	  this.Zaznacz_Zakladke = function () {
-	    var adres = _struktura.Kontroler_Danych.Daj('pelny_adres'),
-	        $zakladka = $('.menu > li > a');
+	  this.select_overlap = function () {
+	    var url = _struktura.data_controller.get('all_url'),
+	        $overlap = $('.menu > li > a');
 	
-	    $zakladka.removeClass('wybrany');
+	    $overlap.removeClass('wybrany');
 	
-	    for (var i = 0; $zakladka.length > i; ++i) {
-	      if ($zakladka[i].href === adres) $zakladka.eq(i).addClass('wybrany');
+	    for (var i = 0; $overlap.length > i; ++i) {
+	      if ($overlap[i].href === url) $overlap.eq(i).addClass('wybrany');
 	    }
 	  };
 	}
 	
-	var Menu = new Kontroler_Menu();
+	var menu_controller = new Menu_Controller();
 	
-	exports.Kontroler_Menu = Menu;
+	exports.menu_controller = menu_controller;
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Form_Controller_Events = Form_Controller_Events;
+	
+	var _podstawa = __webpack_require__(15);
+	
+	var _views = __webpack_require__(16);
+	
+	/*    JavaScript    */
+	
+	var form_controller = new _podstawa.Form_Controller();
+	
+	function Form_Controller_Events() {
+	
+	  this.define = function () {
+	    $('form').submit(prepare_form_to_send);
+	
+	    (0, _views.define)();
+	  };
+	
+	  //////////////////////////////////////////////////////////
+	
+	  var get_form_fields = function get_form_fields(element) {
+	    var $fields = $(element).serializeArray(),
+	        form_object = {};
+	
+	    $.each($fields, function (i, field) {
+	      form_object[field.name] = field.value;
+	    });
+	
+	    return form_object;
+	  };
+	
+	  var prepare_form_to_send = function prepare_form_to_send(event) {
+	    event.preventDefault();
+	
+	    var url = $(this).attr('action'),
+	        form_object = get_form_fields(this);
+	
+	    if (typeof url === 'undefined' || url === '') url = _podstawa.data_controller.get('path');
+	
+	    form_controller.Przeslij(url, form_object);
+	  };
+	}
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.EVENTS = exports.data_controller = undefined;
+	
+	var _struktura = __webpack_require__(10);
+	
+	Object.defineProperty(exports, 'data_controller', {
+	  enumerable: true,
+	  get: function get() {
+	    return _struktura.data_controller;
+	  }
+	});
+	Object.defineProperty(exports, 'EVENTS', {
+	  enumerable: true,
+	  get: function get() {
+	    return _struktura.EVENTS;
+	  }
+	});
+	exports.Form_Controller = Form_Controller;
+	function Form_Controller() {
+	
+	  var _prepare_post_data = function _prepare_post_data(object) {
+	    if (!object) return {};
+	
+	    object.__form__ = 'true';
+	    object.csrfmiddlewaretoken = _struktura.data_controller.get('csrf_token');
+	
+	    return object;
+	  };
+	
+	  var _preprocess_url = function _preprocess_url(url) {
+	    if (!url) url = _struktura.data_controller.get('path');
+	
+	    return url;
+	  };
+	
+	  var _show_statement = function _show_statement(data) {
+	    if (data.__url__) {
+	      _struktura.data_controller.Zmien('url_do_zmiany', data.__url__);
+	      window.dispatchEvent(_struktura.EVENTS.changed_url);
+	    }
+	  };
+	
+	  this.send = function (url, data_post) {
+	    url = _preprocess_url(url);
+	    data_post = _prepare_post_data(data_post);
+	
+	    // console.log('url: '+ url +' |||| data:')
+	    // console.log(data_post)
+	
+	    $.post(url, data_post).done(_show_statement);
+	  };
+	
+	  /////////////////   SPRAWDZANIE PÓL   ///////////////////
+	
+	  // let $form
+	  //   , field_name
+	  //   , field_value;
+	  //
+	  //
+	  // let _preprocess_post_data = function( object )
+	  // {
+	  //   if( !object )
+	  //     object = {};
+	  //
+	  //   object.__istnieje__ = 'true';
+	  //   object.csrfmiddlewaretoken = data_controller.get( 'csrf_token' );
+	  //
+	  //   return object;
+	  // };
+	}
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.define = undefined;
+	
+	var _checkers = __webpack_require__(17);
+	
+	var Validators = {};
+	
+	var define = exports.define = function define() {
+	
+	  $('form[data-test=yes]').each(function () {
+	    var name = $(this).data('form');
+	    Validators[name] = new _checkers.Constructor_Validator(name);
+	  });
+	
+	  $('.test').keyup(function () {
+	    validate(this);
+	  });
+	
+	  $('.show_password').change(function () {
+	    if ($(this).is(':checked')) show_password(this);else hide_password(this);
+	  });
+	};
+	
+	//////////////////////////////   VIEWS VALIDATOR   ///////////////////////////////////
+	
+	var validate = function validate(field) {
+	  var form_name = $(field).parents('form').data('form'),
+	      Validator = Validators[form_name],
+	      name = $(field).attr('name'),
+	      value = $(field).val(),
+	      results = Validator.field(name, value),
+	      test_form = Validator.check_list_field();
+	
+	  show_status(field, results);
+	  change_status_blockade(form_name, test_form);
+	};
+	
+	var show_status = function show_status(field, result) {
+	  if (result) {
+	    var $field = $(field),
+	        $status = $field.parent().find('.status');
+	
+	    var bool = result.bool,
+	        message = result.message,
+	        correction = result.correction;
+	
+	    if ($field.val() != correction && correction != '' && correction) $field.val(correction);
+	
+	    if (bool) {
+	      $field.removeClass('form_error');
+	      $status.html(message).fadeOut(200);
+	    } else {
+	      $field.addClass('form_error');
+	      $status.html(message).fadeIn(200);
+	    }
+	  }
+	};
+	
+	var change_status_blockade = function change_status_blockade(form_name, test_form) {
+	  if (typeof test_form === 'boolean') {
+	    var $form = $('form[data-form=' + form_name + ']'),
+	        $button = $form.find('*[type=submit]');
+	
+	    if (test_form) $button.prop('disabled', false);else $button.prop('disabled', true);
+	  }
+	};
+	
+	//////////////////////////////   VIEWS - SHOW/HIDE PASSWORD   ///////////////////////////////////
+	
+	var show_password = function show_password(checker) {
+	  var $checker = $(checker),
+	      $field = $checker.parent().find('input[name=password]');
+	  $field.attr('type', 'text');
+	};
+	
+	var hide_password = function hide_password(checker) {
+	  var $checker = $(checker),
+	      $field = $checker.parent().find('input[name=password]');
+	  $field.attr('type', 'password');
+	};
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.Constructor_Validator = undefined;
+	
+	var _validator = __webpack_require__(18);
+	
+	Object.defineProperty(exports, 'Constructor_Validator', {
+		enumerable: true,
+		get: function get() {
+			return _validator.Constructor_Validator;
+		}
+	});
+	
+	
+	/////////////////////////////  Prepare checkers  ///////////////////////////////
+	
+	_validator.Constructor_Validator.prototype.types = {};
+	
+	var create_checker = function create_checker(name, callback) {
+		_validator.Constructor_Validator.prototype.types[name] = {
+			validate: callback
+		};
+	};
+	
+	var Types_Veriable = function Types_Veriable() {
+		var array_result = [];
+		this.bool = true;
+		this.message = '';
+		this.correction = '';
+	
+		this.add = function () {
+			var object = {
+				bool: this.bool,
+				message: this.message,
+				correction: this.correction
+			};
+	
+			array_result.push(object);
+	
+			return true;
+		};
+	
+		this.get_all = function () {
+			return array_result;
+		};
+	};
+	
+	/////////////////////////////  Checkers  ///////////////////////////////
+	
+	create_checker('email', function (value) {
+		var Results = new Types_Veriable(),
+		    re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	
+		Results.bool = re.test(value);
+		if (!Results.bool) Results.message = 'It\'s not email.';
+	
+		Results.add();
+	
+		return Results.get_all();
+	});
+	
+	create_checker('password', function (value) {
+		var Results = new Types_Veriable();
+	
+		Results.bool = value.length >= 8;
+		if (!Results.bool) Results.message = 'The password is too short.';
+	
+		Results.add();
+	
+		return Results.get_all();
+	});
+	
+	create_checker('proper_name', function (value) {
+		var Results = new Types_Veriable();
+	
+		value = value.charAt(0).toUpperCase() + value.slice(1);
+	
+		Results.bool = value.length >= 3;
+		if (!Results.bool) Results.message = 'The name is too short.';
+	
+		Results.correction = value;
+		Results.add();
+	
+		return Results.get_all();
+	});
+	
+	create_checker('length', function (value) {
+		var Results = new Types_Veriable();
+	
+		Results.bool = value.length >= 3;
+		if (!Results.bool) Results.message = 'It\'s too short.';
+	
+		Results.add();
+	
+		return Results.get_all();
+	});
+	
+	create_checker('number', function (value) {
+		var Results = new Types_Veriable();
+	
+		value = value.replace(/\s/g, '');
+	
+		Results.bool = value.length === 9;
+		if (!Results.bool) Results.message = 'Number length is 9 digits.';
+		Results.add();
+	
+		Results.bool = !isNaN(value);
+		if (!Results.bool) Results.message = 'The number must consist of digits.';
+		Results.add();
+	
+		return Results.get_all();
+	});
+	
+	////////////////////////////////////////////
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.Constructor_Validator = undefined;
+	
+	var _config = __webpack_require__(19);
+	
+	var Constructor_Validator = exports.Constructor_Validator = function Constructor_Validator(form_name) {
+		this.types = Constructor_Validator.prototype.types;
+		this.config = _config.list_configs[form_name];
+	
+		////////////////////////////////////////////////////
+	
+		var prepare_list_fields = function prepare_list_fields(fields_of_form) {
+			var obj = {},
+			    i = void 0,
+			    length = fields_of_form.length;
+			for (i = 0; i < length; ++i) {
+				obj[fields_of_form[i].name] = false;
+			}return obj;
+		};
+	
+		this.change_field = function (name, value) {
+			if (typeof fields_of_form[name] === 'boolean') {
+				if (typeof value === 'boolean') fields_of_form[name] = value;else throw {
+					name: 'Validation Error',
+					message: 'Invalid value in the field ' + value + '.'
+				};
+			} else throw {
+				name: 'Validation Error',
+				message: 'No manual for the field ' + name + '.'
+			};
+		};
+	
+		this.check_list_field = function () {
+			for (var key in fields_of_form) {
+				if (fields_of_form.hasOwnProperty(key)) if (fields_of_form[key] === false) return false;
+			}return true;
+		};
+	
+		var fields_of_form = prepare_list_fields($('form[data-form=' + form_name + ']').serializeArray());
+	
+		////////////////////////////////////////////////////
+	
+		this.hasErrors = function () {
+			return this.messages.length !== 0;
+		};
+	
+		this.field = function (name, value) {
+			var last_result = false,
+			    results = [];
+	
+			if (name && value) {
+				var msg = void 0,
+				    type = void 0,
+				    checker = void 0;
+	
+				this.messages = [];
+	
+				type = this.config[name];
+				checker = this.types[type];
+	
+				if (!checker) throw {
+					name: 'Validation Error',
+					message: 'No manual for the key ' + name + '.'
+				};
+	
+				results = checker.validate(value);
+			} else if (value != '') {
+				var Results = new this.Types_veriable();
+				Results.bool = false;
+				Results.message = "Incorrect value " + name;
+				Results.add();
+				results = Results.get_all();
+			} else results = false;
+			//////////////////////////////////
+	
+			if (results) {
+				for (var i = 0; i < results.length; ++i) {
+					if (results[i].bool === false) last_result = results[i];
+				}if (!last_result) last_result = results[results.length - 1];
+	
+				this.change_field(name, last_result.bool);
+			} else this.change_field(name, false);
+	
+			return last_result;
+		};
+	};
+
+/***/ },
+/* 19 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	var list_configs = exports.list_configs = {};
+	
+	list_configs.register = {
+		email: 'email',
+		password: 'password',
+		first_name: 'proper_name',
+		last_name: 'proper_name',
+		mobile_phone: 'number'
+	};
+	
+	list_configs.login = {
+		email_or_username: 'length',
+		password: 'password'
+	};
 
 /***/ }
 /******/ ]);

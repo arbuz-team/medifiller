@@ -1,8 +1,8 @@
 <script>
-  Kontroler_Tresci.Wklej_Dane({
-    tytul : 'Logowanie'
-    , opis : 'Na tej stronie możesz się zalogować.'
-  });
+  window.APP = {
+    title : 'Login'
+    , description : 'Here you can login.'
+  };
 </script>
 
 
@@ -12,26 +12,29 @@
 
   <div class="tresc">
   
-    {% if request.session.uzytkownik_zalogowany %}
+    {% if request.session.user_login %}
       Witamy!<br />
       <a href="/uzytkownik/wyloguj/">Wyloguj</a>.
     {% else %}
       Logowanie
 
-      <form method="post" action="">
+      <form method="post" action="" data-form="login" data-test="yes">
 
-        {% for i in formularz %}
+        {% for i in form %}
 
           {{ i.errors }}
-          <div class="otoczka_pola">
+          <div class="otoczka_pola" class="test">
 
             {{ i }}
+            <div class="status"></div>
 
           </div>
 
         {% endfor %}
 
-        <div class="otoczka_pola"><button type="submit"> Zarejestruj </button></div>
+        <div class="otoczka_pola">
+          <button type="submit"> Zarejestruj </button>
+        </div>
 
       </form>
 

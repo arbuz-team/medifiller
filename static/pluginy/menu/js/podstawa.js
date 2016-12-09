@@ -2,50 +2,50 @@
  * Created by mrskull on 24.11.16.
  */
 
-import {Kontroler_Danych, EVENTS} from '../../arbuz/js/dane_strony/struktura';
-export {Kontroler_Danych, EVENTS} from '../../arbuz/js/dane_strony/struktura';
+import {data_controller, EVENTS} from '../../arbuz/js/dane_strony/struktura';
+export {data_controller, EVENTS} from '../../arbuz/js/dane_strony/struktura';
 
 /*---------------- Kontroler Menu ----------------*/
 
-function Kontroler_Menu()
+function Menu_Controller()
 {
   let $menu = $( '#MENU' )
-    , $nakladka = $menu.children( '.nakladka' );
+    , $overlay = $menu.children( '.overlay' );
 
 
-  this.Pokaz = function()
+  this.show = function()
   {
     $menu.animate( { 'right' : '0px' }, 200 );
-      $nakladka.show();
-    $menu.Dodaj_Dane( 'wysuniete', 'tak' );
+      $overlay.show();
+    $menu.add_data( 'wysuniete', 'tak' );
   };
 
 
-  this.Ukryj = function()
+  this.hide = function()
   {
-    $nakladka.hide();
+    $overlay.hide();
 
     $menu.animate( { right : '-250px' }, 200 );
-    $menu.Dodaj_Dane( 'wysuniete', 'nie' );
+    $menu.add_data( 'wysuniete', 'nie' );
   };
 
 
-  this.Zaznacz_Zakladke = function()
+  this.select_overlap = function()
   {
-    let adres = Kontroler_Danych.Daj( 'pelny_adres' )
-      , $zakladka = $( '.menu > li > a' )
+    let url = data_controller.get( 'all_url' )
+      , $overlap = $( '.menu > li > a' )
 
-    $zakladka.removeClass( 'wybrany' );
+    $overlap.removeClass( 'wybrany' );
 
-    for( let i = 0; $zakladka.length > i; ++i )
-      if( $zakladka[ i ].href === adres )
-        $zakladka.eq( i ).addClass( 'wybrany' );
+    for( let i = 0; $overlap.length > i; ++i )
+      if( $overlap[ i ].href === url )
+        $overlap.eq( i ).addClass( 'wybrany' );
   };
 
 }
 
-let Menu = new Kontroler_Menu();
+let menu_controller = new Menu_Controller();
 
-export {Menu as Kontroler_Menu};
+export {menu_controller};
  
 

@@ -11,43 +11,43 @@
   return new dziecko();
 }*/
 
-Function.prototype.Dodaj_Metode = function( nazwa, funkcja )
+Function.prototype.add_method = function( name, callback )
 {
-  this.prototype[ nazwa ] = funkcja;
+  this.prototype[ name ] = callback;
   return this;
 };
 
 
-$.prototype.Dodaj_Dane = function( nazwa, wartosc )
+$.prototype.add_data = function( name, value )
 {
-  $( this ).attr( 'data-'+ nazwa, wartosc );
-  $( this ).data( nazwa, wartosc );
+  $( this ).attr( 'data-'+ name, value );
+  $( this ).data( name, value );
   return this;
 };
 
 
-$.prototype.Usun_Dane = function( nazwa )
+$.prototype.delete_data = function( name )
 {
-  $( this ).removeAttr( 'data-'+ nazwa );
-  $( this ).removeData( nazwa );
+  $( this ).removeAttr( 'data-'+ name );
+  $( this ).removeData( name );
   return this;
 };
 
 
-Array.prototype.Usun_Puste = function()
+Array.prototype.delete_empty = function()
 {
-  var tablica_adresu = [];
+  let url_array = [];
   
-  for( var j = 0, i = 0; this.length > i; i++ )
+  for( let j = 0, i = 0; this.length > i; i++ )
   {
     if( this[ i ] )
     {
-      tablica_adresu[ j ] = this[ i ];
+      url_array[ j ] = this[ i ];
       j++;
     }
   }
 
-  return tablica_adresu;
+  return url_array;
 };
 
 

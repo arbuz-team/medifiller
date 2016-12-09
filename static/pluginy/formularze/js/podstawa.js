@@ -1,128 +1,75 @@
 /*    JavaScript    */
 
-
-/*---------------- Kontroler Formularzy ----------------*/
-
-"use strict"; 
+import {data_controller, EVENTS} from '../../arbuz/js/dane_strony/struktura';
+export {data_controller, EVENTS} from '../../arbuz/js/dane_strony/struktura';
 
 
-var Kontroler_Formularzy = (function()
+export function Form_Controller()
 {
 
-  var _Wygeneruj_Dane_Post = function( Obiekt )
+  let _prepare_post_data = function( object )
   {
-    if( !Obiekt )
+    if( !object )
       return {};
 
-    Obiekt.__formularz__ = 'true';
-    Obiekt.csrfmiddlewaretoken = Kontroler_Danych.Daj( 'csrf_token' );
+    object.__form__ = 'true';
+    object.csrfmiddlewaretoken = data_controller.get( 'csrf_token' );
 
-    return Obiekt;
-  }
+    return object;
+  };
 
 
-  var _Przetworz_Adres = function( adres )
+  let _preprocess_url = function( url )
   {
-    if( !adres )
-      adres = Kontroler_Danych.Daj( 'sciezka' );
+    if( !url )
+      url = data_controller.get( 'path' );
 
-    return adres;
-  }
+    return url;
+  };
 
 
-  var _Wyswietl_Komunikat = function( Dane )
+  let _show_statement = function( data )
   {
-    Kontroler_Tresci.Zmien_Tresc( Dane.__url__ );
-  }
+    if(data.__url__)
+    {
+      data_controller.Zmien( 'url_do_zmiany', data.__url__ );
+      window.dispatchEvent( EVENTS.changed_url );
+    }
+  };
 
 
-  var Przeslij = function( adres, Dane_post )
+  this.send = function( url, data_post )
   {
-    adres = _Przetworz_Adres( adres );
-    Dane_post = _Wygeneruj_Dane_Post( Dane_post );
+    url = _preprocess_url( url );
+    data_post = _prepare_post_data( data_post );
 
-    $.post( adres, Dane_post )
-      .done( _Wyswietl_Komunikat )
-  }
+    // console.log('url: '+ url +' |||| data:')
+    // console.log(data_post)
+
+    $.post( url, data_post )
+      .done( _show_statement );
+  };
 
 
 /////////////////   SPRAWDZANIE PÓL   ///////////////////
 
-  var $formularz
-    , nazwa_pola
-    , wartosc_pola;
+  // let $form
+  //   , field_name
+  //   , field_value;
+  //
+  //
+  // let _preprocess_post_data = function( object )
+  // {
+  //   if( !object )
+  //     object = {};
+  //
+  //   object.__istnieje__ = 'true';
+  //   object.csrfmiddlewaretoken = data_controller.get( 'csrf_token' );
+  //
+  //   return object;
+  // };
 
-  var _Przetworz_Adres = function()
-  {
-    return Kontroler_Danych.Daj( 'sciezka'  );
-  }
-
-  var _Przetworz_Dane_Post = function( Obiekt )
-  {
-    if( !Obiekt )
-      var Obiekt = {};
-
-    Obiekt.__istnieje__ = 'true';
-    Obiekt.csrfmiddlewaretoken = Kontroler_Danych.Daj( 'csrf_token' );
-
-    return Obiekt;
-  }
-
-
-  var _Wykorzystaj_Dane = function( Dane ) 
-  {
-    var $komunikat = $formularz.find( '[name="'+ nazwa_pola +'"]' ).parent().children( '.komunikat' )
-      , $submit = $formularz.find( '*[type="submit"]' );
-
-    if( Dane.__istnieje__ === 'true' )
-    {
-      $komunikat
-        .removeClass( 'dobrze' )
-        .removeClass( 'zle' )
-        .addClass( 'zle' )
-      $submit.prop('disabled', true);
-    }
-    else
-    {
-      $komunikat
-        .removeClass( 'dobrze' )
-        .removeClass( 'zle' )
-        .addClass( 'dobrze' )
-      $submit.prop('disabled', false);
-    }
-  }
-
-
-  var Sprawdz_Pole = function( pole, nazwa, wartosc )
-  {
-    var adres = _Przetworz_Adres()
-      , Dane_post = {};
-
-    $formularz = $( pole ).parents('form:first');
-    nazwa_pola = nazwa;
-    wartosc_pola = wartosc;
-
-    Dane_post[ nazwa ] = wartosc;
-    Dane_post = _Przetworz_Dane_Post( Dane_post );
-
-    $.post( adres, Dane_post )
-      .done( _Wykorzystaj_Dane )
-      .fail(function( jqxhr, textStatus, error ) {
-        var err = textStatus + ", " + error;
-        Komunikat.Log( "Request Failed: ", err );
-      })
-  }
-
-//------------------------------------------
-
-  var udostepnione = 
-  {
-    Przeslij : Przeslij
-    , Sprawdz_Pole : Sprawdz_Pole
-  }
-
-  return udostepnione;
-})();
+}
 
 
 

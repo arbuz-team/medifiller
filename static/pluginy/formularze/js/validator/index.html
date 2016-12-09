@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+	<head>
+
+		<title> Testing the dynamic form </title>
+
+		<meta name="viewport" content="minimum-scale=0" />
+		<meta name="viewport" content="user-scalable=yes" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<meta name="description" content="This is test dynamic form" />
+
+		<link rel="stylesheet" href="style.css" />
+
+	</head>
+
+	<body>
+	
+	<div>
+	
+		<div class="title"> Testing the dynamic form </div>
+	
+		<div class="block">
+			<form method="post" data-form="register" data-test="yes">
+				<div>
+					<input name="email" type="text" class="test" placeholder="Email" />
+					<div class="status"></div>
+				</div>
+				
+				<div>
+					<input name="password" type="password" class="test" placeholder="Password" autocomplete="off" />
+					<input type="checkbox" class="show_password" />
+					<span>Show password</span>
+					<div class="status"></div>
+				</div>
+				
+				<div>
+					<input name="first_name" type="text" class="test" placeholder="First name" />
+					<div class="status"></div>
+				</div>
+				
+				<div>
+					<input name="last_name" type="text" class="test" placeholder="Last name" />
+					<div class="status"></div>
+				</div>
+				
+				<div>
+					<input name="mobile_phone" type="text" class="test" placeholder="Mobile phone" />
+					<div class="status"></div>
+				</div>
+				
+				<div>
+					By Registering, you agree that you've read and accepted our User Agreement, you're at least 18 years old, and you consent to our Privacy Notice and receiving marketing communications from us.
+				</div>
+				
+				<div>
+					<button type="submit" disabled> Register </button>
+					<div class="status"></div>
+				</div>
+			</form>
+		</div>
+		
+		
+		<div method="post" class="block">
+			<form data-form="login" data-test="yes">
+				<div>
+					<input name="email_or_username" placeholder="Email or username" class="test" type="text" />
+				</div>
+				
+				<div>
+					<input name="password" placeholder="Password" class="test" type="password" />
+				</div>
+				
+				<div>
+					<button type="submit" disabled> Sign in </button>
+					<div class="status"></div>
+				</div>
+				
+				<div>
+					<input name="stay_signed_in" type="checkbox" /> Stay signed in
+				</div>
+				
+				<div>
+					<a href=""> Forgot your password? </a>
+				</div>
+			</form>
+		</div>
+		
+	</div>
+
+	<script src="jquery-3.1.1.min.js"></script>
+	
+	<script src="config.js"> </script>
+	<script src="validator.js"> </script>
+	<script src="checkers.js"> </script>
+	<script src="main.js"> </script>
+
+	</body>
+	
+</html>

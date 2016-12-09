@@ -2,57 +2,56 @@
  * Created by mrskull on 24.11.16.
  */
 
-import {Kontroler_Menu, Kontroler_Danych, EVENTS} from '../podstawa';
-export {Kontroler_Danych, EVENTS} from '../podstawa';
+import {menu_controller, data_controller, EVENTS} from '../podstawa';
+export {data_controller, EVENTS} from '../podstawa';
 
 /*---------------- Wydarzenia kontrolera Menu ----------------*/
 
-"use strict";
 
-export function Wydarzenia_Kontrolera_Menu()
+export function Menu_Controller_Events()
 {
   
-  this.Definiuj = function()
+  this.define = function()
   {
-    $( '.guzik_menu' ).click( this.Pokaz_Ukryj_Menu );
-    $( '#MENU .nakladka' ).click( this.Pokaz_Ukryj_Menu );
-    $( '#MENU > .menu a' ).click( this.Pokaz_Ukryj_Menu );
+    $( '.guzik_menu' ).click( this.show_hide_menu );
+    $( '#MENU .nakladka' ).click( this.show_hide_menu );
+    $( '#MENU > .menu a' ).click( this.show_hide_menu );
 
-    window.addEventListener('changed_adres', Kontroler_Menu.Zaznacz_Zakladke(), false);
+    window.addEventListener('changed_url', menu_controller.select_overlap(), false);
   };
 
 
-  let Czy_Istnieje_Element = function( id )
+  let is_exist = function( element )
   {
-    if( $( id ).length )
+    if( $( element ).length )
       return true;
 
     return false;
   };
 
 
-  let Sprawdz_Atrybut_Data = function( element, nazwa, wartosc )
+  let check_atribute_data = function( element, name, value )
   {
-    if( Czy_Istnieje_Element( element ) )
+    if( is_exist( element ) )
     {
-      return $( element ).data( nazwa ) === wartosc;
+      return $( element ).data( name ) === value;
     }
 
     return false;
   };
 
 
-  this.Pokaz_Ukryj_Menu = function( event )
+  this.show_hide_menu = function( event )
   {
     if( event.which === 1 )
     {
       let menu = '#MENU';
 
-      if( Sprawdz_Atrybut_Data( menu, 'wysuniete', 'nie' ) )
-        Kontroler_Menu.Pokaz();
+      if( check_atribute_data( menu, 'wysuniete', 'nie' ) )
+        menu_controller.show();
 
-      else if( Sprawdz_Atrybut_Data( menu, 'wysuniete', 'tak' ) )
-        Kontroler_Menu.Ukryj();
+      else if( check_atribute_data( menu, 'wysuniete', 'tak' ) )
+        menu_controller.hide();
 
       return false;
     }

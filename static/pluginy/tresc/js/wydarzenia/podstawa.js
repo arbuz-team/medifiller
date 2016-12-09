@@ -2,50 +2,56 @@
  * Created by mrskull on 24.11.16.
  */
 
-"use strict";
 
+import {Content_Controller, data_controller, EVENTS} from '../podstawa';
+export {data_controller, EVENTS} from '../podstawa';
 
-import {Kontroler_Tresci, Kontroler_Danych, EVENTS} from '../podstawa';
-export {Kontroler_Danych, EVENTS} from '../podstawa';
-
-let Tresc = new Kontroler_Tresci();
+let content_controller = new Content_Controller();
 
 
 /*---------------- Wydarzenia Kontrolera Treści ----------------*/
 
-export function Wydarzenia_Kontrolera_Tresci()
+export function Content_Controller_Events()
 {
   
-  this.Definiuj = function()
+  this.define = function()
   {
-    $( 'a' ).click( Zmien_Adres );
+    $( 'a' ).click( start_link );
 
-    window.addEventListener( "popstate", Cofnij_Adres );
+    window.addEventListener('popstate', back_url );
+
+    window.addEventListener('change_url', change_url, false);
 
     window.onload = () => {
-      Tresc.Uruchom();
+      content_controller.start();
     };
   };
 
 //////////////////////////////////////////////////////////
 
-  let Zmien_Adres = function( event )
+  let start_link = function( event )
   {
     event.preventDefault();
-    let adres = $( this ).attr( 'href' );
+    let url = $( this ).attr( 'href' );
 
     if( event.which === 1 )
     {
-      if( Kontroler_Danych.Daj( 'sciezka' ) !== adres )
-        Tresc.Zmien_Tresc( adres );
+      if( data_controller.get( 'path' ) !== url )
+        content_controller.change_content( url );
     }
   };
 
+  let change_url = function()
+  {
+    let url = data_controller.Generuj_Adres_Do_Zmiany();
+    content_controller.change_content( url );
+  };
 
-  let Cofnij_Adres = function()
+
+  let back_url = function()
   {
     event.preventDefault();
-    Tresc.Uruchom();
+    content_controller.start();
   }
 
 }

@@ -2,117 +2,143 @@
  * Created by mrskull on 24.11.16.
  */
 
-import {Kontroler_Danych, EVENTS} from '../../arbuz/js/dane_strony/struktura';
-export {Kontroler_Danych, EVENTS} from '../../arbuz/js/dane_strony/struktura';
+import {data_controller, EVENTS} from '../../arbuz/js/dane_strony/struktura';
+export {data_controller, EVENTS} from '../../arbuz/js/dane_strony/struktura';
 
 /*---------------- Kontroler Treści ----------------*/
 
-export function Kontroler_Tresci()
+export function Content_Controller()
 {
 
-//// PUBLICZNA ----
-  this.Uruchom = function()
+
+///////////////////////////////////////////////////////////////////////////
+
+  let _refresh_data = function()
   {
-    this.Zmien_Tresc();
+    data_controller.reset();
   };
 
 
-  let _Odswiez_Dane = function()
-  {
-    Kontroler_Danych.Resetuj();
-  };
-
-
-  let _Odswiez_Wydarzenia = function()
+  let _refresh_events = function()
   {
     window.dispatchEvent( EVENTS.define );
   };
 
 
-  let _Ukryj_Tresc = function()
+  let _show_content = function( response, status, error )
   {
-    $( Kontroler_Danych.Daj( 'kontener' ) +' > div > .tresc' )
-    .animate( { opacity: 0.4 }, 100, _Pobierz_Tresc );
-  };
+    let $kontener = $( data_controller.get( 'container' ) + ' > div > .tresc' );
 
-
-  let _Pokaz_Tresc = function( response, status )
-  {
-    if( status !== 'success' )
+    if(error)
     {
-      _Pobierz_Tresc( '/komunikat/404/' );
-      return false;
+      if( status !== 'success' )
+      {
+        $kontener.html( 'An error has occurred while connecting to server. Please, refresh website.' )
+      }
+    }
+    else
+    {
+      if( status !== 'success' )
+      {
+        _download_content( '/statementa/404/', 'yes' );
+        return false;
+      }
     }
 
-    _Odswiez_Wydarzenia();
+    _refresh_events();
 
-    $( Kontroler_Danych.Daj( 'kontener' ) +' > div > .tresc' )
-    .animate( { opacity: 1 }, 150, () => {
-      window.dispatchEvent( EVENTS.changed_adres )
-      Wklej_Dane( window.APP );
+    $kontener.animate( { opacity: 1 }, 150, function(){
+      if(window.APP)
+        paste_data(window.APP);
     });
   };
 
 
-  let _Pobierz_Tresc = function( adres )
+  let _download_content = function( url, error )
   {
-    adres = _Przetworz_Adres( adres );
-    let Dane_post = Kontroler_Danych.Daj( 'Dane_post' );
+    url = _preprocess_url( url );
+    let post_data = data_controller.get( 'post_data' );
 
-    $( Kontroler_Danych.Daj( 'kontener' ) )
-      .load( adres, Dane_post, _Pokaz_Tresc )
-      .Dodaj_Dane( 'url', adres )
-  };
-
-  /////////////////////////////////////////////////////////
-
-  let _Przetworz_Adres = function( adres )
-  {
-    if( !adres )
-      adres = Kontroler_Danych.Daj( 'sciezka' );
-
-    return adres;
+    $( data_controller.get( 'container' ) )
+      .load( url, post_data, (response, status) => {
+        if(error)
+          _show_content(response, status, error);
+        else
+          _show_content(response, status);
+      })
+      .add_data( 'url', url )
   };
 
 
-  let _Wygeneruj_Dane_Post = function( Obiekt )
+  let _hide_content = function()
   {
-    if( !Obiekt )
-      Obiekt = {};
-
-    Obiekt.__esencja__ = 'true';
-    Obiekt.csrfmiddlewaretoken = Kontroler_Danych.Daj( 'csrf_token' );
-
-    return Obiekt;
+    $( data_controller.get( 'container' ) +' > div > .tresc' )
+      .animate( { opacity: 0.4 }, 100, () => {
+        _download_content();
+      });
   };
 
 
-//// PUBLICZNA ----
-  let Wklej_Dane = function( Obiekt )
-  {
-    Kontroler_Danych.Zmien_Wiele( Obiekt );
+///////////////////////////////////////////////////////////////////////////
 
-    $( 'title' ).html( Kontroler_Danych.Daj( 'tytul' ) );
-    $( 'meta[ name="description" ]' ).attr( 'content', Kontroler_Danych.Daj( 'opis' ) );
+  this.change_content = function( url, post_data )
+  {
+    url = _preprocess_url( url );
+    console.log(url);
+    _change_url( url );
+    _refresh_data();
+
+    post_data = _prepare_post_data( post_data );
+    data_controller.change( 'post_data', post_data );
+
+    _hide_content();
+  };
+
+  this.start = function()
+  {
+    _refresh_data();
+
+    let post_data = _prepare_post_data();
+    data_controller.change( 'post_data', post_data );
+
+    _hide_content();
+  };
+
+///////////////////////////////////////////////////////////////////////////
+
+  let _preprocess_url = function( url )
+  {
+    if( !url )
+      url = data_controller.get( 'path' );
+
+    return url;
   };
 
 
-  let _Zmien_Adres = function( adres )
+  let _prepare_post_data = function( object )
   {
-    history.pushState( '', adres, adres );
+    if( !object )
+      object = {};
+
+    object.__content__ = 'true';
+    object.csrfmiddlewaretoken = data_controller.get( 'csrf_token' );
+
+    return object;
   };
 
 
-//// PUBLICZNA ----
-  this.Zmien_Tresc = function( adres, Dane_post )
+  let paste_data = function( object )
   {
-    adres = _Przetworz_Adres( adres );
-    _Zmien_Adres( adres );
-    _Odswiez_Dane();
+    data_controller.change_much( object );
 
-    Dane_post = _Wygeneruj_Dane_Post( Dane_post );
-    Kontroler_Danych.Zmien( 'Dane_post', Dane_post );
-
-    _Ukryj_Tresc();
+    $( 'title' ).html( data_controller.get( 'title' ) );
+    $( 'meta[ name="description" ]' ).attr( 'content', data_controller.get( 'description' ) );
   };
+
+
+  let _change_url = function( url )
+  {
+    history.pushState( '', url, url );
+  };
+
 }

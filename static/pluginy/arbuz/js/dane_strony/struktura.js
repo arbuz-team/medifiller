@@ -7,80 +7,99 @@ export {EVENTS} from '../kreator_wydarzen';
 
 /*---------------- Struktura Dane_Strony ----------------*/
 
-let Kontroler_Danych = function()
+let Data_Controller = function()
 {
-  let Prywatne_Dane,
-      Publiczne_Dane;
+  let private_data,
+      public_data;
 
-  this.Resetuj = function()
+  this.reset = function()
   {
-    Prywatne_Dane = {
-      protokol : location.protocol,
-      nazwa_hosta : location.hostname,
-      pelna_nazwa_hosta : location.host,
+    private_data = {
+      protocol : location.protocol,
+      host_name : location.hostname,
+      all_hosta_name : location.host,
       port : location.port,
       domena : location.protocol +'://'+ location.host,
-      sciezka : location.pathname,
-      pelny_adres : location.href,
-      historia : [],
+      path : location.pathname,
+      all_url : location.href,
+      history : [],
       csrf_token : $( 'input[ name=csrfmiddlewaretoken ]').val() || '',
     };
 
-    Publiczne_Dane = {
-      nazwa_strony : 'Arbuz Team',
-      tytul : 'Ładuję... - Arbuz Team',
-      opis : 'To jest opis',
-      tresc_komunikatu : 'Pusty komunikat.',
-      kontener : '#TRESC',
-      Dane_post : {},
+    public_data = {
+      url_to_change : '',
+      page_name : 'Spasungate',
+      title : 'Loading... - Spasungate',
+      description : 'This page is shop, which is ownership Spasungate.',
+      statement_content : 'Empty statement.',
+      container : '#TRESC',
+      post_data : {},
     };
   };
 
-  this.Resetuj();
+  this.reset();
 
 
-  this.Daj = function( nazwa )
+  this.get = function( name )
   {
-    if( typeof  Prywatne_Dane[ nazwa ] !== 'undefined' )
-      return Prywatne_Dane[ nazwa ];
+    if( typeof  private_data[ name ] !== 'undefined' )
+      return private_data[ name ];
 
-    else if( typeof Publiczne_Dane[ nazwa ] !== 'undefined' )
-        return Publiczne_Dane[ nazwa ];
+    else if( typeof public_data[ name ] !== 'undefined' )
+        return public_data[ name ];
       else
-        console.warn( 'Błędne wywołanie! Nie ma takiej zmiennej.'+ nazwa );
-  };
-
-
-  this.Zmien = function( nazwa, wartosc )
-  {
-    if( typeof Publiczne_Dane[ nazwa ] !== 'undefined' )
-      Publiczne_Dane[ nazwa ] = wartosc;
-    else if( typeof Prywatne_Dane[ nazwa ] !== 'undefined' )
-      console.warn( 'Brak dostępu! Zmienna prywatna.' );
-    else
-      console.warn( 'Błędne wywołanie! Nie ma takiej zmiennej. Z' );
-  };
-
-
-  this.Zmien_Wiele = function( Obiekt )
-  {
-    for( let nazwa in Obiekt )
-      if( Obiekt.hasOwnProperty( nazwa ) )
       {
-        if( nazwa === 'tytul' )
+        console.warn( 'Wrong call! Veriable with this name doesn\'t exist.' );
+        console.trace();
+      }
+  };
+
+
+  this.change = function( name, wartosc )
+  {
+    if( typeof public_data[ name ] !== 'undefined' )
+      public_data[ name ] = wartosc;
+    else if( typeof private_data[ name ] !== 'undefined' )
+    {
+      console.warn( 'Wrong call! Veriable with this name doesn\'t exist.' );
+      console.trace();
+    }
+    else
+    {
+      console.warn( 'Wrong call! Veriable with this name doesn\'t exist.' );
+      console.trace();
+    }
+  };
+
+
+  this.change_much = function( object )
+  {
+    for( let name in object )
+      if( object.hasOwnProperty( name ) )
+      {
+        if( name === 'title' )
         {
-          if( Obiekt[ nazwa ] !== '' )
-            this.Zmien( nazwa, Obiekt[ nazwa ] +' - '+ Publiczne_Dane.nazwa_strony );
+          if( object[ name ] !== '' )
+            this.change( name, object[ name ] +' - '+ public_data.page_name );
           else
-            this.Zmien( nazwa, Publiczne_Dane.nazwa_strony );
+            this.change( name, public_data.page_name );
         }
         else
-          this.Zmien( nazwa, Obiekt[ nazwa ] );
+          this.change( name, object[ name ] );
       }
+  };
+
+
+  this.Generuj_Adres_Do_Zmiany = function()
+  {
+    if( public_data.url_to_change !== '' )
+      return public_data.url_to_change;
+    else
+      return private_data.domena;
   };
 
 };
 
-let Dane = new Kontroler_Danych();
+let data = new Data_Controller();
 
-export { Dane as Kontroler_Danych }
+export { data as data_controller }

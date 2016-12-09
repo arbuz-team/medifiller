@@ -1,73 +1,50 @@
 /*    JavaScript    */
 
+import {Form_Controller, data_controller, EVENTS} from '../podstawa'
+import {define} from '../validator/views'
 
-/*---------------- Wydarzenia Kontrolera formularzy ----------------*/
+let form_controller = new Form_Controller();
 
-"use strict"; 
-
-
-var Wydarzenia_Kontrolera_Formularzy = (function()
+export function Form_Controller_Events()
 {
-  
-  var Definiuj = function()
-  {
-    $( 'form' ).submit( Przygotuj_Formularz_Do_Wyslania );
 
-    $( '.sprawdz_pole > *' ).focusout( _Sprawdz_Pole );
-  }
+  this.define = function()
+  {
+    $( 'form' ).submit( prepare_form_to_send );
+
+    define();
+  };
 
 //////////////////////////////////////////////////////////
 
-  var Pobierz_Pola_Formularza = function( element )
+  let get_form_fields = function( element )
   {
-    var Pola = $( element ).serializeArray()
-      , Obiekt_formularza = {}
+    let $fields = $( element ).serializeArray()
+      , form_object = {};
 
-    $.each( Pola, function( i, pole )
+    $.each( $fields , function( i, field )
     {
-      Obiekt_formularza[ pole.name ] = pole.value;
+      form_object[ field.name ] = field.value;
     });
 
-    return Obiekt_formularza;
-  }
+    return form_object;
+  };
 
 
 
-  var Przygotuj_Formularz_Do_Wyslania = function( event )
+  let prepare_form_to_send = function( event )
   {
     event.preventDefault();
 
-    var adres = $( this ).attr( 'action' )
-      , Obiekt_formularza = Pobierz_Pola_Formularza( this );
+    let url = $( this ).attr( 'action' )
+      , form_object = get_form_fields( this );
 
-    if( typeof adres === undefined || adres === '' )
-      adres = Kontroler_Danych.Daj( 'sciezka' );
+    if( typeof url === 'undefined' || url === '' )
+      url = data_controller.get( 'path' );
 
-    Kontroler_Formularzy.Przeslij( adres, Obiekt_formularza );
-    
-    return false;
-  }
+    form_controller.Przeslij( url, form_object );
+  };
 
-//////////////////////////////////////////////////////////
-
-  var _Sprawdz_Pole = function( event )
-  {
-    var $this = $( this )
-      , nazwa = $this.attr( 'name' )
-      , wartosc = $this.val()
-
-    if( nazwa && wartosc )
-      Kontroler_Formularzy.Sprawdz_Pole( this, nazwa, wartosc )
-  }
-
-//------------------------------------------
-
-  var udostepnione = 
-  {
-    Definiuj : Definiuj
-  }
-
-  return udostepnione;
-})();
+}
  
 

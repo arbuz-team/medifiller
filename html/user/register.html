@@ -1,8 +1,8 @@
 <script>
-  Kontroler_Tresci.Wklej_Dane({
-    tytul : 'Rejestracja'
-    , opis : 'Na tej stronie znajduje się formularz rejestracyjny.'
-  });
+  window.APP = {
+    title : 'Register'
+    , description : 'Here you can register.'
+  };
 </script>
 
 
@@ -14,19 +14,18 @@
   
     Rejestracja
 
-    <form method="post" action="">
+    <form method="post" action="" data-test="yes">
 
-      {% for i in formularz %}
+      {% for i in form %}
 
         {{ i.errors }}
         {% if i.name == 'login' %}
-          <div class="otoczka_pola sprawdz_pole">
+          <div data-lp="" class="otoczka_pola sprawdz_pole">
 
             {{ i }}
 
-            <div class="komunikat"></div>
-
           </div>
+          <div class="status"></div>
         {% else %}
           <div class="otoczka_pola">
 
@@ -37,7 +36,7 @@
 
       {% endfor %}
 
-      <div class="otoczka_pola"><button disabled type="submit"> Zarejestruj </button></div>
+      <div class="otoczka_pola"><button disabled type="submit"> Register </button></div>
 
     </form>
   
