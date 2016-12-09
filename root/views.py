@@ -39,18 +39,3 @@ class Logout(Manage_Dynamic_Event):
     @staticmethod
     def Launch(request):
         return Logout(request).HTML
-
-
-
-class Create(Manage_Dynamic_Event):
-
-    def Manage_Content(self):
-        Root(username='arbuz', password='koperkowe7SUNGATE')
-
-        return_value = {}
-        return_value['__url__'] = '/statement/login_ok/'
-        return JsonResponse(return_value)
-
-    @staticmethod
-    def Launch(request):
-        return Create(request).HTML

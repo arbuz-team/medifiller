@@ -132,7 +132,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.zoho.com'
-EMAIL_HOST_PASSWORD = 'koperkowe7ASBHP'
-EMAIL_HOST_USER = 'asbhp@asbhp.pl'
+EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = ''
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
