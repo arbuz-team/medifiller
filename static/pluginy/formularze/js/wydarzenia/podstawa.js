@@ -1,7 +1,7 @@
 /*    JavaScript    */
 
 import {Form_Controller, data_controller, EVENTS} from '../podstawa'
-import {define} from '../validator/views'
+import * as validator from '../validator/views'
 
 let form_controller = new Form_Controller();
 
@@ -12,7 +12,7 @@ export function Form_Controller_Events()
   {
     $( 'form' ).submit( prepare_form_to_send );
 
-    define();
+    validator.define();
   };
 
 //////////////////////////////////////////////////////////
@@ -42,7 +42,7 @@ export function Form_Controller_Events()
     if( typeof url === 'undefined' || url === '' )
       url = data_controller.get( 'path' );
 
-    form_controller.Przeslij( url, form_object );
+    form_controller.send( url, form_object );
   };
 
 }

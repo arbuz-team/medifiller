@@ -43,7 +43,7 @@ export function Content_Controller_Events()
 
   let change_url = function()
   {
-    let url = data_controller.Generuj_Adres_Do_Zmiany();
+    let url = data_controller.prepare_url_to_change();
     content_controller.change_content( url );
   };
 

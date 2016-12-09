@@ -90,12 +90,12 @@ let Data_Controller = function()
   };
 
 
-  this.Generuj_Adres_Do_Zmiany = function()
+  this.prepare_url_to_change = function()
   {
     if( public_data.url_to_change !== '' )
       return public_data.url_to_change;
     else
-      return private_data.domena;
+      return '/';
   };
 
 };

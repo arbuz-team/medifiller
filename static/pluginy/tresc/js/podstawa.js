@@ -29,7 +29,7 @@ export function Content_Controller()
   {
     let $kontener = $( data_controller.get( 'container' ) + ' > div > .tresc' );
 
-    if(error)
+    if(error === 'yes')
     {
       if( status !== 'success' )
       {
@@ -40,7 +40,7 @@ export function Content_Controller()
     {
       if( status !== 'success' )
       {
-        _download_content( '/statementa/404/', 'yes' );
+        _download_content( '/statement/404/', 'yes' );
         return false;
       }
     }
@@ -84,7 +84,6 @@ export function Content_Controller()
   this.change_content = function( url, post_data )
   {
     url = _preprocess_url( url );
-    console.log(url);
     _change_url( url );
     _refresh_data();
 

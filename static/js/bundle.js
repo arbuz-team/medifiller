@@ -264,7 +264,7 @@
 	  };
 	
 	  var change_url = function change_url() {
-	    var url = _podstawa.data_controller.Generuj_Adres_Do_Zmiany();
+	    var url = _podstawa.data_controller.prepare_url_to_change();
 	    content_controller.change_content(url);
 	  };
 	
@@ -319,13 +319,13 @@
 	  var _show_content = function _show_content(response, status, error) {
 	    var $kontener = $(_struktura.data_controller.get('container') + ' > div > .tresc');
 	
-	    if (error) {
+	    if (error === 'yes') {
 	      if (status !== 'success') {
 	        $kontener.html('An error has occurred while connecting to server. Please, refresh website.');
 	      }
 	    } else {
 	      if (status !== 'success') {
-	        _download_content('/statementa/404/', 'yes');
+	        _download_content('/statement/404/', 'yes');
 	        return false;
 	      }
 	    }
@@ -356,7 +356,6 @@
 	
 	  this.change_content = function (url, post_data) {
 	    url = _preprocess_url(url);
-	    console.log(url);
 	    _change_url(url);
 	    _refresh_data();
 	
@@ -484,8 +483,8 @@
 	    }
 	  };
 	
-	  this.Generuj_Adres_Do_Zmiany = function () {
-	    if (public_data.url_to_change !== '') return public_data.url_to_change;else return private_data.domena;
+	  this.prepare_url_to_change = function () {
+	    if (public_data.url_to_change !== '') return public_data.url_to_change;else return '/';
 	  };
 	};
 	
@@ -652,6 +651,10 @@
 	
 	var _views = __webpack_require__(16);
 	
+	var validator = _interopRequireWildcard(_views);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
 	/*    JavaScript    */
 	
 	var form_controller = new _podstawa.Form_Controller();
@@ -661,7 +664,7 @@
 	  this.define = function () {
 	    $('form').submit(prepare_form_to_send);
 	
-	    (0, _views.define)();
+	    validator.define();
 	  };
 	
 	  //////////////////////////////////////////////////////////
@@ -685,7 +688,7 @@
 	
 	    if (typeof url === 'undefined' || url === '') url = _podstawa.data_controller.get('path');
 	
-	    form_controller.Przeslij(url, form_object);
+	    form_controller.send(url, form_object);
 	  };
 	}
 
@@ -734,17 +737,14 @@
 	
 	  var _show_statement = function _show_statement(data) {
 	    if (data.__url__) {
-	      _struktura.data_controller.Zmien('url_do_zmiany', data.__url__);
-	      window.dispatchEvent(_struktura.EVENTS.changed_url);
+	      _struktura.data_controller.change('url_to_change', data.__url__);
+	      window.dispatchEvent(_struktura.EVENTS.change_url);
 	    }
 	  };
 	
 	  this.send = function (url, data_post) {
 	    url = _preprocess_url(url);
 	    data_post = _prepare_post_data(data_post);
-	
-	    // console.log('url: '+ url +' |||| data:')
-	    // console.log(data_post)
 	
 	    $.post(url, data_post).done(_show_statement);
 	  };

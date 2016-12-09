@@ -32,8 +32,8 @@ export function Form_Controller()
   {
     if(data.__url__)
     {
-      data_controller.Zmien( 'url_do_zmiany', data.__url__ );
-      window.dispatchEvent( EVENTS.changed_url );
+      data_controller.change( 'url_to_change', data.__url__ );
+      window.dispatchEvent( EVENTS.change_url );
     }
   };
 
@@ -42,9 +42,6 @@ export function Form_Controller()
   {
     url = _preprocess_url( url );
     data_post = _prepare_post_data( data_post );
-
-    // console.log('url: '+ url +' |||| data:')
-    // console.log(data_post)
 
     $.post( url, data_post )
       .done( _show_statement );
