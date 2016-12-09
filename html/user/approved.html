@@ -1,0 +1,46 @@
+<script>
+  Kontroler_Tresci.Wklej_Dane({
+    tytul : 'Rejestracja'
+    , opis : 'Na tej stronie znajduje się formularz rejestracyjny.'
+  });
+</script>
+
+
+<div class="BLOK1">
+
+  <div class="tlo abs_pelny"></div>
+
+  <div class="tresc">
+  
+    Rejestracja
+
+    <form method="post" action="">
+
+      {% for i in formularz %}
+
+        {{ i.errors }}
+        {% if i.name == 'login' %}
+          <div class="otoczka_pola sprawdz_pole">
+
+            {{ i }}
+
+            <div class="komunikat"></div>
+
+          </div>
+        {% else %}
+          <div class="otoczka_pola">
+
+            {{ i }}
+
+          </div>
+        {% endif %}
+
+      {% endfor %}
+
+      <div class="otoczka_pola"><button disabled type="submit"> Zarejestruj </button></div>
+
+    </form>
+  
+  </div>
+
+</div>

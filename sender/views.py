@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
-from .forms import *
 from arbuz.views import *
 from django.core.mail import EmailMessage
 
 
-
-class Send_Email(Manage_Dynamic_Event):
+class Sender(Manage_Dynamic_Event):
 
     def Manage_Content(self):
         pass
 
     @staticmethod
-    def Send(title, content):
+    def Send_Email(title, content):
 
         email = EmailMessage\
         (
@@ -26,4 +24,4 @@ class Send_Email(Manage_Dynamic_Event):
 
     @staticmethod
     def Launch(request):
-        return Send_Email(request).HTML
+        return Sender(request).HTML
