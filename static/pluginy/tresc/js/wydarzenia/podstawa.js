@@ -3,15 +3,13 @@
  */
 
 
-import {Content_Controller, data_controller} from '../podstawa';
+import {content_controller, data_controller} from '../podstawa';
 export {data_controller} from '../podstawa';
-
-let content_controller = new Content_Controller();
 
 
 /*---------------- Wydarzenia Kontrolera Treści ----------------*/
 
-export function Content_Controller_Events()
+export let content_controller_events = new function Content_Controller_Events()
 {
   
   this.define = function()
@@ -73,5 +71,5 @@ export function Content_Controller_Events()
   };
 
 
-}
+};
  

@@ -149,50 +149,26 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.start = exports.Form_Controller_Events = exports.Menu_Controller_Events = exports.Content_Controller_Events = undefined;
+	exports.start = undefined;
 	
 	var _podstawa = __webpack_require__(8);
 	
-	Object.defineProperty(exports, 'Content_Controller_Events', {
-	  enumerable: true,
-	  get: function get() {
-	    return _podstawa.Content_Controller_Events;
-	  }
-	});
-	
 	var _podstawa2 = __webpack_require__(12);
-	
-	Object.defineProperty(exports, 'Menu_Controller_Events', {
-	  enumerable: true,
-	  get: function get() {
-	    return _podstawa2.Menu_Controller_Events;
-	  }
-	});
 	
 	var _podstawa3 = __webpack_require__(14);
 	
-	Object.defineProperty(exports, 'Form_Controller_Events', {
-	  enumerable: true,
-	  get: function get() {
-	    return _podstawa3.Form_Controller_Events;
-	  }
-	});
-	
-	
 	/*---------------- Wydarzenia na stronie ----------------*/
-	
-	var content_controller_events = new _podstawa.Content_Controller_Events(),
-	    menu_controller_events = new _podstawa2.Menu_Controller_Events(),
-	    form_controller_events = new _podstawa3.Form_Controller_Events();
 	
 	var define = function define() {
 	  // Usuń wszystkie wydarzenia ze wszystkich elementów
 	  $('*').off();
 	
-	  content_controller_events.define();
-	  menu_controller_events.define();
-	  form_controller_events.define();
-	};
+	  _podstawa.content_controller_events.define();
+	  _podstawa2.menu_controller_events.define();
+	  _podstawa3.form_controller_events.define();
+	}; /**
+	    * Created by mrskull on 24.11.16.
+	    */
 	
 	var start = exports.start = function start() {
 	  define();
@@ -209,7 +185,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.data_controller = undefined;
+	exports.content_controller_events = exports.data_controller = undefined;
 	
 	var _podstawa = __webpack_require__(9);
 	
@@ -219,14 +195,11 @@
 	    return _podstawa.data_controller;
 	  }
 	});
-	exports.Content_Controller_Events = Content_Controller_Events;
 	
-	
-	var content_controller = new _podstawa.Content_Controller();
 	
 	/*---------------- Wydarzenia Kontrolera Treści ----------------*/
 	
-	function Content_Controller_Events() {
+	var content_controller_events = exports.content_controller_events = new function Content_Controller_Events() {
 	
 	  this.define = function () {
 	    $('a').click(start_link);
@@ -239,7 +212,7 @@
 	
 	    //////////////////////////////////////////
 	    window.onload = function () {
-	      content_controller.start();
+	      _podstawa.content_controller.start();
 	    };
 	  };
 	
@@ -250,18 +223,18 @@
 	    var url = $(this).attr('href');
 	
 	    if (event.which === 1) {
-	      if (_podstawa.data_controller.get('path') !== url) content_controller.change_content(url);
+	      if (_podstawa.data_controller.get('path') !== url) _podstawa.content_controller.change_content(url);
 	    }
 	  };
 	
 	  var change_url = function change_url() {
 	    var url = _podstawa.data_controller.prepare_url_to_change();
-	    content_controller.change_content(url);
+	    _podstawa.content_controller.change_content(url);
 	  };
 	
 	  var back_url = function back_url() {
 	    event.preventDefault();
-	    content_controller.start();
+	    _podstawa.content_controller.start();
 	  };
 	
 	  var redirect = function redirect() {
@@ -270,10 +243,10 @@
 	    if (typeof APP !== 'undefined' && typeof APP.redirect !== 'undefined') url = APP.redirect;else url = '/';
 	
 	    setTimeout(function () {
-	      content_controller.change_content(url);
+	      _podstawa.content_controller.change_content(url);
 	    }, 2000);
 	  };
-	}
+	}();
 
 /***/ },
 /* 9 */
@@ -284,7 +257,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.data_controller = undefined;
+	exports.content_controller = exports.data_controller = undefined;
 	
 	var _struktura = __webpack_require__(10);
 	
@@ -294,12 +267,11 @@
 	    return _struktura.data_controller;
 	  }
 	});
-	exports.Content_Controller = Content_Controller;
 	
 	
 	/*---------------- Kontroler Treści ----------------*/
 	
-	function Content_Controller() {
+	var content_controller = exports.content_controller = new function Content_Controller() {
 	
 	  ///////////////////////////////////////////////////////////////////////////
 	
@@ -398,7 +370,7 @@
 	  var _change_url = function _change_url(url) {
 	    history.pushState('', url, url);
 	  };
-	}
+	}();
 
 /***/ },
 /* 10 */
@@ -415,7 +387,7 @@
 	
 	/*---------------- Struktura Dane_Strony ----------------*/
 	
-	var Data_Controller = function Data_Controller() {
+	var data_controller = exports.data_controller = new function Data_Controler() {
 	  var private_data = void 0,
 	      public_data = void 0;
 	
@@ -475,13 +447,9 @@
 	  this.prepare_url_to_change = function () {
 	    if (public_data.url_to_change !== '') return public_data.url_to_change;else return '/';
 	  };
-	}; /**
-	    * Created by mrskull on 24.11.16.
-	    */
-	
-	var data = new Data_Controller();
-	
-	exports.data_controller = data;
+	}(); /**
+	      * Created by mrskull on 24.11.16.
+	      */
 
 /***/ },
 /* 11 */
@@ -508,7 +476,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.data_controller = undefined;
+	exports.menu_controller_events = exports.data_controller = undefined;
 	
 	var _podstawa = __webpack_require__(13);
 	
@@ -518,12 +486,11 @@
 	    return _podstawa.data_controller;
 	  }
 	});
-	exports.Menu_Controller_Events = Menu_Controller_Events;
 	
 	
 	/*---------------- Wydarzenia kontrolera Menu ----------------*/
 	
-	function Menu_Controller_Events() {
+	var menu_controller_events = exports.menu_controller_events = new function Menu_Controller_Events() {
 	
 	  this.define = function () {
 	    $('.guzik_menu').click(this.show_hide_menu);
@@ -556,7 +523,7 @@
 	      return false;
 	    }
 	  };
-	}
+	}();
 
 /***/ },
 /* 13 */
@@ -581,7 +548,7 @@
 	
 	/*---------------- Kontroler Menu ----------------*/
 	
-	function Menu_Controller() {
+	var menu_controller = exports.menu_controller = new function Menu_Controller() {
 	  var $menu = $('#MENU'),
 	      $overlay = $menu.children('.overlay');
 	
@@ -608,11 +575,7 @@
 	      if ($overlap[i].href === url) $overlap.eq(i).addClass('wybrany');
 	    }
 	  };
-	}
-	
-	var menu_controller = new Menu_Controller();
-	
-	exports.menu_controller = menu_controller;
+	}();
 
 /***/ },
 /* 14 */
@@ -623,7 +586,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Form_Controller_Events = Form_Controller_Events;
+	exports.form_controller_events = undefined;
 	
 	var _podstawa = __webpack_require__(15);
 	
@@ -635,9 +598,7 @@
 	
 	/*    JavaScript    */
 	
-	var form_controller = new _podstawa.Form_Controller();
-	
-	function Form_Controller_Events() {
+	var form_controller_events = exports.form_controller_events = new function Form_Controller_Events() {
 	
 	  this.define = function () {
 	    $('form').submit(prepare_form_to_send);
@@ -666,9 +627,9 @@
 	
 	    if (typeof url === 'undefined' || url === '') url = _podstawa.data_controller.get('path');
 	
-	    form_controller.send(url, form_object);
+	    _podstawa.form_controller.send(url, form_object);
 	  };
-	}
+	}();
 
 /***/ },
 /* 15 */
@@ -679,7 +640,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.data_controller = undefined;
+	exports.form_controller = exports.data_controller = undefined;
 	
 	var _struktura = __webpack_require__(10);
 	
@@ -689,8 +650,10 @@
 	    return _struktura.data_controller;
 	  }
 	});
-	exports.Form_Controller = Form_Controller;
-	function Form_Controller() {
+	
+	var _podstawa = __webpack_require__(9);
+	
+	var form_controller = exports.form_controller = new function Form_Controller() {
 	
 	  var _prepare_post_data = function _prepare_post_data(object) {
 	    if (!object) return {};
@@ -707,18 +670,11 @@
 	    return url;
 	  };
 	
-	  var _show_statement = function _show_statement(data) {
-	    if (data.__url__) {
-	      _struktura.data_controller.change('url_to_change', data.__url__);
-	      window.dispatchEvent(window.EVENTS.change_url);
-	    }
-	  };
-	
 	  this.send = function (url, data_post) {
 	    url = _preprocess_url(url);
 	    data_post = _prepare_post_data(data_post);
 	
-	    $.post(url, data_post).done(_show_statement);
+	    _podstawa.content_controller.change_content(url, data_post);
 	  };
 	
 	  /////////////////   SPRAWDZANIE PÓL   ///////////////////
@@ -738,7 +694,7 @@
 	  //
 	  //   return object;
 	  // };
-	}
+	}();
 
 /***/ },
 /* 16 */

@@ -8,7 +8,7 @@ export {data_controller} from '../podstawa';
 /*---------------- Wydarzenia kontrolera Menu ----------------*/
 
 
-export function Menu_Controller_Events()
+export let menu_controller_events = new function Menu_Controller_Events()
 {
   
   this.define = function()
@@ -57,6 +57,6 @@ export function Menu_Controller_Events()
     }
   };
 
-}
+};
  
 

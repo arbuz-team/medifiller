@@ -7,7 +7,7 @@ export {data_controller} from '../../arbuz/js/dane_strony/struktura';
 
 /*---------------- Kontroler Treści ----------------*/
 
-export function Content_Controller()
+export let content_controller = new function Content_Controller()
 {
 
 
@@ -142,4 +142,4 @@ export function Content_Controller()
     history.pushState( '', url, url );
   };
 
-}
+};

@@ -6,7 +6,7 @@ import '../kreator_wydarzen';
 
 /*---------------- Struktura Dane_Strony ----------------*/
 
-let Data_Controller = function()
+export let data_controller = new function Data_Controler()
 {
   let private_data,
       public_data;
@@ -98,7 +98,3 @@ let Data_Controller = function()
   };
 
 };
-
-let data = new Data_Controller();
-
-export { data as data_controller }

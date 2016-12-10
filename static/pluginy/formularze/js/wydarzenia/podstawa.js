@@ -1,11 +1,10 @@
 /*    JavaScript    */
 
-import {Form_Controller, data_controller} from '../podstawa'
+import {form_controller, data_controller} from '../podstawa'
 import * as validator from '../validator/views'
 
-let form_controller = new Form_Controller();
 
-export function Form_Controller_Events()
+export let form_controller_events = new function Form_Controller_Events()
 {
 
   this.define = function()
@@ -45,6 +44,6 @@ export function Form_Controller_Events()
     form_controller.send( url, form_object );
   };
 
-}
+};
  
 

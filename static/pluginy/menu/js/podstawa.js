@@ -7,7 +7,7 @@ export {data_controller} from '../../arbuz/js/dane_strony/struktura';
 
 /*---------------- Kontroler Menu ----------------*/
 
-function Menu_Controller()
+export let menu_controller = new function Menu_Controller()
 {
   let $menu = $( '#MENU' )
     , $overlay = $menu.children( '.overlay' );
@@ -42,10 +42,6 @@ function Menu_Controller()
         $overlap.eq( i ).addClass( 'wybrany' );
   };
 
-}
-
-let menu_controller = new Menu_Controller();
-
-export {menu_controller};
+};
  
 
