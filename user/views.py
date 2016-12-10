@@ -15,7 +15,12 @@ class Login(Manage_Dynamic_Event):
             Form_Login(self.request.POST)
 
         if self.content['form'].is_valid():
+            email = self.content['form'].cleaned_data['email']
+
             self.request.session['user_login'] = True
+            self.request.session['user_email'] = email
+            self.request.session['user_username'] = \
+                User.objects.get(email=email).username
 
             self.content['form'] = None # message of correct
             return self.Render_HTML('user/login.html')
@@ -104,7 +109,8 @@ class Logout(Manage_Dynamic_Event):
 
     def Manage_Content(self):
         self.request.session['user_login'] = False
-        print('__content__' in self.request.POST)
+        self.request.session['user_id'] = 0
+        self.request.session['user_name'] = ''
         return self.Render_HTML('user/logout.html')
 
     @staticmethod

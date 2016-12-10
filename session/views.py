@@ -9,6 +9,12 @@ class Session_Controller:
         if 'user_login' not in self.request.session:
             self.request.session['user_login'] = False
 
+        if 'user_id' not in self.request.session:
+            self.request.session['user_id'] = 0
+
+        if 'user_name' not in self.request.session:
+            self.request.session['user_name'] = ''
+
     def Check_Session_Root(self):
 
         if 'root_login' not in self.request.session:

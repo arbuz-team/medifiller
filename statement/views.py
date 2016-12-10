@@ -1,18 +1,6 @@
 from arbuz.views import *
 
 
-class Statement(Manage_Dynamic_Event):
-
-    def Manage_Content(self):
-        self.content['message'] = 'Website manage statement.'
-        return self.Render_HTML('statement/statement.html')
-
-    @staticmethod
-    def Launch(request):
-        return Statement(request).HTML
-
-
-
 class Statement_404(Manage_Dynamic_Event):
 
     def Manage_Content(self):
@@ -26,26 +14,13 @@ class Statement_404(Manage_Dynamic_Event):
 
 
 
-class Statement_Register(Manage_Dynamic_Event):
+class Statement_500(Manage_Dynamic_Event):
 
     def Manage_Content(self):
-        self.content['title'] = 'Register'
-        self.content['message'] = 'User is correct registred.'
+        self.content['title'] = '500 internal server error'
+        self.content['message'] = '500: internal server error.'
         return self.Render_HTML('statement/statement.html')
 
     @staticmethod
     def Launch(request):
-        return Statement_Register(request).HTML
-
-
-
-class Statement_Login(Manage_Dynamic_Event):
-
-    def Manage_Content(self):
-        self.content['title'] = 'Login'
-        self.content['message'] = 'User is correct logged.'
-        return self.Render_HTML('statement/statement.html')
-
-    @staticmethod
-    def Launch(request):
-        return Statement_Login(request).HTML
+        return Statement_500(request).HTML
