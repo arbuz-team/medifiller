@@ -1,5 +1,5 @@
-from user.models import User
+from django.db import models
 
 
-class Root(User):
-    pass
+class Root(models.Model):
+    password = models.CharField(max_length=75)

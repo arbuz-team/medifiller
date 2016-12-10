@@ -4,8 +4,9 @@ from django.contrib.auth.hashers import make_password
 
 class User(models.Model):
 
-    username = models.CharField(max_length=50, primary_key=True)
-    password = models.CharField(max_length=100)
+    email = models.CharField(max_length=50, primary_key=True)
+    username = models.CharField(max_length=20)
+    password = models.CharField(max_length=75)
     approved = models.BooleanField(default=False)
 
     @staticmethod
@@ -14,6 +15,23 @@ class User(models.Model):
 
     def __str__(self):
         return self.username
+
+
+
+class User_Address(models.Model):
+
+    full_name = models.CharField(max_length=50)
+    address_line_1 = models.CharField(max_length=50)
+    address_line_2 = models.CharField(max_length=50)
+    city = models.CharField(max_length=50)
+    region = models.CharField(max_length=50)  # state/province/region
+    postcode = models.CharField(max_length=10)  # zip/postal code
+    country = models.CharField(max_length=20)
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.full_name
 
 
 

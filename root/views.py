@@ -5,14 +5,14 @@ from .forms import *
 class Login(Manage_Dynamic_Event):
 
     def Manage_Content(self):
-        self.content['form'] = Form_Login()
+        self.content['form'] = Form_Root_Login()
         return self.Render_HTML('root/login.html')
 
     def Manage_Form(self):
 
         return_value = {}
         self.content['form'] = \
-            Form_Login(self.request.POST)
+            Form_Root_Login(self.request.POST)
 
         if self.content['form'].is_valid():
             self.request.session['root_login'] = True

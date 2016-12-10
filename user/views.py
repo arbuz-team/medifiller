@@ -18,7 +18,7 @@ class Login(Manage_Dynamic_Event):
         if self.content['form'].is_valid():
             self.request.session['user_login'] = True
             return_value['__form__'] = 'true'
-            return_value['__url__'] = '/statement/login_ok/'
+            return_value['__url__'] = '/statement/login/'
             return JsonResponse(return_value)
 
         return_value['__form__'] = 'false'
@@ -29,6 +29,7 @@ class Login(Manage_Dynamic_Event):
     @staticmethod
     def Launch(request):
         return Login(request).HTML
+
 
 
 class Register(Manage_Dynamic_Event):
@@ -48,11 +49,12 @@ class Register(Manage_Dynamic_Event):
             self.Create_No_Approved_User()
             self.Send_Activate_Link()
             return_value['__form__'] = 'true'
-            return_value['__url__'] = '/statement/register_ok/'
+            return_value['__url__'] = '/statement/register/'
             return JsonResponse(return_value)
 
         return_value['__form__'] = 'false'
-        return_value['__url__'] = '/statement/register_nok/'
+        return_value['__url__'] = '/user/register/'
+        return_value['__message__'] = self.content['form'].errors.as_json()
         return JsonResponse(return_value)
 
     def Create_No_Approved_User(self):
@@ -78,6 +80,7 @@ class Register(Manage_Dynamic_Event):
     @staticmethod
     def Launch(request):
         return Register(request).HTML
+
 
 
 class Logout(Manage_Dynamic_Event):
