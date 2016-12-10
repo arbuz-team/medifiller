@@ -2,7 +2,10 @@
   window.APP = {
     title : 'Register approved'
     , description : 'User has been approved.'
+    , redirect : '/user/login/'
   };
+
+  window.dispatchEvent(window.EVENTS.redirect);
 </script>
 
 

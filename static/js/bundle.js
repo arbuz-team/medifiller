@@ -407,8 +407,7 @@
 	      title: 'Loading... - Spasungate',
 	      description: 'This page is shop, which is ownership Spasungate.',
 	      statement_content: 'Empty statement.',
-	      container: '#TRESC',
-	      post_data: {}
+	      container: '#TRESC'
 	    };
 	  };
 	

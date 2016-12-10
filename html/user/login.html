@@ -5,7 +5,6 @@
   };
 </script>
 
-
 <div class="BLOK1">
 
   <div class="tlo abs_pelny"></div>
@@ -13,20 +12,20 @@
   <div class="tresc">
   
     {% if request.session.user_login %}
-      Hello!<br />
-      <a href="/user/logout/">Logout</a>.
-    {% else %}
-      Login
 
+      Hello {{ request.session.user_username }}! You are login. ;)
+      <script> window.dispatchEvent(window.EVENTS.redirect); </script>
+
+    {% else %}
+
+      Login
       <form method="post" action="" data-form="login" data-test="yes">
 
         {% for i in form %}
 
           <div class="otoczka_pola">
-
             {{ i }}
             {{ i.errors }}
-
           </div>
 
         {% endfor %}

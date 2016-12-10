@@ -1,33 +1,35 @@
 <script>
-  Kontroler_Tresci.Wklej_Dane({
-    title : 'Logowanie'
-    , description : 'Na tej stronie możesz się zalogować.'
-  });
+  window.APP = {
+    title : 'Root login'
+    , description : 'Here root can login.'
+  };
 </script>
-
 
 <div class="BLOK1">
 
   <div class="tlo abs_pelny"></div>
 
   <div class="tresc">
-  
-    {% if request.session.uzytkownik_zalogowany %}
-      Witamy!<br />
-      <a href="/uzytkownik/wyloguj/">Wyloguj</a>.
-    {% else %}
-      Logowanie
+    {% if request.session.user_login %}
 
+      Hello root! You are login. ;)
+      <script> window.dispatchEvent(window.EVENTS.redirect); </script>
+
+    {% else %}
+
+      Login
       <form method="post" action="" data-form="login" data-test="yes">
+
+        <div class="otoczka_pola">
+          <input disabled type="text" value="root" />
+        </div>
 
         {% for i in form %}
 
-        <div class="otoczka_pola">
-
-          {{ i }}
-          {{ i.errors }}
-
-        </div>
+          <div class="otoczka_pola">
+            {{ i }}
+            {{ i.errors }}
+          </div>
 
         {% endfor %}
 
@@ -38,7 +40,6 @@
       </form>
 
     {% endif %}
-  
   </div>
 
 </div>

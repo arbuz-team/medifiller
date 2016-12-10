@@ -32,7 +32,6 @@ export let data_controller = new function Data_Controler()
       description : 'This page is shop, which is ownership Spasungate.',
       statement_content : 'Empty statement.',
       container : '#TRESC',
-      post_data : {},
     };
   };
 
