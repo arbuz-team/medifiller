@@ -3,3 +3,4 @@
 *.swp
 *.swo
 arbuz/settings.py
+update_settings.sh

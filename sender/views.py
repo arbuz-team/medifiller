@@ -9,14 +9,14 @@ class Sender(Manage_Dynamic_Event):
         pass
 
     @staticmethod
-    def Send_Email(title, content):
+    def Send_Email(title, content, recipient):
 
         email = EmailMessage\
         (
             title,
             content,
-            'sender@arbuz.team',        # nadawca
-            ['recipient@arbuz.team']    # odbiorca
+            'sender@arbuz.team',    # nadawca
+            [recipient]             # odbiorca
             # headers={'Reply-To': 'reply@arbuz.team'}
         )
 
