@@ -9,7 +9,7 @@ export {data_controller} from '../../arbuz/js/dane_strony/struktura';
 
 export let content_controller = new function Content_Controller()
 {
-
+  let url, post_data;
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -54,10 +54,9 @@ export let content_controller = new function Content_Controller()
   };
 
 
-  let _download_content = function( url, error )
+  let _download_content = function( response_url, error )
   {
-    url = _preprocess_url( url );
-    let post_data = data_controller.get( 'post_data' );
+    url = _preprocess_url(response_url);
 
     $( data_controller.get( 'container' ) )
       .load( url, post_data, (response, status) => {
@@ -81,16 +80,13 @@ export let content_controller = new function Content_Controller()
 
 ///////////////////////////////////////////////////////////////////////////
 
-  this.change_content = function( url, post_data )
+  this.change_content = function( response_url, response_post_data )
   {
-    console.log( 'url: '+ url );
-
-    url = _preprocess_url( url );
+    url = _preprocess_url(response_url);
     _change_url( url );
     _refresh_data();
 
-    post_data = _prepare_post_data( post_data );
-    data_controller.change( 'post_data', post_data );
+    post_data = _prepare_post_data( response_post_data );
 
     _hide_content();
   };
@@ -99,20 +95,22 @@ export let content_controller = new function Content_Controller()
   {
     _refresh_data();
 
-    let post_data = _prepare_post_data();
-    data_controller.change( 'post_data', post_data );
+    post_data = _prepare_post_data();
 
     _hide_content();
   };
 
 ///////////////////////////////////////////////////////////////////////////
 
-  let _preprocess_url = function( url )
+  let _preprocess_url = function( response_url )
   {
-    if( !url )
-      url = data_controller.get( 'path' );
+    if( !response_url )
+      if( url )
+        return url;
+      else
+        return data_controller.get( 'path' );
 
-    return url;
+    return response_url;
   };
 
 
@@ -121,7 +119,8 @@ export let content_controller = new function Content_Controller()
     if( !object )
       object = {};
 
-    object.__content__ = 'true';
+    if( typeof object.__form__ === 'undefined')
+      object.__content__ = 'true';
     object.csrfmiddlewaretoken = data_controller.get( 'csrf_token' );
 
     return object;

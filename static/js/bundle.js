@@ -272,6 +272,8 @@
 	/*---------------- Kontroler Treści ----------------*/
 	
 	var content_controller = exports.content_controller = new function Content_Controller() {
+	  var url = void 0,
+	      post_data = void 0;
 	
 	  ///////////////////////////////////////////////////////////////////////////
 	
@@ -304,9 +306,8 @@
 	    });
 	  };
 	
-	  var _download_content = function _download_content(url, error) {
-	    url = _preprocess_url(url);
-	    var post_data = _struktura.data_controller.get('post_data');
+	  var _download_content = function _download_content(response_url, error) {
+	    url = _preprocess_url(response_url);
 	
 	    $(_struktura.data_controller.get('container')).load(url, post_data, function (response, status) {
 	      if (error) _show_content(response, status, error);else _show_content(response, status);
@@ -321,15 +322,12 @@
 	
 	  ///////////////////////////////////////////////////////////////////////////
 	
-	  this.change_content = function (url, post_data) {
-	    console.log('url: ' + url);
-	
-	    url = _preprocess_url(url);
+	  this.change_content = function (response_url, response_post_data) {
+	    url = _preprocess_url(response_url);
 	    _change_url(url);
 	    _refresh_data();
 	
-	    post_data = _prepare_post_data(post_data);
-	    _struktura.data_controller.change('post_data', post_data);
+	    post_data = _prepare_post_data(response_post_data);
 	
 	    _hide_content();
 	  };
@@ -337,24 +335,23 @@
 	  this.start = function () {
 	    _refresh_data();
 	
-	    var post_data = _prepare_post_data();
-	    _struktura.data_controller.change('post_data', post_data);
+	    post_data = _prepare_post_data();
 	
 	    _hide_content();
 	  };
 	
 	  ///////////////////////////////////////////////////////////////////////////
 	
-	  var _preprocess_url = function _preprocess_url(url) {
-	    if (!url) url = _struktura.data_controller.get('path');
+	  var _preprocess_url = function _preprocess_url(response_url) {
+	    if (!response_url) if (url) return url;else return _struktura.data_controller.get('path');
 	
-	    return url;
+	    return response_url;
 	  };
 	
 	  var _prepare_post_data = function _prepare_post_data(object) {
 	    if (!object) object = {};
 	
-	    object.__content__ = 'true';
+	    if (typeof object.__form__ === 'undefined') object.__content__ = 'true';
 	    object.csrfmiddlewaretoken = _struktura.data_controller.get('csrf_token');
 	
 	    return object;
@@ -659,21 +656,12 @@
 	    if (!object) return {};
 	
 	    object.__form__ = 'true';
-	    object.csrfmiddlewaretoken = _struktura.data_controller.get('csrf_token');
 	
 	    return object;
 	  };
 	
-	  var _preprocess_url = function _preprocess_url(url) {
-	    if (!url) url = _struktura.data_controller.get('path');
-	
-	    return url;
-	  };
-	
 	  this.send = function (url, data_post) {
-	    url = _preprocess_url(url);
 	    data_post = _prepare_post_data(data_post);
-	
 	    _podstawa.content_controller.change_content(url, data_post);
 	  };
 	

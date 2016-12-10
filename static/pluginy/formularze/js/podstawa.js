@@ -14,26 +14,14 @@ export let form_controller = new function Form_Controller()
       return {};
 
     object.__form__ = 'true';
-    object.csrfmiddlewaretoken = data_controller.get( 'csrf_token' );
 
     return object;
   };
 
 
-  let _preprocess_url = function( url )
-  {
-    if( !url )
-      url = data_controller.get( 'path' );
-
-    return url;
-  };
-
-
   this.send = function( url, data_post )
   {
-    url = _preprocess_url( url );
     data_post = _prepare_post_data( data_post );
-
     content_controller.change_content(url, data_post);
   };
 
