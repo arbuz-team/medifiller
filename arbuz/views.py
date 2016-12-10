@@ -14,7 +14,8 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
         pass
 
     def Manage_Form(self):
-        pass
+        self.content['message'] = 'Undefined form name.'
+        return self.Render_HTML('arbuz/error.html')
 
     def Manage_Exist(self):
         pass

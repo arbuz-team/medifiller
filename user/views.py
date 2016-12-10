@@ -7,9 +7,10 @@ class Login(Manage_Dynamic_Event):
 
     def Manage_Content(self):
         self.content['form'] = Form_Login()
+        self.content['form_name'] = 'login'
         return self.Render_HTML('user/login.html')
 
-    def Manage_Form(self):
+    def Manage_Form_Login(self):
 
         self.content['form'] = \
             Form_Login(self.request.POST)
@@ -22,10 +23,17 @@ class Login(Manage_Dynamic_Event):
             self.request.session['user_username'] = \
                 User.objects.get(email=email).username
 
-            self.content['form'] = None # message of correct
+            self.content['form'] = None  # message of correct
             return self.Render_HTML('user/login.html')
 
         return self.Render_HTML('user/login.html')
+
+    def Manage_Form(self):
+
+        if self.request.POST['__form__'] == 'login':
+            return self.Manage_Form_Login()
+
+        return super(Login, self).Manage_Form()
 
     @staticmethod
     def Launch(request):
@@ -37,6 +45,7 @@ class Register(Manage_Dynamic_Event):
 
     def Manage_Content(self):
         self.content['form'] = Form_Register()
+        self.content['form_name'] = 'register'
         return self.Render_HTML('user/register.html')
 
     def Manage_Form_Register(self):
@@ -50,11 +59,12 @@ class Register(Manage_Dynamic_Event):
             self.Send_Activate_Link()
 
             self.content['form'] = Form_User_Address()
+            self.content['form_name'] = 'user_address'
             return self.Render_HTML('user/register.html')
 
         return self.Render_HTML('user/register.html')
 
-    def Manage_Form_Address_User(self):
+    def Manage_Form_User_Address(self):
 
         self.content['form'] = Form_User_Address(self.request.POST)
 
@@ -68,11 +78,13 @@ class Register(Manage_Dynamic_Event):
 
     def Manage_Form(self):
 
-        if 'username' in self.request.POST: # __step_register__
+        if self.request.POST['__form__'] == 'register':
             return self.Manage_Form_Register()
 
-        if 'full_name' in self.request.POST: # __step_address_user__
-            return self.Manage_Form_Address_User()
+        if self.request.POST['__form__'] == 'user_address':
+            return self.Manage_Form_User_Address()
+
+        return super(Register, self).Manage_Form()
 
     def Create_No_Approved_User(self):
         self.content['key'] = binascii.hexlify(os.urandom(20))
@@ -116,6 +128,21 @@ class Logout(Manage_Dynamic_Event):
     @staticmethod
     def Launch(request):
         return Logout(request).HTML
+
+
+
+class Account(Manage_Dynamic_Event):
+
+    def Manage_Content(self):
+        return self.Render_HTML('user/account.html')
+
+    def Manage_Form(self):
+
+        pass
+
+    @staticmethod
+    def Launch(request):
+        return Account(request).HTML
 
 
 
