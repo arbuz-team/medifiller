@@ -2,8 +2,8 @@
  * Created by mrskull on 24.11.16.
  */
 
-import {data_controller, EVENTS} from '../../arbuz/js/dane_strony/struktura';
-export {data_controller, EVENTS} from '../../arbuz/js/dane_strony/struktura';
+import {data_controller} from '../../arbuz/js/dane_strony/struktura';
+export {data_controller} from '../../arbuz/js/dane_strony/struktura';
 
 /*---------------- Kontroler Treści ----------------*/
 
@@ -21,7 +21,7 @@ export function Content_Controller()
 
   let _refresh_events = function()
   {
-    window.dispatchEvent( EVENTS.define );
+    window.dispatchEvent( window.EVENTS.define );
   };
 
 
@@ -33,7 +33,7 @@ export function Content_Controller()
     {
       if( status !== 'success' )
       {
-        $kontener.html( 'An error has occurred while connecting to server. Please, refresh website.' )
+        $kontener.html( 'An error has occurred while connecting to server. Please, refresh website or check your connect with network.' )
       }
     }
     else

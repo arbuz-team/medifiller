@@ -1,6 +1,6 @@
 /*    JavaScript    */
 
-import {Form_Controller, data_controller, EVENTS} from '../podstawa'
+import {Form_Controller, data_controller} from '../podstawa'
 import * as validator from '../validator/views'
 
 let form_controller = new Form_Controller();

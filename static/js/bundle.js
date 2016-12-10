@@ -149,7 +149,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.start = exports.Form_Controller_Events = exports.Menu_Controller_Events = exports.EVENTS = exports.Content_Controller_Events = undefined;
+	exports.start = exports.Form_Controller_Events = exports.Menu_Controller_Events = exports.Content_Controller_Events = undefined;
 	
 	var _podstawa = __webpack_require__(8);
 	
@@ -157,12 +157,6 @@
 	  enumerable: true,
 	  get: function get() {
 	    return _podstawa.Content_Controller_Events;
-	  }
-	});
-	Object.defineProperty(exports, 'EVENTS', {
-	  enumerable: true,
-	  get: function get() {
-	    return _podstawa.EVENTS;
 	  }
 	});
 	
@@ -215,7 +209,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.EVENTS = exports.data_controller = undefined;
+	exports.data_controller = undefined;
 	
 	var _podstawa = __webpack_require__(9);
 	
@@ -223,12 +217,6 @@
 	  enumerable: true,
 	  get: function get() {
 	    return _podstawa.data_controller;
-	  }
-	});
-	Object.defineProperty(exports, 'EVENTS', {
-	  enumerable: true,
-	  get: function get() {
-	    return _podstawa.EVENTS;
 	  }
 	});
 	exports.Content_Controller_Events = Content_Controller_Events;
@@ -247,6 +235,9 @@
 	
 	    window.addEventListener('change_url', change_url, false);
 	
+	    window.addEventListener('redirect', redirect, false);
+	
+	    //////////////////////////////////////////
 	    window.onload = function () {
 	      content_controller.start();
 	    };
@@ -272,6 +263,16 @@
 	    event.preventDefault();
 	    content_controller.start();
 	  };
+	
+	  var redirect = function redirect() {
+	    var url = void 0;
+	
+	    if (typeof APP !== 'undefined' && APP.redirect !== 'undefined') url = APP.redirect;else url = '/';
+	
+	    setTimeout(function () {
+	      content_controller.change_content(url);
+	    }, 2000);
+	  };
 	}
 
 /***/ },
@@ -283,7 +284,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.EVENTS = exports.data_controller = undefined;
+	exports.data_controller = undefined;
 	
 	var _struktura = __webpack_require__(10);
 	
@@ -291,12 +292,6 @@
 	  enumerable: true,
 	  get: function get() {
 	    return _struktura.data_controller;
-	  }
-	});
-	Object.defineProperty(exports, 'EVENTS', {
-	  enumerable: true,
-	  get: function get() {
-	    return _struktura.EVENTS;
 	  }
 	});
 	exports.Content_Controller = Content_Controller;
@@ -313,7 +308,7 @@
 	  };
 	
 	  var _refresh_events = function _refresh_events() {
-	    window.dispatchEvent(_struktura.EVENTS.define);
+	    window.dispatchEvent(window.EVENTS.define);
 	  };
 	
 	  var _show_content = function _show_content(response, status, error) {
@@ -321,7 +316,7 @@
 	
 	    if (error === 'yes') {
 	      if (status !== 'success') {
-	        $kontener.html('An error has occurred while connecting to server. Please, refresh website.');
+	        $kontener.html('An error has occurred while connecting to server. Please, refresh website or check your connect with network.');
 	      }
 	    } else {
 	      if (status !== 'success') {
@@ -412,17 +407,9 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.data_controller = exports.EVENTS = undefined;
+	exports.data_controller = undefined;
 	
-	var _kreator_wydarzen = __webpack_require__(11);
-	
-	Object.defineProperty(exports, 'EVENTS', {
-	  enumerable: true,
-	  get: function get() {
-	    return _kreator_wydarzen.EVENTS;
-	  }
-	});
-	
+	__webpack_require__(11);
 	
 	/*---------------- Struktura Dane_Strony ----------------*/
 	
@@ -486,7 +473,9 @@
 	  this.prepare_url_to_change = function () {
 	    if (public_data.url_to_change !== '') return public_data.url_to_change;else return '/';
 	  };
-	};
+	}; /**
+	    * Created by mrskull on 24.11.16.
+	    */
 	
 	var data = new Data_Controller();
 	
@@ -496,17 +485,16 @@
 /* 11 */
 /***/ function(module, exports) {
 
+	'use strict';
+	
 	/**
 	 * Created by mrskull on 24.11.16.
 	 */
-	"use strict";
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var EVENTS = exports.EVENTS = {
+	window.EVENTS = {
 	  define: new Event('define'),
-	  change_url: new Event('change_url')
+	  change_url: new Event('change_url'),
+	  redirect: new Event('redirect')
 	};
 
 /***/ },
@@ -518,7 +506,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.EVENTS = exports.data_controller = undefined;
+	exports.data_controller = undefined;
 	
 	var _podstawa = __webpack_require__(13);
 	
@@ -526,12 +514,6 @@
 	  enumerable: true,
 	  get: function get() {
 	    return _podstawa.data_controller;
-	  }
-	});
-	Object.defineProperty(exports, 'EVENTS', {
-	  enumerable: true,
-	  get: function get() {
-	    return _podstawa.EVENTS;
 	  }
 	});
 	exports.Menu_Controller_Events = Menu_Controller_Events;
@@ -583,7 +565,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.menu_controller = exports.EVENTS = exports.data_controller = undefined;
+	exports.menu_controller = exports.data_controller = undefined;
 	
 	var _struktura = __webpack_require__(10);
 	
@@ -591,12 +573,6 @@
 	  enumerable: true,
 	  get: function get() {
 	    return _struktura.data_controller;
-	  }
-	});
-	Object.defineProperty(exports, 'EVENTS', {
-	  enumerable: true,
-	  get: function get() {
-	    return _struktura.EVENTS;
 	  }
 	});
 	
@@ -701,7 +677,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.EVENTS = exports.data_controller = undefined;
+	exports.data_controller = undefined;
 	
 	var _struktura = __webpack_require__(10);
 	
@@ -709,12 +685,6 @@
 	  enumerable: true,
 	  get: function get() {
 	    return _struktura.data_controller;
-	  }
-	});
-	Object.defineProperty(exports, 'EVENTS', {
-	  enumerable: true,
-	  get: function get() {
-	    return _struktura.EVENTS;
 	  }
 	});
 	exports.Form_Controller = Form_Controller;
@@ -738,7 +708,7 @@
 	  var _show_statement = function _show_statement(data) {
 	    if (data.__url__) {
 	      _struktura.data_controller.change('url_to_change', data.__url__);
-	      window.dispatchEvent(_struktura.EVENTS.change_url);
+	      window.dispatchEvent(window.EVENTS.change_url);
 	    }
 	  };
 	

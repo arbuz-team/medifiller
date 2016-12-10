@@ -2,11 +2,11 @@
  * Created by mrskull on 24.11.16.
  */
 
-import {Content_Controller_Events, EVENTS} from '../../tresc/js/wydarzenia/podstawa'
+import {Content_Controller_Events} from '../../tresc/js/wydarzenia/podstawa'
 import {Menu_Controller_Events} from '../../menu/js/wydarzenia/podstawa'
 import {Form_Controller_Events} from '../../formularze/js/wydarzenia/podstawa'
 
-export {Content_Controller_Events, EVENTS} from '../../tresc/js/wydarzenia/podstawa'
+export {Content_Controller_Events} from '../../tresc/js/wydarzenia/podstawa'
 export {Menu_Controller_Events} from '../../menu/js/wydarzenia/podstawa'
 export {Form_Controller_Events} from '../../formularze/js/wydarzenia/podstawa'
 

@@ -2,8 +2,8 @@
  * Created by mrskull on 24.11.16.
  */
 
-import {data_controller, EVENTS} from '../../arbuz/js/dane_strony/struktura';
-export {data_controller, EVENTS} from '../../arbuz/js/dane_strony/struktura';
+import {data_controller} from '../../arbuz/js/dane_strony/struktura';
+export {data_controller} from '../../arbuz/js/dane_strony/struktura';
 
 /*---------------- Kontroler Menu ----------------*/
 

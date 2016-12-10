@@ -2,8 +2,7 @@
  * Created by mrskull on 24.11.16.
  */
 
-import {EVENTS} from '../kreator_wydarzen';
-export {EVENTS} from '../kreator_wydarzen';
+import '../kreator_wydarzen';
 
 /*---------------- Struktura Dane_Strony ----------------*/
 

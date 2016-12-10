@@ -3,8 +3,8 @@
  */
 
 
-import {Content_Controller, data_controller, EVENTS} from '../podstawa';
-export {data_controller, EVENTS} from '../podstawa';
+import {Content_Controller, data_controller} from '../podstawa';
+export {data_controller} from '../podstawa';
 
 let content_controller = new Content_Controller();
 
@@ -22,6 +22,9 @@ export function Content_Controller_Events()
 
     window.addEventListener('change_url', change_url, false);
 
+    window.addEventListener('redirect', redirect, false);
+
+    //////////////////////////////////////////
     window.onload = () => {
       content_controller.start();
     };
@@ -52,7 +55,23 @@ export function Content_Controller_Events()
   {
     event.preventDefault();
     content_controller.start();
-  }
+  };
+
+
+  let redirect = function()
+  {
+    let url;
+
+    if(typeof APP !== 'undefined' && APP.redirect !== 'undefined')
+      url = APP.redirect;
+    else
+      url = '/';
+
+    setTimeout(() => {
+      content_controller.change_content( url );
+    }, 2000);
+  };
+
 
 }
  

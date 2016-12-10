@@ -1,7 +1,7 @@
 /*    JavaScript    */
 
-import {data_controller, EVENTS} from '../../arbuz/js/dane_strony/struktura';
-export {data_controller, EVENTS} from '../../arbuz/js/dane_strony/struktura';
+import {data_controller} from '../../arbuz/js/dane_strony/struktura';
+export {data_controller} from '../../arbuz/js/dane_strony/struktura';
 
 
 export function Form_Controller()
@@ -33,7 +33,7 @@ export function Form_Controller()
     if(data.__url__)
     {
       data_controller.change( 'url_to_change', data.__url__ );
-      window.dispatchEvent( EVENTS.change_url );
+      window.dispatchEvent( window.EVENTS.change_url );
     }
   };
 

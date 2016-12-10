@@ -2,8 +2,8 @@
  * Created by mrskull on 24.11.16.
  */
 
-import {menu_controller, data_controller, EVENTS} from '../podstawa';
-export {data_controller, EVENTS} from '../podstawa';
+import {menu_controller, data_controller} from '../podstawa';
+export {data_controller} from '../podstawa';
 
 /*---------------- Wydarzenia kontrolera Menu ----------------*/
 
