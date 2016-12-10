@@ -19,17 +19,17 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
     def Manage_Exist(self):
         pass
 
-    @staticmethod
-    def Manage_No_Event():
-        message = 'Manage_Dynamic_Event:' \
-                  ' no variable defining instruction.'
-        return JsonResponse({'__error__': message})
+    def Manage_No_Event(self):
+        self.content['message'] = 'Manage_Dynamic_Event:' \
+                            ' no variable defining instruction.'
 
-    @staticmethod
-    def Manage_Unauthorized():
-        message = 'Manage_Dynamic_Event:' \
-                  ' detecting unauthorized access.'
-        return JsonResponse({'__error__': message})
+        return self.Render_HTML('arbuz/error.html')
+
+    def Manage_Unauthorized(self):
+        self.content['message'] = 'Manage_Dynamic_Event:' \
+                            ' detecting unauthorized access.'
+
+        return self.Render_HTML('arbuz/error.html')
 
     def Manage_Index(self):
         Check_Session(self.request)

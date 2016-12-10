@@ -29,6 +29,7 @@ class Statement_404(Manage_Dynamic_Event):
 class Statement_Register(Manage_Dynamic_Event):
 
     def Manage_Content(self):
+        self.content['title'] = 'Register'
         self.content['message'] = 'User is correct registred.'
         return self.Render_HTML('statement/statement.html')
 
@@ -41,6 +42,7 @@ class Statement_Register(Manage_Dynamic_Event):
 class Statement_Login(Manage_Dynamic_Event):
 
     def Manage_Content(self):
+        self.content['title'] = 'Login'
         self.content['message'] = 'User is correct logged.'
         return self.Render_HTML('statement/statement.html')
 

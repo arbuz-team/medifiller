@@ -11,20 +11,16 @@ class Login(Manage_Dynamic_Event):
 
     def Manage_Form(self):
 
-        return_value = {}
         self.content['form'] = \
             Form_Login(self.request.POST)
 
         if self.content['form'].is_valid():
             self.request.session['user_login'] = True
-            return_value['__form__'] = 'true'
-            return_value['__url__'] = '/statement/login/'
-            return JsonResponse(return_value)
 
-        return_value['__form__'] = 'false'
-        return_value['__url__'] = '/user/login/'
-        return_value['__message__'] = self.content['form'].errors.as_json()
-        return JsonResponse(return_value)
+            self.content['form'] = None # message of correct
+            return self.Render_HTML('user/login.html')
+
+        return self.Render_HTML('user/login.html')
 
     @staticmethod
     def Launch(request):
@@ -38,9 +34,8 @@ class Register(Manage_Dynamic_Event):
         self.content['form'] = Form_Register()
         return self.Render_HTML('user/register.html')
 
-    def Manage_Form(self):
+    def Manage_Form_Register(self):
 
-        return_value = {}
         self.content['form'] = Form_Register(self.request.POST)
 
         if self.content['form'].is_valid():
@@ -48,14 +43,31 @@ class Register(Manage_Dynamic_Event):
 
             self.Create_No_Approved_User()
             self.Send_Activate_Link()
-            return_value['__form__'] = 'true'
-            return_value['__url__'] = '/statement/register/'
-            return JsonResponse(return_value)
 
-        return_value['__form__'] = 'false'
-        return_value['__url__'] = '/user/register/'
-        return_value['__message__'] = self.content['form'].errors.as_json()
-        return JsonResponse(return_value)
+            self.content['form'] = Form_User_Address()
+            return self.Render_HTML('user/register.html')
+
+        return self.Render_HTML('user/register.html')
+
+    def Manage_Form_Address_User(self):
+
+        self.content['form'] = Form_User_Address(self.request.POST)
+
+        if self.content['form'].is_valid():
+            self.content['form'].save()  # create address_user
+
+            self.content['form'] = None  # message of correct
+            return self.Render_HTML('user/register.html')
+
+        return self.Render_HTML('user/register.html')
+
+    def Manage_Form(self):
+
+        if 'username' in self.request.POST: # __step_register__
+            return self.Manage_Form_Register()
+
+        if 'full_name' in self.request.POST: # __step_address_user__
+            return self.Manage_Form_Address_User()
 
     def Create_No_Approved_User(self):
         self.content['key'] = binascii.hexlify(os.urandom(20))
@@ -71,11 +83,16 @@ class Register(Manage_Dynamic_Event):
         else: self.Create_No_Approved_User()
 
     def Send_Activate_Link(self):
-        title = 'Confirm your new account.'
-        content = 'http://127.0.0.1:8000/user/approved/' + \
-                  self.content['key'].decode("utf-8")
 
-        Sender.Send_Email(title, content, '93.endo@gmail.com')
+        activate_key = self.content['key'].decode("utf-8")
+        activate_url = self.request.build_absolute_uri().replace('register/', '')
+        activate_url = '{0}approved/{1}'.format(activate_url, activate_key)
+
+        title = 'Confirm your new account.'
+        content = activate_url
+        email = self.content['form'].cleaned_data['email']
+
+        Sender.Send_Email(title, content, email)
 
     @staticmethod
     def Launch(request):
@@ -87,6 +104,7 @@ class Logout(Manage_Dynamic_Event):
 
     def Manage_Content(self):
         self.request.session['user_login'] = False
+        print('__content__' in self.request.POST)
         return self.Render_HTML('user/logout.html')
 
     @staticmethod
