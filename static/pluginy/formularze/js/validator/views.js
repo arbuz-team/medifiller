@@ -7,11 +7,17 @@ export let define = function(){
 
 	$('form[data-test=yes]').each(function(){
 		let name = $(this).data('form');
-		Validators[name] = new Constructor_Validator(name);
+		if(name)
+    {
+      if(typeof Validators[name] === 'undefined')
+        Validators[name] = new Constructor_Validator(name);
+    }
+    else
+      console.error('Validation Error: Incorrect or empty form name "'+ name +'".')
 	});
 
 
-  $('.test').keyup(function(){
+  $('form[data-test=yes] .test').keyup(function(){
     validate(this);
   });
 

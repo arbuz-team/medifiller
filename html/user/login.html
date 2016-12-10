@@ -22,18 +22,17 @@
 
         {% for i in form %}
 
-          {{ i.errors }}
-          <div class="otoczka_pola" class="test">
+          <div class="otoczka_pola">
 
             {{ i }}
-            <div class="status"></div>
+            {{ i.errors }}
 
           </div>
 
         {% endfor %}
 
         <div class="otoczka_pola">
-          <button type="submit"> Login </button>
+          <button disabled type="submit"> Login </button>
         </div>
 
       </form>

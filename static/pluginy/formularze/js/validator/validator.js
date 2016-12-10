@@ -57,7 +57,7 @@ export let Constructor_Validator = function(form_name)
 	this.field = function(name, value)
 	{
 		let last_result = false, results = [];
-		
+
 		if(name && value)
 		{
 			let msg, type, checker;
@@ -77,7 +77,7 @@ export let Constructor_Validator = function(form_name)
 		}
 		else if(value != '')
 		{
-			let Results = new this.Types_veriable();
+			let Results = new Types_Veriable();
 			Results.bool = false;
 			Results.message = "Incorrect value "+ name;
 			Results.add();
@@ -100,7 +100,35 @@ export let Constructor_Validator = function(form_name)
 		}
 		else
 			this.change_field(name, false);
-		
+
 		return last_result;
 	};
+};
+
+/////////////////////////////////////////////////////////////////////
+
+export let Types_Veriable = function()
+{
+  let array_result = [];
+  this.bool = true;
+  this.message = '';
+  this.correction = '';
+
+  this.add = function()
+  {
+    let object = {
+      bool: this.bool,
+      message: this.message,
+      correction: this.correction
+    };
+
+    array_result.push( object );
+
+    return true;
+  };
+
+  this.get_all = function()
+  {
+    return array_result;
+  };
 };

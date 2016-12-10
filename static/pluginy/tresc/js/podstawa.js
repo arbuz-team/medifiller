@@ -83,6 +83,8 @@ export function Content_Controller()
 
   this.change_content = function( url, post_data )
   {
+    console.log( 'url: '+ url );
+
     url = _preprocess_url( url );
     _change_url( url );
     _refresh_data();

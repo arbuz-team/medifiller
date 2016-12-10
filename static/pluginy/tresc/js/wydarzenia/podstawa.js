@@ -62,7 +62,7 @@ export function Content_Controller_Events()
   {
     let url;
 
-    if(typeof APP !== 'undefined' && APP.redirect !== 'undefined')
+    if(typeof APP !== 'undefined' && typeof APP.redirect !== 'undefined')
       url = APP.redirect;
     else
       url = '/';

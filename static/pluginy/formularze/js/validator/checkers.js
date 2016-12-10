@@ -1,7 +1,7 @@
 
-import {Constructor_Validator} from './validator'
+import {Constructor_Validator, Types_Veriable} from './validator'
 
-export {Constructor_Validator} from './validator'
+export {Constructor_Validator, Types_Veriable} from './validator'
 
 /////////////////////////////  Prepare checkers  ///////////////////////////////
 
@@ -11,32 +11,6 @@ let create_checker = function(name, callback)
 {
 	Constructor_Validator.prototype.types[name] = {
 		validate: callback
-	};
-};
-
-let Types_Veriable = function()
-{
-	let array_result = [];
-	this.bool = true;
-	this.message = '';
-	this.correction = '';
-
-	this.add = function()
-	{
-		let object = {
-			bool: this.bool,
-			message: this.message,
-			correction: this.correction
-		};
-
-		array_result.push( object );
-
-		return true;
-	};
-
-	this.get_all = function()
-	{
-		return array_result;
 	};
 };
 

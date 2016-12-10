@@ -14,25 +14,17 @@
   
     Register
 
-    <form method="post" action="" data-test="yes">
+    <form method="post" action="" data-form="register" data-test="yes">
 
       {% for i in form %}
 
-        {{ i.errors }}
-        {% if i.name == 'login' %}
-          <div data-lp="" class="otoczka_pola sprawdz_pole">
+        <div class="otoczka_pola">
 
-            {{ i }}
-
-          </div>
+          {{ i }}
+          {{ i.errors }}
           <div class="status"></div>
-        {% else %}
-          <div class="otoczka_pola">
 
-            {{ i }}
-
-          </div>
-        {% endif %}
+        </div>
 
       {% endfor %}
 

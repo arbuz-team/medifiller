@@ -2,14 +2,12 @@
 export let list_configs = {};
 
 list_configs.register = {
-	email: 'email',
+	username: 'length',
 	password: 'password',
-	first_name: 'proper_name',
-	last_name: 'proper_name',
-	mobile_phone: 'number'
+	email: 'email',
 };
 
 list_configs.login = {
-	email_or_username: 'length',
+	email: 'email',
 	password: 'password',
 };

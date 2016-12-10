@@ -267,7 +267,7 @@
 	  var redirect = function redirect() {
 	    var url = void 0;
 	
-	    if (typeof APP !== 'undefined' && APP.redirect !== 'undefined') url = APP.redirect;else url = '/';
+	    if (typeof APP !== 'undefined' && typeof APP.redirect !== 'undefined') url = APP.redirect;else url = '/';
 	
 	    setTimeout(function () {
 	      content_controller.change_content(url);
@@ -350,6 +350,8 @@
 	  ///////////////////////////////////////////////////////////////////////////
 	
 	  this.change_content = function (url, post_data) {
+	    console.log('url: ' + url);
+	
 	    url = _preprocess_url(url);
 	    _change_url(url);
 	    _refresh_data();
@@ -757,10 +759,12 @@
 	
 	  $('form[data-test=yes]').each(function () {
 	    var name = $(this).data('form');
-	    Validators[name] = new _checkers.Constructor_Validator(name);
+	    if (name) {
+	      if (typeof Validators[name] === 'undefined') Validators[name] = new _checkers.Constructor_Validator(name);
+	    } else console.error('Validation Error: Incorrect or empty form name "' + name + '".');
 	  });
 	
-	  $('.test').keyup(function () {
+	  $('form[data-test=yes] .test').keyup(function () {
 	    validate(this);
 	  });
 	
@@ -836,7 +840,7 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.Constructor_Validator = undefined;
+	exports.Types_Veriable = exports.Constructor_Validator = undefined;
 	
 	var _validator = __webpack_require__(18);
 	
@@ -844,6 +848,12 @@
 		enumerable: true,
 		get: function get() {
 			return _validator.Constructor_Validator;
+		}
+	});
+	Object.defineProperty(exports, 'Types_Veriable', {
+		enumerable: true,
+		get: function get() {
+			return _validator.Types_Veriable;
 		}
 	});
 	
@@ -858,33 +868,10 @@
 		};
 	};
 	
-	var Types_Veriable = function Types_Veriable() {
-		var array_result = [];
-		this.bool = true;
-		this.message = '';
-		this.correction = '';
-	
-		this.add = function () {
-			var object = {
-				bool: this.bool,
-				message: this.message,
-				correction: this.correction
-			};
-	
-			array_result.push(object);
-	
-			return true;
-		};
-	
-		this.get_all = function () {
-			return array_result;
-		};
-	};
-	
 	/////////////////////////////  Checkers  ///////////////////////////////
 	
 	create_checker('email', function (value) {
-		var Results = new Types_Veriable(),
+		var Results = new _validator.Types_Veriable(),
 		    re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	
 		Results.bool = re.test(value);
@@ -896,7 +883,7 @@
 	});
 	
 	create_checker('password', function (value) {
-		var Results = new Types_Veriable();
+		var Results = new _validator.Types_Veriable();
 	
 		Results.bool = value.length >= 8;
 		if (!Results.bool) Results.message = 'The password is too short.';
@@ -907,7 +894,7 @@
 	});
 	
 	create_checker('proper_name', function (value) {
-		var Results = new Types_Veriable();
+		var Results = new _validator.Types_Veriable();
 	
 		value = value.charAt(0).toUpperCase() + value.slice(1);
 	
@@ -921,7 +908,7 @@
 	});
 	
 	create_checker('length', function (value) {
-		var Results = new Types_Veriable();
+		var Results = new _validator.Types_Veriable();
 	
 		Results.bool = value.length >= 3;
 		if (!Results.bool) Results.message = 'It\'s too short.';
@@ -932,7 +919,7 @@
 	});
 	
 	create_checker('number', function (value) {
-		var Results = new Types_Veriable();
+		var Results = new _validator.Types_Veriable();
 	
 		value = value.replace(/\s/g, '');
 	
@@ -958,7 +945,7 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.Constructor_Validator = undefined;
+	exports.Types_Veriable = exports.Constructor_Validator = undefined;
 	
 	var _config = __webpack_require__(19);
 	
@@ -1024,7 +1011,7 @@
 	
 				results = checker.validate(value);
 			} else if (value != '') {
-				var Results = new this.Types_veriable();
+				var Results = new Types_Veriable();
 				Results.bool = false;
 				Results.message = "Incorrect value " + name;
 				Results.add();
@@ -1043,6 +1030,31 @@
 			return last_result;
 		};
 	};
+	
+	/////////////////////////////////////////////////////////////////////
+	
+	var Types_Veriable = exports.Types_Veriable = function Types_Veriable() {
+		var array_result = [];
+		this.bool = true;
+		this.message = '';
+		this.correction = '';
+	
+		this.add = function () {
+			var object = {
+				bool: this.bool,
+				message: this.message,
+				correction: this.correction
+			};
+	
+			array_result.push(object);
+	
+			return true;
+		};
+	
+		this.get_all = function () {
+			return array_result;
+		};
+	};
 
 /***/ },
 /* 19 */
@@ -1056,15 +1068,13 @@
 	var list_configs = exports.list_configs = {};
 	
 	list_configs.register = {
-		email: 'email',
+		username: 'length',
 		password: 'password',
-		first_name: 'proper_name',
-		last_name: 'proper_name',
-		mobile_phone: 'number'
+		email: 'email'
 	};
 	
 	list_configs.login = {
-		email_or_username: 'length',
+		email: 'email',
 		password: 'password'
 	};
 

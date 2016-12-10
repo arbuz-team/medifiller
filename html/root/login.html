@@ -18,20 +18,22 @@
     {% else %}
       Logowanie
 
-      <form method="post" action="">
+      <form method="post" action="" data-form="login" data-test="yes">
 
         {% for i in form %}
 
+        <div class="otoczka_pola">
+
+          {{ i }}
           {{ i.errors }}
-          <div class="otoczka_pola">
 
-            {{ i }}
-
-          </div>
+        </div>
 
         {% endfor %}
 
-        <div class="otoczka_pola"><button type="submit"> Zarejestruj </button></div>
+        <div class="otoczka_pola">
+          <button disabled type="submit"> Login </button>
+        </div>
 
       </form>
 
