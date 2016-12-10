@@ -9,7 +9,7 @@ class Form_Root_Login(forms.Form):
             attrs=
             {
                 'placeholder': 'Password',
-                'data-test': 'yes',
+                'class': 'test',
             }),
         max_length=100
     )

@@ -10,7 +10,7 @@ class Form_Login(forms.Form):
             attrs=
             {
                 'placeholder': 'Email',
-                'data-test': 'yes',
+                'class': 'test',
             }),
         max_length=50
     )
@@ -21,7 +21,7 @@ class Form_Login(forms.Form):
             attrs=
             {
                 'placeholder': 'Password',
-                'data-test': 'yes',
+                'class': 'test',
             }),
         max_length=100
     )
@@ -74,21 +74,21 @@ class Form_Register(forms.ModelForm):
                 attrs=
                 {
                     'placeholder': 'Username',
-                    'data-test': 'yes',
+                    'class': 'test',
                 }),
 
             'password': forms.PasswordInput(
                 attrs=
                 {
                     'placeholder': 'Password',
-                    'data-test': 'yes',
+                    'class': 'test',
                 }),
 
             'email': forms.TextInput(
                 attrs=
                 {
                     'placeholder': 'Email',
-                    'data-test': 'yes',
+                    'class': 'test',
                 }),
         }
 
@@ -120,48 +120,48 @@ class Form_User_Address(forms.ModelForm):
                 attrs=
                 {
                     'placeholder': 'Full Name',
-                    'data-test': 'yes',
+                    'class': 'test',
                 }),
 
             'address_line_1': forms.PasswordInput(
                 attrs=
                 {
                     'placeholder': 'Address Line 1',
-                    'data-test': 'yes',
+                    'class': 'test',
                 }),
 
             'address_line_2': forms.PasswordInput(
                 attrs=
                 {
                     'placeholder': 'Address Line 2',
-                    'data-test': 'yes',
+                    'class': 'test',
                 }),
 
             'city': forms.PasswordInput(
                 attrs=
                 {
                     'placeholder': 'City',
-                    'data-test': 'yes',
+                    'class': 'test',
                 }),
 
             'region': forms.PasswordInput(
                 attrs=
                 {
                     'placeholder': 'State / Province / Region',
-                    'data-test': 'yes',
+                    'class': 'test',
                 }),
 
             'postcode': forms.PasswordInput(
                 attrs=
                 {
                     'placeholder': 'ZIP / Postal Code',
-                    'data-test': 'yes',
+                    'class': 'test',
                 }),
 
             'country': forms.PasswordInput(
                 attrs=
                 {
                     'placeholder': 'Country',
-                    'data-test': 'yes',
+                    'class': 'test',
                 }),
         }
