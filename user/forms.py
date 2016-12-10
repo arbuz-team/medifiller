@@ -116,49 +116,48 @@ class Form_User_Address(forms.ModelForm):
 
         widgets = \
         {
-            'full_name': forms.PasswordInput(
+            'full_name': forms.TextInput(
                 attrs=
                 {
                     'placeholder': 'Full Name',
                     'class': 'test',
                 }),
 
-            'address_line_1': forms.PasswordInput(
+            'address_line_1': forms.TextInput(
                 attrs=
                 {
                     'placeholder': 'Address Line 1',
                     'class': 'test',
                 }),
 
-            'address_line_2': forms.PasswordInput(
+            'address_line_2': forms.TextInput(
                 attrs=
                 {
                     'placeholder': 'Address Line 2',
-                    'class': 'test',
                 }),
 
-            'city': forms.PasswordInput(
+            'city': forms.TextInput(
                 attrs=
                 {
                     'placeholder': 'City',
                     'class': 'test',
                 }),
 
-            'region': forms.PasswordInput(
+            'region': forms.TextInput(
                 attrs=
                 {
                     'placeholder': 'State / Province / Region',
                     'class': 'test',
                 }),
 
-            'postcode': forms.PasswordInput(
+            'postcode': forms.TextInput(
                 attrs=
                 {
                     'placeholder': 'ZIP / Postal Code',
                     'class': 'test',
                 }),
 
-            'country': forms.PasswordInput(
+            'country': forms.TextInput(
                 attrs=
                 {
                     'placeholder': 'Country',
