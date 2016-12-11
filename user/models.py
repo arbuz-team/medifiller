@@ -4,7 +4,8 @@ from django.contrib.auth.hashers import make_password
 
 class User(models.Model):
 
-    email = models.CharField(max_length=50, primary_key=True)
+    unique = models.CharField(max_length=8, primary_key=True)
+    email = models.CharField(max_length=50, unique=True)
     username = models.CharField(max_length=20)
     password = models.CharField(max_length=75)
     approved = models.BooleanField(default=False)

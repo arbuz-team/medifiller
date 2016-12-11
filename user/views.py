@@ -1,6 +1,6 @@
 from sender.views import *
 from .forms import *
-import os, binascii
+import os, binascii, string, random
 
 
 class Login(Manage_Dynamic_Event):
@@ -16,11 +16,12 @@ class Login(Manage_Dynamic_Event):
 
         if self.content['form'].is_valid():
             email = self.content['form'].cleaned_data['email']
+            unique = User.objects.get(email=email).unique
 
             self.request.session['user_login'] = True
-            self.request.session['user_email'] = email
+            self.request.session['user_unique'] = unique
             self.request.session['user_username'] = \
-                User.objects.get(email=email).username
+                User.objects.get(unique=unique).username
 
             self.content['form'] = None  # message of correct
             return self.Render_HTML('user/login.html')
@@ -51,9 +52,10 @@ class Register(Manage_Dynamic_Event):
         self.content['form'] = Form_Register(self.request.POST)
 
         if self.content['form'].is_valid():
-            email = self.content['form'].cleaned_data['email']
-            self.request.session['user_email'] = email
-            self.content['form'].save()  # create user
+            user = self.content['form'].save(commit=False)
+            user.unique = self.Generate_User_Unique()
+            self.request.session['user_unique'] = user.unique
+            user.save()
 
             self.Create_No_Approved_User()
             self.Send_Activate_Link()
@@ -68,9 +70,9 @@ class Register(Manage_Dynamic_Event):
         self.content['form'] = Form_User_Address(self.request.POST)
 
         if self.content['form'].is_valid():
-            email = self.request.session['user_email']
+            unique = self.request.session['user_unique']
             address_user = self.content['form'].save(commit=False)
-            address_user.user = User.objects.get(email=email)
+            address_user.user = User.objects.get(unique=unique)
             address_user.save()  # create address_user
 
             self.content['form'] = None  # message of correct
@@ -122,6 +124,21 @@ class Register(Manage_Dynamic_Event):
         Sender.Send_Email(title, content, email)
 
     @staticmethod
+    def Generate_User_Unique():
+
+        unique = ''
+        permitted_chars = string.ascii_letters + \
+                          string.digits
+
+        for char_number in range(0, 8):
+            unique += random.choice(permitted_chars)
+
+        if {'unique': unique} in User.objects.values('unique'):
+            return Register.Generate_User_Unique()
+
+        return unique
+
+    @staticmethod
     def Launch(request):
         return Register(request).HTML
 
@@ -131,8 +148,8 @@ class Logout(Manage_Dynamic_Event):
 
     def Manage_Content(self):
         self.request.session['user_login'] = False
-        self.request.session['user_id'] = 0
-        self.request.session['user_name'] = ''
+        self.request.session['user_unique'] = ''
+        self.request.session['user_username'] = ''
         return self.Render_HTML('user/logout.html')
 
     @staticmethod
@@ -144,8 +161,8 @@ class Logout(Manage_Dynamic_Event):
 class Account(Manage_Dynamic_Event):
 
     def Manage_Content(self):
-        email = self.request.session['user_email']
-        self.content['user'] = User.objects.get(email=email)
+        unique = self.request.session['user_unique']
+        self.content['user'] = User.objects.get(unique=unique)
         return self.Render_HTML('user/account.html')
 
     def Manage_Form(self):

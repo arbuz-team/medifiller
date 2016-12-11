@@ -4,3 +4,5 @@
 *.swo
 arbuz/settings.py
 update_settings.sh
+*migrations*
+db.sqlite3
