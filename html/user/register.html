@@ -11,35 +11,43 @@
   <div class="tlo abs_pelny"></div>
 
   <div class="tresc">
-  
-    Register
 
-    <form method="post" action="" data-form="{{ form_name }}" data-test="yes">
+    {% if request.session.user_login %}
 
-      {% for i in form %}
+        Hello {{ request.session.user_username }}! You are registered. Visit your mailbox and active account ;)
+        <script> window.dispatchEvent(window.EVENTS.redirect); </script>
 
-        {% if i.name = 'password' %}
+    {% else %}
+      Register
 
-          <div class="otoczka_pola">
-            {{ i }}
-            <input type="checkbox" class="show_password" /> show password
-            {{ i.errors }}
-            <div class="status"></div>
-          </div>
+      <form method="post" action="" data-form="{{ form_name }}" data-test="yes">
 
-        {% else %}
+        {% for i in form %}
 
-          <div class="otoczka_pola">
-            {{ i }}
-            {{ i.errors }}
-            <div class="status"></div>
-          </div>
+          {% if i.name == 'password' %}
 
-        {% endif %}
+            <div class="otoczka_pola">
+              {{ i }}
+              <input type="checkbox" class="show_password" /> show password
+              {{ i.errors }}
+              <div class="status"></div>
+            </div>
 
-      {% endfor %}
+          {% else %}
 
-      <div class="otoczka_pola"><button disabled type="submit"> Register </button></div>
+            <div class="otoczka_pola">
+              {{ i }}
+              {{ i.errors }}
+              <div class="status"></div>
+            </div>
+
+          {% endif %}
+
+        {% endfor %}
+
+        <div class="otoczka_pola"><button disabled type="submit"> Register </button></div>
+
+      {% endif %}
 
     </form>
   

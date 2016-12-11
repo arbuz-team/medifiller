@@ -6,7 +6,8 @@ from session.views import *
 
 class Manage_Dynamic_Event(metaclass=ABCMeta):
 
-    def Render_HTML(self, file_name):
+    def Render_HTML(self, file_name, form_name = ''):
+        self.content['form_name'] = form_name
         return render(self.request, file_name, self.content)
 
     @abstractmethod

@@ -1,13 +1,13 @@
 from arbuz.views import *
 from .forms import *
+import string, random
 
 
 class Login(Manage_Dynamic_Event):
 
     def Manage_Content(self):
         self.content['form'] = Form_Root_Login()
-        self.content['form_name'] = 'login'
-        return self.Render_HTML('root/login.html')
+        return self.Render_HTML('root/login.html', 'login')
 
     def Manage_Form_Login(self):
 
@@ -20,7 +20,7 @@ class Login(Manage_Dynamic_Event):
             self.content['form'] = None  # message of correct
             return self.Render_HTML('root/login.html')
 
-        return self.Render_HTML('user/login.html')
+        return self.Render_HTML('root/login.html', 'login')
 
     def Manage_Form(self):
 
@@ -44,3 +44,32 @@ class Logout(Manage_Dynamic_Event):
     @staticmethod
     def Launch(request):
         return Logout(request).HTML
+
+
+
+class Create(Manage_Dynamic_Event):
+
+    def Manage_Content(self):
+        self.content['password'] = ''
+
+        if not Root.objects.all():
+            self.content['password'] = Create.Generate_Passwrod(8)
+            Root(password=User.Encrypt(self.content['password'])).save()
+
+        return self.Render_HTML('root/create.html')
+
+    @staticmethod
+    def Generate_Passwrod(length):
+        password = ''
+        permitted_chars = string.ascii_letters + \
+                          string.digits + \
+                          string.punctuation
+
+        for char_number in range(0, length):
+            password += random.choice(permitted_chars)
+
+        return password
+
+    @staticmethod
+    def Launch(request):
+        return Create(request).HTML

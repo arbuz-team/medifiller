@@ -7,8 +7,7 @@ class Login(Manage_Dynamic_Event):
 
     def Manage_Content(self):
         self.content['form'] = Form_Login()
-        self.content['form_name'] = 'login'
-        return self.Render_HTML('user/login.html')
+        return self.Render_HTML('user/login.html', 'login')
 
     def Manage_Form_Login(self):
 
@@ -26,7 +25,7 @@ class Login(Manage_Dynamic_Event):
             self.content['form'] = None  # message of correct
             return self.Render_HTML('user/login.html')
 
-        return self.Render_HTML('user/login.html')
+        return self.Render_HTML('user/login.html', 'login')
 
     def Manage_Form(self):
 
@@ -45,36 +44,39 @@ class Register(Manage_Dynamic_Event):
 
     def Manage_Content(self):
         self.content['form'] = Form_Register()
-        self.content['form_name'] = 'register'
-        return self.Render_HTML('user/register.html')
+        return self.Render_HTML('user/register.html', 'register')
 
     def Manage_Form_Register(self):
 
         self.content['form'] = Form_Register(self.request.POST)
 
         if self.content['form'].is_valid():
+            email = self.content['form'].cleaned_data['email']
+            self.request.session['user_email'] = email
             self.content['form'].save()  # create user
 
             self.Create_No_Approved_User()
             self.Send_Activate_Link()
 
             self.content['form'] = Form_User_Address()
-            self.content['form_name'] = 'user_address'
-            return self.Render_HTML('user/register.html')
+            return self.Render_HTML('user/register.html', 'user_address')
 
-        return self.Render_HTML('user/register.html')
+        return self.Render_HTML('user/register.html', 'register')
 
     def Manage_Form_User_Address(self):
 
         self.content['form'] = Form_User_Address(self.request.POST)
 
         if self.content['form'].is_valid():
-            self.content['form'].save()  # create address_user
+            email = self.request.session['user_email']
+            address_user = self.content['form'].save(commit=False)
+            address_user.user = User.objects.get(email=email)
+            address_user.save()  # create address_user
 
             self.content['form'] = None  # message of correct
             return self.Render_HTML('user/register.html')
 
-        return self.Render_HTML('user/register.html')
+        return self.Render_HTML('user/register.html', 'user_address')
 
     def Manage_Form(self):
 
@@ -101,7 +103,7 @@ class Register(Manage_Dynamic_Event):
         if self.content['key'] not in No_Approved_User.objects.all():
             No_Approved_User\
             (
-                user=User.objects.get(username=form.cleaned_data['username']),
+                user=User.objects.get(email=form.cleaned_data['email']),
                 approved_key=self.content['key']
             ).save()
 
@@ -142,6 +144,8 @@ class Logout(Manage_Dynamic_Event):
 class Account(Manage_Dynamic_Event):
 
     def Manage_Content(self):
+        email = self.request.session['user_email']
+        self.content['user'] = User.objects.get(email=email)
         return self.Render_HTML('user/account.html')
 
     def Manage_Form(self):
