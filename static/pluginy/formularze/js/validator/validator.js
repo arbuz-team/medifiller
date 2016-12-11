@@ -1,42 +1,103 @@
 
 import {list_configs} from './config'
+import {data_controller} from '../../../arbuz/js/dane_strony/struktura';
+
+//////////////////////////////////////////////////////
+
+export let checker = {
+
+  create_checker : function(name, callback)
+  {
+    Constructor_Validator.prototype.types[name] = {
+      validate: callback
+    };
+  },
+
+
+  check_condition : function(condition)
+  {
+    return !condition;
+  },
+
+
+  create_result : function(correction)
+  {
+    let result = {
+      bool: true
+    };
+
+    if(typeof correction !== 'undefined')
+      result.correction = correction;
+
+    return result;
+  },
+
+
+  create_error : function(message, correction)
+  {
+    let result = {
+      bool: false
+    };
+
+    if(typeof message !== 'undefined')
+      result.message = message;
+
+    if(typeof correction !== 'undefined')
+      result.correction = correction;
+
+    return result;
+  },
+
+
+  exist_in_db : function(name, value, callback, message)
+  {
+    if(name && value)
+    {
+      let post_data = {
+        __exist__: name,
+        value: value,
+        csrfmiddlewaretoken: data_controller.get('csrf_token')
+      };
+
+      $.post('', post_data)
+      .done(function(data){
+        if(data.__exist__ !== 'undefined')
+          if(data.__exist__ === 'true')
+            callback( checker.create_error(message) );
+          else if(data.__exist__ === 'false')
+            callback( checker.create_result() );
+      })
+      .fail(function(err) {
+        console.error( err );
+      });
+    }
+  },
+};
+
+
+
+//////////////////////////////////////////////////////
 
 export let Constructor_Validator = function(form_name)
 {
-	this.types = Constructor_Validator.prototype.types;
+  // define base veriable
+
+  let fields_of_form;
+  this.types = Constructor_Validator.prototype.types;
 	this.config = list_configs[form_name];
-	let that = this;
+
+
+	// definitions function
 	
-////////////////////////////////////////////////////
-	
-	let prepare_list_fields = function(form)
-	{
-		let fields = $(form).serializeArray(),
-      obj = {},
-			i,
-      length = fields.length;
-		for( i = 0; i < length; ++i )
-		  if($(form).find('*[name='+ fields[i].name +']').hasClass('test'))
-			  obj[fields[i].name] = false;
-		
-		return obj;
-	};
-	
-	this.change_field = function(name, value)
+	this.change_status_field = function(name, value)
 	{
 		if(typeof fields_of_form[name] === 'boolean')
 			if(typeof value === 'boolean')
 				fields_of_form[name] = value;
 			else
-				throw {
-					name: 'Validation Error',
-					message: 'Invalid value in the field '+ value +'.'
-				};
+				console.error('Validation Error: Invalid value in the field '+ value +'.');
 		else
-			throw {
-				name: 'Validation Error',
-				message: 'No manual for the field '+ name +'.'
-			};
+      console.error('Validation Error: No manual for the field '+ name +'.');
 	};
 	
 	this.check_list_field = function()
@@ -48,25 +109,31 @@ export let Constructor_Validator = function(form_name)
 		
 		return true;
 	};
-	
-	let fields_of_form = prepare_list_fields($('form[data-form='+ form_name +']'));
+
+  let prepare_list_fields = function(form)
+  {
+    let fields = $(form).serializeArray(),
+      obj = {},
+      i,
+      length = fields.length;
+    for( i = 0; i < length; ++i )
+      if($(form).find('*[name='+ fields[i].name +']').hasClass('test'))
+        obj[fields[i].name] = false;
+
+    return obj;
+  };
+
+  fields_of_form = prepare_list_fields($('form[data-form='+ form_name +']'));
 	
 ////////////////////////////////////////////////////
 	
-	this.hasErrors = function()
+	this.field = function(name, value, callback)
 	{
-		return fields_of_form;
-	};
-	
-	this.field = function(name, value)
-	{
-		let last_result = false, results = [];
+		let results = [];
 
 		if(name && value)
 		{
-			let msg, type, checker;
-			
-			this.messages = [];
+			let type, checker;
 		
 			type = this.config[name];
 			checker = this.types[type];
@@ -77,62 +144,21 @@ export let Constructor_Validator = function(form_name)
 					message: 'No manual for the key '+ name +'.'
 				};
 			
-			results = checker.validate(value);
+			checker.validate(value, callback);
 		}
-		else if(value != '')
+		else if(value !== '')
 		{
-			let Results = new Types_Veriable();
-			Results.bool = false;
-			Results.message = "Incorrect value "+ name;
-			Results.add();
-			results = Results.get_all();
+		  results = checker.create_error('Incorrect value '+ name);
+      callback(results);
 		}
 		else
-			results = false;
-		//////////////////////////////////
-		
-		if(results)
-		{
-			for( let i = 0; i < results.length; ++i )
-				if(results[i].bool === false)
-					last_result = results[i];
-			
-			if(!last_result)
-				last_result = results[results.length - 1];
-			
-			this.change_field(name, last_result.bool);
-		}
-		else
-			this.change_field(name, false);
-
-		return last_result;
+      callback( checker.create_error() );
 	};
-};
 
-/////////////////////////////////////////////////////////////////////
 
-export let Types_Veriable = function()
-{
-  let array_result = [];
-  this.bool = true;
-  this.message = '';
-  this.correction = '';
-
-  this.add = function()
+  this.hasErrors = function()
   {
-    let object = {
-      bool: this.bool,
-      message: this.message,
-      correction: this.correction
-    };
-
-    array_result.push( object );
-
-    return true;
+    return fields_of_form;
   };
 
-  this.get_all = function()
-  {
-    return array_result;
-  };
 };

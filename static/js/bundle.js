@@ -719,27 +719,28 @@
 	
 	//////////////////////////////   VIEWS VALIDATOR   ///////////////////////////////////
 	
-	var running_validator = false;
+	var running_validator = false,
+	    form_name = void 0,
+	    Validator = void 0,
+	    field = void 0,
+	    field_name = void 0,
+	    field_value = void 0;
 	
 	var validate = function validate() {
 	  if (running_validator === false) {
 	    running_validator = true;
 	
-	    var field = this,
-	        form_name = $(field).parents('form').data('form'),
-	        Validator = Validators[form_name],
-	        name = $(field).attr('name'),
-	        value = $(field).val(),
-	        results = Validator.field(name, value),
-	        test_form = Validator.check_list_field();
+	    field = this;
+	    form_name = $(field).parents('form').data('form');
+	    Validator = Validators[form_name];
+	    field_name = $(field).attr('name');
+	    field_value = $(field).val();
 	
-	    show_status(field, results);
-	    change_status_blockade(form_name, test_form);
-	    running_validator = false;
+	    Validator.field(field_name, field_value, show_status);
 	  }
 	};
 	
-	var show_status = function show_status(field, result) {
+	var show_status = function show_status(result) {
 	  if (result) {
 	    var $field = $(field),
 	        $status = $field.parent().find('.status');
@@ -748,19 +749,29 @@
 	        message = result.message,
 	        correction = result.correction;
 	
-	    if ($field.val() != correction && correction != '' && correction) $field.val(correction);
+	    Validator.change_status_field(field_name, bool);
+	
+	    if ($field.val() != correction && typeof correction !== 'undefined' && correction !== '') $field.val(correction);
 	
 	    if (bool) {
 	      $field.removeClass('form_error');
-	      $status.html(message).fadeOut(200);
+	      $status.html('').fadeOut(200);
+	    } else if (typeof message === 'undefined') {
+	      $field.addClass('form_error');
+	      $status.html('').fadeOut(200);
 	    } else {
 	      $field.addClass('form_error');
 	      $status.html(message).fadeIn(200);
 	    }
 	  }
+	
+	  var test_form = Validator.check_list_field();
+	  change_status_blockade(test_form);
+	
+	  running_validator = false;
 	};
 	
-	var change_status_blockade = function change_status_blockade(form_name, test_form) {
+	var change_status_blockade = function change_status_blockade(test_form) {
 	  if (typeof test_form === 'boolean') {
 	    var $form = $('form[data-form=' + form_name + ']'),
 	        $button = $form.find('*[type=submit]');
@@ -790,23 +801,17 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
-	exports.Types_Veriable = exports.Constructor_Validator = undefined;
+	exports.Constructor_Validator = undefined;
 	
 	var _validator = __webpack_require__(18);
 	
 	Object.defineProperty(exports, 'Constructor_Validator', {
-		enumerable: true,
-		get: function get() {
-			return _validator.Constructor_Validator;
-		}
-	});
-	Object.defineProperty(exports, 'Types_Veriable', {
-		enumerable: true,
-		get: function get() {
-			return _validator.Types_Veriable;
-		}
+	  enumerable: true,
+	  get: function get() {
+	    return _validator.Constructor_Validator;
+	  }
 	});
 	
 	
@@ -814,109 +819,80 @@
 	
 	_validator.Constructor_Validator.prototype.types = {};
 	
-	var create_checker = function create_checker(name, callback) {
-		_validator.Constructor_Validator.prototype.types[name] = {
-			validate: callback
-		};
-	};
-	
 	/////////////////////////////  Checkers  ///////////////////////////////
 	
-	create_checker('email', function (value) {
-		var Results = new _validator.Types_Veriable(),
-		    re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	_validator.checker.create_checker('email', function (value, callback) {
+	  var result = _validator.checker.create_result(),
+	      re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	
-		Results.bool = re.test(value);
-		if (!Results.bool) Results.message = 'It\'s not email.';
-	
-		Results.add();
-	
-		return Results.get_all();
+	  if (_validator.checker.check_condition(re.test(value))) {
+	    result = _validator.checker.create_error('It\'s not email.');
+	    callback(result);
+	  } else {
+	    _validator.checker.exist_in_db('email', value, callback, 'Someone already has that email. Try another?');
+	  }
 	});
 	
-	create_checker('password', function (value) {
-		var Results = new _validator.Types_Veriable();
+	_validator.checker.create_checker('password', function (value, callback) {
+	  var result = _validator.checker.create_result();
 	
-		Results.bool = value.length >= 8;
-		if (!Results.bool) Results.message = 'The password is too short.';
+	  if (_validator.checker.check_condition(value.length >= 8)) result = _validator.checker.create_error('Short passwords are easy to guess. Try one with at least 8 characters.');
 	
-		Results.add();
-	
-		return Results.get_all();
+	  callback(result);
 	});
 	
-	create_checker('proper_name', function (value) {
-		var Results = new _validator.Types_Veriable();
+	_validator.checker.create_checker('proper_name', function (value, callback) {
+	  value = value.charAt(0).toUpperCase() + value.slice(1);
 	
-		value = value.charAt(0).toUpperCase() + value.slice(1);
+	  var result = _validator.checker.create_result(value);
 	
-		Results.bool = value.length >= 3;
-		if (!Results.bool) Results.message = 'The name is too short.';
+	  if (_validator.checker.check_condition(value.length >= 3)) result = _validator.checker.create_error('The name is too short.', value);
 	
-		Results.correction = value;
-		Results.add();
-	
-		return Results.get_all();
+	  callback(result);
 	});
 	
-	create_checker('number', function (value) {
-		var Results = new _validator.Types_Veriable();
+	_validator.checker.create_checker('number', function (value, callback) {
+	  value = value.replace(/\s/g, '');
 	
-		value = value.replace(/\s/g, '');
+	  var result = _validator.checker.create_result(value);
 	
-		Results.bool = value.length === 9;
-		if (!Results.bool) Results.message = 'Number length is 9 digits.';
-		Results.add();
+	  if (_validator.checker.check_condition(value.length === 9)) result = _validator.checker.create_error('Number length is 9 digits.', value);
 	
-		Results.bool = !isNaN(value);
-		if (!Results.bool) Results.message = 'The number must consist of digits.';
-		Results.add();
+	  if (_validator.checker.check_condition(!isNaN(value))) result = _validator.checker.create_error('The number must consist of digits.', value);
 	
-		return Results.get_all();
+	  callback(result);
 	});
 	
-	create_checker('full_name', function (value) {
-		var Results = new _validator.Types_Veriable();
+	_validator.checker.create_checker('full_name', function (value, callback) {
+	  value = value.replace(/\w\S*/g, function (txt) {
+	    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+	  });
+	  value = value.replace('  ', ' ');
 	
-		value = value.replace(/\w\S*/g, function (txt) {
-			return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-		});
+	  var result = _validator.checker.create_result(value),
+	      split = value.split(' ');
 	
-		value = value.replace('  ', ' ');
+	  if (_validator.checker.check_condition(split.length >= 2 && split[0] !== '' && split[1] !== '')) result = _validator.checker.create_error('Full name consists of minimum 2 word.', value);
 	
-		var split = value.split(' ');
-	
-		if (split.length >= 2 && split[0] !== '' && split[1] !== '') Results.bool = true;else Results.bool = false;
-	
-		if (!Results.bool) Results.message = 'Full name consists of minimum 2 word.';
-	
-		Results.correction = value;
-		Results.add();
-	
-		return Results.get_all();
+	  callback(result);
 	});
 	
-	create_checker('no_empty', function (value) {
-		var Results = new _validator.Types_Veriable();
+	_validator.checker.create_checker('no_empty', function (value, callback) {
+	  var result = _validator.checker.create_result();
 	
-		Results.bool = value !== '';
-		if (!Results.bool) Results.message = 'The field can\'t be empty.';
-		Results.add();
+	  if (_validator.checker.check_condition(value !== '')) result = _validator.checker.create_error("You can't leave this empty.", value);
 	
-		return Results.get_all();
+	  callback(result);
 	});
 	
 	////////////////      LENGTH      ///////////////////
 	
-	create_checker('length_3', function (value) {
-		var Results = new _validator.Types_Veriable();
+	_validator.checker.create_checker('length_3', function (value, callback) {
+	  var result = _validator.checker.create_result();
 	
-		Results.bool = value.length >= 3;
-		if (!Results.bool) Results.message = 'It\'s too short.';
+	  if (_validator.checker.check_condition(value.length >= 3)) result = _validator.checker.create_error('It\'s too short.', value);
 	
-		Results.add();
-	
-		return Results.get_all();
+	  callback(result);
 	});
 	
 	////////////////////////////////////////////
@@ -928,119 +904,129 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
-	exports.Types_Veriable = exports.Constructor_Validator = undefined;
+	exports.Constructor_Validator = exports.checker = undefined;
 	
 	var _config = __webpack_require__(19);
 	
-	var Constructor_Validator = exports.Constructor_Validator = function Constructor_Validator(form_name) {
-		this.types = Constructor_Validator.prototype.types;
-		this.config = _config.list_configs[form_name];
-		var that = this;
+	var _struktura = __webpack_require__(10);
 	
-		////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////
 	
-		var prepare_list_fields = function prepare_list_fields(form) {
-			var fields = $(form).serializeArray(),
-			    obj = {},
-			    i = void 0,
-			    length = fields.length;
-			for (i = 0; i < length; ++i) {
-				if ($(form).find('*[name=' + fields[i].name + ']').hasClass('test')) obj[fields[i].name] = false;
-			}return obj;
-		};
+	var checker = exports.checker = {
 	
-		this.change_field = function (name, value) {
-			if (typeof fields_of_form[name] === 'boolean') {
-				if (typeof value === 'boolean') fields_of_form[name] = value;else throw {
-					name: 'Validation Error',
-					message: 'Invalid value in the field ' + value + '.'
-				};
-			} else throw {
-				name: 'Validation Error',
-				message: 'No manual for the field ' + name + '.'
-			};
-		};
+	  create_checker: function create_checker(name, callback) {
+	    Constructor_Validator.prototype.types[name] = {
+	      validate: callback
+	    };
+	  },
 	
-		this.check_list_field = function () {
-			for (var key in fields_of_form) {
-				if (fields_of_form.hasOwnProperty(key)) if (fields_of_form[key] === false) return false;
-			}return true;
-		};
+	  check_condition: function check_condition(condition) {
+	    return !condition;
+	  },
 	
-		var fields_of_form = prepare_list_fields($('form[data-form=' + form_name + ']'));
+	  create_result: function create_result(correction) {
+	    var result = {
+	      bool: true
+	    };
 	
-		////////////////////////////////////////////////////
+	    if (typeof correction !== 'undefined') result.correction = correction;
 	
-		this.hasErrors = function () {
-			return fields_of_form;
-		};
+	    return result;
+	  },
 	
-		this.field = function (name, value) {
-			var last_result = false,
-			    results = [];
+	  create_error: function create_error(message, correction) {
+	    var result = {
+	      bool: false
+	    };
 	
-			if (name && value) {
-				var msg = void 0,
-				    type = void 0,
-				    checker = void 0;
+	    if (typeof message !== 'undefined') result.message = message;
 	
-				this.messages = [];
+	    if (typeof correction !== 'undefined') result.correction = correction;
 	
-				type = this.config[name];
-				checker = this.types[type];
+	    return result;
+	  },
 	
-				if (!checker) throw {
-					name: 'Validation Error',
-					message: 'No manual for the key ' + name + '.'
-				};
+	  exist_in_db: function exist_in_db(name, value, callback, message) {
+	    if (name && value) {
+	      var post_data = {
+	        __exist__: name,
+	        value: value,
+	        csrfmiddlewaretoken: _struktura.data_controller.get('csrf_token')
+	      };
 	
-				results = checker.validate(value);
-			} else if (value != '') {
-				var Results = new Types_Veriable();
-				Results.bool = false;
-				Results.message = "Incorrect value " + name;
-				Results.add();
-				results = Results.get_all();
-			} else results = false;
-			//////////////////////////////////
-	
-			if (results) {
-				for (var i = 0; i < results.length; ++i) {
-					if (results[i].bool === false) last_result = results[i];
-				}if (!last_result) last_result = results[results.length - 1];
-	
-				this.change_field(name, last_result.bool);
-			} else this.change_field(name, false);
-	
-			return last_result;
-		};
+	      $.post('', post_data).done(function (data) {
+	        if (data.__exist__ !== 'undefined') if (data.__exist__ === 'true') callback(checker.create_error(message));else if (data.__exist__ === 'false') callback(checker.create_result());
+	      }).fail(function (err) {
+	        console.error(err);
+	      });
+	    }
+	  }
 	};
 	
-	/////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////
 	
-	var Types_Veriable = exports.Types_Veriable = function Types_Veriable() {
-		var array_result = [];
-		this.bool = true;
-		this.message = '';
-		this.correction = '';
+	var Constructor_Validator = exports.Constructor_Validator = function Constructor_Validator(form_name) {
+	  // define base veriable
 	
-		this.add = function () {
-			var object = {
-				bool: this.bool,
-				message: this.message,
-				correction: this.correction
-			};
+	  var fields_of_form = void 0;
+	  this.types = Constructor_Validator.prototype.types;
+	  this.config = _config.list_configs[form_name];
 	
-			array_result.push(object);
+	  // definitions function
 	
-			return true;
-		};
+	  this.change_status_field = function (name, value) {
+	    if (typeof fields_of_form[name] === 'boolean') {
+	      if (typeof value === 'boolean') fields_of_form[name] = value;else console.error('Validation Error: Invalid value in the field ' + value + '.');
+	    } else console.error('Validation Error: No manual for the field ' + name + '.');
+	  };
 	
-		this.get_all = function () {
-			return array_result;
-		};
+	  this.check_list_field = function () {
+	    for (var key in fields_of_form) {
+	      if (fields_of_form.hasOwnProperty(key)) if (fields_of_form[key] === false) return false;
+	    }return true;
+	  };
+	
+	  var prepare_list_fields = function prepare_list_fields(form) {
+	    var fields = $(form).serializeArray(),
+	        obj = {},
+	        i = void 0,
+	        length = fields.length;
+	    for (i = 0; i < length; ++i) {
+	      if ($(form).find('*[name=' + fields[i].name + ']').hasClass('test')) obj[fields[i].name] = false;
+	    }return obj;
+	  };
+	
+	  fields_of_form = prepare_list_fields($('form[data-form=' + form_name + ']'));
+	
+	  ////////////////////////////////////////////////////
+	
+	  this.field = function (name, value, callback) {
+	    var results = [];
+	
+	    if (name && value) {
+	      var type = void 0,
+	          _checker = void 0;
+	
+	      type = this.config[name];
+	      _checker = this.types[type];
+	
+	      if (!_checker) throw {
+	        name: 'Validation Error',
+	        message: 'No manual for the key ' + name + '.'
+	      };
+	
+	      _checker.validate(value, callback);
+	    } else if (value !== '') {
+	      results = checker.create_error('Incorrect value ' + name);
+	      callback(results);
+	    } else callback(checker.create_error());
+	  };
+	
+	  this.hasErrors = function () {
+	    return fields_of_form;
+	  };
 	};
 
 /***/ },

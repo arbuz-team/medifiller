@@ -33,7 +33,7 @@ export let content_controller = new function Content_Controller()
     {
       if( status !== 'success' )
       {
-        $kontener.html( 'An error has occurred while connecting to server. Please, refresh website or check your connect with network.' )
+        $kontener.html( 'An error has occurred while connecting to server. Please, refresh website or check your connect with network.' );
       }
     }
     else

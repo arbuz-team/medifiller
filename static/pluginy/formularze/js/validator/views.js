@@ -37,7 +37,12 @@ export let define = function()
 
 //////////////////////////////   VIEWS VALIDATOR   ///////////////////////////////////
 
-let running_validator = false;
+let running_validator = false,
+  form_name,
+  Validator,
+  field,
+  field_name,
+  field_value;
 
 let validate = function()
 {
@@ -45,22 +50,18 @@ let validate = function()
   {
     running_validator = true;
 
-    let field = this,
-      form_name = $(field).parents('form').data('form'),
-      Validator = Validators[form_name],
-      name = $(field).attr('name'),
-      value = $(field).val(),
-      results = Validator.field(name, value),
-      test_form = Validator.check_list_field();
+    field = this;
+    form_name = $(field).parents('form').data('form');
+    Validator = Validators[form_name];
+    field_name = $(field).attr('name');
+    field_value = $(field).val();
 
-    show_status(field, results);
-    change_status_blockade(form_name, test_form);
-    running_validator = false;
+    Validator.field(field_name, field_value, show_status);
   }
 };
 
 
-let show_status = function(field, result)
+let show_status = function(result)
 {
   if(result)
   {
@@ -71,13 +72,20 @@ let show_status = function(field, result)
       message = result.message,
       correction = result.correction;
 
-    if($field.val() != correction && correction != '' && correction )
+    Validator.change_status_field(field_name, bool);
+
+    if($field.val() != correction && typeof correction !== 'undefined' && correction !== '')
       $field.val(correction);
 
-    if( bool )
+    if(bool)
     {
       $field.removeClass('form_error');
-      $status.html(message).fadeOut(200);
+      $status.html('').fadeOut(200);
+    }
+    else if(typeof message === 'undefined')
+    {
+      $field.addClass('form_error');
+      $status.html('').fadeOut(200);
     }
     else
     {
@@ -85,10 +93,15 @@ let show_status = function(field, result)
       $status.html(message).fadeIn(200);
     }
   }
+
+  let test_form = Validator.check_list_field();
+  change_status_blockade(test_form);
+
+  running_validator = false;
 };
 
 
-let change_status_blockade = function(form_name, test_form)
+let change_status_blockade = function(test_form)
 {
   if(typeof test_form === 'boolean')
   {

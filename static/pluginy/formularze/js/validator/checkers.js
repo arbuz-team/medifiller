@@ -1,139 +1,108 @@
 
-import {Constructor_Validator, Types_Veriable} from './validator'
+import {Constructor_Validator, checker} from './validator'
 
-export {Constructor_Validator, Types_Veriable} from './validator'
+export {Constructor_Validator} from './validator'
 
 /////////////////////////////  Prepare checkers  ///////////////////////////////
 
 Constructor_Validator.prototype.types = {};
 
-let create_checker = function(name, callback)
-{
-	Constructor_Validator.prototype.types[name] = {
-		validate: callback
-	};
-};
-
 /////////////////////////////  Checkers  ///////////////////////////////
 
-create_checker('email', function(value)
+checker.create_checker('email', function(value, callback)
 {
-	let Results = new Types_Veriable(),
+	let result = checker.create_result(),
 	  re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-	Results.bool = re.test(value);
-	if(!Results.bool)
-		Results.message = 'It\'s not email.';
-
-	Results.add();
-
-	return Results.get_all();
+	if(checker.check_condition( re.test(value) ))
+  {
+    result = checker.create_error('It\'s not email.');
+    callback(result);
+  }
+	else
+  {
+    checker.exist_in_db('email', value, callback, 'Someone already has that email. Try another?');
+  }
 });
 
 
-create_checker('password', function(value)
+checker.create_checker('password', function(value, callback)
 {
-	let Results = new Types_Veriable();
+  let result = checker.create_result();
 
-	Results.bool = value.length >= 8;
-	if(!Results.bool)
-		Results.message = 'The password is too short.';
+  if(checker.check_condition( value.length >= 8 ))
+    result = checker.create_error('Short passwords are easy to guess. Try one with at least 8 characters.');
 
-	Results.add();
-
-	return Results.get_all();
+  callback(result);
 });
 
 
-create_checker('proper_name', function(value)
+checker.create_checker('proper_name', function(value, callback)
 {
-	let Results = new Types_Veriable();
+  value = value.charAt(0).toUpperCase() + value.slice(1);
 
-	value = value.charAt(0).toUpperCase() + value.slice(1);
+  let result = checker.create_result(value);
 
-	Results.bool = value.length >= 3;
-	if(!Results.bool)
-		Results.message = 'The name is too short.';
+  if(checker.check_condition( value.length >= 3 ))
+    result = checker.create_error('The name is too short.', value);
 
-	Results.correction = value;
-	Results.add();
-
-	return Results.get_all();
+  callback(result);
 });
 
 
-create_checker('number', function(value)
+checker.create_checker('number', function(value, callback)
 {
-	let Results = new Types_Veriable();
+  value = value.replace(/\s/g, '');
 
-	value = value.replace(/\s/g, '');
+  let result = checker.create_result(value);
 
-	Results.bool = value.length === 9;
-	if(!Results.bool)
-		Results.message = 'Number length is 9 digits.';
-	Results.add();
+  if(checker.check_condition( value.length === 9 ))
+    result = checker.create_error('Number length is 9 digits.', value);
 
-	Results.bool = !isNaN(value);
-	if(!Results.bool)
-		Results.message = 'The number must consist of digits.';
-	Results.add();
+  if(checker.check_condition( !isNaN(value) ))
+    result = checker.create_error('The number must consist of digits.', value);
 
-	return Results.get_all();
+  callback(result);
 });
 
 
-create_checker('full_name', function(value)
+checker.create_checker('full_name', function(value, callback)
 {
-  let Results = new Types_Veriable();
-
   value = value.replace(/\w\S*/g, function(txt){
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   });
-
   value = value.replace('  ', ' ');
 
-  let split = value.split(' ');
+  let result = checker.create_result(value),
+    split = value.split(' ');
 
-  if(split.length >= 2 && split[0] !== '' && split[1] !== '')
-    Results.bool = true;
-  else
-    Results.bool = false;
+  if(checker.check_condition( split.length >= 2 && split[0] !== '' && split[1] !== '' ))
+    result = checker.create_error('Full name consists of minimum 2 word.', value);
 
-  if(!Results.bool)
-    Results.message = 'Full name consists of minimum 2 word.';
-
-  Results.correction = value;
-  Results.add();
-
-  return Results.get_all();
+  callback(result);
 });
 
 
-create_checker('no_empty', function(value)
+checker.create_checker('no_empty', function(value, callback)
 {
-  let Results = new Types_Veriable();
+  let result = checker.create_result();
 
-  Results.bool = value !== '';
-  if(!Results.bool)
-    Results.message = 'The field can\'t be empty.';
-  Results.add();
+  if(checker.check_condition( value !== '' ))
+    result = checker.create_error("You can't leave this empty.", value);
 
-  return Results.get_all();
+  callback(result);
 });
 
 ////////////////      LENGTH      ///////////////////
 
-create_checker('length_3', function(value)
+checker.create_checker('length_3', function(value, callback)
 {
-  let Results = new Types_Veriable();
+  let result = checker.create_result();
 
-  Results.bool = value.length >= 3;
-  if(!Results.bool)
-    Results.message = 'It\'s too short.';
+  if(checker.check_condition( value.length >= 3 ))
+    result = checker.create_error('It\'s too short.', value);
 
-  Results.add();
-
-  return Results.get_all();
+  callback(result);
 });
 
 ////////////////////////////////////////////
