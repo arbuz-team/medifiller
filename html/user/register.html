@@ -12,7 +12,7 @@
 
   <div class="tresc">
 
-    {% if request.session.user_login %}
+    {% if not form %}
 
         Hello {{ request.session.user_username }}! You are registered. Visit your mailbox and active account ;)
         <script> window.dispatchEvent(window.EVENTS.redirect); </script>

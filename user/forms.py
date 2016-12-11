@@ -1,5 +1,6 @@
 from django import forms
 from .models import *
+from nocaptcha_recaptcha.fields import NoReCaptchaField
 
 
 class Form_Login(forms.Form):
@@ -25,6 +26,8 @@ class Form_Login(forms.Form):
             }),
         max_length=100
     )
+
+    captcha = NoReCaptchaField()
 
     def clean_email(self):
         email = self.cleaned_data['email']

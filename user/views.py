@@ -154,7 +154,7 @@ class Logout(Manage_Dynamic_Event):
 
     @staticmethod
     def Launch(request):
-        return Logout(request).HTML
+        return Logout(request, authorization=True).HTML
 
 
 
@@ -171,7 +171,7 @@ class Account(Manage_Dynamic_Event):
 
     @staticmethod
     def Launch(request):
-        return Account(request).HTML
+        return Account(request, authorization=True).HTML
 
 
 

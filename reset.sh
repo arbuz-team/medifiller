@@ -9,7 +9,7 @@ python manage.py makemigrations user
 python manage.py makemigrations root
 python manage.py makemigrations product
 
-python manage.py migrate auth
+python manage.py migrate
 
 python manage.py migrate user
 python manage.py migrate root
