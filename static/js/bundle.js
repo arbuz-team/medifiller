@@ -618,12 +618,13 @@
 	  var prepare_form_to_send = function prepare_form_to_send(event) {
 	    event.preventDefault();
 	
-	    var url = $(this).attr('action'),
+	    var form_name = $(this).data('form'),
+	        url = $(this).attr('action'),
 	        form_object = get_form_fields(this);
 	
 	    if (typeof url === 'undefined' || url === '') url = _podstawa.data_controller.get('path');
 	
-	    _podstawa.form_controller.send(url, form_object);
+	    _podstawa.form_controller.send(form_name, url, form_object);
 	  };
 	}();
 
@@ -651,16 +652,16 @@
 	
 	var form_controller = exports.form_controller = new function Form_Controller() {
 	
-	  var _prepare_post_data = function _prepare_post_data(object) {
+	  var _prepare_post_data = function _prepare_post_data(form_name, object) {
 	    if (!object) return {};
 	
-	    object.__form__ = 'true';
+	    object.__form__ = form_name;
 	
 	    return object;
 	  };
 	
-	  this.send = function (url, data_post) {
-	    data_post = _prepare_post_data(data_post);
+	  this.send = function (form_name, url, data_post) {
+	    data_post = _prepare_post_data(form_name, data_post);
 	    _podstawa.content_controller.change_content(url, data_post);
 	  };
 	
@@ -698,18 +699,18 @@
 	
 	var Validators = {};
 	
+	window.Validators = Validators;
+	
 	var define = exports.define = function define() {
 	
 	  $('form[data-test=yes]').each(function () {
-	    var name = $(this).data('form');
+	    var name = $(this).attr('data-form');
 	    if (name) {
 	      if (typeof Validators[name] === 'undefined') Validators[name] = new _checkers.Constructor_Validator(name);
 	    } else console.error('Validation Error: Incorrect or empty form name "' + name + '".');
 	  });
 	
-	  $('form[data-test=yes] .test').keyup(function () {
-	    validate(this);
-	  });
+	  $('form[data-test=yes] .test').keyup(validate).change(validate);
 	
 	  $('.show_password').change(function () {
 	    if ($(this).is(':checked')) show_password(this);else hide_password(this);
@@ -718,16 +719,24 @@
 	
 	//////////////////////////////   VIEWS VALIDATOR   ///////////////////////////////////
 	
-	var validate = function validate(field) {
-	  var form_name = $(field).parents('form').data('form'),
-	      Validator = Validators[form_name],
-	      name = $(field).attr('name'),
-	      value = $(field).val(),
-	      results = Validator.field(name, value),
-	      test_form = Validator.check_list_field();
+	var running_validator = false;
 	
-	  show_status(field, results);
-	  change_status_blockade(form_name, test_form);
+	var validate = function validate() {
+	  if (running_validator === false) {
+	    running_validator = true;
+	
+	    var field = this,
+	        form_name = $(field).parents('form').data('form'),
+	        Validator = Validators[form_name],
+	        name = $(field).attr('name'),
+	        value = $(field).val(),
+	        results = Validator.field(name, value),
+	        test_form = Validator.check_list_field();
+	
+	    show_status(field, results);
+	    change_status_blockade(form_name, test_form);
+	    running_validator = false;
+	  }
 	};
 	
 	var show_status = function show_status(field, result) {
@@ -850,17 +859,6 @@
 		return Results.get_all();
 	});
 	
-	create_checker('length', function (value) {
-		var Results = new _validator.Types_Veriable();
-	
-		Results.bool = value.length >= 3;
-		if (!Results.bool) Results.message = 'It\'s too short.';
-	
-		Results.add();
-	
-		return Results.get_all();
-	});
-	
 	create_checker('number', function (value) {
 		var Results = new _validator.Types_Veriable();
 	
@@ -872,6 +870,50 @@
 	
 		Results.bool = !isNaN(value);
 		if (!Results.bool) Results.message = 'The number must consist of digits.';
+		Results.add();
+	
+		return Results.get_all();
+	});
+	
+	create_checker('full_name', function (value) {
+		var Results = new _validator.Types_Veriable();
+	
+		value = value.replace(/\w\S*/g, function (txt) {
+			return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+		});
+	
+		value = value.replace('  ', ' ');
+	
+		var split = value.split(' ');
+	
+		if (split.length >= 2 && split[0] !== '' && split[1] !== '') Results.bool = true;else Results.bool = false;
+	
+		if (!Results.bool) Results.message = 'Full name consists of minimum 2 word.';
+	
+		Results.correction = value;
+		Results.add();
+	
+		return Results.get_all();
+	});
+	
+	create_checker('no_empty', function (value) {
+		var Results = new _validator.Types_Veriable();
+	
+		Results.bool = value !== '';
+		if (!Results.bool) Results.message = 'The field can\'t be empty.';
+		Results.add();
+	
+		return Results.get_all();
+	});
+	
+	////////////////      LENGTH      ///////////////////
+	
+	create_checker('length_3', function (value) {
+		var Results = new _validator.Types_Veriable();
+	
+		Results.bool = value.length >= 3;
+		if (!Results.bool) Results.message = 'It\'s too short.';
+	
 		Results.add();
 	
 		return Results.get_all();
@@ -895,15 +937,17 @@
 	var Constructor_Validator = exports.Constructor_Validator = function Constructor_Validator(form_name) {
 		this.types = Constructor_Validator.prototype.types;
 		this.config = _config.list_configs[form_name];
+		var that = this;
 	
 		////////////////////////////////////////////////////
 	
-		var prepare_list_fields = function prepare_list_fields(fields_of_form) {
-			var obj = {},
+		var prepare_list_fields = function prepare_list_fields(form) {
+			var fields = $(form).serializeArray(),
+			    obj = {},
 			    i = void 0,
-			    length = fields_of_form.length;
+			    length = fields.length;
 			for (i = 0; i < length; ++i) {
-				obj[fields_of_form[i].name] = false;
+				if ($(form).find('*[name=' + fields[i].name + ']').hasClass('test')) obj[fields[i].name] = false;
 			}return obj;
 		};
 	
@@ -925,12 +969,12 @@
 			}return true;
 		};
 	
-		var fields_of_form = prepare_list_fields($('form[data-form=' + form_name + ']').serializeArray());
+		var fields_of_form = prepare_list_fields($('form[data-form=' + form_name + ']'));
 	
 		////////////////////////////////////////////////////
 	
 		this.hasErrors = function () {
-			return this.messages.length !== 0;
+			return fields_of_form;
 		};
 	
 		this.field = function (name, value) {
@@ -1006,19 +1050,28 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 	var list_configs = exports.list_configs = {};
 	
 	list_configs.register = {
-		username: 'length',
-		password: 'password',
-		email: 'email'
+	  username: 'length_3',
+	  password: 'password',
+	  email: 'email'
 	};
 	
 	list_configs.login = {
-		email: 'email',
-		password: 'password'
+	  email: 'email',
+	  password: 'password'
+	};
+	
+	list_configs.user_address = {
+	  full_name: 'full_name',
+	  address_line_1: 'no_empty',
+	  city: 'proper_name',
+	  region: 'proper_name',
+	  postcode: 'no_empty',
+	  country: 'proper_name'
 	};
 
 /***/ }

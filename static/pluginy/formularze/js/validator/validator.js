@@ -5,15 +5,19 @@ export let Constructor_Validator = function(form_name)
 {
 	this.types = Constructor_Validator.prototype.types;
 	this.config = list_configs[form_name];
+	let that = this;
 	
 ////////////////////////////////////////////////////
 	
-	let prepare_list_fields = function(fields_of_form)
+	let prepare_list_fields = function(form)
 	{
-		let obj = {},
-			i, length = fields_of_form.length;
+		let fields = $(form).serializeArray(),
+      obj = {},
+			i,
+      length = fields.length;
 		for( i = 0; i < length; ++i )
-			obj[fields_of_form[i].name] = false;
+		  if($(form).find('*[name='+ fields[i].name +']').hasClass('test'))
+			  obj[fields[i].name] = false;
 		
 		return obj;
 	};
@@ -45,13 +49,13 @@ export let Constructor_Validator = function(form_name)
 		return true;
 	};
 	
-	let fields_of_form = prepare_list_fields($('form[data-form='+ form_name +']').serializeArray());
+	let fields_of_form = prepare_list_fields($('form[data-form='+ form_name +']'));
 	
 ////////////////////////////////////////////////////
 	
 	this.hasErrors = function()
 	{
-		return this.messages.length !== 0;
+		return fields_of_form;
 	};
 	
 	this.field = function(name, value)

@@ -3,23 +3,25 @@ import {Constructor_Validator} from './checkers'
 
 let Validators = {};
 
-export let define = function(){
+window.Validators = Validators;
+
+export let define = function()
+{
 
 	$('form[data-test=yes]').each(function(){
-		let name = $(this).data('form');
+		let name = $(this).attr('data-form');
 		if(name)
     {
       if(typeof Validators[name] === 'undefined')
         Validators[name] = new Constructor_Validator(name);
     }
     else
-      console.error('Validation Error: Incorrect or empty form name "'+ name +'".')
+      console.error( 'Validation Error: Incorrect or empty form name "' + name + '".' );
 	});
 
 
-  $('form[data-test=yes] .test').keyup(function(){
-    validate(this);
-  });
+  $('form[data-test=yes] .test').keyup(validate)
+    .change(validate);
 
 
   $('.show_password').change(function(){
@@ -35,17 +37,26 @@ export let define = function(){
 
 //////////////////////////////   VIEWS VALIDATOR   ///////////////////////////////////
 
-let validate = function(field)
-{
-  let form_name = $(field).parents('form').data('form'),
-    Validator = Validators[form_name],
-    name = $(field).attr('name'),
-    value = $(field).val(),
-    results = Validator.field(name, value),
-    test_form = Validator.check_list_field();
+let running_validator = false;
 
-  show_status(field, results);
-  change_status_blockade(form_name, test_form);
+let validate = function()
+{
+  if(running_validator === false)
+  {
+    running_validator = true;
+
+    let field = this,
+      form_name = $(field).parents('form').data('form'),
+      Validator = Validators[form_name],
+      name = $(field).attr('name'),
+      value = $(field).val(),
+      results = Validator.field(name, value),
+      test_form = Validator.check_list_field();
+
+    show_status(field, results);
+    change_status_blockade(form_name, test_form);
+    running_validator = false;
+  }
 };
 
 
