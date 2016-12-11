@@ -62,20 +62,6 @@ create_checker('proper_name', function(value)
 });
 
 
-create_checker('length', function(value)
-{
-	let Results = new Types_Veriable();
-
-	Results.bool = value.length >= 3;
-	if(!Results.bool)
-		Results.message = 'It\'s too short.';
-
-	Results.add();
-
-	return Results.get_all();
-});
-
-
 create_checker('number', function(value)
 {
 	let Results = new Types_Veriable();
@@ -93,6 +79,61 @@ create_checker('number', function(value)
 	Results.add();
 
 	return Results.get_all();
+});
+
+
+create_checker('full_name', function(value)
+{
+  let Results = new Types_Veriable();
+
+  value = value.replace(/\w\S*/g, function(txt){
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+
+  value = value.replace('  ', ' ');
+
+  let split = value.split(' ');
+
+  if(split.length >= 2 && split[0] !== '' && split[1] !== '')
+    Results.bool = true;
+  else
+    Results.bool = false;
+
+  if(!Results.bool)
+    Results.message = 'Full name consists of minimum 2 word.';
+
+  Results.correction = value;
+  Results.add();
+
+  return Results.get_all();
+});
+
+
+create_checker('no_empty', function(value)
+{
+  let Results = new Types_Veriable();
+
+  Results.bool = value !== '';
+  if(!Results.bool)
+    Results.message = 'The field can\'t be empty.';
+  Results.add();
+
+  return Results.get_all();
+});
+
+////////////////      LENGTH      ///////////////////
+
+create_checker('length_3', function(value)
+{
+  let Results = new Types_Veriable();
+
+  Results.bool = value.length >= 3;
+  if(!Results.bool)
+    Results.message = 'It\'s too short.';
+
+  Results.add();
+
+  return Results.get_all();
 });
 
 ////////////////////////////////////////////

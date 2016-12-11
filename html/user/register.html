@@ -14,17 +14,28 @@
   
     Register
 
-    <form method="post" action="" data-form="register" data-test="yes">
+    <form method="post" action="" data-form="{{ form_name }}" data-test="yes">
 
       {% for i in form %}
 
-        <div class="otoczka_pola">
+        {% if i.name = 'password' %}
 
-          {{ i }}
-          {{ i.errors }}
-          <div class="status"></div>
+          <div class="otoczka_pola">
+            {{ i }}
+            <input type="checkbox" class="show_password" /> show password
+            {{ i.errors }}
+            <div class="status"></div>
+          </div>
 
-        </div>
+        {% else %}
+
+          <div class="otoczka_pola">
+            {{ i }}
+            {{ i.errors }}
+            <div class="status"></div>
+          </div>
+
+        {% endif %}
 
       {% endfor %}
 
