@@ -86,6 +86,14 @@ class Register(Manage_Dynamic_Event):
 
         return super(Register, self).Manage_Form()
 
+    def Manage_Exist(self):
+
+        if self.request.POST['__exist__'] == 'email':
+            if User.objects.filter(email=self.request.POST['value']):
+                return JsonResponse({'__exist__': 'true'})
+
+        return JsonResponse({'__exist__': 'false'})
+
     def Create_No_Approved_User(self):
         self.content['key'] = binascii.hexlify(os.urandom(20))
         form = self.content['form']
