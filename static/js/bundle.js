@@ -825,6 +825,15 @@
 	  var result = _validator.checker.create_result(),
 	      re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	
+	  if (_validator.checker.check_condition(re.test(value))) result = _validator.checker.create_error('It\'s not email.');
+	
+	  callback(result);
+	});
+	
+	_validator.checker.create_checker('email_db', function (value, callback) {
+	  var result = _validator.checker.create_result(),
+	      re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	
 	  if (_validator.checker.check_condition(re.test(value))) {
 	    result = _validator.checker.create_error('It\'s not email.');
 	    callback(result);
@@ -1047,7 +1056,7 @@
 	};
 	
 	list_configs.login = {
-	  email: 'email',
+	  email: 'email_db',
 	  password: 'password'
 	};
 	
