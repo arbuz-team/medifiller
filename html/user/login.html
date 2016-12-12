@@ -11,7 +11,7 @@
 
   <div class="tresc">
   
-    {% if not form %}
+    {% if not form or request.session.user_login %}
 
       Hello {{ request.session.user_username }}! You are login. ;)
       <script> window.dispatchEvent(window.EVENTS.redirect); </script>

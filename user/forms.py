@@ -27,8 +27,6 @@ class Form_Login(forms.Form):
         max_length=100
     )
 
-    captcha = NoReCaptchaField()
-
     def clean_email(self):
         email = self.cleaned_data['email']
 
@@ -60,6 +58,8 @@ class Form_Login(forms.Form):
 
 
 class Form_Register(forms.ModelForm):
+
+    captcha = NoReCaptchaField()
 
     class Meta:
 
