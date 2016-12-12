@@ -15,11 +15,23 @@ checker.create_checker('email', function(value, callback)
 	  re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 	if(checker.check_condition( re.test(value) ))
+    result = checker.create_error('It\'s not email.');
+
+  callback(result);
+});
+
+
+checker.create_checker('email_db', function(value, callback)
+{
+  let result = checker.create_result(),
+    re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  if(checker.check_condition( re.test(value) ))
   {
     result = checker.create_error('It\'s not email.');
     callback(result);
   }
-	else
+  else
   {
     checker.exist_in_db('email', value, callback, 'Someone already has that email. Try another?');
   }
