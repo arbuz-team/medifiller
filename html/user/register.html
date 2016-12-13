@@ -7,7 +7,7 @@
 <script src='https://www.google.com/recaptcha/api.js'></script>
 
 
-<div class="BLOK1">
+<div class="BLOK1 USER_FORM">
 
   <div class="tlo abs_pelny"></div>
 
@@ -19,9 +19,10 @@
         <script> window.dispatchEvent(window.EVENTS.redirect); </script>
 
     {% else %}
-      Register
 
       <form method="post" action="" data-form="{{ form_name }}" data-test="yes">
+
+        <div class="title"> Register </div>
 
         {% for i in form %}
 
@@ -29,7 +30,7 @@
 
             <div class="otoczka_pola">
               {{ i }}
-              <input type="checkbox" class="show_password" /> show password
+              <input type="checkbox" class="show_password" />
               {{ i.errors }}
               <div class="status"></div>
             </div>
@@ -46,7 +47,7 @@
 
         {% endfor %}
 
-        <div class="otoczka_pola"><button disabled type="submit"> Register </button></div>
+        <div class="otoczka_pola"><button disabled type="submit"> Done </button></div>
 
       {% endif %}
 

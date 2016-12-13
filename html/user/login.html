@@ -5,7 +5,7 @@
   };
 </script>
 
-<div class="BLOK1">
+<div class="BLOK1 USER_FORM">
 
   <div class="tlo abs_pelny"></div>
 
@@ -18,8 +18,9 @@
 
     {% else %}
 
-      Login
       <form method="post" action="" data-form="{{ form_name }}" data-test="yes">
+
+        <div class="title"> Login </div>
 
         {% for i in form %}
 
@@ -31,7 +32,7 @@
         {% endfor %}
 
         <div class="otoczka_pola">
-          <button disabled type="submit"> Login </button>
+          <button disabled type="submit"> Done </button>
         </div>
 
       </form>

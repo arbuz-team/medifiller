@@ -1,86 +1,3 @@
-@font-face {
-  font-family: 'OS_Regular';
-  src: url("/static/img/czcionki/OpenSans-Regular.ttf"); }
-
-@font-face {
-  font-family: 'OS_Bold';
-  src: url("/static/img/czcionki/OpenSans-Bold.ttf"); }
-
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small,
-strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form,
-label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas,
-details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section,
-summary, time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font: inherit;
-  font-size: 100%;
-  vertical-align: baseline; }
-
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
-  display: block; }
-
-body, html {
-  width: 100%;
-  min-height: 100%;
-  max-height: 100%;
-  height: 100%;
-  overflow: hidden;
-  background-color: #fff;
-  color: #333;
-  font-family: 'OS_Regular', sans-serif;
-  font-size: 19px;
-  line-height: 1.45; }
-
-body {
-  position: absolute;
-  overflow: hidden; }
-
-a, a:hover, a:active, a:visited {
-  color: inherit;
-  text-decoration: none;
-  font-weight: bold; }
-
-ul {
-  list-style: none; }
-
-.abs_pelny {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0; }
-
-.rel_pelny {
-  position: relative;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0; }
-
-.fix_pelny {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0; }
-
-#NIEWIDZIALNY_OPIS {
-  display: none; }
-
-#BLOK_GLOWNY {
-  overflow: hidden;
-  z-index: 3; }
-  #BLOK_GLOWNY > div {
-    overflow: auto;
-    overflow-x: hidden; }
-    #BLOK_GLOWNY > div > .fragment {
-      position: relative;
-      z-index: 5;
-      overflow: hidden; }
-
 #NAGLOWEK {
   position: relative;
   z-index: 37 !important;
@@ -166,6 +83,89 @@ ul {
   position: relative;
   min-height: 300px;
   background-color: #fff; }
+
+@font-face {
+  font-family: 'OS_Regular';
+  src: url("/static/img/czcionki/OpenSans-Regular.ttf"); }
+
+@font-face {
+  font-family: 'OS_Bold';
+  src: url("/static/img/czcionki/OpenSans-Bold.ttf"); }
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small,
+strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form,
+label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas,
+details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section,
+summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline; }
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body, html {
+  width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #fff;
+  color: #333;
+  font-family: 'OS_Regular', sans-serif;
+  font-size: 19px;
+  line-height: 1.45; }
+
+body {
+  position: absolute;
+  overflow: hidden; }
+
+a, a:hover, a:active, a:visited {
+  color: inherit;
+  text-decoration: none;
+  font-weight: bold; }
+
+ul {
+  list-style: none; }
+
+.abs_pelny {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0; }
+
+.rel_pelny {
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0; }
+
+.fix_pelny {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0; }
+
+#NIEWIDZIALNY_OPIS {
+  display: none; }
+
+#BLOK_GLOWNY {
+  overflow: hidden;
+  z-index: 3; }
+  #BLOK_GLOWNY > div {
+    overflow: auto;
+    overflow-x: hidden; }
+    #BLOK_GLOWNY > div > .fragment {
+      position: relative;
+      z-index: 5;
+      overflow: hidden; }
 
 #NAGLOWEK .menu {
   float: right;
@@ -326,38 +326,55 @@ ul {
   .fragment.RWD > div > .tresc {
     width: 970px; } }
 
-.otoczka_pola input[type=text],
-.otoczka_pola input[type=email],
-.otoczka_pola input[type=password],
-.otoczka_pola input[type=number],
-.otoczka_pola select,
-.otoczka_pola button,
-.otoczka_pola textarea {
+#TRESC > .USER_FORM > .tresc {
+  width: 330px;
+  background: #fff;
+  border: 1px solid #ddd;
+    border-radius: 3px; }
+  #TRESC > .USER_FORM > .tresc form > .title {
+    padding: 10px 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    color: #666;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center; }
+  #TRESC > .USER_FORM > .tresc .otoczka_pola {
+    position: relative; }
+    #TRESC > .USER_FORM > .tresc .otoczka_pola input[type=text], #TRESC > .USER_FORM > .tresc .otoczka_pola input[type=email], #TRESC > .USER_FORM > .tresc .otoczka_pola input[type=password], #TRESC > .USER_FORM > .tresc .otoczka_pola input[type=number], #TRESC > .USER_FORM > .tresc .otoczka_pola select, #TRESC > .USER_FORM > .tresc .otoczka_pola button, #TRESC > .USER_FORM > .tresc .otoczka_pola textarea {
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box; }
+    #TRESC > .USER_FORM > .tresc .otoczka_pola input[type=checkbox] {
+      position: absolute;
+      right: 8px;
+      top: 9px;
+      width: 18px;
+      height: 18px; }
+  #TRESC > .USER_FORM > .tresc .otoczka_pola:last-child {
+    padding-top: 10px;
+    margin-top: 10px;
+    border-top: 1px solid #eee; }
+
+.otoczka_pola input[type=text], .otoczka_pola input[type=email], .otoczka_pola input[type=password], .otoczka_pola input[type=number], .otoczka_pola select, .otoczka_pola button, .otoczka_pola textarea {
   margin: 2px 3px;
+    margin-bottom: 8px;
   outline: none;
   border: 1px solid #d9d9d9;
     border-top: 1px solid #c0c0c0;
     border-radius: 3px;
-  line-height: 20px;
-  padding: 5px 10px; }
+  line-height: 25px;
+  padding: 5px 10px;
+  font-size: 14px; }
 
-.otoczka_pola input[type=text]:disabled,
-.otoczka_pola input[type=email]:disabled,
-.otoczka_pola input[type=password]:disabled,
-.otoczka_pola input[type=number]:disabled,
-.otoczka_pola select:disabled,
-.otoczka_pola button:disabled,
-.otoczka_pola textarea:disabled {
+.otoczka_pola input[type=text]:disabled, .otoczka_pola input[type=email]:disabled, .otoczka_pola input[type=password]:disabled, .otoczka_pola input[type=number]:disabled, .otoczka_pola select:disabled, .otoczka_pola button:disabled, .otoczka_pola textarea:disabled {
   background-color: #efefef;
   border: 1px solid #d9d9d9; }
 
-.otoczka_pola input[type=text]:focus,
-.otoczka_pola input[type=email]:focus,
-.otoczka_pola input[type=password]:focus,
-.otoczka_pola input[type=number]:focus,
-.otoczka_pola select:focus,
-.otoczka_pola button:focus,
-.otoczka_pola textarea:focus {
+.otoczka_pola input[type=text]:focus, .otoczka_pola input[type=email]:focus, .otoczka_pola input[type=password]:focus, .otoczka_pola input[type=number]:focus, .otoczka_pola select:focus, .otoczka_pola button:focus, .otoczka_pola textarea:focus {
   border: 1px solid #b9b9b9;
     border-top: 1px solid #a0a0a0;
   -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
