@@ -68,7 +68,8 @@ export let checker = {
             callback( checker.create_result() );
       })
       .fail(function(err) {
-        console.error( err );
+        console.error( 'Something is wrong.' );
+        callback( checker.create_error('Validator, don\' work. Please, refresh website.') );
       });
     }
   },

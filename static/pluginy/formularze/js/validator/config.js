@@ -4,11 +4,11 @@ export let list_configs = {};
 list_configs.register = {
 	username: 'length_3',
 	password: 'password',
-	email: 'email',
+	email: 'email_db',
 };
 
 list_configs.login = {
-	email: 'email_db',
+	email: 'email',
 	password: 'password',
 };
 

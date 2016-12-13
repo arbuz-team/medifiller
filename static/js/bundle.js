@@ -968,7 +968,8 @@
 	      $.post('', post_data).done(function (data) {
 	        if (data.__exist__ !== 'undefined') if (data.__exist__ === 'true') callback(checker.create_error(message));else if (data.__exist__ === 'false') callback(checker.create_result());
 	      }).fail(function (err) {
-	        console.error(err);
+	        console.error('Something is wrong.');
+	        callback(checker.create_error('Validator, don\' work. Please, refresh website.'));
 	      });
 	    }
 	  }
@@ -1052,11 +1053,11 @@
 	list_configs.register = {
 	  username: 'length_3',
 	  password: 'password',
-	  email: 'email'
+	  email: 'email_db'
 	};
 	
 	list_configs.login = {
-	  email: 'email_db',
+	  email: 'email',
 	  password: 'password'
 	};
 	
