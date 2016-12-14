@@ -160,14 +160,51 @@ class Logout(Manage_Dynamic_Event):
 
 class Account(Manage_Dynamic_Event):
 
-    def Manage_Content(self):
+    def Get_User_Details(self):
         unique = self.request.session['user_unique']
         self.content['user'] = User.objects.get(unique=unique)
-        return self.Render_HTML('user/account.html')
+        self.content['addresses'] = \
+            User_Address.objects.filter(user=unique).values()
+
+    def Manage_Content(self):
+        self.Get_User_Details()
+        self.content['form'] = Form_User_Address()
+        return self.Render_HTML('user/account.html', 'user_address')
+
+    def Manage_Form_User_Address(self):
+
+        self.content['form'] = Form_User_Address(self.request.POST)
+
+        if self.content['form'].is_valid():
+            unique = self.request.session['user_unique']
+            address_user = self.content['form'].save(commit=False)
+            address_user.user = User.objects.get(unique=unique)
+            address_user.save()  # create address_user
+
+            self.content['form'] = Form_User_Address()
+
+        self.Get_User_Details()
+        return self.Render_HTML('user/account.html', 'user_address')
 
     def Manage_Form(self):
 
-        pass
+        if self.request.POST['__form__'] == 'user_address':
+            return self.Manage_Form_User_Address()
+
+        return super(Account, self).Manage_Form()
+
+    def Manage_Edit(self):
+        user = User.objects.get(unique=self.request.session['user_unique'])
+
+        if self.request.POST['__edit__'] == 'email':
+            user.email = self.request.POST['value']
+            return JsonResponse({'__edit__': 'true'})
+
+        if self.request.POST['__edit__'] == 'username':
+            user.username = self.request.POST['value']
+            return JsonResponse({'__edit__': 'true'})
+
+        return JsonResponse({'__edit__': 'false'})
 
     @staticmethod
     def Launch(request):

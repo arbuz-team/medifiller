@@ -66,9 +66,9 @@ class Form_Register(forms.ModelForm):
         model = User
         fields = \
         (
+            'email',
             'username',
             'password',
-            'email',
         )
 
         widgets = \
@@ -102,6 +102,10 @@ class Form_Register(forms.ModelForm):
 
 
 class Form_User_Address(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(Form_User_Address, self).__init__(*args, **kwargs)
+        self.fields['address_line_2'].required = False
 
     class Meta:
 

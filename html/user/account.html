@@ -4,9 +4,41 @@
 
   <div class="tresc">
   
-    User details:
+    User details:<br>
 
-    {{ user }}
+    Email: {{ user.email }} <br>
+    Username: {{ user.username }} <br>
+    <br>
+
+    {% for address in addresses %}
+
+      {% for key, value in address.items %}
+        {{ key }}: {{ value }} <br>
+      {% endfor %}
+      <br><br>
+
+    {% endfor %}
+
+    <br><br>
+
+    <form method="post" action="" data-form="{{ form_name }}" data-test="yes">
+
+      <div class="title"> Login </div>
+
+      {% for i in form %}
+
+        <div class="otoczka_pola">
+          {{ i }}
+          {{ i.errors }}
+        </div>
+
+      {% endfor %}
+
+      <div class="otoczka_pola">
+        <button disabled type="submit"> Done </button>
+      </div>
+
+    </form>
   
   </div>
 

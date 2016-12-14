@@ -21,6 +21,9 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
     def Manage_Exist(self):
         pass
 
+    def Manage_Edit(self):
+        pass
+
     def Manage_No_Event(self):
         self.content['message'] = 'Manage_Dynamic_Event:' \
                             ' no variable defining instruction.'
@@ -58,6 +61,9 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
 
                 if '__exist__' in self.request.POST:
                     return self.Manage_Exist()
+
+                if '__edit__' in self.request.POST:
+                    return self.Manage_Edit()
 
                 return self.Manage_No_Event()
             return self.Manage_Unauthorized()
