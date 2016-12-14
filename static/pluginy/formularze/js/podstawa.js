@@ -11,7 +11,7 @@ export let form_controller = new function Form_Controller()
   let _prepare_post_data = function(form_name, object)
   {
     if(!object)
-      return {};
+      object = {};
 
     object.__form__ = form_name;
 

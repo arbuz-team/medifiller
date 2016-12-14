@@ -77,7 +77,7 @@ export let checker = {
 
 
 
-//////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 
 export let Constructor_Validator = function(form_name)
 {
@@ -117,6 +117,7 @@ export let Constructor_Validator = function(form_name)
       obj = {},
       i,
       length = fields.length;
+
     for( i = 0; i < length; ++i )
       if($(form).find('*[name='+ fields[i].name +']').hasClass('test'))
         obj[fields[i].name] = false;

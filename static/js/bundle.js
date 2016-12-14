@@ -286,22 +286,19 @@
 	  };
 	
 	  var _show_content = function _show_content(response, status, error) {
-	    var $kontener = $(_struktura.data_controller.get('container') + ' > div > .tresc');
+	    var $container = $(_struktura.data_controller.get('container')),
+	        $content = $(_struktura.data_controller.get('container') + ' > div > .tresc');
 	
 	    if (error === 'yes') {
-	      if (status !== 'success') {
-	        $kontener.html('An error has occurred while connecting to server. Please, refresh website or check your connect with network.');
-	      }
-	    } else {
-	      if (status !== 'success') {
-	        _download_content('/statement/404/', 'yes');
-	        return false;
-	      }
+	      if (status !== 'success') $content.html('An error has occurred while connecting to server. Please, refresh website or check your connect with network.');
+	    } else if (status !== 'success') {
+	      _download_content('/statement/404/', 'yes');
+	      return false;
 	    }
 	
 	    _refresh_events();
 	
-	    $kontener.animate({ opacity: 1 }, 150, function () {
+	    $container.animate({ opacity: 1 }, 150, function () {
 	      if (window.APP) paste_data(window.APP);
 	    });
 	  };
@@ -310,12 +307,13 @@
 	    url = _preprocess_url(response_url);
 	
 	    $(_struktura.data_controller.get('container')).load(url, post_data, function (response, status) {
-	      if (error) _show_content(response, status, error);else _show_content(response, status);
+	      _show_content(response, status, error);
 	    }).add_data('url', url);
 	  };
 	
 	  var _hide_content = function _hide_content() {
-	    $(_struktura.data_controller.get('container') + ' > div > .tresc').animate({ opacity: 0.4 }, 100, function () {
+	    $(_struktura.data_controller.get('container')).animate({ opacity: 0.4 }, 100, function () {
+	
 	      _download_content();
 	    });
 	  };
@@ -343,9 +341,7 @@
 	  ///////////////////////////////////////////////////////////////////////////
 	
 	  var _preprocess_url = function _preprocess_url(response_url) {
-	    if (!response_url) if (url) return url;else return _struktura.data_controller.get('path');
-	
-	    return response_url;
+	    if (response_url) return response_url;else return _struktura.data_controller.get('path');
 	  };
 	
 	  var _prepare_post_data = function _prepare_post_data(object) {
@@ -653,7 +649,7 @@
 	var form_controller = exports.form_controller = new function Form_Controller() {
 	
 	  var _prepare_post_data = function _prepare_post_data(form_name, object) {
-	    if (!object) return {};
+	    if (!object) object = {};
 	
 	    object.__form__ = form_name;
 	
@@ -975,7 +971,7 @@
 	  }
 	};
 	
-	//////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////
 	
 	var Constructor_Validator = exports.Constructor_Validator = function Constructor_Validator(form_name) {
 	  // define base veriable
@@ -1003,6 +999,7 @@
 	        obj = {},
 	        i = void 0,
 	        length = fields.length;
+	
 	    for (i = 0; i < length; ++i) {
 	      if ($(form).find('*[name=' + fields[i].name + ']').hasClass('test')) obj[fields[i].name] = false;
 	    }return obj;

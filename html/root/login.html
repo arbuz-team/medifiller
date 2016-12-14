@@ -17,8 +17,9 @@
 
     {% else %}
 
-      Login
       <form method="post" action="" data-form="{{ form_name }}" data-test="yes">
+
+        <div class="title"> Root login </div>
 
         <div class="otoczka_pola">
           <input disabled type="text" value="root" />
@@ -34,7 +35,7 @@
         {% endfor %}
 
         <div class="otoczka_pola">
-          <button disabled type="submit"> Login </button>
+          <button disabled type="submit"> Done </button>
         </div>
 
       </form>

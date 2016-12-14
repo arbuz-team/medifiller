@@ -27,27 +27,23 @@ export let content_controller = new function Content_Controller()
 
   let _show_content = function( response, status, error )
   {
-    let $kontener = $( data_controller.get( 'container' ) + ' > div > .tresc' );
+    let $container = $( data_controller.get( 'container' ) ),
+      $content = $( data_controller.get( 'container' ) + ' > div > .tresc' );
 
     if(error === 'yes')
     {
       if( status !== 'success' )
-      {
-        $kontener.html( 'An error has occurred while connecting to server. Please, refresh website or check your connect with network.' );
-      }
+        $content.html( 'An error has occurred while connecting to server. Please, refresh website or check your connect with network.' );
     }
-    else
+    else if( status !== 'success' )
     {
-      if( status !== 'success' )
-      {
-        _download_content( '/statement/404/', 'yes' );
-        return false;
-      }
+      _download_content( '/statement/404/', 'yes' );
+      return false;
     }
 
     _refresh_events();
 
-    $kontener.animate( { opacity: 1 }, 150, function(){
+    $container.animate( { opacity: 1 }, 150, function(){
       if(window.APP)
         paste_data(window.APP);
     });
@@ -60,10 +56,7 @@ export let content_controller = new function Content_Controller()
 
     $( data_controller.get( 'container' ) )
       .load( url, post_data, (response, status) => {
-        if(error)
-          _show_content(response, status, error);
-        else
-          _show_content(response, status);
+        _show_content(response, status, error);
       })
       .add_data( 'url', url )
   };
@@ -71,8 +64,9 @@ export let content_controller = new function Content_Controller()
 
   let _hide_content = function()
   {
-    $( data_controller.get( 'container' ) +' > div > .tresc' )
+    $( data_controller.get( 'container' ) )
       .animate( { opacity: 0.4 }, 100, () => {
+
         _download_content();
       });
   };
@@ -91,6 +85,7 @@ export let content_controller = new function Content_Controller()
     _hide_content();
   };
 
+
   this.start = function()
   {
     _refresh_data();
@@ -104,13 +99,10 @@ export let content_controller = new function Content_Controller()
 
   let _preprocess_url = function( response_url )
   {
-    if( !response_url )
-      if( url )
-        return url;
-      else
-        return data_controller.get( 'path' );
-
-    return response_url;
+    if( response_url )
+      return response_url;
+    else
+      return data_controller.get( 'path' );
   };
 
 

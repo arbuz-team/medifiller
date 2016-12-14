@@ -23,7 +23,7 @@ class User_Address(models.Model):
 
     full_name = models.CharField(max_length=50)
     address_line_1 = models.CharField(max_length=50)
-    address_line_2 = models.CharField(max_length=50, default=None)
+    address_line_2 = models.CharField(max_length=50, default='')
     city = models.CharField(max_length=50)
     region = models.CharField(max_length=50)  # state/province/region
     postcode = models.CharField(max_length=10)  # zip/postal code

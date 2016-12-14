@@ -264,14 +264,15 @@ ul {
     color: #333; }
 
 #TRESC {
-  position: relative; }
+  position: relative;
+  opacity: 0.4; }
   #TRESC > div.BLOK1 {
     border-bottom: 1px solid #d8d8d8; }
   #TRESC > div {
     position: relative;
     display: inline-block;
-    padding-top: 0px;
-    margin: 0px;
+    padding-top: 0;
+    margin: 0;
     width: 100%;
     min-height: 550px; }
     #TRESC > div > .tytul {
@@ -286,7 +287,6 @@ ul {
       position: relative;
       z-index: 12;
       color: #333;
-      opacity: 0.4;
       font-size: 16px; }
     #TRESC > div > .tlo {
       z-index: 10;
@@ -303,8 +303,8 @@ ul {
 .fragment.RWD > div > .tresc {
   margin: 10px auto 30px auto;
   padding: 10px;
-  padding-left: 15px;
-  padding-right: 15px; }
+    padding-left: 15px;
+    padding-right: 15px; }
 
 @media (min-width: 768px) {
   #TRESC > div > .tytul {
