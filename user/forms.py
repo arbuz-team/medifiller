@@ -45,8 +45,7 @@ class Form_Login(forms.Form):
         password = self.cleaned_data['password']
 
         if not User.objects.filter(email=email):
-            raise forms.ValidationError('User with this email '
-                                        'does not exist.')
+            return ''
 
         user = User.objects.get(email=email)
         if user.password != User.Encrypt(password):

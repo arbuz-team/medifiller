@@ -24,6 +24,9 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
     def Manage_Edit(self):
         pass
 
+    def Manage_Delete(self):
+        pass
+
     def Manage_No_Event(self):
         self.content['message'] = 'Manage_Dynamic_Event:' \
                             ' no variable defining instruction.'
@@ -65,6 +68,9 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
                 if '__edit__' in self.request.POST:
                     return self.Manage_Edit()
 
+                if '__delete__' in self.request.POST:
+                    return self.Manage_Edit()
+
                 return self.Manage_No_Event()
             return self.Manage_Unauthorized()
 
@@ -81,6 +87,7 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
 
         if autostart:
             self.HTML = self.Manage()
+
 
     @staticmethod
     @abstractmethod

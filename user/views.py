@@ -163,15 +163,40 @@ class Account(Manage_Dynamic_Event):
     def Get_User_Details(self):
         unique = self.request.session['user_unique']
         self.content['user'] = User.objects.get(unique=unique)
-        self.content['addresses'] = \
-            User_Address.objects.filter(user=unique).values()
+        self.content['form_name_new'] = 'new_user_address'
+        self.content['form_name_edit'] = 'edit_user_address'
+        self.content['edit_forms_address'] = {}
+
+        for address in User_Address.objects.filter(user=unique):
+            self.content['edit_forms_address'][address.pk] = \
+                [Form_User_Address(instance=address)]
+
+    def Get_User_Address_ID(self):
+        form_name = self.request.POST['__form__']
+        id_address = int(form_name.replace('edit_user_address_', ''))
+
+        if self.Check_ID_Address(id_address):
+            return id_address
+
+        raise Exception('An attempt unauthorized removal of address. '
+                        '<user.Account.Get_User_Address_ID>')
+
+    def Check_ID_Address(self, id_address):
+        user = User.objects.get(unique=self.request.session['user_unique'])
+        ids_address = User_Address.objects.filter(user=user).\
+            values_list('id', flat=True)
+
+        if id_address in ids_address:
+            return True
+
+        return False
 
     def Manage_Content(self):
         self.Get_User_Details()
-        self.content['form'] = Form_User_Address()
-        return self.Render_HTML('user/account.html', 'user_address')
+        self.content['new_form_address'] = Form_User_Address()
+        return self.Render_HTML('user/account.html')
 
-    def Manage_Form_User_Address(self):
+    def Manage_Form_New_User_Address(self):
 
         self.content['form'] = Form_User_Address(self.request.POST)
 
@@ -181,15 +206,32 @@ class Account(Manage_Dynamic_Event):
             address_user.user = User.objects.get(unique=unique)
             address_user.save()  # create address_user
 
-            self.content['form'] = Form_User_Address()
+            self.content['new_form_address'] = Form_User_Address()
 
         self.Get_User_Details()
-        return self.Render_HTML('user/account.html', 'user_address')
+        return self.Render_HTML('user/account.html')
+
+    def Manage_Form_Edit_User_Address(self):
+
+        id_address = self.Get_User_Address_ID()
+        address = User_Address.objects.get(id=id_address)
+        self.content['form'] = Form_User_Address(self.request.POST, instance=address)
+
+        if self.content['form'].is_valid():
+            self.content['form'].save() # save change of address_user
+
+        self.Get_User_Details()
+        self.content['new_form_address'] = Form_User_Address()
+        return self.Render_HTML('user/account.html')
 
     def Manage_Form(self):
 
-        if self.request.POST['__form__'] == 'user_address':
-            return self.Manage_Form_User_Address()
+        if self.request.POST['__form__'] == 'new_user_address':
+            return self.Manage_Form_New_User_Address()
+
+        # all of edit forms
+        if 'edit_user_address' in self.request.POST['__form__']:
+            return self.Manage_Form_Edit_User_Address()
 
         return super(Account, self).Manage_Form()
 
@@ -198,13 +240,24 @@ class Account(Manage_Dynamic_Event):
 
         if self.request.POST['__edit__'] == 'email':
             user.email = self.request.POST['value']
+            user.save()
             return JsonResponse({'__edit__': 'true'})
 
         if self.request.POST['__edit__'] == 'username':
             user.username = self.request.POST['value']
+            user.save()
             return JsonResponse({'__edit__': 'true'})
 
         return JsonResponse({'__edit__': 'false'})
+
+    def Manage_Delete(self):
+        id_address = self.request.POST['__delete__']
+
+        if self.Check_ID_Address(id_address):
+            User_Address.objects.get(id=id_address).delete()
+            return JsonResponse({'__delete__': 'true'})
+
+        return JsonResponse({'__delete__': 'false'})
 
     @staticmethod
     def Launch(request):

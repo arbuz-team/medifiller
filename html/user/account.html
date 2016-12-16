@@ -10,26 +10,36 @@
     Username: {{ user.username }} <br>
     <br>
 
-    {% for address in addresses %}
+    {% for id_address, edit_form_address in edit_forms_address.items %}
+      <form method="post" action="" data-form="{{ form_name_edit }}_{{ id_address }}" data-test="yes">
 
-      {% for key, value in address.items %}
-        {{ key }}: {{ value }} <br>
-      {% endfor %}
-      <br><br>
+        {% for address in edit_form_address %}
 
+          <div class="otoczka_pola">
+            {{ address }}
+            {{ address.errors }}
+          </div>
+
+        {% endfor %}
+
+        <div class="otoczka_pola">
+          <button disabled type="submit"> Done </button>
+        </div>
+
+      </form>
     {% endfor %}
 
     <br><br>
 
-    <form method="post" action="" data-form="{{ form_name }}" data-test="yes">
+    <form method="post" action="" data-form="{{ form_name_new }}" data-test="yes">
 
       <div class="title"> Login </div>
 
-      {% for i in form %}
+      {% for address in new_form_address %}
 
         <div class="otoczka_pola">
-          {{ i }}
-          {{ i.errors }}
+          {{ address }}
+          {{ address.errors }}
         </div>
 
       {% endfor %}
