@@ -116,9 +116,12 @@ class Register(Manage_Dynamic_Event):
         activate_key = self.content['key'].decode("utf-8")
         activate_url = self.request.build_absolute_uri().replace('register/', '')
         activate_url = '{0}approved/{1}'.format(activate_url, activate_key)
+        user_unique = self.request.session['user_unique']
+        content = {}
 
         title = 'Confirm your new account.'
-        content = activate_url
+        content['activate_url'] = activate_url
+        content['user'] = User.objects.get(unique=user_unique)
         email = self.content['form'].cleaned_data['email']
 
         Sender.Send_Email(title, content, email)
