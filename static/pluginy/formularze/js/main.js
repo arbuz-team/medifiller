@@ -1,8 +1,8 @@
 /*    JavaScript    */
 
-import {data_controller} from '../../arbuz/js/dane_strony/struktura';
-import {content_controller} from '../../tresc/js/podstawa';
-export {data_controller} from '../../arbuz/js/dane_strony/struktura';
+import {data_controller} from '../../arbuz/js/structure';
+import {content_controller} from '../../tresc/js/main';
+export {data_controller} from '../../arbuz/js/structure';
 
 
 export let form_controller = new function Form_Controller()

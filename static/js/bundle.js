@@ -71,9 +71,9 @@
 	
 	__webpack_require__(6);
 	
-	var _wydarzenia = __webpack_require__(7);
+	var _view = __webpack_require__(7);
 	
-	var page_controller = _interopRequireWildcard(_wydarzenia);
+	var page_controller = _interopRequireWildcard(_view);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -151,11 +151,11 @@
 	});
 	exports.start = undefined;
 	
-	var _podstawa = __webpack_require__(8);
+	var _view = __webpack_require__(8);
 	
-	var _podstawa2 = __webpack_require__(12);
+	var _view2 = __webpack_require__(13);
 	
-	var _podstawa3 = __webpack_require__(14);
+	var _view3 = __webpack_require__(15);
 	
 	/*---------------- Wydarzenia na stronie ----------------*/
 	
@@ -163,9 +163,9 @@
 	  // Usuń wszystkie wydarzenia ze wszystkich elementów
 	  $('*').off();
 	
-	  _podstawa.content_controller_events.define();
-	  _podstawa2.menu_controller_events.define();
-	  _podstawa3.form_controller_events.define();
+	  _view.content_controller_events.define();
+	  _view2.menu_controller_events.define();
+	  _view3.form_controller_events.define();
 	}; /**
 	    * Created by mrskull on 24.11.16.
 	    */
@@ -187,12 +187,12 @@
 	});
 	exports.content_controller_events = exports.data_controller = undefined;
 	
-	var _podstawa = __webpack_require__(9);
+	var _main = __webpack_require__(9);
 	
 	Object.defineProperty(exports, 'data_controller', {
 	  enumerable: true,
 	  get: function get() {
-	    return _podstawa.data_controller;
+	    return _main.data_controller;
 	  }
 	});
 	
@@ -212,7 +212,7 @@
 	
 	    //////////////////////////////////////////
 	    window.onload = function () {
-	      _podstawa.content_controller.start();
+	      _main.content_controller.start();
 	    };
 	  };
 	
@@ -223,18 +223,18 @@
 	    var url = $(this).attr('href');
 	
 	    if (event.which === 1) {
-	      if (_podstawa.data_controller.get('path') !== url) _podstawa.content_controller.change_content(url);
+	      if (_main.data_controller.get('path') !== url) _main.content_controller.change_content(url);
 	    }
 	  };
 	
 	  var change_url = function change_url() {
-	    var url = _podstawa.data_controller.prepare_url_to_change();
-	    _podstawa.content_controller.change_content(url);
+	    var url = _main.data_controller.prepare_url_to_change();
+	    _main.content_controller.change_content(url);
 	  };
 	
 	  var back_url = function back_url() {
 	    event.preventDefault();
-	    _podstawa.content_controller.start();
+	    _main.content_controller.start();
 	  };
 	
 	  var redirect = function redirect() {
@@ -243,7 +243,7 @@
 	    if (typeof APP !== 'undefined' && typeof APP.redirect !== 'undefined') url = APP.redirect;else url = '/';
 	
 	    setTimeout(function () {
-	      _podstawa.content_controller.change_content(url);
+	      _main.content_controller.change_content(url);
 	    }, 2000);
 	  };
 	}();
@@ -259,15 +259,20 @@
 	});
 	exports.content_controller = exports.data_controller = undefined;
 	
-	var _struktura = __webpack_require__(10);
+	var _structure = __webpack_require__(10);
 	
 	Object.defineProperty(exports, 'data_controller', {
 	  enumerable: true,
 	  get: function get() {
-	    return _struktura.data_controller;
+	    return _structure.data_controller;
 	  }
 	});
 	
+	var _img_loader = __webpack_require__(12);
+	
+	var img_loader = _interopRequireWildcard(_img_loader);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	/*---------------- Kontroler Treści ----------------*/
 	
@@ -278,16 +283,17 @@
 	  ///////////////////////////////////////////////////////////////////////////
 	
 	  var _refresh_data = function _refresh_data() {
-	    _struktura.data_controller.reset();
+	    _structure.data_controller.reset();
 	  };
 	
 	  var _refresh_events = function _refresh_events() {
 	    window.dispatchEvent(window.EVENTS.define);
+	    img_loader.define();
 	  };
 	
 	  var _show_content = function _show_content(response, status, error) {
-	    var $container = $(_struktura.data_controller.get('container')),
-	        $content = $(_struktura.data_controller.get('container') + ' > div > .tresc');
+	    var $container = $(_structure.data_controller.get('container')),
+	        $content = $(_structure.data_controller.get('container') + ' > div > .tresc');
 	
 	    if (error === 'yes') {
 	      if (status !== 'success') $content.html('An error has occurred while connecting to server. Please, refresh website or check your connect with network.');
@@ -306,13 +312,13 @@
 	  var _download_content = function _download_content(response_url, error) {
 	    url = _preprocess_url(response_url);
 	
-	    $(_struktura.data_controller.get('container')).load(url, post_data, function (response, status) {
+	    $(_structure.data_controller.get('container')).load(url, post_data, function (response, status) {
 	      _show_content(response, status, error);
 	    }).add_data('url', url);
 	  };
 	
 	  var _hide_content = function _hide_content() {
-	    $(_struktura.data_controller.get('container')).animate({ opacity: 0.4 }, 100, function () {
+	    $(_structure.data_controller.get('container')).animate({ opacity: 0.4 }, 100, function () {
 	
 	      _download_content();
 	    });
@@ -341,23 +347,23 @@
 	  ///////////////////////////////////////////////////////////////////////////
 	
 	  var _preprocess_url = function _preprocess_url(response_url) {
-	    if (response_url) return response_url;else return _struktura.data_controller.get('path');
+	    if (response_url) return response_url;else return _structure.data_controller.get('path');
 	  };
 	
 	  var _prepare_post_data = function _prepare_post_data(object) {
 	    if (!object) object = {};
 	
 	    if (typeof object.__form__ === 'undefined') object.__content__ = 'true';
-	    object.csrfmiddlewaretoken = _struktura.data_controller.get('csrf_token');
+	    object.csrfmiddlewaretoken = _structure.data_controller.get('csrf_token');
 	
 	    return object;
 	  };
 	
 	  var paste_data = function paste_data(object) {
-	    _struktura.data_controller.change_much(object);
+	    _structure.data_controller.change_much(object);
 	
-	    $('title').html(_struktura.data_controller.get('title'));
-	    $('meta[ name="description" ]').attr('content', _struktura.data_controller.get('description'));
+	    $('title').html(_structure.data_controller.get('title'));
+	    $('meta[ name="description" ]').attr('content', _structure.data_controller.get('description'));
 	  };
 	
 	  var _change_url = function _change_url(url) {
@@ -461,6 +467,65 @@
 
 /***/ },
 /* 12 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var $query = function $query(css_query) {
+	  return document.querySelectorAll(css_query);
+	};
+	
+	var attr = function attr(elem, name) {
+	  return elem.getAttribute(name);
+	};
+	
+	////////////////////////////////////////
+	
+	var define = exports.define = function define() {
+	  var $images = $query('img'),
+	      default_src = '/static/img/load.jpg',
+	      image = new Image();
+	
+	  function download_img($imgs, i) {
+	    if (!$imgs[i]) return false;
+	
+	    var downloadingImage = new Image(),
+	        data_src = attr($imgs[i], 'data-src');
+	
+	    downloadingImage.onload = function () {
+	      $imgs[i].src = this.src;
+	      setTimeout(function () {
+	        $imgs[i].style = 'opacity: 1;';
+	        download_img($images, i + 1);
+	      }, 100);
+	    };
+	
+	    downloadingImage.onerror = function () {
+	      $imgs[i].src = default_src;
+	      $imgs[i].alt = 'Sorry, an error has occurred.';
+	      setTimeout(function () {
+	        $imgs[i].style = 'opacity: 1;';
+	        $imgs[i].setAttribute('class', 'error');
+	        download_img($images, i + 1);
+	      }, 100);
+	    };
+	
+	    downloadingImage.src = data_src;
+	  }
+	
+	  image.onload = function () {
+	    download_img($images, 0);
+	  };
+	
+	  image.src = default_src;
+	};
+
+/***/ },
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -470,12 +535,12 @@
 	});
 	exports.menu_controller_events = exports.data_controller = undefined;
 	
-	var _podstawa = __webpack_require__(13);
+	var _main = __webpack_require__(14);
 	
 	Object.defineProperty(exports, 'data_controller', {
 	  enumerable: true,
 	  get: function get() {
-	    return _podstawa.data_controller;
+	    return _main.data_controller;
 	  }
 	});
 	
@@ -489,7 +554,7 @@
 	    $('#MENU .nakladka').click(this.show_hide_menu);
 	    $('#MENU > .menu a').click(this.show_hide_menu);
 	
-	    window.addEventListener('changed_url', _podstawa.menu_controller.select_overlap(), false);
+	    window.addEventListener('changed_url', _main.menu_controller.select_overlap(), false);
 	  };
 	
 	  var is_exist = function is_exist(element) {
@@ -510,7 +575,7 @@
 	    if (event.which === 1) {
 	      var menu = '#MENU';
 	
-	      if (check_atribute_data(menu, 'wysuniete', 'nie')) _podstawa.menu_controller.show();else if (check_atribute_data(menu, 'wysuniete', 'tak')) _podstawa.menu_controller.hide();
+	      if (check_atribute_data(menu, 'wysuniete', 'nie')) _main.menu_controller.show();else if (check_atribute_data(menu, 'wysuniete', 'tak')) _main.menu_controller.hide();
 	
 	      return false;
 	    }
@@ -518,7 +583,7 @@
 	}();
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -528,12 +593,12 @@
 	});
 	exports.menu_controller = exports.data_controller = undefined;
 	
-	var _struktura = __webpack_require__(10);
+	var _structure = __webpack_require__(10);
 	
 	Object.defineProperty(exports, 'data_controller', {
 	  enumerable: true,
 	  get: function get() {
-	    return _struktura.data_controller;
+	    return _structure.data_controller;
 	  }
 	});
 	
@@ -558,7 +623,7 @@
 	  };
 	
 	  this.select_overlap = function () {
-	    var url = _struktura.data_controller.get('all_url'),
+	    var url = _structure.data_controller.get('all_url'),
 	        $overlap = $('.menu > li > a');
 	
 	    $overlap.removeClass('wybrany');
@@ -570,7 +635,7 @@
 	}();
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -580,9 +645,9 @@
 	});
 	exports.form_controller_events = undefined;
 	
-	var _podstawa = __webpack_require__(15);
+	var _main = __webpack_require__(16);
 	
-	var _views = __webpack_require__(16);
+	var _views = __webpack_require__(17);
 	
 	var validator = _interopRequireWildcard(_views);
 	
@@ -614,18 +679,18 @@
 	  var prepare_form_to_send = function prepare_form_to_send(event) {
 	    event.preventDefault();
 	
-	    var form_name = $(this).data('form'),
+	    var form_name = $(this).data('name'),
 	        url = $(this).attr('action'),
 	        form_object = get_form_fields(this);
 	
-	    if (typeof url === 'undefined' || url === '') url = _podstawa.data_controller.get('path');
+	    if (typeof url === 'undefined' || url === '') url = _main.data_controller.get('path');
 	
-	    _podstawa.form_controller.send(form_name, url, form_object);
+	    _main.form_controller.send(form_name, url, form_object);
 	  };
 	}();
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -635,16 +700,16 @@
 	});
 	exports.form_controller = exports.data_controller = undefined;
 	
-	var _struktura = __webpack_require__(10);
+	var _structure = __webpack_require__(10);
 	
 	Object.defineProperty(exports, 'data_controller', {
 	  enumerable: true,
 	  get: function get() {
-	    return _struktura.data_controller;
+	    return _structure.data_controller;
 	  }
 	});
 	
-	var _podstawa = __webpack_require__(9);
+	var _main = __webpack_require__(9);
 	
 	var form_controller = exports.form_controller = new function Form_Controller() {
 	
@@ -658,7 +723,7 @@
 	
 	  this.send = function (form_name, url, data_post) {
 	    data_post = _prepare_post_data(form_name, data_post);
-	    _podstawa.content_controller.change_content(url, data_post);
+	    _main.content_controller.change_content(url, data_post);
 	  };
 	
 	  /////////////////   SPRAWDZANIE PÓL   ///////////////////
@@ -681,7 +746,7 @@
 	}();
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -691,7 +756,7 @@
 	});
 	exports.define = undefined;
 	
-	var _checkers = __webpack_require__(17);
+	var _checkers = __webpack_require__(18);
 	
 	var Validators = {};
 	
@@ -700,10 +765,21 @@
 	var define = exports.define = function define() {
 	
 	  $('form[data-test=yes]').each(function () {
-	    var name = $(this).attr('data-form');
-	    if (name) {
-	      if (typeof Validators[name] === 'undefined') Validators[name] = new _checkers.Constructor_Validator(name);
-	    } else console.error('Validation Error: Incorrect or empty form name "' + name + '".');
+	    var name = $(this).data('name'),
+	        type = $(this).data('type');
+	    if (name || type) {
+	      Validators[name] = new _checkers.Constructor_Validator(name, type);
+	
+	      // Sprawdzanie wszystkich pól by odblokować guzik w razie ich poprawnego wypełnienia
+	      var fields_of_form = Validators[name].hasErrors();
+	      for (var key in fields_of_form) {
+	        if (fields_of_form.hasOwnProperty(key)) {
+	          var $field = $('form[data-name=' + name + '] *[name=' + key + ']');
+	
+	          if ($field.val()) validate($field);
+	        }
+	      }
+	    } else console.error('Validation Error: Incorrect or empty form name/type.');
 	  });
 	
 	  $('form[data-test=yes] .test').keyup(validate).change(validate);
@@ -717,21 +793,25 @@
 	
 	var running_validator = false,
 	    form_name = void 0,
+	    $form = void 0,
 	    Validator = void 0,
 	    field = void 0,
 	    field_name = void 0,
 	    field_value = void 0;
 	
-	var validate = function validate() {
+	var validate = function validate(that) {
 	  if (running_validator === false) {
 	    running_validator = true;
 	
-	    field = this;
-	    form_name = $(field).parents('form').data('form');
+	    if (that) field = that;else field = this;
+	
+	    form_name = $(field).parents('form').data('name');
+	    $form = $('form[data-name=' + form_name + ']');
 	    Validator = Validators[form_name];
 	    field_name = $(field).attr('name');
 	    field_value = $(field).val();
 	
+	    // Sprawdzanie pojedynczego pola poprzez checker przypisany do jego nazwy
 	    Validator.field(field_name, field_value, show_status);
 	  }
 	};
@@ -747,6 +827,7 @@
 	
 	    Validator.change_status_field(field_name, bool);
 	
+	    // Sprawdź czy istnieje poprawiona wartość poli i jeśli tak to przypisz do tego pola.
 	    if ($field.val() != correction && typeof correction !== 'undefined' && correction !== '') $field.val(correction);
 	
 	    if (bool) {
@@ -769,8 +850,7 @@
 	
 	var change_status_blockade = function change_status_blockade(test_form) {
 	  if (typeof test_form === 'boolean') {
-	    var $form = $('form[data-form=' + form_name + ']'),
-	        $button = $form.find('*[type=submit]');
+	    var $button = $form.find('*[type=submit]');
 	
 	    if (test_form) $button.prop('disabled', false);else $button.prop('disabled', true);
 	  }
@@ -791,7 +871,7 @@
 	};
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -801,7 +881,7 @@
 	});
 	exports.Constructor_Validator = undefined;
 	
-	var _validator = __webpack_require__(18);
+	var _validator = __webpack_require__(19);
 	
 	Object.defineProperty(exports, 'Constructor_Validator', {
 	  enumerable: true,
@@ -903,7 +983,7 @@
 	////////////////////////////////////////////
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -913,9 +993,9 @@
 	});
 	exports.Constructor_Validator = exports.checker = undefined;
 	
-	var _config = __webpack_require__(19);
+	var _config = __webpack_require__(20);
 	
-	var _struktura = __webpack_require__(10);
+	var _structure = __webpack_require__(10);
 	
 	//////////////////////////////////////////////////////
 	
@@ -958,12 +1038,12 @@
 	      var post_data = {
 	        __exist__: name,
 	        value: value,
-	        csrfmiddlewaretoken: _struktura.data_controller.get('csrf_token')
+	        csrfmiddlewaretoken: _structure.data_controller.get('csrf_token')
 	      };
 	
 	      $.post('', post_data).done(function (data) {
 	        if (data.__exist__ !== 'undefined') if (data.__exist__ === 'true') callback(checker.create_error(message));else if (data.__exist__ === 'false') callback(checker.create_result());
-	      }).fail(function (err) {
+	      }).fail(function () {
 	        console.error('Something is wrong.');
 	        callback(checker.create_error('Validator, don\' work. Please, refresh website.'));
 	      });
@@ -973,12 +1053,15 @@
 	
 	///////////////////////////////////////////////////////////////////////////////////////
 	
-	var Constructor_Validator = exports.Constructor_Validator = function Constructor_Validator(form_name) {
+	var Constructor_Validator = exports.Constructor_Validator = function Constructor_Validator(form_name, form_type) {
 	  // define base veriable
 	
-	  var fields_of_form = void 0;
+	  var fields_of_form = void 0,
+	      $form = $('form[data-name=' + form_name + ']');
 	  this.types = Constructor_Validator.prototype.types;
-	  this.config = _config.list_configs[form_name];
+	  this.config = _config.list_configs[form_type];
+	
+	  if (!this.config) console.error('Validation Error: Invalid form type of list configs.');
 	
 	  // definitions function
 	
@@ -994,24 +1077,22 @@
 	    }return true;
 	  };
 	
-	  var prepare_list_fields = function prepare_list_fields(form) {
-	    var fields = $(form).serializeArray(),
+	  var prepare_list_fields = function prepare_list_fields() {
+	    var fields = $form.serializeArray(),
 	        obj = {},
 	        i = void 0,
 	        length = fields.length;
 	
 	    for (i = 0; i < length; ++i) {
-	      if ($(form).find('*[name=' + fields[i].name + ']').hasClass('test')) obj[fields[i].name] = false;
+	      if ($form.find('*[name=' + fields[i].name + ']').hasClass('test')) obj[fields[i].name] = false;
 	    }return obj;
 	  };
 	
-	  fields_of_form = prepare_list_fields($('form[data-form=' + form_name + ']'));
+	  fields_of_form = prepare_list_fields();
 	
 	  ////////////////////////////////////////////////////
 	
 	  this.field = function (name, value, callback) {
-	    var results = [];
-	
 	    if (name && value) {
 	      var type = void 0,
 	          _checker = void 0;
@@ -1026,8 +1107,8 @@
 	
 	      _checker.validate(value, callback);
 	    } else if (value !== '') {
-	      results = checker.create_error('Incorrect value ' + name);
-	      callback(results);
+	      var result = checker.create_error('Incorrect value ' + name);
+	      callback(result);
 	    } else callback(checker.create_error());
 	  };
 	
@@ -1037,7 +1118,7 @@
 	};
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports) {
 
 	'use strict';

@@ -263,6 +263,14 @@ ul {
   #MENU > li > a:hover {
     color: #333; }
 
+img {
+  display: inline-block;
+  position: relative;
+  min-width: 300px;
+  height: 200px;
+  opacity: 0.4;
+  z-index: 1; }
+
 #TRESC {
   position: relative;
   opacity: 0.4; }

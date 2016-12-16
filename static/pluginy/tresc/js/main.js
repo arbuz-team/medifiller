@@ -2,8 +2,9 @@
  * Created by mrskull on 24.11.16.
  */
 
-import {data_controller} from '../../arbuz/js/dane_strony/struktura';
-export {data_controller} from '../../arbuz/js/dane_strony/struktura';
+import {data_controller} from '../../arbuz/js/structure';
+import * as img_loader from './img_loader';
+export {data_controller} from '../../arbuz/js/structure';
 
 /*---------------- Kontroler Treści ----------------*/
 
@@ -22,6 +23,7 @@ export let content_controller = new function Content_Controller()
   let _refresh_events = function()
   {
     window.dispatchEvent( window.EVENTS.define );
+    img_loader.define();
   };
 
 

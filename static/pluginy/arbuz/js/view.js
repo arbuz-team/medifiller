@@ -2,9 +2,9 @@
  * Created by mrskull on 24.11.16.
  */
 
-import {content_controller_events} from '../../tresc/js/wydarzenia/podstawa'
-import {menu_controller_events} from '../../menu/js/wydarzenia/podstawa'
-import {form_controller_events} from '../../formularze/js/wydarzenia/podstawa'
+import {content_controller_events} from '../../tresc/js/view'
+import {menu_controller_events} from '../../menu/js/view'
+import {form_controller_events} from '../../formularze/js/view'
 
 /*---------------- Wydarzenia na stronie ----------------*/
 

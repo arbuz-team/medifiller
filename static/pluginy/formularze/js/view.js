@@ -1,7 +1,7 @@
 /*    JavaScript    */
 
-import {form_controller, data_controller} from '../podstawa'
-import * as validator from '../validator/views'
+import {form_controller, data_controller} from './main'
+import * as validator from './validator/views'
 
 
 export let form_controller_events = new function Form_Controller_Events()
@@ -35,7 +35,7 @@ export let form_controller_events = new function Form_Controller_Events()
   {
     event.preventDefault();
 
-    let form_name = $(this).data('form')
+    let form_name = $(this).data('name')
       , url = $(this).attr( 'action' )
       , form_object = get_form_fields( this );
 

@@ -9,18 +9,30 @@ export let define = function()
 {
 
 	$('form[data-test=yes]').each(function(){
-		let name = $(this).attr('data-form');
-		if(name)
+		let name = $(this).data('name'),
+      type = $(this).data('type');
+		if(name || type)
     {
-      if(typeof Validators[name] === 'undefined')
-        Validators[name] = new Constructor_Validator(name);
+      Validators[name] = new Constructor_Validator(name, type);
+
+      // Sprawdzanie wszystkich pól by odblokować guzik w razie ich poprawnego wypełnienia
+      let fields_of_form = Validators[name].hasErrors();
+      for( let key in fields_of_form )
+        if(fields_of_form.hasOwnProperty( key ))
+        {
+          let $field = $('form[data-name=' + name + '] *[name=' + key + ']')
+
+          if($field.val())
+            validate($field);
+        }
     }
     else
-      console.error( 'Validation Error: Incorrect or empty form name "' + name + '".' );
+      console.error( 'Validation Error: Incorrect or empty form name/type.' );
 	});
 
 
-  $('form[data-test=yes] .test').keyup(validate)
+  $('form[data-test=yes] .test')
+    .keyup(validate)
     .change(validate);
 
 
@@ -39,23 +51,30 @@ export let define = function()
 
 let running_validator = false,
   form_name,
+  $form,
   Validator,
   field,
   field_name,
   field_value;
 
-let validate = function()
+let validate = function(that)
 {
   if(running_validator === false)
   {
     running_validator = true;
 
-    field = this;
-    form_name = $(field).parents('form').data('form');
+    if(that)
+      field = that;
+    else
+      field = this;
+
+    form_name = $(field).parents('form').data('name');
+    $form = $('form[data-name='+ form_name +']');
     Validator = Validators[form_name];
     field_name = $(field).attr('name');
     field_value = $(field).val();
 
+    // Sprawdzanie pojedynczego pola poprzez checker przypisany do jego nazwy
     Validator.field(field_name, field_value, show_status);
   }
 };
@@ -74,6 +93,7 @@ let show_status = function(result)
 
     Validator.change_status_field(field_name, bool);
 
+    // Sprawdź czy istnieje poprawiona wartość poli i jeśli tak to przypisz do tego pola.
     if($field.val() != correction && typeof correction !== 'undefined' && correction !== '')
       $field.val(correction);
 
@@ -105,8 +125,7 @@ let change_status_blockade = function(test_form)
 {
   if(typeof test_form === 'boolean')
   {
-    let $form = $('form[data-form='+ form_name +']'),
-      $button = $form.find('*[type=submit]');
+    let $button = $form.find('*[type=submit]');
 
     if(test_form)
       $button.prop('disabled', false);

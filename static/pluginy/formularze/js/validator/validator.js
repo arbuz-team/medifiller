@@ -1,6 +1,6 @@
 
 import {list_configs} from './config'
-import {data_controller} from '../../../arbuz/js/dane_strony/struktura';
+import {data_controller} from '../../../arbuz/js/structure';
 
 //////////////////////////////////////////////////////
 
@@ -67,7 +67,7 @@ export let checker = {
           else if(data.__exist__ === 'false')
             callback( checker.create_result() );
       })
-      .fail(function(err) {
+      .fail(function() {
         console.error( 'Something is wrong.' );
         callback( checker.create_error('Validator, don\' work. Please, refresh website.') );
       });
@@ -79,13 +79,17 @@ export let checker = {
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-export let Constructor_Validator = function(form_name)
+export let Constructor_Validator = function(form_name, form_type)
 {
   // define base veriable
 
-  let fields_of_form;
+  let fields_of_form,
+    $form = $('form[data-name='+ form_name +']');
   this.types = Constructor_Validator.prototype.types;
-	this.config = list_configs[form_name];
+	this.config = list_configs[form_type];
+
+	if(!this.config)
+	  console.error('Validation Error: Invalid form type of list configs.');
 
 
 	// definitions function
@@ -111,28 +115,26 @@ export let Constructor_Validator = function(form_name)
 		return true;
 	};
 
-  let prepare_list_fields = function(form)
+  let prepare_list_fields = function()
   {
-    let fields = $(form).serializeArray(),
+    let fields = $form.serializeArray(),
       obj = {},
       i,
       length = fields.length;
 
     for( i = 0; i < length; ++i )
-      if($(form).find('*[name='+ fields[i].name +']').hasClass('test'))
+      if($form.find('*[name='+ fields[i].name +']').hasClass('test'))
         obj[fields[i].name] = false;
 
     return obj;
   };
 
-  fields_of_form = prepare_list_fields($('form[data-form='+ form_name +']'));
+  fields_of_form = prepare_list_fields();
 	
 ////////////////////////////////////////////////////
 	
 	this.field = function(name, value, callback)
 	{
-		let results = [];
-
 		if(name && value)
 		{
 			let type, checker;
@@ -150,8 +152,8 @@ export let Constructor_Validator = function(form_name)
 		}
 		else if(value !== '')
 		{
-		  results = checker.create_error('Incorrect value '+ name);
-      callback(results);
+		  let result = checker.create_error('Incorrect value '+ name);
+      callback(result);
 		}
 		else
       callback( checker.create_error() );

@@ -6,7 +6,7 @@ import './../pluginy/arbuz/js/interfejs_f-k_podst';
 
 // import './autosize-master/dist/autosize';
 
-import * as page_controller from './../pluginy/arbuz/js/wydarzenia';
+import * as page_controller from '../pluginy/arbuz/js/view';
 
 page_controller.start();
 

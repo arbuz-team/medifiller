@@ -11,7 +11,7 @@
     <br>
 
     {% for id_address, edit_form_address in edit_forms_address.items %}
-      <form method="post" action="" data-form="{{ form_name_edit }}_{{ id_address }}" data-test="yes">
+      <form method="post" action="" data-name="{{ form_name_edit }}_{{ id_address }}" data-type="user_address" data-test="yes">
 
         {% for address in edit_form_address %}
 
@@ -32,9 +32,9 @@
 
     <br><br>
 
-    <form method="post" action="" data-form="{{ form_name_new }}" data-test="yes">
+    <form method="post" action="" data-name="{{ form_name_new }}" data-type="user_address" data-test="yes">
 
-      <div class="title"> Login </div>
+      <div class="title"> Add address </div>
 
       {% for address in new_form_address %}
 
@@ -46,7 +46,7 @@
       {% endfor %}
 
       <div class="otoczka_pola">
-        <button disabled type="submit"> Done </button>
+        <button disabled type="submit"> Add </button>
       </div>
 
     </form>

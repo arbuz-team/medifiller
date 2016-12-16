@@ -3,8 +3,8 @@
  */
 
 
-import {content_controller, data_controller} from '../podstawa';
-export {data_controller} from '../podstawa';
+import {content_controller, data_controller} from './main';
+export {data_controller} from './main';
 
 
 /*---------------- Wydarzenia Kontrolera Treści ----------------*/

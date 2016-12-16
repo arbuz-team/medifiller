@@ -2,7 +2,7 @@
  * Created by mrskull on 24.11.16.
  */
 
-import '../kreator_wydarzen';
+import './creator_own_events';
 
 /*---------------- Struktura Dane_Strony ----------------*/
 
