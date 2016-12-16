@@ -298,6 +298,7 @@
 	    if (error === 'yes') {
 	      if (status !== 'success') $content.html('An error has occurred while connecting to server. Please, refresh website or check your connect with network.');
 	    } else if (status !== 'success') {
+	      post_data = {};
 	      _download_content('/statement/404/', 'yes');
 	      return false;
 	    }
@@ -782,7 +783,7 @@
 	    } else console.error('Validation Error: Incorrect or empty form name/type.');
 	  });
 	
-	  $('form[data-test=yes] .test').keyup(validate).change(validate);
+	  $('form[data-test=yes] .test').keyup(catch_event_validate).change(catch_event_validate);
 	
 	  $('.show_password').change(function () {
 	    if ($(this).is(':checked')) show_password(this);else hide_password(this);
@@ -799,11 +800,15 @@
 	    field_name = void 0,
 	    field_value = void 0;
 	
-	var validate = function validate(that) {
+	var catch_event_validate = function catch_event_validate() {
+	  validate(this);
+	};
+	
+	var validate = function validate(response_field) {
 	  if (running_validator === false) {
 	    running_validator = true;
 	
-	    if (that) field = that;else field = this;
+	    field = response_field;
 	
 	    form_name = $(field).parents('form').data('name');
 	    $form = $('form[data-name=' + form_name + ']');

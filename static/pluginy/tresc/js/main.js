@@ -39,6 +39,7 @@ export let content_controller = new function Content_Controller()
     }
     else if( status !== 'success' )
     {
+      post_data = {};
       _download_content( '/statement/404/', 'yes' );
       return false;
     }

@@ -20,7 +20,7 @@ export let define = function()
       for( let key in fields_of_form )
         if(fields_of_form.hasOwnProperty( key ))
         {
-          let $field = $('form[data-name=' + name + '] *[name=' + key + ']')
+          let $field = $('form[data-name=' + name + '] *[name=' + key + ']');
 
           if($field.val())
             validate($field);
@@ -32,8 +32,8 @@ export let define = function()
 
 
   $('form[data-test=yes] .test')
-    .keyup(validate)
-    .change(validate);
+    .keyup(catch_event_validate)
+    .change(catch_event_validate);
 
 
   $('.show_password').change(function(){
@@ -57,16 +57,20 @@ let running_validator = false,
   field_name,
   field_value;
 
-let validate = function(that)
+
+let catch_event_validate = function()
+{
+  validate(this);
+};
+
+
+let validate = function(response_field)
 {
   if(running_validator === false)
   {
     running_validator = true;
 
-    if(that)
-      field = that;
-    else
-      field = this;
+    field = response_field;
 
     form_name = $(field).parents('form').data('name');
     $form = $('form[data-name='+ form_name +']');
