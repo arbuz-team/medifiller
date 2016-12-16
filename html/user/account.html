@@ -6,8 +6,8 @@
   
     User details:<br>
 
-    Email: {{ user.email }} <br>
-    Username: {{ user.username }} <br>
+    Email: {{ user.email }} # EDIT: POST={ '__edit__': 'email', 'value': '{{ user.email }}' }<br>
+    Username: {{ user.username }} # EDIT: POST={ '__edit__': 'username', 'value': '{{ user.username }}' }<br>
     <br>
 
     {% for id_address, edit_form_address in edit_forms_address.items %}
@@ -24,6 +24,7 @@
 
         <div class="otoczka_pola">
           <button disabled type="submit"> Done </button>
+          # DELETE_ADDRESS: POST={ '__delete__': '{{ id_address }}' }
         </div>
 
       </form>

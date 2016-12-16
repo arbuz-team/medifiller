@@ -251,7 +251,7 @@ class Account(Manage_Dynamic_Event):
         return JsonResponse({'__edit__': 'false'})
 
     def Manage_Delete(self):
-        id_address = self.request.POST['__delete__']
+        id_address = int(self.request.POST['__delete__'])
 
         if self.Check_ID_Address(id_address):
             User_Address.objects.get(id=id_address).delete()
