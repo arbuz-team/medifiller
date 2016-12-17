@@ -172,7 +172,7 @@ class Account(Manage_Dynamic_Event):
 
         for address in User_Address.objects.filter(user=unique):
             self.content['edit_forms_address'][address.pk] = \
-                [Form_User_Address(instance=address)]
+                Form_User_Address(instance=address)
 
     def Get_User_Address_ID(self):
         form_name = self.request.POST['__form__']

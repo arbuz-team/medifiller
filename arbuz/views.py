@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from abc import ABCMeta, abstractmethod
 from session.views import *
+import re
 
 
 class Manage_Dynamic_Event(metaclass=ABCMeta):
@@ -51,8 +52,16 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
         else: return True
         return False
 
+    def Check_POST_Is_Dangerous(self):
+
+        for key in self.request.POST:
+            if re.findall('<.*>', self.request.POST[key]):
+                raise Exception('POST is dangerous. '
+                    '<arbuz.Manage_Dynamic_Event.Check_POST_Is_Dangerous>')
+
     def Manage(self):
 
+        self.Check_POST_Is_Dangerous()
         if self.request.method == 'POST':
             if self.Check_Authorization():
 
