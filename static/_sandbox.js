@@ -1,5 +1,5 @@
 //noinspection JSUnresolvedFunction
-require( './style/style.sass' );
+require( './style/core.sass' );
 
 //noinspection JSUnresolvedFunction
 window.viewability = (

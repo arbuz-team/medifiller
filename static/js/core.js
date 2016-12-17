@@ -2,7 +2,7 @@
  * Created by mrskull on 24.11.16.
  */
 
-import './../pluginy/arbuz/js/interfejs_f-k_podst';
+import '../pluginy/arbuz/js/base_function';
 
 // import './autosize-master/dist/autosize';
 

@@ -291,15 +291,15 @@
 	    img_loader.define();
 	  };
 	
-	  var _show_content = function _show_content(response, status, error) {
+	  var _show_content = function _show_content(response, status, code, error) {
 	    var $container = $(_structure.data_controller.get('container')),
 	        $content = $(_structure.data_controller.get('container') + ' > div > .tresc');
 	
 	    if (error === 'yes') {
 	      if (status !== 'success') $content.html('An error has occurred while connecting to server. Please, refresh website or check your connect with network.');
 	    } else if (status !== 'success') {
-	      post_data = {};
-	      _download_content('/statement/404/', 'yes');
+	      post_data = _prepare_post_data();
+	      _download_content('/statement/' + code + '/', 'yes');
 	      return false;
 	    }
 	
@@ -313,8 +313,8 @@
 	  var _download_content = function _download_content(response_url, error) {
 	    url = _preprocess_url(response_url);
 	
-	    $(_structure.data_controller.get('container')).load(url, post_data, function (response, status) {
-	      _show_content(response, status, error);
+	    $(_structure.data_controller.get('container')).load(url, post_data, function (response, status, code) {
+	      _show_content(response, status, code.status, error);
 	    }).add_data('url', url);
 	  };
 	
