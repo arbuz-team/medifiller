@@ -1,17 +1,27 @@
 from .models import *
 
 
-class Translate:
+class Translator:
 
     @staticmethod
     def Get_PL(en_value):
 
         if not Language_EN.objects.filter(value=en_value):
             raise Exception('This value does not exist. '
-                            '<translate.Translate.Get_PL>')
+                            '<translator.Translate.Get_PL>')
 
         pk = Language_EN.objects.get(value=en_value)
         return Language_PL.objects.get(id=pk).value
+
+    @staticmethod
+    def Get_DE(en_value):
+
+        if not Language_EN.objects.filter(value=en_value):
+            raise Exception('This value does not exist. '
+                            '<translator.Translate.Get_DE>')
+
+        pk = Language_EN.objects.get(value=en_value)
+        return Language_DE.objects.get(id=pk).value
 
     @staticmethod
     def Load_Languages():
@@ -28,4 +38,11 @@ class Translate:
         lines = file.readlines()
         file.close()
         for line in lines:
-            Language_EN(value=line).save()
+            Language_PL(value=line).save()
+
+        # load DE language
+        file = open('language/DE')
+        lines = file.readlines()
+        file.close()
+        for line in lines:
+            Language_DE(value=line).save()
