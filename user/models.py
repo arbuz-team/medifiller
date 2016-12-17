@@ -8,6 +8,7 @@ class User(models.Model):
     email = models.EmailField(max_length=50, unique=True)
     username = models.CharField(max_length=20)
     password = models.CharField(max_length=75)
+    language = models.CharField(max_length=2)
     approved = models.BooleanField(default=False)
 
     @staticmethod

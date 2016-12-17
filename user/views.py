@@ -53,6 +53,7 @@ class Register(Manage_Dynamic_Event):
 
         if self.content['form'].is_valid():
             user = self.content['form'].save(commit=False)
+            user.language = self.request.session['']
             user.unique = self.Generate_User_Unique()
             self.request.session['user_unique'] = user.unique
             user.save()
