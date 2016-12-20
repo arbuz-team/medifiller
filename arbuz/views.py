@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from abc import ABCMeta, abstractmethod
 from session.views import *
+from translator.views import *
 import re
 
 
@@ -16,32 +17,29 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
         pass
 
     def Manage_Form(self):
-        self.content['message'] = 'Undefined form name.'
+        self.content['message'] = Text(self.request, 3)
         return self.Render_HTML('arbuz/error.html')
 
     def Manage_Exist(self):
-        pass
+        return JsonResponse({'__exist__': 'false'})
 
     def Manage_Edit(self):
-        pass
+        return JsonResponse({'__edit__': 'false'})
 
     def Manage_Delete(self):
-        pass
+        return JsonResponse({'__delete__': 'false'})
 
     def Manage_No_Event(self):
-        self.content['message'] = 'Manage_Dynamic_Event:' \
-                            ' no variable defining instruction.'
-
+        self.content['message'] = Text(self.request, 1)
         return self.Render_HTML('arbuz/error.html')
 
     def Manage_Unauthorized(self):
-        self.content['message'] = 'Manage_Dynamic_Event:' \
-                            ' detecting unauthorized access.'
-
+        self.content['message'] = Text(self.request, 2)
         return self.Render_HTML('arbuz/error.html')
 
     def Manage_Index(self):
         Check_Session(self.request)
+        Check_Translator()
         return render(self.request, 'index.html', {})
 
     def Check_Authorization(self):
@@ -56,12 +54,16 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
 
         for key in self.request.POST:
             if re.findall('<.*>', self.request.POST[key]):
-                raise Exception('POST is dangerous. '
-                    '<arbuz.Manage_Dynamic_Event.Check_POST_Is_Dangerous>')
+                return True
+
+        return False
 
     def Manage(self):
 
-        self.Check_POST_Is_Dangerous()
+        if self.Check_POST_Is_Dangerous():
+            self.content['message'] = Text(self.request, 4)
+            return self.Render_HTML('arbuz/error.html')
+
         if self.request.method == 'POST':
             if self.Check_Authorization():
 

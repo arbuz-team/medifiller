@@ -120,7 +120,7 @@ class Register(Manage_Dynamic_Event):
         user_unique = self.request.session['user_unique']
         content = {}
 
-        title = 'Confirm your new account.'
+        title = Text(self.request, 8)
         content['activate_url'] = activate_url
         content['user'] = User.objects.get(unique=user_unique)
         email = self.content['form'].cleaned_data['email']
