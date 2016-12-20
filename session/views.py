@@ -3,6 +3,11 @@ from inspect import getmembers, ismethod
 
 class Session_Controller:
 
+    def Check_Session_Arbuz(self):
+
+        if 'arbuz_navigation' not in self.request.session:
+            self.request.session['arbuz_navigation'] = []
+
     def Check_Session_User(self):
 
         if 'user_login' not in self.request.session:

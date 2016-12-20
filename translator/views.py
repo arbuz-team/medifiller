@@ -56,7 +56,3 @@ class Translator:
 def Text(request, pk):
     translator = Translator(request)
     return translator.Translate(pk)
-
-def Check_Translator():
-    if not Language_EN.objects.all():
-        Translator.Load_Languages()

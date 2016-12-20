@@ -39,7 +39,6 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
 
     def Manage_Index(self):
         Check_Session(self.request)
-        Check_Translator()
         return render(self.request, 'index.html', {})
 
     def Check_Authorization(self):
@@ -58,8 +57,14 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
 
         return False
 
+    def Update_Navigation(self):
+        url = self.request.build_absolute_uri()
+        self.request.session['arbuz_navigation'] = \
+            url.split('/')[3:-1]
+
     def Manage(self):
 
+        self.Update_Navigation()
         if self.Check_POST_Is_Dangerous():
             self.content['message'] = Text(self.request, 4)
             return self.Render_HTML('arbuz/error.html')
