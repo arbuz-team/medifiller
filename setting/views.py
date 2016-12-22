@@ -10,7 +10,7 @@ class Control_Panel(Manage_Dynamic_Event):
 
     @staticmethod
     def Reset_Databases(request):
-        os.system('./reset.sh')
+        os.system(BASE_DIR + '/reset.sh')
         return Control_Panel.Launch(request)
 
     @staticmethod
