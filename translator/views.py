@@ -29,21 +29,21 @@ class Translator:
     def Load_Languages():
 
         # load EN language
-        file = open(BASE_DIR + '/translator/language/EN')
+        file = open(BASE_DIR + '/translator/language/EN', encoding='utf-8')
         lines = file.readlines()
         file.close()
         for line in lines:
             Language_EN(value=line).save()
 
         # load PL language
-        file = open(BASE_DIR + '/translator/language/PL')
+        file = open(BASE_DIR + '/translator/language/PL', encoding='utf-8')
         lines = file.readlines()
         file.close()
         for line in lines:
             Language_PL(value=line).save()
 
         # load DE language
-        file = open(BASE_DIR + '/translator/language/DE')
+        file = open(BASE_DIR + '/translator/language/DE', encoding='utf-8')
         lines = file.readlines()
         file.close()
         for line in lines:
