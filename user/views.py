@@ -239,14 +239,16 @@ class Account(Manage_Dynamic_Event):
 
         return JsonResponse({'__edit__': 'false'})
 
-    def Manage_Delete(self):
-        id_address = int(self.request.POST['__delete__'])
+    def Manage_Button(self):
 
-        if self.Check_ID_Address(id_address):
-            User_Address.objects.get(id=id_address).delete()
-            return JsonResponse({'__delete__': 'true'})
+        if '__button__' in self.request.POST:
+            id_address = int(self.request.POST['value'])
 
-        return JsonResponse({'__delete__': 'false'})
+            if self.Check_ID_Address(id_address):
+                User_Address.objects.get(id=id_address).delete()
+                return JsonResponse({'__button__': 'true'})
+
+        return JsonResponse({'__button__': 'false'})
 
     @staticmethod
     def Launch(request):

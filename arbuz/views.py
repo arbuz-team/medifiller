@@ -26,8 +26,8 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
     def Manage_Edit(self):
         return JsonResponse({'__edit__': 'false'})
 
-    def Manage_Delete(self):
-        return JsonResponse({'__delete__': 'false'})
+    def Manage_Button(self):
+        return JsonResponse({'__button__': 'false'})
 
     def Manage_No_Event(self):
         self.content['message'] = Text(self.request, 1)
@@ -72,20 +72,24 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
         if self.request.method == 'POST':
             if self.Check_Authorization():
 
+                # parts of pages
                 if '__content__' in self.request.POST:
                     return self.Manage_Content()
 
+                # manage forms
                 if '__form__' in self.request.POST:
                     return self.Manage_Form()
-
-                if '__exist__' in self.request.POST:
-                    return self.Manage_Exist()
 
                 if '__edit__' in self.request.POST:
                     return self.Manage_Edit()
 
-                if '__delete__' in self.request.POST:
-                    return self.Manage_Edit()
+                # checkers
+                if '__exist__' in self.request.POST:
+                    return self.Manage_Exist()
+
+                # options
+                if '__button__' in self.request.POST:
+                    return self.Manage_Button()
 
                 return self.Manage_No_Event()
             return self.Manage_Unauthorized()
