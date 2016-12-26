@@ -71,17 +71,17 @@
 	
 	__webpack_require__(6);
 	
-	var _view = __webpack_require__(7);
+	__webpack_require__(7);
+	
+	var _view = __webpack_require__(10);
 	
 	var page_controller = _interopRequireWildcard(_view);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
-	/**
-	 * Created by mrskull on 24.11.16.
-	 */
-	
-	page_controller.start();
+	page_controller.start(); /**
+	                          * Created by mrskull on 24.11.16.
+	                          */
 	
 	// import './autosize-master/dist/autosize';
 
@@ -95,21 +95,25 @@
 	
 	/*---------------- Interfejs funkcji standardowych ----------------*/
 	
-	/*Object.prototype.Dziedzicz_Po = function( rodzic )
-	{
-	  var dziecko = function() {};
-	  dziecko.prototype = rodzic;
-	  return new dziecko();
-	}*/
+	/**
+	 *    Defining global veriables
+	 */
 	
-	Function.prototype.add_method = function (name, callback) {
-	  this.prototype[name] = callback;
-	  return this;
-	};
+	window.APP = {};
+	window.APP.DATA = {};
+	
+	/**
+	 *    Defining global functions
+	 */
 	
 	$.prototype.add_data = function (name, value) {
 	  $(this).attr('data-' + name, value);
 	  $(this).data(name, value);
+	  return this;
+	};
+	
+	$.prototype.change_data = function (name, value) {
+	  $(this).add_data(name, value);
 	  return this;
 	};
 	
@@ -128,17 +132,8 @@
 	      j++;
 	    }
 	  }
-	
 	  return url_array;
 	};
-	
-	/*
-	Function.Dodaj_Metode( 'inherits', function( Parent )
-	{
-	  this.prototype = new Parent();
-	  return this;
-	})
-	*/
 
 /***/ },
 /* 7 */
@@ -146,34 +141,31 @@
 
 	'use strict';
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.start = undefined;
+	var _structure = __webpack_require__(8);
 	
-	var _view = __webpack_require__(8);
+	// ---- defining private functions
 	
-	var _view2 = __webpack_require__(13);
-	
-	var _view3 = __webpack_require__(15);
-	
-	/*---------------- Wydarzenia na stronie ----------------*/
-	
-	var define = function define() {
-	  // Usuń wszystkie wydarzenia ze wszystkich elementów
-	  $('*').off();
-	
-	  _view.content_controller_events.define();
-	  _view2.menu_controller_events.define();
-	  _view3.form_controller_events.define();
+	var send_post_preprocess_url = function send_post_preprocess_url(response_url) {
+	  if (response_url) return response_url;else return _structure.data_controller.get('path');
 	}; /**
-	    * Created by mrskull on 24.11.16.
+	    * Created by mrskull on 20.12.16.
 	    */
 	
-	var start = exports.start = function start() {
-	  define();
+	var send_post_prepare = function send_post_prepare(post_data) {
+	  if (!post_data) post_data = {};
 	
-	  window.addEventListener('define', define, false);
+	  post_data[_structure.data_controller.get_crsf('name')] = _structure.data_controller.get_crsf('value');
+	
+	  return post_data;
+	};
+	
+	// ---- defining global functions
+	
+	window.APP.send_post = function (url, data_post, callback) {
+	  url = send_post_preprocess_url(url);
+	  data_post = send_post_prepare(data_post);
+	
+	  $.post(url, data_post).always(callback);
 	};
 
 /***/ },
@@ -185,205 +177,9 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.content_controller_events = exports.data_controller = undefined;
-	
-	var _main = __webpack_require__(9);
-	
-	Object.defineProperty(exports, 'data_controller', {
-	  enumerable: true,
-	  get: function get() {
-	    return _main.data_controller;
-	  }
-	});
-	
-	
-	/*---------------- Wydarzenia Kontrolera Treści ----------------*/
-	
-	var content_controller_events = exports.content_controller_events = new function Content_Controller_Events() {
-	
-	  this.define = function () {
-	    $('a').click(start_link);
-	
-	    window.addEventListener('popstate', back_url);
-	
-	    window.addEventListener('change_url', change_url, false);
-	
-	    window.addEventListener('redirect', redirect, false);
-	
-	    //////////////////////////////////////////
-	    window.onload = function () {
-	      _main.content_controller.start();
-	    };
-	  };
-	
-	  //////////////////////////////////////////////////////////
-	
-	  var start_link = function start_link(event) {
-	    event.preventDefault();
-	    var url = $(this).attr('href');
-	
-	    if (event.which === 1) {
-	      if (_main.data_controller.get('path') !== url) _main.content_controller.change_content(url);
-	    }
-	  };
-	
-	  var change_url = function change_url() {
-	    var url = _main.data_controller.prepare_url_to_change();
-	    _main.content_controller.change_content(url);
-	  };
-	
-	  var back_url = function back_url() {
-	    event.preventDefault();
-	    _main.content_controller.start();
-	  };
-	
-	  var redirect = function redirect() {
-	    var url = void 0;
-	
-	    if (typeof APP !== 'undefined' && typeof APP.redirect !== 'undefined') url = APP.redirect;else url = '/';
-	
-	    setTimeout(function () {
-	      _main.content_controller.change_content(url);
-	    }, 2000);
-	  };
-	}();
-
-/***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.content_controller = exports.data_controller = undefined;
-	
-	var _structure = __webpack_require__(10);
-	
-	Object.defineProperty(exports, 'data_controller', {
-	  enumerable: true,
-	  get: function get() {
-	    return _structure.data_controller;
-	  }
-	});
-	
-	var _img_loader = __webpack_require__(12);
-	
-	var img_loader = _interopRequireWildcard(_img_loader);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	/*---------------- Kontroler Treści ----------------*/
-	
-	var content_controller = exports.content_controller = new function Content_Controller() {
-	  var url = void 0,
-	      post_data = void 0;
-	
-	  ///////////////////////////////////////////////////////////////////////////
-	
-	  var _refresh_data = function _refresh_data() {
-	    _structure.data_controller.reset();
-	  };
-	
-	  var _refresh_events = function _refresh_events() {
-	    window.dispatchEvent(window.EVENTS.define);
-	    img_loader.define();
-	  };
-	
-	  var _show_content = function _show_content(response, status, code, error) {
-	    var $container = $(_structure.data_controller.get('container')),
-	        $content = $(_structure.data_controller.get('container') + ' > div > .tresc');
-	
-	    if (error === 'yes') {
-	      if (status !== 'success') $content.html('An error has occurred while connecting to server. Please, refresh website or check your connect with network.');
-	    } else if (status !== 'success') {
-	      post_data = _prepare_post_data();
-	      _download_content('/statement/' + code + '/', 'yes');
-	      return false;
-	    }
-	
-	    _refresh_events();
-	
-	    $container.animate({ opacity: 1 }, 150, function () {
-	      if (window.APP) paste_data(window.APP);
-	    });
-	  };
-	
-	  var _download_content = function _download_content(response_url, error) {
-	    url = _preprocess_url(response_url);
-	
-	    $(_structure.data_controller.get('container')).load(url, post_data, function (response, status, code) {
-	      _show_content(response, status, code.status, error);
-	    }).add_data('url', url);
-	  };
-	
-	  var _hide_content = function _hide_content() {
-	    $(_structure.data_controller.get('container')).animate({ opacity: 0.4 }, 100, function () {
-	
-	      _download_content();
-	    });
-	  };
-	
-	  ///////////////////////////////////////////////////////////////////////////
-	
-	  this.change_content = function (response_url, response_post_data) {
-	    url = _preprocess_url(response_url);
-	    _change_url(url);
-	    _refresh_data();
-	
-	    post_data = _prepare_post_data(response_post_data);
-	
-	    _hide_content();
-	  };
-	
-	  this.start = function () {
-	    _refresh_data();
-	
-	    post_data = _prepare_post_data();
-	
-	    _hide_content();
-	  };
-	
-	  ///////////////////////////////////////////////////////////////////////////
-	
-	  var _preprocess_url = function _preprocess_url(response_url) {
-	    if (response_url) return response_url;else return _structure.data_controller.get('path');
-	  };
-	
-	  var _prepare_post_data = function _prepare_post_data(object) {
-	    if (!object) object = {};
-	
-	    if (typeof object.__form__ === 'undefined') object.__content__ = 'true';
-	    object.csrfmiddlewaretoken = _structure.data_controller.get('csrf_token');
-	
-	    return object;
-	  };
-	
-	  var paste_data = function paste_data(object) {
-	    _structure.data_controller.change_much(object);
-	
-	    $('title').html(_structure.data_controller.get('title'));
-	    $('meta[ name="description" ]').attr('content', _structure.data_controller.get('description'));
-	  };
-	
-	  var _change_url = function _change_url(url) {
-	    history.pushState('', url, url);
-	  };
-	}();
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
 	exports.data_controller = undefined;
 	
-	__webpack_require__(11);
+	__webpack_require__(9);
 	
 	/*---------------- Struktura Dane_Strony ----------------*/
 	
@@ -405,12 +201,11 @@
 	    };
 	
 	    public_data = {
-	      url_to_change: '',
+	      can_do_redirect: false,
 	      page_name: 'Spasungate',
 	      title: 'Loading... - Spasungate',
 	      description: 'This page is shop, which is ownership Spasungate.',
-	      statement_content: 'Empty statement.',
-	      container: '#TRESC'
+	      statement_content: 'Empty statement.'
 	    };
 	  };
 	
@@ -418,19 +213,16 @@
 	
 	  this.get = function (name) {
 	    if (typeof private_data[name] !== 'undefined') return private_data[name];else if (typeof public_data[name] !== 'undefined') return public_data[name];else {
-	      console.warn('Wrong call! Veriable with this name doesn\'t exist.');
-	      console.trace();
+	      console.error('Data structure error: Wrong call! Veriable with this name doesn\'t exist.');
 	    }
 	  };
 	
+	  this.get_crsf = function (what) {
+	    if (what === 'name') return 'csrfmiddlewaretoken';else if (what === 'value') return private_data.csrf_token;else console.error('Data structure error: Wrong call! Veriable with this name doesn\'t exist (crsf).');
+	  };
+	
 	  this.change = function (name, wartosc) {
-	    if (typeof public_data[name] !== 'undefined') public_data[name] = wartosc;else if (typeof private_data[name] !== 'undefined') {
-	      console.warn('Wrong call! Veriable with this name doesn\'t exist.');
-	      console.trace();
-	    } else {
-	      console.warn('Wrong call! Veriable with this name doesn\'t exist.');
-	      console.trace();
-	    }
+	    if (typeof public_data[name] !== 'undefined') public_data[name] = wartosc;else console.error('Data structure error: Wrong call! Veriable with this name doesn\'t exist. ' + name);
 	  };
 	
 	  this.change_much = function (object) {
@@ -442,16 +234,12 @@
 	      }
 	    }
 	  };
-	
-	  this.prepare_url_to_change = function () {
-	    if (public_data.url_to_change !== '') return public_data.url_to_change;else return '/';
-	  };
 	}(); /**
 	      * Created by mrskull on 24.11.16.
 	      */
 
 /***/ },
-/* 11 */
+/* 9 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -462,12 +250,321 @@
 	
 	window.EVENTS = {
 	  define: new Event('define'),
-	  change_url: new Event('change_url'),
 	  redirect: new Event('redirect')
 	};
 
 /***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.start = undefined;
+	
+	var _view = __webpack_require__(11);
+	
+	var content_controller_events = _interopRequireWildcard(_view);
+	
+	var _view2 = __webpack_require__(15);
+	
+	var menu_controller_events = _interopRequireWildcard(_view2);
+	
+	var _view3 = __webpack_require__(17);
+	
+	var form_controller_events = _interopRequireWildcard(_view3);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	/*---------------- Wydarzenia na stronie ----------------*/
+	
+	var define = function define() {
+	  // Usuń wszystkie wydarzenia ze wszystkich elementów
+	  $('*').off();
+	
+	  content_controller_events.define();
+	  menu_controller_events.define();
+	  form_controller_events.define();
+	}; /**
+	    * Created by mrskull on 24.11.16.
+	    */
+	
+	var start = exports.start = function start() {
+	  define();
+	
+	  window.addEventListener('define', define, false);
+	};
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.define = undefined;
+	
+	var _main = __webpack_require__(12);
+	
+	var content_controller = _interopRequireWildcard(_main);
+	
+	var _structure = __webpack_require__(8);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	/*---------------- Wydarzenia Kontrolera Treści ----------------*/
+	
+	/**
+	 *    Defining public functions
+	 */
+	
+	/**
+	 * Created by mrskull on 24.11.16.
+	 */
+	
+	var define = exports.define = function define() {
+	  $('a').click(start_link);
+	
+	  window.addEventListener('popstate', back_url);
+	
+	  window.addEventListener('redirect', redirect, false);
+	
+	  //////////////////////////////////////////
+	  window.onload = function () {
+	    content_controller.start();
+	  };
+	};
+	
+	/**
+	 *    Defining private functions
+	 */
+	
+	var start_link = function start_link(event) {
+	  event.preventDefault();
+	
+	  var url = $(this).attr('href');
+	
+	  if (event.which === 1) {
+	    if (_structure.data_controller.get('path') !== url) content_controller.change_content(url);
+	  }
+	};
+	
+	var back_url = function back_url() {
+	  event.preventDefault();
+	  content_controller.start();
+	};
+	
+	var redirect = function redirect() {
+	  var url = _structure.data_controller.get('path'),
+	      delay = 0;
+	
+	  if (typeof APP !== 'undefined' && typeof APP.DATA !== 'undefined') {
+	    if (typeof APP.DATA.redirect !== 'undefined') url = APP.DATA.redirect;
+	
+	    if (typeof APP.DATA.delay !== 'undefined') delay = APP.DATA.delay;
+	  }
+	
+	  _structure.data_controller.change('can_do_redirect', true);
+	
+	  setTimeout(function () {
+	    if (_structure.data_controller.get('can_do_redirect') === true) content_controller.change_content(url);
+	  }, delay);
+	};
+
+/***/ },
 /* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.start = exports.change_content = undefined;
+	
+	var _structure = __webpack_require__(8);
+	
+	var _models = __webpack_require__(13);
+	
+	var models = _interopRequireWildcard(_models);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	/*---------------- Kontroler Treści ----------------*/
+	
+	/**
+	 *    Defining public functions
+	 */
+	
+	/**
+	 *    Created by mrskull on 24.11.16.
+	 */
+	
+	var change_content = exports.change_content = function change_content(url, post_data) {
+	  _structure.data_controller.change('can_do_redirect', false);
+	
+	  models.prepare_url(url);
+	  models.prepare_post_data(post_data);
+	
+	  _change_url();
+	  models.refresh_data();
+	
+	  _hide_content();
+	};
+	
+	var start = exports.start = function start() {
+	  models.refresh_data();
+	  models.prepare_post_data();
+	
+	  _hide_content();
+	};
+	
+	/**
+	 *    Defining content functions
+	 */
+	
+	var _download_content = function _download_content(url) {
+	  models.prepare_url(url);
+	  window.APP.send_post(models.url, models.post_data, _paste_content);
+	};
+	
+	var _paste_content = function _paste_content(response, status, code) {
+	  $(models.settings.container).html(response).add_data('url', models.url);
+	  _prepare_to_show_content(response, status, code.status);
+	};
+	
+	var _paste_data = function _paste_data(object) {
+	  _structure.data_controller.change_much({
+	    title: object.title,
+	    description: object.description
+	  });
+	
+	  $('title').html(_structure.data_controller.get('title'));
+	  $('meta[ name="description" ]').attr('content', _structure.data_controller.get('description'));
+	};
+	
+	var _change_url = function _change_url() {
+	  history.pushState('', models.url, models.url);
+	};
+	
+	/**
+	 *    Defining view functions
+	 */
+	
+	var _prepare_to_show_content = function _prepare_to_show_content(response, status, code) {
+	  if (models.error === true) if (status !== 'success') $(models.settings.container + ' > div > .tresc').html('An error has occurred while connecting to server. Please, refresh website or check your connect with network.');else if (status !== 'success') {
+	    models.prepare_post_data();
+	    _download_content('/statement/' + code + '/', true);
+	    return false;
+	  }
+	
+	  models.url = '';
+	  models.refresh_events();
+	  _show_content();
+	};
+	
+	var _show_content = function _show_content() {
+	  var container = models.settings.container,
+	      opacity = models.settings.show_content.opacity,
+	      duration = models.settings.show_content.duration;
+	
+	  $(container).animate({ opacity: opacity }, duration, function () {
+	    if (window.APP.DATA) _paste_data(window.APP.DATA);
+	  });
+	};
+	
+	var _hide_content = function _hide_content() {
+	  var container = models.settings.container,
+	      opacity = models.settings.hide_content.opacity,
+	      duration = models.settings.hide_content.duration;
+	
+	  $(container).animate({ opacity: opacity }, duration, function () {
+	    _download_content();
+	  });
+	};
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.refresh_events = exports.refresh_data = exports.prepare_post_data = exports.prepare_url = exports.error = exports.post_data = exports.url = exports.settings = undefined;
+	
+	var _structure = __webpack_require__(8);
+	
+	var _img_loader = __webpack_require__(14);
+	
+	var img_loader = _interopRequireWildcard(_img_loader);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	/**
+	 *    Plugin settings
+	 */
+	
+	/**
+	 * Created by mrskull on 26.12.16.
+	 */
+	
+	var settings = exports.settings = {
+	  show_content: {
+	    duration: 150, opacity: 1
+	  },
+	
+	  hide_content: {
+	    duration: 100, opacity: 0.4
+	  },
+	
+	  container: '#TRESC'
+	};
+	
+	/**
+	 *    Plugin variables
+	 */
+	
+	var url = exports.url = '',
+	    post_data = exports.post_data = {},
+	    error = exports.error = false;
+	
+	/**
+	 *    Defining prepare functions
+	 */
+	
+	var prepare_url = exports.prepare_url = function prepare_url(response_url) {
+	  if (response_url) exports.url = url = response_url;else exports.url = url = _structure.data_controller.get('path');
+	};
+	
+	var prepare_post_data = exports.prepare_post_data = function prepare_post_data(object) {
+	  if (!object) object = {};
+	
+	  if (typeof object.__form__ === 'undefined') object.__content__ = 'true';
+	
+	  exports.post_data = post_data = object;
+	};
+	
+	/**
+	 *    Defining refresh functions
+	 */
+	
+	var refresh_data = exports.refresh_data = function refresh_data() {
+	  _structure.data_controller.reset();
+	};
+	
+	var refresh_events = exports.refresh_events = function refresh_events() {
+	  window.dispatchEvent(window.EVENTS.define);
+	  img_loader.define();
+	};
+
+/***/ },
+/* 14 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -526,116 +623,6 @@
 	};
 
 /***/ },
-/* 13 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.menu_controller_events = exports.data_controller = undefined;
-	
-	var _main = __webpack_require__(14);
-	
-	Object.defineProperty(exports, 'data_controller', {
-	  enumerable: true,
-	  get: function get() {
-	    return _main.data_controller;
-	  }
-	});
-	
-	
-	/*---------------- Wydarzenia kontrolera Menu ----------------*/
-	
-	var menu_controller_events = exports.menu_controller_events = new function Menu_Controller_Events() {
-	
-	  this.define = function () {
-	    $('.guzik_menu').click(this.show_hide_menu);
-	    $('#MENU .nakladka').click(this.show_hide_menu);
-	    $('#MENU > .menu a').click(this.show_hide_menu);
-	
-	    window.addEventListener('changed_url', _main.menu_controller.select_overlap(), false);
-	  };
-	
-	  var is_exist = function is_exist(element) {
-	    if ($(element).length) return true;
-	
-	    return false;
-	  };
-	
-	  var check_atribute_data = function check_atribute_data(element, name, value) {
-	    if (is_exist(element)) {
-	      return $(element).data(name) === value;
-	    }
-	
-	    return false;
-	  };
-	
-	  this.show_hide_menu = function (event) {
-	    if (event.which === 1) {
-	      var menu = '#MENU';
-	
-	      if (check_atribute_data(menu, 'wysuniete', 'nie')) _main.menu_controller.show();else if (check_atribute_data(menu, 'wysuniete', 'tak')) _main.menu_controller.hide();
-	
-	      return false;
-	    }
-	  };
-	}();
-
-/***/ },
-/* 14 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.menu_controller = exports.data_controller = undefined;
-	
-	var _structure = __webpack_require__(10);
-	
-	Object.defineProperty(exports, 'data_controller', {
-	  enumerable: true,
-	  get: function get() {
-	    return _structure.data_controller;
-	  }
-	});
-	
-	
-	/*---------------- Kontroler Menu ----------------*/
-	
-	var menu_controller = exports.menu_controller = new function Menu_Controller() {
-	  var $menu = $('#MENU'),
-	      $overlay = $menu.children('.overlay');
-	
-	  this.show = function () {
-	    $menu.animate({ 'right': '0px' }, 200);
-	    $overlay.show();
-	    $menu.add_data('wysuniete', 'tak');
-	  };
-	
-	  this.hide = function () {
-	    $overlay.hide();
-	
-	    $menu.animate({ right: '-250px' }, 200);
-	    $menu.add_data('wysuniete', 'nie');
-	  };
-	
-	  this.select_overlap = function () {
-	    var url = _structure.data_controller.get('all_url'),
-	        $overlap = $('.menu > li > a');
-	
-	    $overlap.removeClass('wybrany');
-	
-	    for (var i = 0; $overlap.length > i; ++i) {
-	      if ($overlap[i].href === url) $overlap.eq(i).addClass('wybrany');
-	    }
-	  };
-	}();
-
-/***/ },
 /* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -644,51 +631,57 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.form_controller_events = undefined;
+	exports.show_hide_menu = exports.define = undefined;
 	
 	var _main = __webpack_require__(16);
 	
-	var _views = __webpack_require__(17);
-	
-	var validator = _interopRequireWildcard(_views);
+	var menu_controller = _interopRequireWildcard(_main);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
-	/*    JavaScript    */
+	/*---------------- Wydarzenia kontrolera Menu ----------------*/
 	
-	var form_controller_events = exports.form_controller_events = new function Form_Controller_Events() {
+	/**
+	 *    Defining public functions
+	 */
 	
-	  this.define = function () {
-	    $('form').submit(prepare_form_to_send);
+	var define = exports.define = function define() {
+	  $('.guzik_menu').click(this.show_hide_menu);
+	  $('#MENU .nakladka').click(this.show_hide_menu);
+	  $('#MENU > .menu a').click(this.show_hide_menu);
 	
-	    validator.define();
-	  };
+	  window.addEventListener('changed_url', menu_controller.select_overlap(), false);
+	}; /**
+	    * Created by mrskull on 24.11.16.
+	    */
 	
-	  //////////////////////////////////////////////////////////
+	var show_hide_menu = exports.show_hide_menu = function show_hide_menu(event) {
+	  if (event.which === 1) {
+	    var menu = '#MENU';
 	
-	  var get_form_fields = function get_form_fields(element) {
-	    var $fields = $(element).serializeArray(),
-	        form_object = {};
+	    if (check_atribute_data(menu, 'wysuniete', 'nie')) menu_controller.show();else if (check_atribute_data(menu, 'wysuniete', 'tak')) menu_controller.hide();
 	
-	    $.each($fields, function (i, field) {
-	      form_object[field.name] = field.value;
-	    });
+	    return false;
+	  }
+	};
 	
-	    return form_object;
-	  };
+	/**
+	 *    Defining private functions
+	 */
 	
-	  var prepare_form_to_send = function prepare_form_to_send(event) {
-	    event.preventDefault();
+	var is_exist = function is_exist(element) {
+	  if ($(element).length) return true;
 	
-	    var form_name = $(this).data('name'),
-	        url = $(this).attr('action'),
-	        form_object = get_form_fields(this);
+	  return false;
+	};
 	
-	    if (typeof url === 'undefined' || url === '') url = _main.data_controller.get('path');
+	var check_atribute_data = function check_atribute_data(element, name, value) {
+	  if (is_exist(element)) {
+	    return $(element).data(name) === value;
+	  }
 	
-	    _main.form_controller.send(form_name, url, form_object);
-	  };
-	}();
+	  return false;
+	};
 
 /***/ },
 /* 16 */
@@ -699,52 +692,50 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.form_controller = exports.data_controller = undefined;
+	exports.select_overlap = exports.hide = exports.show = undefined;
 	
-	var _structure = __webpack_require__(10);
+	var _structure = __webpack_require__(8);
 	
-	Object.defineProperty(exports, 'data_controller', {
-	  enumerable: true,
-	  get: function get() {
-	    return _structure.data_controller;
+	/*---------------- Kontroler Menu ----------------*/
+	
+	/**
+	 *    Defining private veriables
+	 */
+	
+	var $menu = $('#MENU'),
+	    $overlay = $menu.children('.overlay');
+	
+	/**
+	 *    Defining public functions
+	 */
+	
+	/**
+	 * Created by mrskull on 24.11.16.
+	 */
+	
+	var show = exports.show = function show() {
+	  $menu.animate({ 'right': '0px' }, 200);
+	  $overlay.show();
+	  $menu.add_data('wysuniete', 'tak');
+	};
+	
+	var hide = exports.hide = function hide() {
+	  $overlay.hide();
+	
+	  $menu.animate({ right: '-250px' }, 200);
+	  $menu.add_data('wysuniete', 'nie');
+	};
+	
+	var select_overlap = exports.select_overlap = function select_overlap() {
+	  var url = _structure.data_controller.get('all_url'),
+	      $overlap = $('.menu > li > a');
+	
+	  $overlap.removeClass('wybrany');
+	
+	  for (var i = 0; $overlap.length > i; ++i) {
+	    if ($overlap[i].href === url) $overlap.eq(i).addClass('wybrany');
 	  }
-	});
-	
-	var _main = __webpack_require__(9);
-	
-	var form_controller = exports.form_controller = new function Form_Controller() {
-	
-	  var _prepare_post_data = function _prepare_post_data(form_name, object) {
-	    if (!object) object = {};
-	
-	    object.__form__ = form_name;
-	
-	    return object;
-	  };
-	
-	  this.send = function (form_name, url, data_post) {
-	    data_post = _prepare_post_data(form_name, data_post);
-	    _main.content_controller.change_content(url, data_post);
-	  };
-	
-	  /////////////////   SPRAWDZANIE PÓL   ///////////////////
-	
-	  // let $form
-	  //   , field_name
-	  //   , field_value;
-	  //
-	  //
-	  // let _preprocess_post_data = function( object )
-	  // {
-	  //   if( !object )
-	  //     object = {};
-	  //
-	  //   object.__istnieje__ = 'true';
-	  //   object.csrfmiddlewaretoken = data_controller.get( 'csrf_token' );
-	  //
-	  //   return object;
-	  // };
-	}();
+	};
 
 /***/ },
 /* 17 */
@@ -757,7 +748,119 @@
 	});
 	exports.define = undefined;
 	
-	var _checkers = __webpack_require__(18);
+	var _main = __webpack_require__(18);
+	
+	var form_controller = _interopRequireWildcard(_main);
+	
+	var _views = __webpack_require__(19);
+	
+	var validator = _interopRequireWildcard(_views);
+	
+	var _view = __webpack_require__(23);
+	
+	var mini_form = _interopRequireWildcard(_view);
+	
+	var _view2 = __webpack_require__(25);
+	
+	var post_button = _interopRequireWildcard(_view2);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	/**
+	 *    Defining public functions
+	 */
+	
+	/**
+	 * Created by mrskull on 24.11.16.
+	 */
+	
+	var define = exports.define = function define() {
+	  $('form').submit(prepare_form_to_send);
+	
+	  validator.define();
+	  mini_form.define();
+	  post_button.define();
+	};
+	
+	/**
+	 *    Defining private functions
+	 */
+	
+	var get_form_fields = function get_form_fields(element) {
+	  var $fields = $(element).serializeArray(),
+	      form_object = {};
+	
+	  $.each($fields, function (i, field) {
+	    form_object[field.name] = field.value;
+	  });
+	
+	  return form_object;
+	};
+	
+	var prepare_form_to_send = function prepare_form_to_send(event) {
+	  event.preventDefault();
+	
+	  var form_name = $(this).data('name'),
+	      url = $(this).attr('action'),
+	      form_object = get_form_fields(this);
+	
+	  form_controller.send(form_name, url, form_object);
+	};
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.send = undefined;
+	
+	var _main = __webpack_require__(12);
+	
+	var content_controller = _interopRequireWildcard(_main);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	/**
+	 *    Defining private functions
+	 */
+	
+	var _prepare_post_data = function _prepare_post_data(form_name, object) {
+	  if (!object) object = {};
+	
+	  object.__form__ = form_name;
+	
+	  return object;
+	};
+	
+	/**
+	 *    Defining public functions
+	 */
+	
+	/**
+	 * Created by mrskull on 24.11.16.
+	 */
+	
+	var send = exports.send = function send(form_name, url, data_post) {
+	  data_post = _prepare_post_data(form_name, data_post);
+	  content_controller.change_content(url, data_post);
+	};
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.define = undefined;
+	
+	var _checkers = __webpack_require__(20);
 	
 	var Validators = {};
 	
@@ -876,7 +979,7 @@
 	};
 
 /***/ },
-/* 18 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -886,7 +989,7 @@
 	});
 	exports.Constructor_Validator = undefined;
 	
-	var _validator = __webpack_require__(19);
+	var _validator = __webpack_require__(21);
 	
 	Object.defineProperty(exports, 'Constructor_Validator', {
 	  enumerable: true,
@@ -988,7 +1091,7 @@
 	////////////////////////////////////////////
 
 /***/ },
-/* 19 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -998,9 +1101,9 @@
 	});
 	exports.Constructor_Validator = exports.checker = undefined;
 	
-	var _config = __webpack_require__(20);
+	var _config = __webpack_require__(22);
 	
-	var _structure = __webpack_require__(10);
+	var _structure = __webpack_require__(8);
 	
 	//////////////////////////////////////////////////////
 	
@@ -1123,7 +1226,7 @@
 	};
 
 /***/ },
-/* 20 */
+/* 22 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1151,6 +1254,202 @@
 	  region: 'proper_name',
 	  postcode: 'no_empty',
 	  country: 'proper_name'
+	};
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.define = undefined;
+	
+	var _main = __webpack_require__(24);
+	
+	var form = _interopRequireWildcard(_main);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	/**
+	 *    Defining events
+	 */
+	
+	var define = exports.define = function define() {
+	  var $otoczka_pola = $('.mini_form > .otoczka_pola');
+	
+	  $otoczka_pola.children('div').click(edit_field);
+	
+	  $otoczka_pola.children('button').click(save_or_edit);
+	};
+	
+	/**
+	 *    Defining private event functions
+	 */
+	
+	/**
+	 * Created by mrskull on 17.12.16.
+	 */
+	var edit_field = function edit_field() {
+	  var $div = $(this),
+	      $field = $div.parent().children('input'),
+	      $button = $div.parent().children('button');
+	
+	  // Change words to input
+	  $div.fadeOut(100, function () {
+	    $field.fadeIn(100, function () {
+	      $(this).focus();
+	    });
+	    $button.html('Save');
+	  });
+	};
+	
+	var save_or_edit = function save_or_edit() {
+	  var $button = $(this),
+	      data_button = $button.data('type'),
+	      $div = $button.parent().children('div'),
+	      $field = $button.parent().children('input');
+	
+	  var save_data = function save_data(response, status) {
+	    if (status === 'success')
+	      // Change input to words
+	      $field.fadeOut(100, function () {
+	        $div.html($field.val());
+	        $div.fadeIn(100);
+	        $button.change_data('type', 'edit').html('Edit');
+	      });else $button.html('Save: error');
+	  };
+	
+	  if (data_button === 'edit')
+	    // Change words to input
+	    $div.fadeOut(100, function () {
+	      $field.fadeIn(100, function () {
+	        $(this).focus();
+	      });
+	      $button.change_data('type', 'save').html('Save');
+	    });else if (data_button === 'save') form.send(this, save_data);
+	};
+
+/***/ },
+/* 24 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	 * Created by mrskull on 18.12.16.
+	 */
+	
+	/**
+	 *    Defining private functions
+	 */
+	
+	var send_prepare_post = function send_prepare_post(name, value) {
+	  return {
+	    __edit__: name,
+	    value: value
+	  };
+	};
+	
+	/**
+	 *    Defining public functions
+	 */
+	
+	var send = exports.send = function send(field, callback) {
+	  var $field = $(field),
+	      field_name = $field.attr('name'),
+	      field_value = $field.val(),
+	      post_data = send_prepare_post(field_name, field_value);
+	
+	  window.APP.send_post(undefined, post_data, callback);
+	};
+
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.define = undefined;
+	
+	var _main = __webpack_require__(26);
+	
+	var mini_form = _interopRequireWildcard(_main);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	var define = exports.define = function define() {
+	  $('.post_button').click(send_post_button);
+	}; /**
+	    * Created by mrskull on 17.12.16.
+	    */
+	
+	var send_post_button_is_running = false;
+	
+	var send_post_button = function send_post_button() {
+	  if (send_post_button_is_running) return false;
+	
+	  send_post_button_is_running = true;
+	
+	  var $button = $(this),
+	      text_button = $.trim($button.text()),
+	      // Delete white spaces
+	  data_name = $button.data('name'),
+	      data_value = $button.data('value');
+	
+	  // Change input on disabled
+	  $button.prop('disabled', true).html('Loading...');
+	
+	  var show_answer = function show_answer(response, status) {
+	    if (status === 'success') {
+	      $button.html(text_button).prop('disabled', false);
+	      window.APP.DATA.redirect = undefined;
+	      window.APP.DATA.delay = undefined;
+	      window.dispatchEvent(window.EVENTS.redirect);
+	    } else {
+	      $button.html(text_button + ': Error').prop('disabled', false);
+	    }
+	
+	    send_post_button_is_running = false;
+	  };
+	
+	  setTimeout(function () {
+	    mini_form.send(data_name, data_value, show_answer);
+	  }, 100);
+	};
+
+/***/ },
+/* 26 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	 * Created by mrskull on 18.12.16.
+	 */
+	
+	var send_prepare_post = function send_prepare_post(button_name, button_value) {
+	  return {
+	    __button__: button_name,
+	    value: button_value
+	  };
+	};
+	
+	var send = exports.send = function send(button_name, button_value, callback) {
+	  var post_data = send_prepare_post(button_name, button_value);
+	
+	  window.APP.send_post(undefined, post_data, callback);
 	};
 
 /***/ }

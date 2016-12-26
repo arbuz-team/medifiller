@@ -2,16 +2,16 @@
  * Created by mrskull on 24.11.16.
  */
 
-import {menu_controller, data_controller} from './main';
-export {data_controller} from './main';
+import * as menu_controller from './main';
+
 
 /*---------------- Wydarzenia kontrolera Menu ----------------*/
 
-
-export let menu_controller_events = new function Menu_Controller_Events()
-{
+/**
+ *    Defining public functions
+ */
   
-  this.define = function()
+  export let define = function()
   {
     $( '.guzik_menu' ).click( this.show_hide_menu );
     $( '#MENU .nakladka' ).click( this.show_hide_menu );
@@ -20,6 +20,27 @@ export let menu_controller_events = new function Menu_Controller_Events()
     window.addEventListener('changed_url', menu_controller.select_overlap(), false);
   };
 
+
+  export let show_hide_menu = function( event )
+  {
+    if( event.which === 1 )
+    {
+      let menu = '#MENU';
+
+      if( check_atribute_data( menu, 'wysuniete', 'nie' ) )
+        menu_controller.show();
+
+      else if( check_atribute_data( menu, 'wysuniete', 'tak' ) )
+        menu_controller.hide();
+
+      return false;
+    }
+  };
+
+
+/**
+ *    Defining private functions
+ */
 
   let is_exist = function( element )
   {
@@ -39,24 +60,5 @@ export let menu_controller_events = new function Menu_Controller_Events()
 
     return false;
   };
-
-
-  this.show_hide_menu = function( event )
-  {
-    if( event.which === 1 )
-    {
-      let menu = '#MENU';
-
-      if( check_atribute_data( menu, 'wysuniete', 'nie' ) )
-        menu_controller.show();
-
-      else if( check_atribute_data( menu, 'wysuniete', 'tak' ) )
-        menu_controller.hide();
-
-      return false;
-    }
-  };
-
-};
  
 

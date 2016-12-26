@@ -2,23 +2,21 @@
  * Created by mrskull on 24.11.16.
  */
 
-
-import {content_controller, data_controller} from './main';
-export {data_controller} from './main';
+import * as content_controller from './main';
+import {data_controller} from '../../arbuz/js/structure'
 
 
 /*---------------- Wydarzenia Kontrolera Treści ----------------*/
 
-export let content_controller_events = new function Content_Controller_Events()
-{
-  
-  this.define = function()
+/**
+ *    Defining public functions
+ */
+
+  export let define = function()
   {
     $( 'a' ).click( start_link );
 
     window.addEventListener('popstate', back_url );
-
-    window.addEventListener('change_url', change_url, false);
 
     window.addEventListener('redirect', redirect, false);
 
@@ -28,11 +26,15 @@ export let content_controller_events = new function Content_Controller_Events()
     };
   };
 
-//////////////////////////////////////////////////////////
+
+/**
+ *    Defining private functions
+ */
 
   let start_link = function( event )
   {
     event.preventDefault();
+
     let url = $( this ).attr( 'href' );
 
     if( event.which === 1 )
@@ -40,12 +42,6 @@ export let content_controller_events = new function Content_Controller_Events()
       if( data_controller.get( 'path' ) !== url )
         content_controller.change_content( url );
     }
-  };
-
-  let change_url = function()
-  {
-    let url = data_controller.prepare_url_to_change();
-    content_controller.change_content( url );
   };
 
 
@@ -58,18 +54,27 @@ export let content_controller_events = new function Content_Controller_Events()
 
   let redirect = function()
   {
-    let url;
+    let
+      url = data_controller.get('path'),
+      delay = 0;
 
-    if(typeof APP !== 'undefined' && typeof APP.redirect !== 'undefined')
-      url = APP.redirect;
-    else
-      url = '/';
 
-    setTimeout(() => {
-      content_controller.change_content( url );
-    }, 2000);
+    if(typeof APP !== 'undefined' && typeof APP.DATA !== 'undefined')
+    {
+      if(typeof APP.DATA.redirect !== 'undefined')
+        url = APP.DATA.redirect;
+
+      if(typeof APP.DATA.delay !== 'undefined')
+        delay = APP.DATA.delay;
+    }
+
+
+    data_controller.change('can_do_redirect', true);
+
+    setTimeout(() =>
+    {
+      if(data_controller.get('can_do_redirect') === true)
+        content_controller.change_content(url);
+    }, delay);
   };
 
-
-};
- 

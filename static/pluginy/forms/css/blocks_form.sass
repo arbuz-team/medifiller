@@ -4,16 +4,14 @@
   -moz-box-sizing: $param
   box-sizing: $param
 
-#TRESC > .USER_FORM
+#TRESC > .BLOCK
 
   >.tresc
-    width: 330px
     background: #fff
     border: 1px solid #ddd
       radius: 3px
 
-
-    form > .title
+    >.title, form > .title
       padding: 10px 0
       margin-bottom: 10px
       border-bottom: 1px solid #eee
@@ -26,7 +24,6 @@
       position: relative
 
       input[type=text], input[type=email], input[type=password], input[type=number], select, button, textarea
-        width: 100%
         margin:
           left: 0
           right: 0
@@ -44,3 +41,36 @@
       padding-top: 10px
       margin-top: 10px
       border-top: 1px solid #eee
+
+
+#TRESC > .BLOCK.SMALL > .tresc
+  width: 330px
+
+  .otoczka_pola
+
+    input[type=text], input[type=email], input[type=password], input[type=number], select, button, textarea
+      width: 100%
+
+
+#TRESC > .BLOCK.BIG > .tresc
+  width: 660px
+
+  .edit_address
+    display: inline-block
+    width: 215px
+
+    .title
+      font-size: 14px
+      color: #999
+      text-align: left
+      padding-bottom: 5px
+
+    .otoczka_pola
+
+      input[type=text], input[type=email], input[type=password], input[type=number], select, textarea
+        width: 90%
+
+  .otoczka_pola
+
+    input[type=text], input[type=email], input[type=password], input[type=number], select, button, textarea
+      width: auto

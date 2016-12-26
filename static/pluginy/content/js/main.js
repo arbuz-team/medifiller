@@ -1,139 +1,124 @@
 /**
- * Created by mrskull on 24.11.16.
+ *    Created by mrskull on 24.11.16.
  */
 
 import {data_controller} from '../../arbuz/js/structure';
-import * as img_loader from './img_loader';
-export {data_controller} from '../../arbuz/js/structure';
+import * as models from './models'
 
 /*---------------- Kontroler Treści ----------------*/
 
-export let content_controller = new function Content_Controller()
+
+/**
+ *    Defining public functions
+ */
+
+  export let change_content = function( url, post_data )
+  {
+    data_controller.change('can_do_redirect', false);
+
+    models.prepare_url(url);
+    models.prepare_post_data( post_data );
+
+    _change_url();
+    models.refresh_data();
+
+    _hide_content();
+  };
+
+
+  export let start = function()
+  {
+    models.refresh_data();
+    models.prepare_post_data();
+
+    _hide_content();
+  };
+
+
+/**
+ *    Defining content functions
+ */
+
+let _download_content = function( url )
 {
-  let url, post_data;
+  models.prepare_url(url);
+  window.APP.send_post( models.url, models.post_data, _paste_content);
+};
 
-///////////////////////////////////////////////////////////////////////////
 
-  let _refresh_data = function()
+let _paste_content = function(response, status, code)
+{
+  $( models.settings.container ).html(response).add_data( 'url', models.url );
+  _prepare_to_show_content(response, status, code.status);
+};
+
+
+let _paste_data = function( object )
+{
+  data_controller.change_much({
+    title: object.title,
+    description: object.description
+  });
+
+  $( 'title' ).html( data_controller.get( 'title' ) );
+  $( 'meta[ name="description" ]' ).attr( 'content', data_controller.get( 'description' ) );
+};
+
+
+let _change_url = function()
+{
+  history.pushState( '', models.url, models.url );
+};
+
+
+/**
+ *    Defining view functions
+ */
+
+  let _prepare_to_show_content = function( response, status, code )
   {
-    data_controller.reset();
-  };
-
-
-  let _refresh_events = function()
-  {
-    window.dispatchEvent( window.EVENTS.define );
-    img_loader.define();
-  };
-
-
-  let _show_content = function( response, status, code, error )
-  {
-    let $container = $( data_controller.get( 'container' ) ),
-      $content = $( data_controller.get( 'container' ) + ' > div > .tresc' );
-
-    if(error === 'yes')
-    {
+    if(models.error === true)
       if( status !== 'success' )
-        $content.html( 'An error has occurred while connecting to server. Please, refresh website or check your connect with network.' );
-    }
+        $( models.settings.container + ' > div > .tresc' )
+          .html( 'An error has occurred while connecting to server. Please, refresh website or check your connect with network.' );
+
     else if( status !== 'success' )
     {
-      post_data = _prepare_post_data();
-      _download_content( '/statement/'+ code +'/', 'yes' );
+      models.prepare_post_data();
+      _download_content( '/statement/'+ code +'/', true );
       return false;
     }
 
-    _refresh_events();
-
-    $container.animate( { opacity: 1 }, 150, function(){
-      if(window.APP)
-        paste_data(window.APP);
-    });
+    models.url = '';
+    models.refresh_events();
+    _show_content();
   };
 
 
-  let _download_content = function( response_url, error )
+  let _show_content = function()
   {
-    url = _preprocess_url(response_url);
+    let
+      container = models.settings.container,
+      opacity = models.settings.show_content.opacity,
+      duration = models.settings.show_content.duration;
 
-    $( data_controller.get( 'container' ) )
-      .load( url, post_data, (response, status, code) => {
-        _show_content(response, status, code.status, error);
-      })
-      .add_data( 'url', url )
+    $( container )
+      .animate( { opacity: opacity }, duration, function(){
+        if(window.APP.DATA)
+          _paste_data(window.APP.DATA);
+      });
   };
 
 
   let _hide_content = function()
   {
-    $( data_controller.get( 'container' ) )
-      .animate( { opacity: 0.4 }, 100, () => {
+    let
+      container = models.settings.container,
+      opacity = models.settings.hide_content.opacity,
+      duration = models.settings.hide_content.duration;
 
+    $( container )
+      .animate( { opacity: opacity }, duration, () => {
         _download_content();
       });
   };
-
-
-///////////////////////////////////////////////////////////////////////////
-
-  this.change_content = function( response_url, response_post_data )
-  {
-    url = _preprocess_url(response_url);
-    _change_url( url );
-    _refresh_data();
-
-    post_data = _prepare_post_data( response_post_data );
-
-    _hide_content();
-  };
-
-
-  this.start = function()
-  {
-    _refresh_data();
-
-    post_data = _prepare_post_data();
-
-    _hide_content();
-  };
-
-///////////////////////////////////////////////////////////////////////////
-
-  let _preprocess_url = function( response_url )
-  {
-    if( response_url )
-      return response_url;
-    else
-      return data_controller.get( 'path' );
-  };
-
-
-  let _prepare_post_data = function( object )
-  {
-    if( !object )
-      object = {};
-
-    if( typeof object.__form__ === 'undefined')
-      object.__content__ = 'true';
-    object.csrfmiddlewaretoken = data_controller.get( 'csrf_token' );
-
-    return object;
-  };
-
-
-  let paste_data = function( object )
-  {
-    data_controller.change_much( object );
-
-    $( 'title' ).html( data_controller.get( 'title' ) );
-    $( 'meta[ name="description" ]' ).attr( 'content', data_controller.get( 'description' ) );
-  };
-
-
-  let _change_url = function( url )
-  {
-    history.pushState( '', url, url );
-  };
-
-};

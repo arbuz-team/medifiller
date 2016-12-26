@@ -26,12 +26,11 @@ export let data_controller = new function Data_Controler()
     };
 
     public_data = {
-      url_to_change : '',
+      can_do_redirect : false,
       page_name : 'Spasungate',
       title : 'Loading... - Spasungate',
       description : 'This page is shop, which is ownership Spasungate.',
       statement_content : 'Empty statement.',
-      container : '#TRESC',
     };
   };
 
@@ -47,9 +46,19 @@ export let data_controller = new function Data_Controler()
         return public_data[ name ];
       else
       {
-        console.warn( 'Wrong call! Veriable with this name doesn\'t exist.' );
-        console.trace();
+        console.error('Data structure error: Wrong call! Veriable with this name doesn\'t exist.');
       }
+  };
+
+
+  this.get_crsf = function(what)
+  {
+    if(what === 'name')
+      return 'csrfmiddlewaretoken';
+    else if(what === 'value')
+      return private_data.csrf_token;
+    else
+      console.error('Data structure error: Wrong call! Veriable with this name doesn\'t exist (crsf).');
   };
 
 
@@ -57,16 +66,8 @@ export let data_controller = new function Data_Controler()
   {
     if( typeof public_data[ name ] !== 'undefined' )
       public_data[ name ] = wartosc;
-    else if( typeof private_data[ name ] !== 'undefined' )
-    {
-      console.warn( 'Wrong call! Veriable with this name doesn\'t exist.' );
-      console.trace();
-    }
     else
-    {
-      console.warn( 'Wrong call! Veriable with this name doesn\'t exist.' );
-      console.trace();
-    }
+      console.error('Data structure error: Wrong call! Veriable with this name doesn\'t exist. '+ name);
   };
 
 
@@ -85,15 +86,6 @@ export let data_controller = new function Data_Controler()
         else
           this.change( name, object[ name ] );
       }
-  };
-
-
-  this.prepare_url_to_change = function()
-  {
-    if( public_data.url_to_change !== '' )
-      return public_data.url_to_change;
-    else
-      return '/';
   };
 
 };

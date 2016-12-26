@@ -1,18 +1,44 @@
-<div class="BLOK1">
+<script>
+  window.APP.DATA = {
+    title : 'Account'
+    , description : 'Discription'
+  };
+</script>
+
+
+<div class="BLOK1 BLOCK BIG">
 
   <div class="tlo abs_pelny"></div>
 
   <div class="tresc">
   
-    User details:<br>
+    <div class="title"> User details: </div>
 
-    Email: {{ user.email }} # EDIT: POST={ '__edit__': 'email', 'value': '{{ user.email }}' }<br>
-    Username: {{ user.username }} # EDIT: POST={ '__edit__': 'username', 'value': '{{ user.username }}' }<br>
-    <br>
+    <div class="mini_form">
+      <div class="label"> Email: </div>
+      <div class="otoczka_pola">
+        <div> {{ user.email }} </div>
+        <input name="email" id="id_email" value="{{ user.email }}" type="text" />
+        <button data-type="edit" type="button"> Edit </button>
+      </div>
+    </div>
+
+    <div class="mini_form">
+      <div class="label"> Username: </div>
+      <div class="otoczka_pola">
+        <div> {{ user.username }} </div>
+        <input name="username" id="id_username" value="{{ user.username }}" type="text" />
+        <button data-type="edit" type="button"> Edit </button>
+      </div>
+    </div>
+
+    <div class="title"> Edit addresses </div>
 
     {% for id_address, edit_form_address in edit_forms_address.items %}
+    <div class="edit_address">
       <form method="post" action="" data-name="{{ form_name_edit }}_{{ id_address }}" data-type="user_address" data-test="yes">
 
+        <div class="title"> Address {{ id_address }} </div>
         {% for address in edit_form_address %}
 
           <div class="otoczka_pola">
@@ -23,33 +49,33 @@
         {% endfor %}
 
         <div class="otoczka_pola">
-          <button disabled type="submit"> Done </button>
-          # DELETE_ADDRESS: POST={ '__delete__': '{{ id_address }}' }
+          <button disabled type="submit"> Update </button>
+          <button class="post_button" data-name="delete_address" data-value="{{ id_address }}" type="button"> Delete </button>
         </div>
 
       </form>
+    </div>
     {% endfor %}
 
-    <br><br>
+    <div class="edit_address">
+      <form method="post" action="" data-name="{{ form_name_new }}" data-type="user_address" data-test="yes">
 
-    <form method="post" action="" data-name="{{ form_name_new }}" data-type="user_address" data-test="yes">
+        <div class="title"> Add address </div>
+        {% for address in new_form_address %}
 
-      <div class="title"> Add address </div>
+          <div class="otoczka_pola">
+            {{ address }}
+            {{ address.errors }}
+          </div>
 
-      {% for address in new_form_address %}
+        {% endfor %}
 
         <div class="otoczka_pola">
-          {{ address }}
-          {{ address.errors }}
+          <button disabled type="submit"> Add address </button>
         </div>
 
-      {% endfor %}
-
-      <div class="otoczka_pola">
-        <button disabled type="submit"> Add </button>
-      </div>
-
-    </form>
+      </form>
+    </div>
   
   </div>
 

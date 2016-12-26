@@ -1,11 +1,11 @@
 <script>
-  window.APP = {
-    title : 'Root login'
-    , description : 'Here root can login.'
+  window.APP.DATA = {
+    title : 'Root login',
+    description : 'Here root can login.'
   };
 </script>
 
-<div class="BLOK1 USER_FORM">
+<div class="BLOK1 BLOCK SMALL">
 
   <div class="tlo abs_pelny"></div>
 
@@ -13,7 +13,11 @@
     {% if request.session.user_login %}
 
       Hello root! You are login. ;)
-      <script> window.dispatchEvent(window.EVENTS.redirect); </script>
+      <script>
+        window.APP.DATA.redirect = '/';
+        window.APP.DATA.delay = 2000;
+        window.dispatchEvent(window.EVENTS.redirect);
+      </script>
 
     {% else %}
 

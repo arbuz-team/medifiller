@@ -1,20 +1,30 @@
-/*    JavaScript    */
+/**
+ * Created by mrskull on 24.11.16.
+ */
 
-import {form_controller, data_controller} from './main'
+import * as form_controller from './main'
 import * as validator from './validator/views'
+import * as mini_form from './mini_form/view'
+import * as post_button from './post_button/view'
 
 
-export let form_controller_events = new function Form_Controller_Events()
-{
+/**
+ *    Defining public functions
+ */
 
-  this.define = function()
+  export let define = function()
   {
     $( 'form' ).submit( prepare_form_to_send );
 
     validator.define();
+    mini_form.define();
+    post_button.define();
   };
 
-//////////////////////////////////////////////////////////
+
+/**
+ *    Defining private functions
+ */
 
   let get_form_fields = function( element )
   {
@@ -39,12 +49,7 @@ export let form_controller_events = new function Form_Controller_Events()
       , url = $(this).attr( 'action' )
       , form_object = get_form_fields( this );
 
-    if( typeof url === 'undefined' || url === '' )
-      url = data_controller.get( 'path' );
-
     form_controller.send( form_name, url, form_object );
   };
-
-};
  
 

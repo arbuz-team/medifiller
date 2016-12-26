@@ -5,7 +5,6 @@
 
 window.EVENTS = {
   define: new Event('define'),
-  change_url: new Event('change_url'),
   redirect: new Event('redirect')
 };
 

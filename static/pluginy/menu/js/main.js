@@ -3,17 +3,23 @@
  */
 
 import {data_controller} from '../../arbuz/js/structure';
-export {data_controller} from '../../arbuz/js/structure';
+
 
 /*---------------- Kontroler Menu ----------------*/
 
-export let menu_controller = new function Menu_Controller()
-{
+/**
+ *    Defining private veriables
+ */
+
   let $menu = $( '#MENU' )
     , $overlay = $menu.children( '.overlay' );
 
 
-  this.show = function()
+/**
+ *    Defining public functions
+ */
+
+  export let show = function()
   {
     $menu.animate( { 'right' : '0px' }, 200 );
       $overlay.show();
@@ -21,7 +27,7 @@ export let menu_controller = new function Menu_Controller()
   };
 
 
-  this.hide = function()
+  export let hide = function()
   {
     $overlay.hide();
 
@@ -30,10 +36,10 @@ export let menu_controller = new function Menu_Controller()
   };
 
 
-  this.select_overlap = function()
+  export let select_overlap = function()
   {
     let url = data_controller.get( 'all_url' )
-      , $overlap = $( '.menu > li > a' )
+      , $overlap = $( '.menu > li > a' );
 
     $overlap.removeClass( 'wybrany' );
 
@@ -42,6 +48,5 @@ export let menu_controller = new function Menu_Controller()
         $overlap.eq( i ).addClass( 'wybrany' );
   };
 
-};
  
 

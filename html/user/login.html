@@ -1,11 +1,11 @@
 <script>
-  window.APP = {
+  window.APP.DATA = {
     title : 'Login'
     , description : 'Here you can login.'
   };
 </script>
 
-<div class="BLOK1 USER_FORM">
+<div class="BLOK1 BLOCK SMALL">
 
   <div class="tlo abs_pelny"></div>
 
@@ -14,7 +14,11 @@
     {% if not form or request.session.user_login %}
 
       Hello {{ request.session.user_username }}! You are login. ;)
-      <script> window.dispatchEvent(window.EVENTS.redirect); </script>
+      <script>
+        window.APP.DATA.redirect = '/';
+        window.APP.DATA.delay = 2000;
+        window.dispatchEvent(window.EVENTS.redirect);
+      </script>
 
     {% else %}
 
@@ -27,6 +31,10 @@
           <div class="otoczka_pola">
             {{ i }}
             {{ i.errors }}
+
+            {% if i.name == 'email' %}
+            <div class="status"></div>
+            {% endif %}
           </div>
 
         {% endfor %}
@@ -34,6 +42,9 @@
         <div class="otoczka_pola">
           <button disabled type="submit"> Done </button>
         </div>
+        <a href="/user/register/" class="otoczka_pola">
+          <button type="button"> Register </button>
+        </a>
 
       </form>
 
