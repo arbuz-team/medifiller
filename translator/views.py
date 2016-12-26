@@ -50,6 +50,7 @@ class Translator:
             Language_DE(value=line).save()
 
     def Check_Subdomain_Language(self):
+
         url = self.request.build_absolute_uri()
         subdomain = url.split('.')[0]
 

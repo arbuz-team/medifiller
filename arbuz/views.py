@@ -39,7 +39,6 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
 
     def Manage_Index(self):
         Check_Session(self.request)
-        Translator.Check_Subdomain_Language()
         return render(self.request, 'index.html', {})
 
     def Check_Authorization(self):
