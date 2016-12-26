@@ -12,7 +12,7 @@
   <div class="tresc">
     {% if request.session.user_login %}
 
-      Hello root! You are login. ;)
+      {{ message }}
       <script>
         window.APP.DATA.redirect = '/';
         window.APP.DATA.delay = 2000;

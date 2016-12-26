@@ -54,6 +54,8 @@ class Translator:
         url = self.request.get_host()
         subdomain = url.split('.')[0]
 
+        print(subdomain)
+
         if subdomain in ['en', 'pl', 'de']:
             self.request.session['translator_language'] = subdomain.upper()
 

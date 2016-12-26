@@ -17,6 +17,7 @@ class Login(Manage_Dynamic_Event):
         if self.content['form'].is_valid():
             self.request.session['root_login'] = True
 
+            self.content['message'] = Text(self.request, 10)
             self.content['form'] = None  # message of correct
             return self.Render_HTML('root/login.html')
 
@@ -39,6 +40,7 @@ class Logout(Manage_Dynamic_Event):
 
     def Manage_Content(self):
         self.request.session['root_login'] = False
+        self.content['message'] = Text(self.request, 9)
         return self.Render_HTML('root/logout.html')
 
     @staticmethod

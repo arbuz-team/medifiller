@@ -13,7 +13,7 @@
   
     {% if not form or request.session.user_login %}
 
-      Hello {{ request.session.user_username }}! You are login. ;)
+      {{ message }}
       <script>
         window.APP.DATA.redirect = '/';
         window.APP.DATA.delay = 2000;
