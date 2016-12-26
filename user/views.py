@@ -1,6 +1,6 @@
 from sender.views import *
 from .forms import *
-import os, binascii, string, random
+import os, binascii
 
 
 class Login(Manage_Dynamic_Event):
@@ -54,7 +54,7 @@ class Register(Manage_Dynamic_Event):
         if self.content['form'].is_valid():
             user = self.content['form'].save(commit=False)
             user.language = self.request.session['translator_language']
-            user.unique = self.Generate_User_Unique()
+            user.unique = User.Generate_User_Unique()
             self.request.session['user_unique'] = user.unique
             user.save()
 
@@ -126,21 +126,6 @@ class Register(Manage_Dynamic_Event):
         email = self.content['form'].cleaned_data['email']
 
         Sender.Send_Email(title, content, email)
-
-    @staticmethod
-    def Generate_User_Unique():
-
-        unique = ''
-        permitted_chars = string.ascii_letters + \
-                          string.digits
-
-        for char_number in range(0, 8):
-            unique += random.choice(permitted_chars)
-
-        if {'unique': unique} in User.objects.values('unique'):
-            return Register.Generate_User_Unique()
-
-        return unique
 
     @staticmethod
     def Launch(request):

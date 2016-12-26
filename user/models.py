@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.hashers import make_password
+import string, random
 
 
 class User(models.Model):
@@ -14,6 +15,21 @@ class User(models.Model):
     @staticmethod
     def Encrypt(password):
         return make_password(password=password, salt='arbuz-team')
+
+    @staticmethod
+    def Generate_User_Unique():
+
+        unique = ''
+        permitted_chars = string.ascii_letters + \
+                          string.digits
+
+        for char_number in range(0, 8):
+            unique += random.choice(permitted_chars)
+
+        if {'unique': unique} in User.objects.values('unique'):
+            return User.Generate_User_Unique()
+
+        return unique
 
     def __str__(self):
         return self.username

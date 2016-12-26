@@ -1,5 +1,6 @@
 from arbuz.views import *
 from translator.views import *
+from user.forms import *
 import os
 
 
@@ -11,6 +12,53 @@ class Control_Panel(Manage_Dynamic_Event):
     @staticmethod
     def Reset_Databases(request):
         os.system(BASE_DIR + '/reset.sh')
+        return Control_Panel.Launch(request)
+
+    @staticmethod
+    def Load_Defautl_Users(request):
+
+        User\
+        (
+            unique=User.Generate_User_Unique(),
+            email='93.endo@gmail.com',
+            username='arbuz93',
+            password=User.Encrypt('asdfasdf'),
+            language='EN',
+            approved=True
+        ).save()
+
+        User \
+        (
+            unique=User.Generate_User_Unique(),
+            email='dominik.betka@gmail.com',
+            username='Drego31',
+            password=User.Encrypt('kaktus88'),
+            language='EN',
+            approved=True
+        ).save()
+
+        User_Address \
+        (
+            full_name='Filip Betka',
+            address_line_1='Zamenhofa 3/54',
+            city='Gdynia',
+            region='Pomorskie',
+            postcode='81-218',
+            country='Polska',
+            user=User.objects.get(email='93.endo@gmail.com')
+        ).save()
+
+        User_Address \
+        (
+            full_name='Dominik Betka',
+            address_line_1='Zamenhofa 3/54',
+            city='Gdynia',
+            region='Pomorskie',
+            postcode='81-218',
+            country='Polska',
+            user=User.objects.get(email='dominik.betka@gmail.com')
+        ).save()
+
         return Control_Panel.Launch(request)
 
     @staticmethod

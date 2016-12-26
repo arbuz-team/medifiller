@@ -20,5 +20,7 @@ python manage.py makemigrations translator
 python manage.py makemigrations user
 
 python manage.py migrate
-
 chmod 664 db.sqlite3
+
+GET http://127.0.0.1:8000/setting/load_languages/ > /dev/null
+GET http://127.0.0.1:8000/setting/load_default_users/ > /dev/null
