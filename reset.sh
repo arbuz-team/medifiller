@@ -1,26 +1,26 @@
-#! /usr/bin/fish
+#! /bin/bash
 
-rm db.sqlite3
-rm -r main/migrations/*
-rm -r product/migrations/*
-rm -r root/migrations/*
-rm -r sender/migrations/*
-rm -r session/migrations/*
-rm -r statement/migrations/*
-rm -r translator/migrations/*
-rm -r user/migrations/*
+rm $(dirname $0)/db.sqlite3
+rm -r $(dirname $0)/main/migrations/*
+rm -r $(dirname $0)/product/migrations/*
+rm -r $(dirname $0)/root/migrations/*
+rm -r $(dirname $0)/sender/migrations/*
+rm -r $(dirname $0)/session/migrations/*
+rm -r $(dirname $0)/statement/migrations/*
+rm -r $(dirname $0)/translator/migrations/*
+rm -r $(dirname $0)/user/migrations/*
 
-python manage.py makemigrations main
-python manage.py makemigrations product
-python manage.py makemigrations root
-python manage.py makemigrations sender
-python manage.py makemigrations session
-python manage.py makemigrations statement
-python manage.py makemigrations translator
-python manage.py makemigrations user
+python $(dirname $0)/manage.py makemigrations main
+python $(dirname $0)/manage.py makemigrations product
+python $(dirname $0)/manage.py makemigrations root
+python $(dirname $0)/manage.py makemigrations sender
+python $(dirname $0)/manage.py makemigrations session
+python $(dirname $0)/manage.py makemigrations statement
+python $(dirname $0)/manage.py makemigrations translator
+python $(dirname $0)/manage.py makemigrations user
 
-python manage.py migrate
-chmod 664 db.sqlite3
+python $(dirname $0)/manage.py migrate
+chmod 664 $(dirname $0)/db.sqlite3
 
 GET http://127.0.0.1:8000/setting/load_languages/ > /dev/null
 GET http://127.0.0.1:8000/setting/load_default_users/ > /dev/null

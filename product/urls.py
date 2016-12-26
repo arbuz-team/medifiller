@@ -2,5 +2,5 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^details/(?P<pk>\d+)/$', views.Produkt_Details.Launch_GET),
+    url(r'^(?P<pk>\d+)/details/$', views.Produkt_Details.Launch_GET),
 ]
