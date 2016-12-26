@@ -49,6 +49,13 @@ class Translator:
         for line in lines:
             Language_DE(value=line).save()
 
+    def Check_Subdomain_Language(self):
+        url = self.request.build_absolute_uri()
+        subdomain = url.split('.')[0]
+
+        if subdomain in ['en', 'pl', 'de']:
+            self.request.session['translator_language'] = subdomain.upper()
+
     def __init__(self, request):
         self.request = request
 
