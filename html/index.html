@@ -3,8 +3,8 @@
 
 {% include "arbuz/html/header.html" %}
 
-{% for location in request.session.arbuz_navigation %}
-    >{{ location }}
+{% for element in request.session.arbuz_navigation %}
+    > <a href="{{ element.1 }}">{{ element.0 }}</a>
 {% endfor %}
 
 {% include "arbuz/html/content.html" %}

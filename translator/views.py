@@ -51,7 +51,7 @@ class Translator:
 
     def Check_Subdomain_Language(self):
 
-        url = self.request.build_absolute_uri()
+        url = self.request.get_host()
         subdomain = url.split('.')[0]
 
         if subdomain in ['en', 'pl', 'de']:

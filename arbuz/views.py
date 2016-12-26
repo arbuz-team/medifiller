@@ -58,9 +58,16 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
         return False
 
     def Update_Navigation(self):
+
+        self.request.session['arbuz_navigation'] = []
         url = self.request.build_absolute_uri()
-        self.request.session['arbuz_navigation'] = \
-            url.split('/')[3:-1]
+        navigation = url.split('/')[3:-1]
+        page = '/'
+
+        for element in navigation:
+            page += element + '/'
+            self.request.session['arbuz_navigation']\
+                .append((element, page))
 
     def Manage(self):
 
