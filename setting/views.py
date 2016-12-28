@@ -1,6 +1,7 @@
 from arbuz.views import *
 from translator.views import *
 from user.forms import *
+from django.contrib.sites.models import Site
 import os
 
 
@@ -12,6 +13,14 @@ class Control_Panel(Manage_Dynamic_Event):
     @staticmethod
     def Reset_Databases(request):
         os.system(BASE_DIR + '/reset.sh')
+        return Control_Panel.Launch(request)
+
+    @staticmethod
+    def Change_Default_Domain(request):
+        site = Site.objects.get(id=1)
+        site.name = 'sungate.arbuz.team'
+        site.domain = 'sungate.arbuz.team'
+        site.save()
         return Control_Panel.Launch(request)
 
     @staticmethod
