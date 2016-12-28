@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from . import views
+from user import views
 
 urlpatterns = [
     url(r'^login/$', views.Login.Launch),
