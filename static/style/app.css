@@ -283,6 +283,36 @@ img {
     margin: 0;
     width: 100%;
     min-height: 550px; }
+    #TRESC > div > .navigation {
+      position: relative;
+      z-index: 12;
+      height: 52px;
+      margin: 20px auto;
+      padding: 10px;
+        padding-left: 15px;
+        padding-right: 15px;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      line-height: 32px;
+      color: #333;
+      font-size: 16px;
+      background: #fff;
+      border: 1px solid #ddd;
+        border-radius: 3px; }
+      #TRESC > div > .navigation > * {
+        display: inline-block;
+        height: 32px;
+        margin: auto 5px;
+        line-height: 32px; }
+        #TRESC > div > .navigation > * > i {
+          display: inline-block;
+          width: 30px;
+          line-height: 32px;
+          background-image: url(/static/img/home.png);
+          background-position: center;
+          background-size: 100%;
+          background-repeat: no-repeat; }
     #TRESC > div > .tytul {
       position: relative;
       z-index: 12;
@@ -319,19 +349,28 @@ img {
     margin-top: 15px;
     padding-right: 300px;
     text-align: center; }
-  .fragment.RWD > div > .tresc {
+  .fragment.RWD > div > .tresc,
+  .fragment.RWD > div > .navigation {
     width: 650px; } }
 
 @media (min-width: 870px) {
   .fragment.RWD > div > .tresc {
-    margin: 50px auto; } }
+    margin: 50px auto; }
+  .fragment.RWD:first-child > div > .navigation {
+    margin: 10px auto;
+      margin-top: 50px; }
+  .fragment.RWD:first-child > div > .tresc {
+    margin: 10px auto;
+      margin-bottom: 50px; } }
 
 @media (min-width: 992px) {
-  .fragment.RWD > div > .tresc {
+  .fragment.RWD > div > .tresc,
+  .fragment.RWD > div > .navigation {
     width: 800px; } }
 
 @media (min-width: 1200px) {
-  .fragment.RWD > div > .tresc {
+  .fragment.RWD > div > .tresc,
+  .fragment.RWD > div > .navigation {
     width: 970px; } }
 
 .otoczka_pola input[type=text], .otoczka_pola input[type=email], .otoczka_pola input[type=password], .otoczka_pola input[type=number], .otoczka_pola select, .otoczka_pola button, .otoczka_pola textarea {

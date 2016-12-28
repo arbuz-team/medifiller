@@ -1,0 +1,25 @@
+
+=background-img( $sciezka, $rozmiar: auto auto, $pozycja:0 0 )
+  background:
+    image: url( $sciezka )
+    size: $rozmiar
+    position: $pozycja
+    repeat: no-repeat
+
+=box-shadow($param)
+  -moz-box-shadow: $param
+  -webkit-box-shadow: $param
+  box-shadow: $param
+
+=linear-gradient($param1, $param2, $param3)
+  background:
+    image: -webkit-linear-gradient($param1, $param2, $param3)
+    image: -moz-linear-gradient($param1, $param2, $param3)
+    image: -ms-linear-gradient($param1, $param2, $param3)
+    image: -o-linear-gradient($param1, $param2, $param3)
+    image: linear-gradient($param1, $param2, $param3)
+
+=box-sizing($param)
+  -webkit-box-sizing: $param
+  -moz-box-sizing: $param
+  box-sizing: $param

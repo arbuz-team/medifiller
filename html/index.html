@@ -3,10 +3,6 @@
 
 {% include "arbuz/html/header.html" %}
 
-{% for element in request.session.arbuz_navigation %}
-  > <a href="{{ element.1 }}">{{ element.0 }}</a>
-{% endfor %}
-
 {% include "arbuz/html/content.html" %}
 
 {% include "arbuz/html/footer.html" %}

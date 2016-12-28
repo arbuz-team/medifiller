@@ -12,7 +12,6 @@
   >div.BLOK1
     border-bottom: 1px solid #d8d8d8
 
-
   >div
     position: relative
     display: inline-block
@@ -21,6 +20,43 @@
 
     width: 100%
     min-height: 550px
+
+
+    >.navigation
+      position: relative
+      z-index: 12
+      height: 52px
+      margin: 20px auto
+      padding: 10px
+        left: 15px
+        right: 15px
+      +box-sizing(border-box)
+
+      line-height: 32px
+
+      color: #333
+      font-size: 16px
+      background: #fff
+      border: 1px solid #ddd
+        radius: 3px
+
+
+      >*
+        display: inline-block
+        height: 32px
+        margin: auto 5px
+        line-height: 32px
+
+
+        >i
+          display: inline-block
+          width: 30px
+          line-height: 32px
+          background:
+            image: url(/static/img/home.png)
+            position: center
+            size: 100%
+            repeat: no-repeat
 
 
     >.tytul
@@ -34,14 +70,12 @@
       font-size: 18px
       font-weight: bold
 
-
     >.tresc
       position: relative
       z-index: 12
 
       color: #333
       font-size: 16px
-
 
     >.tlo
       z-index: 10
@@ -82,23 +116,36 @@
     text-align: center
 
 
-  .fragment.RWD > div > .tresc
+  .fragment.RWD > div > .tresc,
+  .fragment.RWD > div > .navigation
     width: 650px
 
 
 @media (min-width: 870px)
 
   .fragment.RWD > div > .tresc
-    margin: 50px auto
+      margin: 50px auto
+
+  .fragment.RWD:first-child > div
+    >.navigation
+      margin: 10px auto
+        top: 50px
+
+    >.tresc
+      margin: 10px auto
+        bottom: 50px
+
 
 
 @media (min-width: 992px)
 
-  .fragment.RWD > div > .tresc
+  .fragment.RWD > div > .tresc,
+  .fragment.RWD > div > .navigation
     width: 800px
 
 
 @media (min-width: 1200px)
 
-  .fragment.RWD > div > .tresc
+  .fragment.RWD > div > .tresc,
+  .fragment.RWD > div > .navigation
     width: 970px
