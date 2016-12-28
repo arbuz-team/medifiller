@@ -71,12 +71,13 @@ class Translator:
 
             geo = GeoIP()
             country = geo.country_code(client_ip)
+            domain = request.get_host()
 
-            if country is 'PL':
-                return redirect('http://pl.sungate.arbuz.team/')
+            if country == 'PL':
+                return redirect('http://pl.{0}/'.format(domain))
 
-            if country is 'DE':
-                return redirect('http://de.sungate.arbuz.team/')
+            if country == 'DE':
+                return redirect('http://de.{0}/'.format(domain))
 
         return None
 
