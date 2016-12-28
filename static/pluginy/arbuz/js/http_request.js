@@ -32,6 +32,10 @@ window.APP.send_post = function(url, data_post, callback)
   url = send_post_preprocess_url(url);
   data_post = send_post_prepare(data_post);
 
-  $.post(url, data_post)
-    .always(callback);
+  $.ajax({
+    type: "POST",
+    url: url,
+    data: data_post,
+    complete: callback,
+  });
 };

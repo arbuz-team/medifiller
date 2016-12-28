@@ -39,49 +39,26 @@ import * as models from './models'
  *    Defining content functions
  */
 
-let _download_content = function( url )
-{
-  models.prepare_url(url);
-  window.APP.send_post( models.url, models.post_data, _paste_content);
-};
-
-
-let _paste_content = function(response, status, code)
-{
-  $( models.settings.container ).html(response).add_data( 'url', models.url );
-  _prepare_to_show_content(response, status, code.status);
-};
-
-
-let _paste_data = function( object )
-{
-  data_controller.change_much({
-    title: object.title,
-    description: object.description
-  });
-
-  $( 'title' ).html( data_controller.get( 'title' ) );
-  $( 'meta[ name="description" ]' ).attr( 'content', data_controller.get( 'description' ) );
-};
-
-
-let _change_url = function()
-{
-  history.pushState( '', models.url, models.url );
-};
-
-
-/**
- *    Defining view functions
- */
-
-  let _prepare_to_show_content = function( response, status, code )
+  let _download_content = function( url )
   {
-    if(models.error === true)
-      if( status !== 'success' )
-        $( models.settings.container + ' > div > .tresc' )
-          .html( 'An error has occurred while connecting to server. Please, refresh website or check your connect with network.' );
+    models.prepare_url(url);
+    window.APP.send_post( models.url, models.post_data, _paste_content);
+  };
 
+
+  let _paste_content = function(response, status)
+  {
+    let
+      html = response.responseText,
+      code = response.status;
+
+
+    if(models.error === true)
+    {
+      if(status !== 'success')
+        $(models.settings.container + ' > div > .tresc')
+        .html('An error has occurred while connecting to server. Please, refresh website or check your connect with network.');
+    }
     else if( status !== 'success' )
     {
       models.prepare_post_data();
@@ -89,11 +66,37 @@ let _change_url = function()
       return false;
     }
 
+
+    $( models.settings.container ).html(html).add_data( 'url', models.url );
+
     models.url = '';
     models.refresh_events();
+
     _show_content();
   };
 
+
+  let _paste_data = function( object )
+  {
+    data_controller.change_much({
+      title: object.title,
+      description: object.description
+    });
+
+    $( 'title' ).html( data_controller.get( 'title' ) );
+    $( 'meta[ name="description" ]' ).attr( 'content', data_controller.get( 'description' ) );
+  };
+
+
+  let _change_url = function()
+  {
+    history.pushState( '', models.url, models.url );
+  };
+
+
+/**
+ *    Defining view functions
+ */
 
   let _show_content = function()
   {

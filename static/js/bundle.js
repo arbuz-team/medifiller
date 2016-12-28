@@ -165,7 +165,12 @@
 	  url = send_post_preprocess_url(url);
 	  data_post = send_post_prepare(data_post);
 	
-	  $.post(url, data_post).always(callback);
+	  $.ajax({
+	    type: "POST",
+	    url: url,
+	    data: data_post,
+	    complete: callback
+	  });
 	};
 
 /***/ },
@@ -432,9 +437,24 @@
 	  window.APP.send_post(models.url, models.post_data, _paste_content);
 	};
 	
-	var _paste_content = function _paste_content(response, status, code) {
-	  $(models.settings.container).html(response).add_data('url', models.url);
-	  _prepare_to_show_content(response, status, code.status);
+	var _paste_content = function _paste_content(response, status) {
+	  var html = response.responseText,
+	      code = response.status;
+	
+	  if (models.error === true) {
+	    if (status !== 'success') $(models.settings.container + ' > div > .tresc').html('An error has occurred while connecting to server. Please, refresh website or check your connect with network.');
+	  } else if (status !== 'success') {
+	    models.prepare_post_data();
+	    _download_content('/statement/' + code + '/', true);
+	    return false;
+	  }
+	
+	  $(models.settings.container).html(html).add_data('url', models.url);
+	
+	  models.url = '';
+	  models.refresh_events();
+	
+	  _show_content();
 	};
 	
 	var _paste_data = function _paste_data(object) {
@@ -454,18 +474,6 @@
 	/**
 	 *    Defining view functions
 	 */
-	
-	var _prepare_to_show_content = function _prepare_to_show_content(response, status, code) {
-	  if (models.error === true) if (status !== 'success') $(models.settings.container + ' > div > .tresc').html('An error has occurred while connecting to server. Please, refresh website or check your connect with network.');else if (status !== 'success') {
-	    models.prepare_post_data();
-	    _download_content('/statement/' + code + '/', true);
-	    return false;
-	  }
-	
-	  models.url = '';
-	  models.refresh_events();
-	  _show_content();
-	};
 	
 	var _show_content = function _show_content() {
 	  var container = models.settings.container,
