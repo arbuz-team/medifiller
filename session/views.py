@@ -30,8 +30,7 @@ class Session_Controller:
         if 'translator_language' not in self.request.session:
             self.request.session['translator_language'] = 'EN'
 
-        translator = Translator(self.request)
-        translator.Check_Subdomain_Language()
+        Translator.Check_Subdomain_Language(self.request)
 
     def Check_Session(self):
 

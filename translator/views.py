@@ -1,5 +1,7 @@
 from .models import *
 from arbuz.settings import BASE_DIR
+from django.contrib.gis.geoip import GeoIP
+from django.shortcuts import redirect
 
 
 class Translator:
@@ -49,15 +51,34 @@ class Translator:
         for line in lines:
             Language_DE(value=line).save()
 
-    def Check_Subdomain_Language(self):
+    @staticmethod
+    def Check_Subdomain_Language(request):
 
-        url = self.request.get_host()
+        url = request.get_host()
         subdomain = url.split('.')[0]
 
-        print(subdomain)
+        if subdomain in ['pl', 'de']:
+            request.session['translator_language'] = subdomain.upper()
 
-        if subdomain in ['en', 'pl', 'de']:
-            self.request.session['translator_language'] = subdomain.upper()
+    @staticmethod
+    def Get_Language_Redirect(request):
+
+        url = request.get_host()
+        subdomain = url.split('.')[0]
+
+        if subdomain not in ['pl', 'de']:
+            client_ip = request.META.get('REMOTE_ADDR', None)
+
+            geo = GeoIP()
+            country = geo.country_code(client_ip)
+
+            if country is 'PL':
+                return redirect('http://pl.sungate.arbuz.team/')
+
+            if country is 'DE':
+                return redirect('http://de.sungate.arbuz.team/')
+
+        return None
 
     def __init__(self, request):
         self.request = request

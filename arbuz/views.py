@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import JsonResponse
 from abc import ABCMeta, abstractmethod
 from session.views import *
@@ -39,7 +39,12 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
 
     def Manage_Index(self):
         Check_Session(self.request)
-        return render(self.request, 'index.html', {})
+
+        lang_redirect = Translator.Get_Language_Redirect(self.request)
+        if lang_redirect:
+            return lang_redirect
+
+        return self.Render_HTML('index.html')
 
     def Check_Authorization(self):
         if self.authorization:
