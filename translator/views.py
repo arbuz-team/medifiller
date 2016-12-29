@@ -57,7 +57,7 @@ class Translator:
         url = request.get_host()
         subdomain = url.split('.')[0]
 
-        if subdomain in ['pl', 'de']:
+        if subdomain in ['pl', 'de', 'en']:
             request.session['translator_language'] = subdomain.upper()
 
     @staticmethod
@@ -66,7 +66,7 @@ class Translator:
         url = request.get_host()
         subdomain = url.split('.')[0]
 
-        if subdomain not in ['pl', 'de']:
+        if subdomain not in ['pl', 'de', 'en']:
             client_ip = request.META.get('REMOTE_ADDR', None)
 
             geo = GeoIP()
