@@ -441,11 +441,6 @@
 	  var html = response.responseText,
 	      code = response.status;
 	
-	  console.clear();
-	  console.log(code);
-	  console.log(models.error);
-	  console.log(status);
-	
 	  if (models.error === true) {
 	    if (status !== 'success') $(models.settings.container + ' > div > .tresc').html('An error has occurred while connecting to server. Please, refresh website or check your connect with network.');
 	  } else if (status !== 'success') {
@@ -455,12 +450,12 @@
 	    return false;
 	  }
 	
-	  // $( models.settings.container ).html(html).add_data( 'url', models.url );
-	  //
-	  // models.url = '';
-	  // models.refresh_events();
+	  $(models.settings.container).html(html).add_data('url', models.url);
 	
-	  // _show_content();
+	  models.url = '';
+	  models.refresh_events();
+	
+	  _show_content();
 	};
 	
 	var _paste_data = function _paste_data(object) {
