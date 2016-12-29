@@ -441,20 +441,26 @@
 	  var html = response.responseText,
 	      code = response.status;
 	
+	  console.clear();
+	  console.log(code);
+	  console.log(models.error);
+	  console.log(status);
+	
 	  if (models.error === true) {
 	    if (status !== 'success') $(models.settings.container + ' > div > .tresc').html('An error has occurred while connecting to server. Please, refresh website or check your connect with network.');
 	  } else if (status !== 'success') {
 	    models.prepare_post_data();
-	    _download_content('/statement/' + code + '/', true);
+	    models.error = true;
+	    _download_content('/statement/' + code + '/');
 	    return false;
 	  }
 	
-	  $(models.settings.container).html(html).add_data('url', models.url);
+	  // $( models.settings.container ).html(html).add_data( 'url', models.url );
+	  //
+	  // models.url = '';
+	  // models.refresh_events();
 	
-	  models.url = '';
-	  models.refresh_events();
-	
-	  _show_content();
+	  // _show_content();
 	};
 	
 	var _paste_data = function _paste_data(object) {

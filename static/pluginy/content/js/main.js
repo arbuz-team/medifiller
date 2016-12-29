@@ -62,7 +62,8 @@ import * as models from './models'
     else if( status !== 'success' )
     {
       models.prepare_post_data();
-      _download_content( '/statement/'+ code +'/', true );
+      models.error = true;
+      _download_content( '/statement/'+ code +'/' );
       return false;
     }
 
