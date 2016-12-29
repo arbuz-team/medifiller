@@ -9,8 +9,13 @@ import re
 class Manage_Dynamic_Event(metaclass=ABCMeta):
 
     def Render_HTML(self, file_name, form_name = ''):
+
+        # example: EN/user/login.html
+        template = self.request.session['translator_language'] \
+                   + '/' + file_name
+
         self.content['form_name'] = form_name
-        return render(self.request, file_name, self.content)
+        return render(self.request, template, self.content)
 
     @abstractmethod
     def Manage_Content(self):
@@ -44,7 +49,7 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
         if lang_redirect:
             return lang_redirect
 
-        return self.Render_HTML('index.html')
+        return render(self.request, 'index.html', {})
 
     def Check_Authorization(self):
         if self.authorization:

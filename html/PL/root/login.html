@@ -1,0 +1,52 @@
+<script>
+  window.APP.DATA = {
+    title : 'Root login',
+    description : 'Here root can login.'
+  };
+</script>
+
+
+<div class="BLOK1 BLOCK SMALL">
+
+  <div class="tlo abs_pelny"></div>
+  {% include "content/html/navigation.html" %}
+
+  <div class="tresc">
+    {% if request.session.user_login %}
+
+      {{ message }}
+      <script>
+        window.APP.DATA.redirect = '/';
+        window.APP.DATA.delay = 2000;
+        window.dispatchEvent(window.EVENTS.redirect);
+      </script>
+
+    {% else %}
+
+      <form method="post" action="" data-name="{{ form_name }}" data-type="{{ form_name }}" data-test="yes">
+
+        <div class="title"> Root login </div>
+
+        <div class="otoczka_pola">
+          <input disabled type="text" value="root" />
+        </div>
+
+        {% for i in form %}
+
+          <div class="otoczka_pola">
+            {{ i }}
+            {{ i.errors }}
+          </div>
+
+        {% endfor %}
+
+        <div class="otoczka_pola">
+          <button disabled type="submit"> Done </button>
+        </div>
+
+      </form>
+
+    {% endif %}
+  </div>
+
+</div>

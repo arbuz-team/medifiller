@@ -1,0 +1,63 @@
+<script>
+  window.APP.DATA = {
+    title : 'Register',
+    description : 'Here you can register.'
+  };
+</script>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
+
+<div class="BLOK1 BLOCK SMALL">
+
+  <div class="tlo abs_pelny"></div>
+  {% include "content/html/navigation.html" %}
+
+  <div class="tresc">
+
+    {% if not form %}
+
+      {{ message }}
+      <script>
+        window.APP.DATA.redirect = '/';
+        window.APP.DATA.delay = 2000;
+        window.dispatchEvent(window.EVENTS.redirect);
+      </script>
+
+    {% else %}
+
+      <form method="post" action="" data-name="{{ form_name }}" data-type="{{ form_name }}" data-test="yes">
+
+        <div class="title"> Register </div>
+
+        {% for i in form %}
+
+          {% if i.name == 'password' %}
+
+            <div class="otoczka_pola">
+              {{ i }}
+              <input type="checkbox" class="show_password" />
+              {{ i.errors }}
+              <div class="status"></div>
+            </div>
+
+          {% else %}
+
+            <div class="otoczka_pola">
+              {{ i }}
+              {{ i.errors }}
+              <div class="status"></div>
+            </div>
+
+          {% endif %}
+
+        {% endfor %}
+
+        <div class="otoczka_pola"><button disabled type="submit"> Done </button></div>
+
+      {% endif %}
+
+    </form>
+  
+  </div>
+
+</div>
