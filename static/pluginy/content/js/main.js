@@ -56,8 +56,12 @@ import * as models from './models'
     if(models.error === true)
     {
       if(status !== 'success')
+      {
+        $(models.settings.container +' > div')
+          .not('.BLOK1').remove();
         $(models.settings.container + ' > div > .tresc')
-        .html('An error has occurred while connecting to server. Please, refresh website or check your connect with network.');
+          .html('An error has occurred while connecting to server. Please, refresh website or check your connect with network.');
+      }
     }
     else if( status !== 'success' )
     {
@@ -68,8 +72,10 @@ import * as models from './models'
     }
 
 
-    $( models.settings.container ).html(html).add_data( 'url', models.url );
+    if(models.error !== true || status === 'success')
+      $( models.settings.container ).html(html).add_data( 'url', models.url );
 
+    models.error = false;
     models.url = '';
     models.refresh_events();
 
