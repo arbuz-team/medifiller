@@ -6,5 +6,5 @@ urlpatterns = [
     url(r'^statement/', include('statement.urls.en'), name='statement'),
     url(r'^product/', include('product.urls.en'), name='product'),
     url(r'^setting/', include('setting.urls.en'), name='setting'),
-    url(r'', include('main.urls.en'), name=''),
+    url(r'', include('main.urls.en'), name='main'),
 ]
