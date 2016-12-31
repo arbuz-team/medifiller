@@ -2,10 +2,11 @@ from arbuz.views import *
 from .forms import *
 import string, random
 
-
+from sender.views import *
 class Login(Dynamic_Event_Menager):
 
     def Manage_Content(self):
+        Sender(self.request).Send_Email('Tytuł', {}, '93.endo@gmail.com')
         self.content['form'] = Form_Root_Login()
         return self.Render_HTML('root/login.html', 'login')
 
