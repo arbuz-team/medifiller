@@ -22,7 +22,7 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
         pass
 
     def Manage_Form(self):
-        self.content['message'] = Text(self.request, 3)
+        self.content['error'] = 'form'
         return self.Render_HTML('arbuz/error.html')
 
     def Manage_Exist(self):
@@ -35,11 +35,11 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
         return JsonResponse({'__button__': 'false'})
 
     def Manage_No_Event(self):
-        self.content['message'] = Text(self.request, 1)
+        self.content['error'] = 'no_event'
         return self.Render_HTML('arbuz/error.html')
 
     def Manage_Unauthorized(self):
-        self.content['message'] = Text(self.request, 2)
+        self.content['error'] = 'unauthorized'
         return self.Render_HTML('arbuz/error.html')
 
     def Manage_Index(self):
@@ -52,6 +52,7 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
         return render(self.request, 'index.html', {})
 
     def Check_Authorization(self):
+
         if self.authorization:
             if self.request.session['user_login']:
                 return True
@@ -83,7 +84,7 @@ class Manage_Dynamic_Event(metaclass=ABCMeta):
 
         self.Update_Navigation()
         if self.Check_POST_Is_Dangerous():
-            self.content['message'] = Text(self.request, 4)
+            self.content['error'] = 'post_is_dangerous'
             return self.Render_HTML('arbuz/error.html')
 
         if self.request.method == 'POST':

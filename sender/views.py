@@ -9,10 +9,10 @@ class Sender(Manage_Dynamic_Event):
     def Manage_Content(self):
         pass
 
-    @staticmethod
-    def Send_Email(title, content, recipient):
+    def Send_Email(self, title, content, recipient):
 
-        html = render_to_string('sender/content.html', content)
+        lang = self.request.session['translator_language']
+        html = render_to_string(lang + '/sender/content.html', content)
         email = EmailMessage\
         (
             title,

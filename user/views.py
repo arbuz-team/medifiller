@@ -24,8 +24,6 @@ class Login(Manage_Dynamic_Event):
                 User.objects.get(unique=unique).username
 
             self.content['form'] = None  # message of correct
-            self.content['message'] = Text(self.request, 12)\
-                .format(self.request.session['user_username'])
 
             return self.Render_HTML('user/login.html')
 
@@ -80,9 +78,6 @@ class Register(Manage_Dynamic_Event):
             address_user.save()  # create address_user
 
             self.content['form'] = None  # message of correct
-            self.content['message'] = Text(self.request, 13)\
-                .format(self.request.session['user_username'])
-
             return self.Render_HTML('user/register.html')
 
         return self.Render_HTML('user/register.html', 'user_address')
@@ -126,12 +121,12 @@ class Register(Manage_Dynamic_Event):
         user_unique = self.request.session['user_unique']
         content = {}
 
-        title = Text(self.request, 8)
+        title = 'Confirm your new account.'
         content['activate_url'] = activate_url
         content['user'] = User.objects.get(unique=user_unique)
         email = self.content['form'].cleaned_data['email']
 
-        Sender.Send_Email(title, content, email)
+        Sender(self.request).Send_Email(title, content, email)
 
     @staticmethod
     def Launch(request):
@@ -145,7 +140,6 @@ class Logout(Manage_Dynamic_Event):
         self.request.session['user_login'] = False
         self.request.session['user_unique'] = ''
         self.request.session['user_username'] = ''
-        self.content['message'] = Text(self.request, 9)
         return self.Render_HTML('user/logout.html')
 
     @staticmethod
@@ -266,7 +260,6 @@ class Account(Manage_Dynamic_Event):
 class Approved_Register(Manage_Dynamic_Event):
 
     def Manage_Content(self):
-        self.content['message'] = Text(self.request, 11)
         return self.Render_HTML('user/approved.html')
 
     @staticmethod

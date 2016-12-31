@@ -16,7 +16,7 @@
 
     {% if not form %}
 
-      {{ message }}
+      Hello {{ self.request.session.user_username }}! You are registered. Visit your mailbox and active account ;)
       <script>
         window.APP.DATA.redirect = '/';
         window.APP.DATA.delay = 2000;
