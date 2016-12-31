@@ -2,7 +2,7 @@
 from arbuz.views import *
 
 
-class Contains_Start(Manage_Dynamic_Event):
+class Contains_Start(Dynamic_Event_Menager):
 
     def Manage_Content(self):
         return self.Render_HTML('main/start.html')
@@ -12,7 +12,7 @@ class Contains_Start(Manage_Dynamic_Event):
         return Contains_Start(request).HTML
 
 
-class Contains_Products(Manage_Dynamic_Event):
+class Contains_Products(Dynamic_Event_Menager):
 
     def Manage_Content(self):
         return self.Render_HTML('main/products.html')
@@ -22,7 +22,7 @@ class Contains_Products(Manage_Dynamic_Event):
         return Contains_Products(request).HTML
 
 
-class Contains_About_Us(Manage_Dynamic_Event):
+class Contains_About_Us(Dynamic_Event_Menager):
 
     def Manage_Content(self):
         return self.Render_HTML('main/about_us.html')
@@ -32,7 +32,7 @@ class Contains_About_Us(Manage_Dynamic_Event):
         return Contains_About_Us(request).HTML
 
 
-class Contains_Contact_Us(Manage_Dynamic_Event):
+class Contains_Contact_Us(Dynamic_Event_Menager):
 
     def Manage_Content(self):
         return self.Render_HTML('main/contact_us.html')
@@ -42,7 +42,7 @@ class Contains_Contact_Us(Manage_Dynamic_Event):
         return Contains_Contact_Us(request).HTML
 
 
-class Contains_Edit(Manage_Dynamic_Event):
+class Contains_Edit(Dynamic_Event_Menager):
 
     def Manage_Content(self):
         return self.Render_HTML('main/edit.html')

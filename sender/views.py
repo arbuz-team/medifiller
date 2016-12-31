@@ -4,7 +4,7 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 
 
-class Sender(Manage_Dynamic_Event):
+class Sender(Dynamic_Event_Menager):
 
     def Manage_Content(self):
         pass

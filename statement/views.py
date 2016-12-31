@@ -1,7 +1,7 @@
 from arbuz.views import *
 
 
-class Statement_403(Manage_Dynamic_Event):
+class Statement_403(Dynamic_Event_Menager):
 
     def Manage_Content(self):
         self.content['title'] = '403'
@@ -13,7 +13,7 @@ class Statement_403(Manage_Dynamic_Event):
 
 
 
-class Statement_404(Manage_Dynamic_Event):
+class Statement_404(Dynamic_Event_Menager):
 
     def Manage_Content(self):
         self.content['title'] = '404'
@@ -25,7 +25,7 @@ class Statement_404(Manage_Dynamic_Event):
 
 
 
-class Statement_500(Manage_Dynamic_Event):
+class Statement_500(Dynamic_Event_Menager):
 
     def Manage_Content(self):
         self.content['title'] = '500'

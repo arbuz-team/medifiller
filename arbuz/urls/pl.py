@@ -1,10 +1,10 @@
 from django.conf.urls import url, include
 
 urlpatterns = [
-    url(r'^użytkownik/', include('user.urls.pl')),
-    url(r'^administrator/', include('root.urls.pl')),
-    url(r'^komunikat/', include('statement.urls.pl')),
-    url(r'^produkt/', include('product.urls.pl')),
-    url(r'^ustawienia/', include('setting.urls.pl')),
-    url(r'', include('main.urls.pl')),
+    url(r'^uzytkownik/', include('user.urls.en'), name='user'),
+    url(r'^administrator/', include('root.urls.en'), name='root'),
+    url(r'^komunikat/', include('statement.urls.en'), name='statement'),
+    url(r'^produkt/', include('product.urls.en'), name='product'),
+    url(r'^ustawienia/', include('setting.urls.en'), name='setting'),
+    url(r'', include('main.urls.en'), name='main'),
 ]

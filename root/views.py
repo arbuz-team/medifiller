@@ -3,7 +3,7 @@ from .forms import *
 import string, random
 
 
-class Login(Manage_Dynamic_Event):
+class Login(Dynamic_Event_Menager):
 
     def Manage_Content(self):
         self.content['form'] = Form_Root_Login()
@@ -35,19 +35,28 @@ class Login(Manage_Dynamic_Event):
 
 
 
-class Logout(Manage_Dynamic_Event):
+class Logout(Dynamic_Event_Menager):
 
     def Manage_Content(self):
         self.request.session['root_login'] = False
         return self.Render_HTML('root/logout.html')
 
+    def Check_Authorization(self):
+
+        if self.authorization:
+            if self.request.session['root_login']:
+                return True
+
+        else: return True
+        return False
+
     @staticmethod
     def Launch(request):
-        return Logout(request).HTML
+        return Logout(request, authorization=True).HTML
 
 
 
-class Create(Manage_Dynamic_Event):
+class Create(Dynamic_Event_Menager):
 
     def Manage_Content(self):
         self.content['password'] = ''

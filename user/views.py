@@ -3,7 +3,7 @@ from .forms import *
 import os, binascii
 
 
-class Login(Manage_Dynamic_Event):
+class Login(Dynamic_Event_Menager):
 
     def Manage_Content(self):
         self.content['form'] = Form_Login()
@@ -42,7 +42,7 @@ class Login(Manage_Dynamic_Event):
 
 
 
-class Register(Manage_Dynamic_Event):
+class Register(Dynamic_Event_Menager):
 
     def Manage_Content(self):
         self.content['form'] = Form_Register()
@@ -134,7 +134,7 @@ class Register(Manage_Dynamic_Event):
 
 
 
-class Logout(Manage_Dynamic_Event):
+class Logout(Dynamic_Event_Menager):
 
     def Manage_Content(self):
         self.request.session['user_login'] = False
@@ -148,7 +148,7 @@ class Logout(Manage_Dynamic_Event):
 
 
 
-class Account(Manage_Dynamic_Event):
+class Account(Dynamic_Event_Menager):
 
     def Get_User_Details(self):
         unique = self.request.session['user_unique']
@@ -257,7 +257,7 @@ class Account(Manage_Dynamic_Event):
 
 
 
-class Approved_Register(Manage_Dynamic_Event):
+class Approved_Register(Dynamic_Event_Menager):
 
     def Manage_Content(self):
         return self.Render_HTML('user/approved.html')

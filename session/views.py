@@ -9,6 +9,9 @@ class Session_Controller:
         if 'arbuz_navigation' not in self.request.session:
             self.request.session['arbuz_navigation'] = []
 
+        if 'arbuz_url' not in self.request.session:
+            self.request.session['arbuz_url'] = {}
+
     def Check_Session_User(self):
 
         if 'user_login' not in self.request.session:
@@ -35,7 +38,7 @@ class Session_Controller:
     def Check_Session(self):
 
         methods = getmembers(self, predicate=ismethod)
-        methods = [metoda[0] for metoda in methods]
+        methods = [method[0] for method in methods]
 
         for method in methods:
             if 'Check_Session_' in method:

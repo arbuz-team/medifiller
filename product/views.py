@@ -2,7 +2,7 @@ from arbuz.views import *
 from .forms import *
 
 
-class Produkt_Details(Manage_Dynamic_Event):
+class Produkt_Details(Dynamic_Event_Menager):
 
     def Manage_Content(self):
         return self.Render_HTML('product/details.html')

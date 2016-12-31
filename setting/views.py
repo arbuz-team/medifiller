@@ -5,7 +5,7 @@ from django.contrib.sites.models import Site
 import os
 
 
-class Control_Panel(Manage_Dynamic_Event):
+class Control_Panel(Dynamic_Event_Menager):
 
     def Manage_Content(self):
         return self.Render_HTML('setting/control_panel.html')
