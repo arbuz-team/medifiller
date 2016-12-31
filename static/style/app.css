@@ -167,6 +167,38 @@ ul {
       z-index: 5;
       overflow: hidden; }
 
+#DIALOGUE_WINDOW {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.4); }
+  #DIALOGUE_WINDOW > .window {
+    display: block;
+    position: relative;
+    width: 500px;
+    margin: 200px auto;
+      margin-bottom: 40px;
+    background: #fff;
+    box-shadow: 0 2px 26px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+      border-radius: 3px; }
+    #DIALOGUE_WINDOW > .window > .window-header {
+      padding: 10px 12px;
+      line-height: 19px;
+      background-color: #f6f7f9;
+      border-bottom: 1px solid #e5e5e5;
+      border-radius: 3px 3px 0 0;
+      color: #1d2129;
+      font-weight: bold; }
+    #DIALOGUE_WINDOW > .window > .window-content {
+      padding: 12px;
+      font-size: 14px;
+      line-height: 18px; }
+
 #NAGLOWEK .menu {
   float: right;
   display: inline-block;

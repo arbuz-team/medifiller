@@ -41,7 +41,7 @@ let send_post_button = function()
         .prop('disabled', false);
       window.APP.DATA.redirect = undefined;
       window.APP.DATA.delay = undefined;
-      window.dispatchEvent(window.EVENTS.redirect);
+      APP.throw_event(window.EVENTS.redirect);
     }
     else
     {

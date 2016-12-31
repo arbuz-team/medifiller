@@ -73,6 +73,6 @@ import * as img_loader from './img_loader';
 
   export let refresh_events = function()
   {
-    window.dispatchEvent( window.EVENTS.define );
+    APP.throw_event( window.EVENTS.define );
     img_loader.define();
   };

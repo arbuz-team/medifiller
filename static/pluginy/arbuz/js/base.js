@@ -15,21 +15,32 @@ window.APP.DATA = {};
  *    Defining global functions
  */
 
-$.prototype.add_data = function(name, value)
+APP.add_own_event = function add_own_event(name, callback)
+{
+  window.addEventListener(name, callback, false);
+};
+
+APP.throw_event = function throw_event(event)
+{
+  window.dispatchEvent( event );
+};
+
+
+$.prototype.add_data = function add_data(name, value)
 {
   $(this).attr('data-'+ name, value);
   $(this).data(name, value);
   return this;
 };
 
-$.prototype.change_data = function(name, value)
+$.prototype.change_data = function change_data(name, value)
 {
   $(this).add_data(name, value);
   return this;
 };
 
 
-$.prototype.delete_data = function(name)
+$.prototype.delete_data = function delete_data(name)
 {
   $(this).removeAttr('data-'+ name);
   $(this).removeData(name);
@@ -37,7 +48,7 @@ $.prototype.delete_data = function(name)
 };
 
 
-Array.prototype.delete_empty = function()
+Array.prototype.delete_empty = function delete_empty()
 {
   let url_array = [];
   
