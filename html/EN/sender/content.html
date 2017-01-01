@@ -3,17 +3,13 @@
 
 	<head>
 
-		<title> E-mail template </title>
-
 		<meta name="viewport" content="minimum-scale=0" />
 		<meta name="viewport" content="user-scalable=yes" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-		<meta name="description" content="Description e-mail template." />
-
 		<style>
 
-		body
+		#body
 		{
 			text-align: center;
 			font-family: Arial;
@@ -93,27 +89,29 @@
 	</head>
 
 	<body>
+		<div id="body">
 
-		<div id="header">
-			<div class="header-title">Shop - SPA Sungate</div>
+			<div id="header">
+				<div class="header-title">Shop - SPA Sungate</div>
+			</div>
+
+			<div id="content">
+
+				<div class="content-image"> <img src="cid:logo" /> </div>
+				<div class="content-title"> You're almost done. </div>
+				<div class="content-text"> Click the link below to activate your account. </div>
+				<a class="content-button" href="{{ activate_url }}"> Confirm </a>
+
+			</div>
+
+			<div id="footer">
+
+				<div class="footer-title"> Something is wrong? </div>
+				<div class="footer-text"> Bla bla bla, dziaba dziaba dziaba. </div>
+
+			</div>
+
 		</div>
-
-		<div id="content">
-
-			<div class="content-image"> <img src="cid:logo" /> </div>
-			<div class="content-title"> You're almost done. </div>
-			<div class="content-text"> Click the link below to activate your account. </div>
-			<a class="content-button" href="{{ activate_url }}"> Confirm </a>
-
-		</div>
-
-		<div id="footer">
-
-			<div class="footer-title"> Something is wrong? </div>
-			<div class="footer-text"> Bla bla bla, dziaba dziaba dziaba. </div>
-
-		</div>
-
 	</body>
 
 </html>
