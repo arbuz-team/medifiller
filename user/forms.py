@@ -173,6 +173,34 @@ class Form_User_Address(forms.ModelForm):
 
 
 
+class Form_Forgot_Password(forms.Form):
+
+    email = forms.CharField \
+    (
+        widget=forms.TextInput(
+            attrs=
+            {
+                'placeholder': 'Email',
+                'class': 'test',
+            }),
+        max_length=50
+    )
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+
+        if not User.objects.filter(email=email):
+            raise forms.ValidationError('User with this email '
+                                        'does not exist.')
+
+        if not User.objects.get(email=email).approved:
+            raise forms.ValidationError('User with this email '
+                                        'is not approved.')
+
+        return email
+
+
+
 class Form_Change_Password(forms.Form):
 
     password = forms.CharField\

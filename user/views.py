@@ -284,19 +284,33 @@ class Approved_Register(Dynamic_Event_Menager):
 class Forgot_Password(Dynamic_Event_Menager):
 
     def Manage_Content(self):
-        return self.Render_HTML('user/forgot.html')
+        self.content['form'] = Form_Forgot_Password()
+        return self.Render_HTML('user/forgot.html', 'forgot_password')
 
-    def Manage_Button(self):
+    def Manage_Form_Forgot_Password(self):
 
-        if 'email' in self.request.POST['__button__']:
-            self.content['email'] = self.request.POST['value']
+        self.content['form'] = \
+            Form_Forgot_Password(self.request.POST)
+
+        if self.content['form'].is_valid():
+            self.content['email'] = self.content['form'].cleaned_data['email']
 
             if User.objects.filter(email=self.content['email']):
                 self.Create_Forgot_Password_User()
                 self.Send_Secure_Link()
-                return JsonResponse({'__button__': 'true'})
 
-        return JsonResponse({'__button__': 'false'})
+            self.content['form'] = None  # message of correct
+
+            return self.Render_HTML('user/forgot.html')
+
+        return self.Render_HTML('user/forgot.html', 'forgot_password')
+
+    def Manage_Form(self):
+
+        if self.request.POST['__form__'] == 'forgot_password':
+            return self.Manage_Form_Forgot_Password()
+
+        return super(Forgot_Password, self).Manage_Form()
 
     def Create_Forgot_Password_User(self):
         self.content['key'] = binascii.hexlify(os.urandom(20))
