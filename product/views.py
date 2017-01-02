@@ -2,17 +2,18 @@ from arbuz.views import *
 from .forms import *
 
 
-class Produkt_Details(Dynamic_Event_Menager):
+class Product_Details(Dynamic_Event_Menager):
 
     def Manage_Content(self):
+        self.content['product'] = \
+            Product.objects.get(pk=self.other_value['pk'])
+
         return self.Render_HTML('product/details.html')
 
     @staticmethod
-    def Launch_GET(request, pk):
-        details = Produkt_Details(request, autostart=False)
-        details.pk = pk
-        return details.Manage()
+    def Product(request, pk):
+        return Product_Details(request, other_value={'pk': pk}).HTML
 
     @staticmethod
     def Launch(request):
-        return Produkt_Details(request).HTML
+        return Product_Details(request).HTML

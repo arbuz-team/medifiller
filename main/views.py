@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from arbuz.views import *
+from product.views import *
 
 
 class Contains_Start(Dynamic_Event_Menager):
@@ -15,6 +15,7 @@ class Contains_Start(Dynamic_Event_Menager):
 class Contains_Products(Dynamic_Event_Menager):
 
     def Manage_Content(self):
+        self.content['products'] = Product.objects.all()
         return self.Render_HTML('main/products.html')
 
     @staticmethod

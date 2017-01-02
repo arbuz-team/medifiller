@@ -13,7 +13,12 @@
 
   <div class="tresc">
 
-    {{ message }}
+    <img data-src="{{ product.image }}" alt="image"><br>
+    {{ product.details_en.name }}<br>
+    {{ product.details_en.description }}<br>
+    price euro: {{ product.price_eur }}<br>
+    price pln:  {{ product.price_pln }}<br>
+    <br><br>
 
   </div>
 
