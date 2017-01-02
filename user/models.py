@@ -60,3 +60,13 @@ class No_Approved_User(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+
+class Forgot_Password_User(models.Model):
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    approved_key = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.user.username

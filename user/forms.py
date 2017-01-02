@@ -170,3 +170,21 @@ class Form_User_Address(forms.ModelForm):
                     'class': 'test',
                 }),
         }
+
+
+
+class Form_Change_Password(forms.Form):
+
+    password = forms.CharField\
+    (
+        widget=forms.PasswordInput(
+            attrs=
+            {
+                'placeholder': 'Password',
+                'class': 'test',
+            }),
+        max_length=100
+    )
+
+    def clean_password(self):
+        return User.Encrypt(self.cleaned_data['password'])

@@ -34,11 +34,14 @@ class Manager(Dynamic_Base):
         self.content['error'] = 'form'
         return self.Render_HTML('arbuz/error.html')
 
+    def Manage_Edit(self):
+        return JsonResponse({'__edit__': 'false'})
+
     def Manage_Exist(self):
         return JsonResponse({'__exist__': 'false'})
 
-    def Manage_Edit(self):
-        return JsonResponse({'__edit__': 'false'})
+    #def Manage_Secure(self):
+    #    return JsonResponse({'__secure__': 'false'})
 
     def Manage_Button(self):
         return JsonResponse({'__button__': 'false'})
@@ -91,7 +94,7 @@ class Checker(Dynamic_Base):
     def __init__(self, request):
         Dynamic_Base.__init__(self, request)
 
-        self.error = None
+        self.ERROR_HTML = None
         self.authorization = False
 
 
@@ -131,6 +134,10 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
 
     def Check(self):
 
+        if self.error_method:
+            self.ERROR_HTML = self.Error()
+            return False
+
         methods = getmembers(self, predicate=ismethod)
         methods = [method[0] for method in methods]
 
@@ -143,7 +150,7 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
 
                     # render error HTML
                     method = method.replace('Check', 'Error')
-                    self.error = getattr(Dynamic_Event_Menager, method)(self)
+                    self.ERROR_HTML = getattr(Dynamic_Event_Menager, method)(self)
 
                     return False
 
@@ -157,6 +164,9 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
         for method in methods:
             if 'Update_' in method:
                 getattr(Dynamic_Event_Menager, method)(self)
+
+    def Error(self):
+        return getattr(Dynamic_Event_Menager, self.error_method)(self)
 
     def Manage(self):
 
@@ -180,25 +190,32 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
                 if '__exist__' in self.request.POST:
                     return self.Manage_Exist()
 
+                #if '__secure__' in self.request.POST:
+                #    return self.Manage_Secure()
+
                 # options
                 if '__button__' in self.request.POST:
                     return self.Manage_Button()
 
                 return self.Error_No_Event()
-            return self.error
+            return self.ERROR_HTML
 
         if self.request.method == 'GET':
             return self.Manage_Index()
 
     def __init__(self, request,
                  autostart=True,
-                 authorization=False):
+                 authorization=False,
+                 error_method=None,
+                 other_value=None):
 
         Manager.__init__(self, request)
         Checker.__init__(self, request)
         Updater.__init__(self, request)
 
         self.authorization = authorization
+        self.error_method = error_method
+        self.other_value = other_value
 
         if autostart:
             self.HTML = self.Manage()

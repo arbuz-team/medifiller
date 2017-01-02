@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from arbuz.views import *
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from email.mime.image import MIMEImage
@@ -19,25 +18,37 @@ class Sender:
 
         self.email_html.attach(img)
 
-    def Send_Email(self, title, content, recipient):
+    def Send_Forgot_Password_Link(self, title, content, recipient):
 
-        html_name = self.language + '/sender/content.html'
+        html_name = self.language + '/sender/forgot_password.html'
         html = render_to_string(html_name, content)
 
         body = MIMEText(html, _subtype='html')
         self.email_html.attach(body)
 
+        self.Send_Email(title, recipient)
+
+    def Send_Register_Approved_Link(self, title, content, recipient):
+
+        html_name = self.language + '/sender/register_approved.html'
+        html = render_to_string(html_name, content)
+
+        body = MIMEText(html, _subtype='html')
+        self.email_html.attach(body)
+
+        self.Send_Email(title, recipient)
+
+    def Send_Email(self, title, recipient):
         self.Attach_Image('static/pluginy/arbuz/img/logo.png', 'logo')
 
-        EmailMessage()
-        email = EmailMessage\
-        (
-            subject=title,
-            body='',
-            from_email='sender@arbuz.team',
-            to=[recipient]
-            # headers={'Reply-To': 'reply@arbuz.team'}
-        )
+        email = EmailMessage \
+                (
+                subject=title,
+                body='',
+                from_email='sender@arbuz.team',
+                to=[recipient]
+                # headers={'Reply-To': 'reply@arbuz.team'}
+            )
 
         email.attach(self.email_html)
         email.send()

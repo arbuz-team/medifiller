@@ -1,3 +1,4 @@
+from arbuz.views import *
 from sender.views import *
 from .forms import *
 import os, binascii
@@ -104,7 +105,7 @@ class Register(Dynamic_Event_Menager):
         self.content['key'] = binascii.hexlify(os.urandom(20))
         form = self.content['form']
 
-        if self.content['key'] not in No_Approved_User.objects.all():
+        if not No_Approved_User.objects.filter(approved_key=self.content['key']):
             No_Approved_User\
             (
                 user=User.objects.get(email=form.cleaned_data['email']),
@@ -126,7 +127,7 @@ class Register(Dynamic_Event_Menager):
         content['user'] = User.objects.get(unique=user_unique)
         email = self.content['form'].cleaned_data['email']
 
-        Sender(self.request).Send_Email(title, content, email)
+        Sender(self.request).Send_Register_Approved_Link(title, content, email)
 
     @staticmethod
     def Launch(request):
@@ -277,3 +278,100 @@ class Approved_Register(Dynamic_Event_Menager):
     @staticmethod
     def Launch(request):
         return Approved_Register(request).HTML
+
+
+
+class Forgot_Password(Dynamic_Event_Menager):
+
+    def Manage_Content(self):
+        return self.Render_HTML('user/forgot.html')
+
+    def Manage_Button(self):
+
+        if 'email' in self.request.POST['__button__']:
+            self.content['email'] = self.request.POST['value']
+
+            if User.objects.filter(email=self.content['email']):
+                self.Create_Forgot_Password_User()
+                self.Send_Secure_Link()
+                return JsonResponse({'__button__': 'true'})
+
+        return JsonResponse({'__button__': 'false'})
+
+    def Create_Forgot_Password_User(self):
+        self.content['key'] = binascii.hexlify(os.urandom(20))
+
+        if not Forgot_Password_User.objects.filter(approved_key=self.content['key']):
+            Forgot_Password_User\
+            (
+                user=User.objects.get(email=self.content['email']),
+                approved_key=self.content['key']
+            ).save()
+
+        else: self.Create_Forgot_Password_User()
+
+    def Send_Secure_Link(self):
+
+        activate_key = self.content['key'].decode("utf-8")
+        activate_url = self.request.build_absolute_uri().replace('forgot/', '')
+        activate_url = '{0}change_password/{1}'.format(activate_url, activate_key)
+        content = {}
+
+        title = 'Change your password.'
+        content['activate_url'] = activate_url
+        content['user'] = User.objects.get(email=self.content['email'])
+        email = self.content['email']
+
+        Sender(self.request).Send_Forgot_Password_Link(title, content, email)
+
+    @staticmethod
+    def Launch(request):
+        return Forgot_Password(request).HTML
+
+
+
+class Change_Password(Dynamic_Event_Menager):
+
+    def Manage_Content(self):
+        self.content['form'] = Form_Change_Password()
+        return self.Render_HTML('user/change_password.html', 'change_password')
+
+    def Manage_Form_Change_Password(self):
+
+        self.content['form'] = \
+            Form_Change_Password(self.request.POST)
+
+        if self.content['form'].is_valid():
+
+            key = self.other_value['key']
+            record = Forgot_Password_User.objects.get(approved_key=key)
+            record.user.password = self.content['form'].cleaned_data['password']
+            record.user.save()
+            record.delete()
+
+            self.content['form'] = None  # message of correct
+
+            return self.Render_HTML('user/change_password.html')
+
+        return self.Render_HTML('user/change_password.html', 'change_password')
+
+    def Manage_Form(self):
+
+        if self.request.POST['__form__'] == 'change_password':
+            return self.Manage_Form_Change_Password()
+
+        return super(Change_Password, self).Manage_Form()
+
+    @staticmethod
+    def Secure(request, key):
+        all_keys = Forgot_Password_User.objects.values('approved_key')
+
+        if {'approved_key': key} in all_keys:
+            value = {'key': key}
+            return Change_Password(request, other_value=value).HTML
+
+        return Change_Password(request, error_method='Error_Authorization').HTML
+
+    @staticmethod
+    def Launch(request):
+        return Change_Password(request).HTML
