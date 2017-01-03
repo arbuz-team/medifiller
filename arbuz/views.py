@@ -117,18 +117,19 @@ class Updater(Dynamic_Base):
 
         name = resolve(self.request.path_info).url_name
         kwargs = resolve(self.request.path_info).kwargs
-        url = self.request.get_host()
-
-        if self.request.is_secure():
-            url = 'https://' + url
-
-        else: url = 'http://' + url
+        secure = 'https://' if self.request.is_secure() else 'http://'
+        url = self.request.get_host()[3:]
 
         self.request.session['arbuz_url'] = \
         {
-            'en': url + reverse(name, urlconf='arbuz.urls.en', kwargs=kwargs),
-            'pl': url + reverse(name, urlconf='arbuz.urls.pl', kwargs=kwargs),
-            #'de': url + reverse(name, urlconf='arbuz.urls.de', kwargs=kwargs),
+            'en': secure + 'en.' + url +
+                  reverse(name, urlconf='arbuz.urls.en', kwargs=kwargs),
+
+            'pl': secure + 'pl.' + url +
+                  reverse(name, urlconf='arbuz.urls.pl', kwargs=kwargs),
+
+            #'de': secure + 'de.' + url +
+            #      reverse(name, urlconf='arbuz.urls.de', kwargs=kwargs),
         }
 
     def __init__(self, request):
