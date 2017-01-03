@@ -1,0 +1,105 @@
+
+#extensions-right
+  position: fixed
+  top: 20px
+  right: 70px
+
+  display: block
+  width: 150px
+  z-index: 40
+
+  >div
+    display: none
+
+    >.extension-mark
+      float: left
+      display: inline-block
+      width: 32px
+      height: 32px
+      position: relative
+      z-index: 22
+
+      >img
+        min-width: 28px
+        width: 28px
+        height: 28px
+
+    >.extension-text
+      display: block
+      position: relative
+      z-index: 21
+      line-height: 28px
+      background: #fff
+
+
+  >.change_language
+    +no_style_field()
+    position: relative
+    display: block
+    padding:
+      left: 10px
+      right: 10px
+    cursor: pointer
+    text-align: left
+
+    >.extension-text >*
+      +no_style_field()
+      width: 105px
+      padding: 4px 0px
+        left: 10px
+      margin-left: -10px
+      font-size: 14px
+      font-weight: bold
+
+
+//-----------------------------------------
+//						 EKRAN KOMPUTERA
+//-----------------------------------------
+
+@media (min-width: 750px)
+
+  #extensions-left, #extensions-right
+    top: 100px
+    z-index: 20
+
+    >.extension
+      +my-box()
+      padding:
+        left: 10px
+        right: 10px
+
+
+  #extensions-left
+    left: 20px
+
+    >.extension
+      text-align: right
+
+      >.extension-mark
+        float: right
+
+
+  #extensions-right
+    right: 20px
+
+    >.extension
+      text-align: left
+
+      >.extension-mark
+        float: left
+
+//
+  @media (min-width: 870px)
+
+
+
+@media (min-width: 1000px)
+
+  #extensions-left, #extensions-right
+    top: 120px
+
+
+//
+  @media (min-width: 1200px)
+
+

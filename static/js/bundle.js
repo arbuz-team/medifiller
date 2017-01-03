@@ -296,13 +296,13 @@
 	
 	var dialogue_window_events = _interopRequireWildcard(_view4);
 	
+	var _view5 = __webpack_require__(30);
+	
+	var extensions_events = _interopRequireWildcard(_view5);
+	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	/*---------------- Wydarzenia na stronie ----------------*/
-	
-	/**
-	 * Created by mrskull on 24.11.16.
-	 */
 	
 	var define = function define() {
 	  // Usuń wszystkie wydarzenia ze wszystkich elementów
@@ -312,7 +312,10 @@
 	  menu_controller_events.define();
 	  form_controller_events.define();
 	  dialogue_window_events.define();
-	};
+	  extensions_events.define();
+	}; /**
+	    * Created by mrskull on 24.11.16.
+	    */
 	
 	var start = exports.start = function start() {
 	  define();
@@ -1671,6 +1674,61 @@
 	}; /**
 	    * Created by mrskull on 29.12.16.
 	    */
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.define = undefined;
+	
+	var _models = __webpack_require__(31);
+	
+	var models = _interopRequireWildcard(_models);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	/**
+	 *    Defining public functions
+	 */
+	
+	var define = exports.define = function define() {
+	  $(models.selectors.language_fields).change(change_language);
+	};
+	
+	/**
+	 *    Defining events functions
+	 */
+	
+	/**
+	 * Created by mrskull on 02.01.17.
+	 */
+	
+	var change_language = function change_language() {
+	  console.log('change');
+	  window.location = $(this).val();
+	};
+
+/***/ },
+/* 31 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	 * Created by mrskull on 02.01.17.
+	 */
+	
+	var selectors = exports.selectors = {
+	  language_fields: '#extensions-left > .extension.change_language > .extension-text > *, #extensions-right > .extension.change_language > .extension-text > *'
+	};
 
 /***/ }
 /******/ ]);

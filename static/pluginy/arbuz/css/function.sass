@@ -1,4 +1,6 @@
 
+//  Standard style elements
+
 =background-img( $sciezka, $rozmiar: auto auto, $pozycja:0 0 )
   background:
     image: url( $sciezka )
@@ -23,3 +25,26 @@
   -webkit-box-sizing: $param
   -moz-box-sizing: $param
   box-sizing: $param
+
+
+//  Own style elements
+
+=my-box()
+  padding: 10px
+    left: 15px
+    right: 15px
+  +box-sizing(border-box)
+
+  color: #333
+  font-size: 16px
+  background: #fff
+  border: 1px solid #ddd
+    radius: 3px
+
+=no_style_field()
+  background: none
+  border: none
+  box-shadow: none
+  box-sizing: border-box
+  outline: none
+  background: transparent

@@ -1,0 +1,20 @@
+{% load staticfiles %}
+
+<div id="extensions-left">
+  <!--<div>bla X</div>-->
+</div>
+
+
+<div id="extensions-right">
+  <div class="extension change_language">
+    <div class="extension-mark"><img data-src="{% static 'img/language.png' %}" alt="languages"></div>
+    <div class="extension-text">
+      <select class="extension">
+        <option selected>language</option>
+        <option value="{{ request.session.arbuz_url.en }}">english</option>
+        <option value="{{ request.session.arbuz_url.pl }}">polski</option>
+        <option value="{{ request.session.arbuz_url.de }}">deutsch</option>
+      </select>
+    </div>
+  </div>
+</div>
