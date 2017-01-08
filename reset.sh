@@ -22,6 +22,4 @@ python3 $(dirname $0)/manage.py makemigrations user
 python3 $(dirname $0)/manage.py migrate
 chmod 664 $(dirname $0)/db.sqlite3
 
-GET http://127.0.0.1:8000/setting/load_languages/ > /dev/null
-GET http://127.0.0.1:8000/setting/load_default_users/ > /dev/null
-GET http://127.0.0.1:8000/setting/load_default_products/ > /dev/null
+GET http://127.0.0.1:8000/setting/load_default_data/ > /dev/null

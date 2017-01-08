@@ -6,7 +6,7 @@ import os, binascii
 
 class Login(Dynamic_Event_Menager):
 
-    def Manage_Content(self):
+    def Manage_Content_Ground(self):
         self.content['form'] = Form_Login()
         return self.Render_HTML('user/login.html', 'login')
 
@@ -45,7 +45,7 @@ class Login(Dynamic_Event_Menager):
 
 class Register(Dynamic_Event_Menager):
 
-    def Manage_Content(self):
+    def Manage_Content_Ground(self):
         self.content['form'] = Form_Register()
         return self.Render_HTML('user/register.html', 'register')
 
@@ -137,7 +137,7 @@ class Register(Dynamic_Event_Menager):
 
 class Logout(Dynamic_Event_Menager):
 
-    def Manage_Content(self):
+    def Manage_Content_Ground(self):
         self.request.session['user_login'] = False
         self.request.session['user_unique'] = ''
         self.request.session['user_username'] = ''
@@ -182,7 +182,7 @@ class Account(Dynamic_Event_Menager):
 
         return False
 
-    def Manage_Content(self):
+    def Manage_Content_Ground(self):
         self.Get_User_Details()
         self.content['new_form_address'] = Form_User_Address()
         return self.Render_HTML('user/account.html')
@@ -260,7 +260,7 @@ class Account(Dynamic_Event_Menager):
 
 class Approved_Register(Dynamic_Event_Menager):
 
-    def Manage_Content(self):
+    def Manage_Content_Ground(self):
         return self.Render_HTML('user/approved.html')
 
     @staticmethod
@@ -283,7 +283,7 @@ class Approved_Register(Dynamic_Event_Menager):
 
 class Forgot_Password(Dynamic_Event_Menager):
 
-    def Manage_Content(self):
+    def Manage_Content_Ground(self):
         self.content['form'] = Form_Forgot_Password()
         return self.Render_HTML('user/forgot.html', 'forgot_password')
 
@@ -346,7 +346,7 @@ class Forgot_Password(Dynamic_Event_Menager):
 
 class Change_Password(Dynamic_Event_Menager):
 
-    def Manage_Content(self):
+    def Manage_Content_Ground(self):
         self.content['form'] = Form_Change_Password()
         return self.Render_HTML('user/change_password.html', 'change_password')
 

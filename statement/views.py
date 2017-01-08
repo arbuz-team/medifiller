@@ -3,7 +3,7 @@ from arbuz.views import *
 
 class Statement_403(Dynamic_Event_Menager):
 
-    def Manage_Content(self):
+    def Manage_Content_Ground(self):
         self.content['title'] = '403'
         return self.Render_HTML('statement/statement.html')
 
@@ -15,7 +15,7 @@ class Statement_403(Dynamic_Event_Menager):
 
 class Statement_404(Dynamic_Event_Menager):
 
-    def Manage_Content(self):
+    def Manage_Content_Ground(self):
         self.content['title'] = '404'
         return self.Render_HTML('statement/statement.html')
 
@@ -27,7 +27,7 @@ class Statement_404(Dynamic_Event_Menager):
 
 class Statement_500(Dynamic_Event_Menager):
 
-    def Manage_Content(self):
+    def Manage_Content_Ground(self):
         self.content['title'] = '500'
         return self.Render_HTML('statement/statement.html')
 

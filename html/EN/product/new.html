@@ -1,22 +1,23 @@
 <script>
   window.APP.DATA = {
-    title : 'Root login',
-    description : 'Here root can login.'
+    title : '{{ title }}',
+    description : 'This page is about us. ;)'
   };
 </script>
 
 
-<div class="ground-block block-1 SMALL">
+<div class="BLOK1">
 
-  <div class="block-background fill-abs"></div>
-  {% include "ground/html/navigation.html" %}
+  <div class="tlo abs_pelny"></div>
+  {% include "content/html/navigation.html" %}
 
-  <div class="block-content">
+  <div class="tresc">
+
     {% if not form %}
 
-      Hello root! You are logged on. ;)
+      Product has been insert to databases.
       <script>
-        window.APP.DATA.redirect = '/';
+        window.APP.DATA.redirect = '/product/new/';
         window.APP.DATA.delay = 2000;
         window.dispatchEvent(window.EVENTS.redirect);
       </script>
@@ -25,11 +26,11 @@
 
       <form method="post" action="" data-name="{{ form_name }}" data-type="{{ form_name }}" data-test="yes">
 
-        <div class="title"> Root login </div>
+        <div class="title"> Create new product </div>
 
-        <div class="otoczka_pola">
-          <input disabled type="text" value="root" />
-        </div>
+        <div>New details for English</div>
+        <div>New details for Polish</div>
+        <div>New details for Germany</div>
 
         {% for i in form %}
 
@@ -41,12 +42,13 @@
         {% endfor %}
 
         <div class="otoczka_pola">
-          <button disabled type="submit"> Done </button>
+          <button disabled type="submit"> Insert </button>
         </div>
 
       </form>
 
     {% endif %}
+
   </div>
 
 </div>

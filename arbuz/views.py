@@ -27,8 +27,40 @@ class Dynamic_Base:
 class Manager(Dynamic_Base):
 
     @abstractmethod
-    def Manage_Content(self):
+    def Manage_Content_Ground(self):
         pass
+
+    def Manage_Content_Cart(self):
+        return self.Render_HTML('parts/cart.html')
+
+    def Manage_Content_Filters(self):
+        return self.Render_HTML('parts/filters.html')
+
+    def Manage_Content_Header(self):
+        return self.Render_HTML('parts/header.html')
+
+    def Manage_Content_Navigation(self):
+        return self.Render_HTML('parts/navigation.html')
+
+    def Manage_Content(self):
+
+        if self.request.POST['__content__'] == 'ground':
+            return self.Manage_Content_Ground()
+
+        if self.request.POST['__content__'] == 'cart':
+            return self.Manage_Content_Cart()
+
+        if self.request.POST['__content__'] == 'filters':
+            return self.Manage_Content_Filters()
+
+        if self.request.POST['__content__'] == 'header':
+            return self.Manage_Content_Header()
+
+        if self.request.POST['__content__'] == 'navigation':
+            return self.Manage_Content_Navigation()
+
+        self.content['error'] = 'no_event'
+        return self.Render_HTML('arbuz/error.html')
 
     def Manage_Form(self):
         self.content['error'] = 'form'
@@ -79,9 +111,14 @@ class Checker(Dynamic_Base):
         if self.authorization:
             if self.request.session['user_login']:
                 return True
+            return False
 
-        else: return True
-        return False
+        if self.only_root:
+            if self.request.session['root_login']:
+                return True
+            return False
+
+        return True
 
     def Check_Secure_POST(self):
 
@@ -96,6 +133,7 @@ class Checker(Dynamic_Base):
 
         self.ERROR_HTML = None
         self.authorization = False
+        self.only_root = False
 
 
 
@@ -214,7 +252,8 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
                  autostart=True,
                  authorization=False,
                  error_method=None,
-                 other_value=None):
+                 other_value=None,
+                 only_root=False):
 
         Manager.__init__(self, request)
         Checker.__init__(self, request)
@@ -223,6 +262,7 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
         self.authorization = authorization
         self.error_method = error_method
         self.other_value = other_value
+        self.only_root = only_root
 
         if autostart:
             self.HTML = self.Manage()

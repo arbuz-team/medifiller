@@ -1,10 +1,45 @@
 # -*- coding: utf-8 -*-
 from product.views import *
+from .models import *
+
+
+class Editable_Tab(Dynamic_Event_Menager, metaclass=ABCMeta):
+
+    def Manage_Edit_Text(self):
+
+        pk = self.request.POST['pk']
+        value = self.request.POST['value']
+
+        record = Text_Content.objects.get(pk=pk)
+        record.text = value
+
+    def Manage_Edit_Image(self):
+
+        pk = self.request.POST['pk']
+        value = self.request.POST['value']
+
+        record = Image_Content.objects.get(pk=pk)
+        record.image = value
+
+    def Manage_Edit(self):
+
+        self.only_root = True
+        if not self.Check():
+            return self.ERROR_HTML
+
+        if 'text' in self.request.POST['__edit__']:
+            self.Manage_Edit_Text()
+
+        if 'text' in self.request.POST['__edit__']:
+            self.Manage_Edit_Image()
+
+        return super(Editable_Tab, self).Manage_Edit()
+
 
 
 class Contains_Start(Dynamic_Event_Menager):
 
-    def Manage_Content(self):
+    def Manage_Content_Ground(self):
         return self.Render_HTML('main/start.html')
 
     @staticmethod
@@ -14,7 +49,7 @@ class Contains_Start(Dynamic_Event_Menager):
 
 class Contains_Products(Dynamic_Event_Menager):
 
-    def Manage_Content(self):
+    def Manage_Content_Ground(self):
         self.content['products'] = Product.objects.all()
         return self.Render_HTML('main/products.html')
 
@@ -23,9 +58,11 @@ class Contains_Products(Dynamic_Event_Menager):
         return Contains_Products(request).HTML
 
 
-class Contains_About_Us(Dynamic_Event_Menager):
+class Contains_About_Us(Editable_Tab):
 
-    def Manage_Content(self):
+    def Manage_Content_Ground(self):
+        self.content['texts'] = Text_Content.objects.filter(tab_name='about_us')
+        self.content['images'] = Image_Content.objects.filter(tab_name='about_us')
         return self.Render_HTML('main/about_us.html')
 
     @staticmethod
@@ -33,9 +70,11 @@ class Contains_About_Us(Dynamic_Event_Menager):
         return Contains_About_Us(request).HTML
 
 
-class Contains_Contact_Us(Dynamic_Event_Menager):
+class Contains_Contact_Us(Editable_Tab):
 
-    def Manage_Content(self):
+    def Manage_Content_Ground(self):
+        self.content['texts'] = Text_Content.objects.filter(tab_name='contact_us')
+        self.content['images'] = Image_Content.objects.filter(tab_name='contact_us')
         return self.Render_HTML('main/contact_us.html')
 
     @staticmethod
@@ -45,7 +84,7 @@ class Contains_Contact_Us(Dynamic_Event_Menager):
 
 class Contains_Edit(Dynamic_Event_Menager):
 
-    def Manage_Content(self):
+    def Manage_Content_Ground(self):
         return self.Render_HTML('main/edit.html')
 
     @staticmethod

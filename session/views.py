@@ -35,6 +35,22 @@ class Session_Controller:
 
         Translator.Check_Subdomain_Language(self.request)
 
+    def Check_Session_Product(self):
+
+        if 'product_new_details_en' not in self.request.session:
+            self.request.session['product_new_details_en'] = None
+
+        if 'product_new_details_pl' not in self.request.session:
+            self.request.session['product_new_details_pl'] = None
+
+        if 'product_new_details_de' not in self.request.session:
+            self.request.session['product_new_details_de'] = None
+
+        if 'product_where_display' not in self.request.session:
+            self.request.session['product_where_display'] = 0
+
+        Translator.Check_Subdomain_Language(self.request)
+
     def Check_Session(self):
 
         methods = getmembers(self, predicate=ismethod)

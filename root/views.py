@@ -4,7 +4,8 @@ import string, random
 
 class Login(Dynamic_Event_Menager):
 
-    def Manage_Content(self):
+    def Manage_Content_Ground(self):
+        self.content['form'] = Form_Root_Login()
         return self.Render_HTML('root/login.html', 'login')
 
     def Manage_Form_Login(self):
@@ -35,7 +36,7 @@ class Login(Dynamic_Event_Menager):
 
 class Logout(Dynamic_Event_Menager):
 
-    def Manage_Content(self):
+    def Manage_Content_Ground(self):
         self.request.session['root_login'] = False
         return self.Render_HTML('root/logout.html')
 
@@ -56,7 +57,7 @@ class Logout(Dynamic_Event_Menager):
 
 class Create(Dynamic_Event_Menager):
 
-    def Manage_Content(self):
+    def Manage_Content_Ground(self):
         self.content['password'] = ''
 
         if not Root.objects.all():

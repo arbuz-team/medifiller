@@ -42,8 +42,8 @@ class Where_Display(models.Model):
 class Product(models.Model):
 
     details_en = models.ForeignKey(Details_EN)
-    details_pl = models.ForeignKey(Details_PL)
-    details_de = models.ForeignKey(Details_DE)
+    details_pl = models.ForeignKey(Details_PL, null=True)
+    details_de = models.ForeignKey(Details_DE, null=True)
     where_display = models.ForeignKey(Where_Display)
 
     image = models.ImageField()
