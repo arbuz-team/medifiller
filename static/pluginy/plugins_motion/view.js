@@ -2,22 +2,22 @@
  * Created by mrskull on 06.01.17.
  */
 
-import {Motion_Plugins_Controller} from './main'
+import {Plugins_Motion_Controller} from './main'
 
 
 
-export let Motion_Plugins_Events = function(config)
+export let Plugins_Motion_Events = function(config)
 {
   let
-    controller = new Motion_Plugins_Controller(config),
-    settings = controller.modules.settings;
+    controller = new Plugins_Motion_Controller(config),
+    settings = controller.models.settings;
 
   this.define = function()
   {
     let
       $window = $(window),
       $body = $('body'),
-      $filters = $(settings.container);
+      $container = $(settings.container);
 
     if(settings.direction_open === 'top' || settings.direction_open === 'bottom')
       $body.hammer().on(settings.swipe_open, pre_filters_open);
@@ -29,7 +29,7 @@ export let Motion_Plugins_Events = function(config)
 
     $body.data('hammer').get('swipe').set({ direction: Hammer.DIRECTION_ALL });
 
-    $filters.click(stop_propagation);
+    $container.click(stop_propagation);
 
     $body.click(controller.filters_close);
 

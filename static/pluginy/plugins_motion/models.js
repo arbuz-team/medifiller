@@ -5,7 +5,7 @@
 import {data_controller} from '../arbuz/js/structure'
 
 
-export let Modules = function Modules(config)
+export let Models = function Models(config)
 {
   let that = this;
 

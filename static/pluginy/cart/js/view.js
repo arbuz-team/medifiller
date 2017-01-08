@@ -2,7 +2,8 @@
  * Created by mrskull on 07.01.17.
  */
 
-import {Motion_Plugins_Events} from '../../motion_plugins/view'
+import {Plugins_Loader_Events} from '../../plugins_loader/view'
+import {Plugins_Motion_Events} from '../../plugins_motion/view'
 
 
 /**
@@ -12,7 +13,21 @@ import {Motion_Plugins_Events} from '../../motion_plugins/view'
 export let define = function()
 {
   let
-    config = {
+    config_loader = {
+      name: 'cart',
+      container: '#CART > .cart',
+      first_element: '*',
+
+      load_with_page: false,
+    },
+
+    cart_loader_events = new Plugins_Loader_Events(config_loader);
+
+  cart_loader_events.define();
+
+
+  let
+    config_motion = {
       container: '#CART',
       open: 'left',
       can_open_by: 'width',
@@ -21,7 +36,7 @@ export let define = function()
       duration_close: 200,
     },
 
-    motion_plugins_events = new Motion_Plugins_Events(config);
+    cart_motion_events = new Plugins_Motion_Events(config_motion);
 
-  motion_plugins_events.define();
+  cart_motion_events.define();
 };
