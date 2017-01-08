@@ -8,11 +8,12 @@
 
     <meta name="viewport" content="minimum-scale=0" />
     <meta name="viewport" content="user-scalable=yes" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+
 
     <meta name="description" content="{{ request.session.meta_tag.description }}" />
 
-    <meta property="og:title"           content="Arbuz Team"/>
+    <meta property="og:title"           content="Arbuz Team" />
     <meta property="fb:app_id"          content="" />
     <meta property="og:type"            content="{{ request.session.meta_tag.og_type }}" />
     <meta property="og:url"             content="{{ request.session.meta_tag.og_url }}" />
@@ -22,7 +23,7 @@
     <link rel="author" href="https://www.facebook.com/AsBhp/?fref=ts" />
     <!--<link rel="shortcut icon" href="" />-->
 
-    <link rel="stylesheet" href="{% static 'style/app.css' %}">
+    <link rel="stylesheet" href="{% static 'style/app.css' %}" />
 
 </head>
 
@@ -30,13 +31,10 @@
 
   {% csrf_token %}
 
-  <div id="NIEWIDZIALNY_OPIS">
+  <div id="INVISIBLE_DESCRIPTION">
         <strong>{{ o_nas.tekst | linebreaksbr }}</strong>
   </div>
+  <div id="LOADING" class="fill-abs"></div>
 
-  <div id="LADOWANIE" class="abs_pelny"></div>
-
-  <div id="BLOK_GLOWNY" class="abs_pelny">
-    
-    <div class="abs_pelny">
+  <div id="CONTAINTER" class="fill-abs">
 

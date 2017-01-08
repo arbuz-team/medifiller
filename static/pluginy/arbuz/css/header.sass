@@ -1,73 +1,52 @@
 // -----------------------------------------
 //			  DEFINIOWANIE ZMIENNYCH
 // -----------------------------------------
-$sciezka_pluginu: '/static/pluginy/arbuz/'
 $wysokosc_naglowka_m: 70px
-$wysokosc_naglowka_d: 100px
+$wysokosc_naglowka_d: 90px
 
 
 // -----------------------------------------
 //			  ELEMENTY NAGŁÓWKA
 // -----------------------------------------
 
-#NAGLOWEK
+#HEADER
   position: relative
-  z-index: 37 !important
-  overflow: visible !important
+  z-index: 37
 
+  display: block
   height: $wysokosc_naglowka_m
-  min-height: $wysokosc_naglowka_m
-  max-height: $wysokosc_naglowka_m
 
   background-color: transparent
 
 
-  >div
-    position: fixed
-    left: 0
-    right: 0
-    top: 0
-    z-index: 35
-    overflow: visible
-
-    height: $wysokosc_naglowka_m
-    min-height: $wysokosc_naglowka_m
-    padding-right: 15px
-
-    background-color: #fff
+  >.header
+    position: relative
+    height: inherit
+    background-color: #f4f4f4
     border-bottom: 1px solid #d8d8d8
 
 
-    >div
-      position: relative
-
-      margin: 0 auto
-      padding-left: 15px
-      padding-right: 15px
-
-      width: 100%
-      height: 100%
-
-
-  .logo
-    position: absolute
-    bottom: -10px
-    left: 10px
-    z-index: 38
-
-    width: 65px
-    height: $wysokosc_naglowka_m
-    min-height: 80px
-
-    @include background-img( '#{$sciezka_pluginu}img/logo.png', 100% auto )
-
-
-    >a
+    >.header-nav-secondary
       position: absolute
+      left: 0
       top: 0
       right: 0
-      bottom: 0
-      left: 0
+
+      display: block
+      height: 30px
+      padding-right: 15px
+
+      background-color: #9d948a
+      color: #f4f4f4
+      text-align: right
+
+
+      >li
+        display: inline-block
+        width: auto
+        font:
+          size: 14px
+          weight: normal
 
 
 //-----------------------------------------
@@ -76,16 +55,15 @@ $wysokosc_naglowka_d: 100px
 
 @media screen and (min-width: 1000px)
 
-  #NAGLOWEK
+  #HEADER
     height: $wysokosc_naglowka_d
-    max-height: $wysokosc_naglowka_d
+    margin-left: 250px
 
 
     >div
       height: $wysokosc_naglowka_d
-      max-height: $wysokosc_naglowka_d
 
-
+  //
     .logo
       left: 30px
 
@@ -107,27 +85,3 @@ $wysokosc_naglowka_d: 100px
 
           //@include background-img( '', 130px auto, center )
           background-image: none
-
-@media (min-width: 768px)
-  #NAGLOWEK
-    >div
-      >div
-        width: 650px
-
-
-//@media (min-width: 870px)
-  #NAGLOWEK > div > div
-
-
-@media (min-width: 992px)
-  #NAGLOWEK
-    >div
-      >div
-        width: 800px
-
-
-@media (min-width: 1200px)
-  #NAGLOWEK
-    >div
-      >div
-        width: 970px

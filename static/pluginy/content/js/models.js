@@ -20,7 +20,8 @@ import * as img_loader from './img_loader';
         duration: 100, opacity: 0.4,
       },
 
-      container: '#TRESC'
+      container: '#CONTENT > .content',
+      first_element: '.block_1'
     };
 
 

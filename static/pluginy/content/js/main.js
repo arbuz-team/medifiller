@@ -58,7 +58,7 @@ import * as models from './models'
       if(status !== 'success')
       {
         $(models.settings.container +' > div')
-          .not('.BLOK1').remove();
+          .not(models.settings.first_element).remove();
         $(models.settings.container + ' > div > .tresc')
           .html('An error has occurred while connecting to server. Please, refresh website or check your connect with network.');
       }

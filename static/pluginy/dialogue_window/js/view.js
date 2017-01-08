@@ -49,7 +49,7 @@ let
   {
     window_data.type = 'alert';
     window_data.title = 'This is alert';
-    models.alert_content.admission = '<b>ble ble</b> aha, no ok...';
+    models.html.alert_content.admission = '<b>ble ble</b> aha, no ok...';
 
     dialogue_window_controller.open_alert();
   },
@@ -60,7 +60,7 @@ let
     window_data.type = 'prompt';
     window_data.name = 'authorisation';
     window_data.title = 'Authorisation';
-    models.prompt_content.admission = 'If you want save the changes enter your password.';
+    models.html.prompt_content.admission = '<div>If you want save the changes enter your password.</div>';
 
     dialogue_window_controller.open_prompt();
   },
@@ -71,7 +71,7 @@ let
     window_data.type = 'confirm';
     window_data.name = 'stupid';
     window_data.title = 'You are stupid?';
-    models.confirm_content.admission = 'You have to confirm that you are stupid.';
+    models.html.confirm_content.admission = '<div>You have to confirm that you are stupid.</div>';
 
     dialogue_window_controller.open_confirm();
   },

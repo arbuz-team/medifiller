@@ -1,14 +1,26 @@
 
 {% include "arbuz/html/admission.html" %}
+<!------------- Container - start -------------->
 
-{% include "arbuz/html/extensions.html" %}
 
-{% include "dialogue_window/html/main.html" %}
+  <!-- Dialogue window -->
+  {% include "dialogue_window/html/main.html" %}
 
-{% include "arbuz/html/header.html" %}
+  <!-- Navigation -->
+  {% include "navigation/html/vertical.html" %}
 
-{% include "arbuz/html/content.html" %}
+  <!-- Filters -->
+  {% include "filters/html/main.html" %}
 
-{% include "arbuz/html/footer.html" %}
+  <!-- Header -->
+  {% include "arbuz/html/header.html" %}
 
+  <!-- Content -->
+  {% include "content/html/main.html" %}
+
+  <!-- Cart -->
+  {% include "cart/html/main.html" %}
+
+
+<!------------- Container - end -------------->
 {% include "arbuz/html/ending.html" %}

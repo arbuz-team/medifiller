@@ -215,6 +215,7 @@
 	
 	    public_data = {
 	      can_do_redirect: false,
+	      can_do_open_plugin: true,
 	      page_name: 'Spasungate',
 	      title: 'Loading... - Spasungate',
 	      description: 'This page is shop, which is ownership Spasungate.',
@@ -282,45 +283,52 @@
 	
 	var _view = __webpack_require__(11);
 	
-	var content_controller_events = _interopRequireWildcard(_view);
+	var filter_controller_events = _interopRequireWildcard(_view);
 	
 	var _view2 = __webpack_require__(15);
 	
-	var menu_controller_events = _interopRequireWildcard(_view2);
+	var cart_controller_events = _interopRequireWildcard(_view2);
 	
-	var _view3 = __webpack_require__(17);
+	var _view3 = __webpack_require__(16);
 	
-	var form_controller_events = _interopRequireWildcard(_view3);
+	var navigation_controller_events = _interopRequireWildcard(_view3);
 	
-	var _view4 = __webpack_require__(27);
+	var _view4 = __webpack_require__(17);
 	
 	var dialogue_window_events = _interopRequireWildcard(_view4);
 	
-	var _view5 = __webpack_require__(30);
+	var _view5 = __webpack_require__(20);
 	
-	var extensions_events = _interopRequireWildcard(_view5);
+	var content_controller_events = _interopRequireWildcard(_view5);
+	
+	var _view6 = __webpack_require__(24);
+	
+	var form_controller_events = _interopRequireWildcard(_view6);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	/*---------------- Wydarzenia na stronie ----------------*/
 	
+	/**
+	 * Created by mrskull on 24.11.16.
+	 */
+	
 	var define = function define() {
 	  // Usuń wszystkie wydarzenia ze wszystkich elementów
 	  $('*').off();
 	
-	  content_controller_events.define();
-	  menu_controller_events.define();
-	  form_controller_events.define();
+	  filter_controller_events.define();
+	  cart_controller_events.define();
+	  navigation_controller_events.define();
 	  dialogue_window_events.define();
-	  extensions_events.define();
-	}; /**
-	    * Created by mrskull on 24.11.16.
-	    */
+	
+	  content_controller_events.define();
+	  form_controller_events.define();
+	};
 	
 	var start = exports.start = function start() {
-	  define();
-	
 	  window.addEventListener('define', define, false);
+	  content_controller_events.start_first_load();
 	};
 
 /***/ },
@@ -334,7 +342,539 @@
 	});
 	exports.define = undefined;
 	
-	var _main = __webpack_require__(12);
+	var _view = __webpack_require__(12);
+	
+	/**
+	 *    Defining public functions
+	 */
+	
+	var define = exports.define = function define() {
+	  var config = {
+	    container: '#FILTERS',
+	    open: 'right',
+	    can_open_by: 'width',
+	    can_open_to: 1000,
+	    duration_open: 200,
+	    duration_close: 200
+	  },
+	      motion_plugins_events = new _view.Motion_Plugins_Events(config);
+	
+	  motion_plugins_events.define();
+	}; /**
+	    * Created by mrskull on 07.01.17.
+	    */
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Motion_Plugins_Events = undefined;
+	
+	var _main = __webpack_require__(13);
+	
+	var Motion_Plugins_Events = exports.Motion_Plugins_Events = function Motion_Plugins_Events(config) {
+	  var controller = new _main.Motion_Plugins_Controller(config),
+	      settings = controller.modules.settings;
+	
+	  this.define = function () {
+	    var $window = $(window),
+	        $body = $('body'),
+	        $filters = $(settings.container);
+	
+	    if (settings.direction_open === 'top' || settings.direction_open === 'bottom') $body.hammer().on(settings.swipe_open, pre_filters_open);else $body.hammer().on(settings.swipe_open, controller.filters_open);
+	
+	    $body.hammer().on(settings.swipe_close, controller.filters_close);
+	
+	    $body.data('hammer').get('swipe').set({ direction: Hammer.DIRECTION_ALL });
+	
+	    $filters.click(stop_propagation);
+	
+	    $body.click(controller.filters_close);
+	
+	    $window.resize(controller.filters_close);
+	  };
+	
+	  var pre_filters_open = function pre_filters_open(event) {
+	    var y = event.gesture.center.y - event.gesture.distance;
+	
+	    if (y <= 70) controller.filters_open();
+	  },
+	      stop_propagation = function stop_propagation(event) {
+	    event.stopPropagation();
+	  };
+	}; /**
+	    * Created by mrskull on 06.01.17.
+	    */
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Motion_Plugins_Controller = undefined;
+	
+	var _modules = __webpack_require__(14);
+	
+	var Motion_Plugins_Controller = exports.Motion_Plugins_Controller = function Motion_Plugins_Controller(config) {
+	  var modules = new _modules.Modules(config),
+	      css = {};
+	
+	  this.modules = modules;
+	
+	  this.filters_open = function () {
+	    if (modules.check_possibility_of_opening()) {
+	      css[modules.settings.direction_close] = 0;
+	
+	      $(modules.settings.container).stop().animate(css, modules.settings.duration_open, function () {
+	        modules.change_possibility_of_opening(false);
+	      });
+	    }
+	  };
+	
+	  this.filters_close = function () {
+	    if (modules.check_is_open()) {
+	      if (modules.settings.direction_open === 'top' || modules.settings.direction_open === 'bottom') css[modules.settings.direction_close] = -modules.settings.height;else if (modules.settings.direction_open === 'right' || modules.settings.direction_open === 'left') css[modules.settings.direction_close] = -modules.settings.width;
+	
+	      $(modules.settings.container).stop().animate(css, modules.settings.duration_close, function () {
+	        modules.change_possibility_of_opening(true);
+	      });
+	    }
+	  };
+	}; /**
+	    * Created by mrskull on 06.01.17.
+	    */
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Modules = undefined;
+	
+	var _structure = __webpack_require__(8);
+	
+	var Modules = exports.Modules = function Modules(config) {
+	  var that = this;
+	
+	  this.settings = {
+	    container: undefined,
+	    width: undefined,
+	    height: undefined,
+	
+	    can_open_by: undefined,
+	    can_open_from: undefined,
+	    can_open_to: undefined,
+	
+	    direction_open: undefined,
+	    direction_close: undefined,
+	
+	    duration_open: undefined,
+	    duration_close: undefined
+	  };
+	
+	  var load_settings = function load_settings() {
+	    if (typeof config !== 'undefined') {
+	      // -- Container
+	      if (typeof config.container !== 'undefined') that.settings.container = config.container;
+	
+	      // -- Witdh & height
+	      var $container = $(that.settings.container);
+	      that.settings.width = $container.outerWidth();
+	      that.settings.height = $container.outerHeight();
+	
+	      // -- Can open
+	      if (typeof config.can_open_by !== 'undefined') that.settings.can_open_by = config.can_open_by;
+	
+	      if (typeof config.can_open_from !== 'undefined') that.settings.can_open_from = config.can_open_from;
+	
+	      if (typeof config.can_open_to !== 'undefined') that.settings.can_open_to = config.can_open_to;
+	
+	      // -- Duration open & close
+	      if (typeof config.duration_open !== 'undefined') that.settings.duration_open = config.duration_open;
+	
+	      if (typeof config.duration_close !== 'undefined') that.settings.duration_close = config.duration_close;
+	
+	      // -- Swipe & direction
+	      if (typeof config.open !== 'undefined') {
+	        switch (config.open) {
+	          case 'right':
+	            that.settings.swipe_open = 'swiperight';
+	            that.settings.swipe_close = 'swipeleft';
+	            that.settings.direction_open = 'right';
+	            that.settings.direction_close = 'left';
+	            break;
+	
+	          case 'left':
+	            that.settings.swipe_open = 'swipeleft';
+	            that.settings.swipe_close = 'swiperight';
+	            that.settings.direction_open = 'left';
+	            that.settings.direction_close = 'right';
+	            break;
+	
+	          case 'up':
+	            that.settings.swipe_open = 'swipeup';
+	            that.settings.swipe_close = 'swipedown';
+	            that.settings.direction_open = 'top';
+	            that.settings.direction_close = 'bottom';
+	            break;
+	
+	          case 'down':
+	            that.settings.swipe_open = 'swipedown';
+	            that.settings.swipe_close = 'swipeup';
+	            that.settings.direction_open = 'bottom';
+	            that.settings.direction_close = 'top';
+	            break;
+	        }
+	      }
+	    }
+	  };
+	
+	  load_settings();
+	
+	  /////////////////////////
+	
+	  this.state = {
+	    is_open: false
+	  };
+	
+	  this.check_is_open = function () {
+	    return this.state.is_open;
+	  };
+	
+	  this.check_is_close = function () {
+	    return !this.state.is_open;
+	  };
+	
+	  this.check_possibility_of_opening = function () {
+	    if (check_by_sizes()) if (_structure.data_controller.get('can_do_open_plugin')) return this.check_is_close();
+	
+	    return false;
+	  };
+	
+	  this.change_possibility_of_opening = function (bool) {
+	    this.state.is_open = !bool;
+	    _structure.data_controller.change('can_do_open_plugin', bool);
+	  };
+	
+	  var check_by_sizes = function check_by_sizes() {
+	    var width_window = $(window).outerWidth(),
+	        height_window = $(window).outerHeight(),
+	        posibility = {
+	      from: that.settings.can_open_from,
+	      to: that.settings.can_open_to
+	    };
+	
+	    if (that.settings.can_open_by === 'width') {
+	      if (typeof posibility.from !== 'undefined') return width_window >= posibility.from;else if (typeof posibility.to !== 'undefined') return width_window <= posibility.to;
+	    } else if (that.settings.can_open_by === 'height') {
+	      if (typeof posibility.from !== 'undefined') return height_window >= posibility.from;else if (typeof posibility.to !== 'undefined') return height_window <= posibility.to;
+	    }
+	
+	    return false;
+	  };
+	}; /**
+	    * Created by mrskull on 06.01.17.
+	    */
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.define = undefined;
+	
+	var _view = __webpack_require__(12);
+	
+	/**
+	 *    Defining public functions
+	 */
+	
+	var define = exports.define = function define() {
+	  var config = {
+	    container: '#CART',
+	    open: 'left',
+	    can_open_by: 'width',
+	    can_open_from: 0,
+	    duration_open: 200,
+	    duration_close: 200
+	  },
+	      motion_plugins_events = new _view.Motion_Plugins_Events(config);
+	
+	  motion_plugins_events.define();
+	}; /**
+	    * Created by mrskull on 07.01.17.
+	    */
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.define = undefined;
+	
+	var _view = __webpack_require__(12);
+	
+	/**
+	 *    Defining public functions
+	 */
+	
+	var define = exports.define = function define() {
+	  var config = {
+	    container: '#NAVIGATION',
+	    open: 'down',
+	    can_open_by: 'width',
+	    can_open_to: 650,
+	    duration_open: 300,
+	    duration_close: 200
+	  },
+	      motion_plugins_events = new _view.Motion_Plugins_Events(config);
+	
+	  motion_plugins_events.define();
+	}; /**
+	    * Created by mrskull on 24.11.16.
+	    */
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.define = undefined;
+	
+	var _models = __webpack_require__(18);
+	
+	var models = _interopRequireWildcard(_models);
+	
+	var _main = __webpack_require__(19);
+	
+	var dialogue_window_controller = _interopRequireWildcard(_main);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	/**
+	 *    Defining public functions
+	 */
+	
+	/**
+	 * Created by mrskull on 29.12.16.
+	 */
+	
+	var define = exports.define = function define() {
+	  var selectors = models.selectors,
+	      open_events = models.open_events;
+	
+	  $(selectors.container).click(close_window);
+	  $(selectors.dialogue_window).click(cancel_event);
+	
+	  APP.add_own_event(open_events.alert, open_alert_window);
+	  APP.add_own_event(open_events.prompt, open_prompt_window);
+	  APP.add_own_event(open_events.confirm, open_confirm_window);
+	
+	  $(selectors.submit + '.alert').click(function () {
+	    APP.throw_event(window.EVENTS.open_alert);
+	  });
+	
+	  $(selectors.submit + '.prompt').click(function () {
+	    APP.throw_event(window.EVENTS.open_prompt);
+	  });
+	
+	  $(selectors.submit + '.confirm').click(function () {
+	    APP.throw_event(window.EVENTS.open_confirm);
+	  });
+	};
+	
+	/**
+	 *    Defining events functions
+	 */
+	
+	var window_data = models.window_data,
+	    open_alert_window = function open_alert_window() {
+	  window_data.type = 'alert';
+	  window_data.title = 'This is alert';
+	  models.html.alert_content.admission = '<b>ble ble</b> aha, no ok...';
+	
+	  dialogue_window_controller.open_alert();
+	},
+	    open_prompt_window = function open_prompt_window() {
+	  window_data.type = 'prompt';
+	  window_data.name = 'authorisation';
+	  window_data.title = 'Authorisation';
+	  models.html.prompt_content.admission = '<div>If you want save the changes enter your password.</div>';
+	
+	  dialogue_window_controller.open_prompt();
+	},
+	    open_confirm_window = function open_confirm_window() {
+	  window_data.type = 'confirm';
+	  window_data.name = 'stupid';
+	  window_data.title = 'You are stupid?';
+	  models.html.confirm_content.admission = '<div>You have to confirm that you are stupid.</div>';
+	
+	  dialogue_window_controller.open_confirm();
+	},
+	    close_window = function close_window(event) {
+	  event.preventDefault();
+	  event.stopPropagation();
+	
+	  dialogue_window_controller.close_window();
+	},
+	    cancel_event = function cancel_event(event) {
+	  event.preventDefault();
+	  event.stopPropagation();
+	};
+
+/***/ },
+/* 18 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	 * Created by mrskull on 29.12.16.
+	 */
+	
+	var selectors = exports.selectors = {
+	  container: '#DIALOGUE_WINDOW',
+	  dialogue_window: '#DIALOGUE_WINDOW > .window',
+	  header: '#DIALOGUE_WINDOW > .window > .window-header',
+	  content: '#DIALOGUE_WINDOW > .window > .window-content',
+	  submit: 'button.submit_secure'
+	},
+	    open_events = exports.open_events = {
+	  alert: 'open_alert',
+	  prompt: 'open_prompt',
+	  confirm: 'open_confirm'
+	},
+	    window_data = exports.window_data = {
+	  type: '',
+	  name: '',
+	  title: '',
+	  content: '',
+	  post_data: {}
+	},
+	    html = exports.html = {
+	  part: {
+	    begining: '<div class="window-content-part otoczka_pola">',
+	    ending: '</div>'
+	  },
+	
+	  alert_content: {
+	    admission: '',
+	    ending: '<button>Ok</button>'
+	  },
+	
+	  prompt_content: {
+	    admission: '',
+	    form: '<input type="password" name="password" placeholder="password" />',
+	    ending: '<button>Cancel</button><button>Ok</button>'
+	  },
+	
+	  confirm_content: {
+	    admission: '',
+	    ending: '<button>Ok</button><button>Cancel</button>'
+	  }
+	};
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.open_confirm = exports.open_prompt = exports.open_alert = exports.close_window = exports.open_window = exports.window_data = exports.selectors = undefined;
+	
+	var _models = __webpack_require__(18);
+	
+	var models = _interopRequireWildcard(_models);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	/**
+	 *    Defining private functions
+	 */
+	
+	var create_part = function create_part(text) {
+	  return models.html.part.begining + text + models.html.part.ending;
+	};
+	
+	/**
+	 *    Defining public functions
+	 */
+	
+	/**
+	 * Created by mrskull on 29.12.16.
+	 */
+	
+	var selectors = exports.selectors = models.selectors,
+	    window_data = exports.window_data = models.window_data,
+	    open_window = exports.open_window = function open_window() {
+	  $(selectors.header).html(window_data.title);
+	
+	  $(selectors.content).html(window_data.content);
+	
+	  $(selectors.container).fadeIn(200);
+	},
+	    close_window = exports.close_window = function close_window(event) {
+	  $(models.selectors.container).fadeOut(200);
+	},
+	    open_alert = exports.open_alert = function open_alert() {
+	  window_data.content = models.html.alert_content.admission;
+	
+	  open_window();
+	},
+	    open_prompt = exports.open_prompt = function open_prompt() {
+	  window_data.content = create_part(models.html.prompt_content.admission) + create_part(models.html.prompt_content.form) + create_part(models.html.prompt_content.ending);
+	
+	  open_window();
+	},
+	    open_confirm = exports.open_confirm = function open_confirm() {
+	  window_data.content = models.html.confirm_content.admission + '<br />' + models.html.confirm_content.ending;
+	
+	  open_window();
+	};
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.start_first_load = exports.define = undefined;
+	
+	var _main = __webpack_require__(21);
 	
 	var content_controller = _interopRequireWildcard(_main);
 	
@@ -360,7 +900,12 @@
 	  window.addEventListener('redirect', redirect, false);
 	
 	  //////////////////////////////////////////
+	
+	  $(window).resize(change_height_content);
+	},
+	    start_first_load = exports.start_first_load = function start_first_load() {
 	  window.onload = function () {
+	    change_height_content();
 	    content_controller.start();
 	  };
 	};
@@ -368,6 +913,14 @@
 	/**
 	 *    Defining private functions
 	 */
+	
+	var change_height_content = function change_height_content() {
+	  var height = {
+	    window: $('#CONTAINTER').innerHeight(),
+	    header: $('#HEADER').outerHeight()
+	  };
+	  $('#CONTENT').height(height.window - height.header);
+	};
 	
 	var start_link = function start_link(event) {
 	  event.preventDefault();
@@ -402,7 +955,7 @@
 	};
 
 /***/ },
-/* 12 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -414,7 +967,7 @@
 	
 	var _structure = __webpack_require__(8);
 	
-	var _models = __webpack_require__(13);
+	var _models = __webpack_require__(22);
 	
 	var models = _interopRequireWildcard(_models);
 	
@@ -464,7 +1017,7 @@
 	
 	  if (models.error === true) {
 	    if (status !== 'success') {
-	      $(models.settings.container + ' > div').not('.BLOK1').remove();
+	      $(models.settings.container + ' > div').not(models.settings.first_element).remove();
 	      $(models.settings.container + ' > div > .tresc').html('An error has occurred while connecting to server. Please, refresh website or check your connect with network.');
 	    }
 	  } else if (status !== 'success') {
@@ -522,7 +1075,7 @@
 	};
 
 /***/ },
-/* 13 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -534,7 +1087,7 @@
 	
 	var _structure = __webpack_require__(8);
 	
-	var _img_loader = __webpack_require__(14);
+	var _img_loader = __webpack_require__(23);
 	
 	var img_loader = _interopRequireWildcard(_img_loader);
 	
@@ -557,7 +1110,8 @@
 	    duration: 100, opacity: 0.4
 	  },
 	
-	  container: '#TRESC'
+	  container: '#CONTENT > .content',
+	  first_element: '.block_1'
 	};
 	
 	/**
@@ -598,7 +1152,7 @@
 	};
 
 /***/ },
-/* 14 */
+/* 23 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -657,122 +1211,7 @@
 	};
 
 /***/ },
-/* 15 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.show_hide_menu = exports.define = undefined;
-	
-	var _main = __webpack_require__(16);
-	
-	var menu_controller = _interopRequireWildcard(_main);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	/*---------------- Wydarzenia kontrolera Menu ----------------*/
-	
-	/**
-	 *    Defining public functions
-	 */
-	
-	var define = exports.define = function define() {
-	  $('.guzik_menu').click(this.show_hide_menu);
-	  $('#MENU .nakladka').click(this.show_hide_menu);
-	  $('#MENU > .menu a').click(this.show_hide_menu);
-	
-	  window.addEventListener('changed_url', menu_controller.select_overlap(), false);
-	}; /**
-	    * Created by mrskull on 24.11.16.
-	    */
-	
-	var show_hide_menu = exports.show_hide_menu = function show_hide_menu(event) {
-	  if (event.which === 1) {
-	    var menu = '#MENU';
-	
-	    if (check_atribute_data(menu, 'wysuniete', 'nie')) menu_controller.show();else if (check_atribute_data(menu, 'wysuniete', 'tak')) menu_controller.hide();
-	
-	    return false;
-	  }
-	};
-	
-	/**
-	 *    Defining private functions
-	 */
-	
-	var is_exist = function is_exist(element) {
-	  if ($(element).length) return true;
-	
-	  return false;
-	};
-	
-	var check_atribute_data = function check_atribute_data(element, name, value) {
-	  if (is_exist(element)) {
-	    return $(element).data(name) === value;
-	  }
-	
-	  return false;
-	};
-
-/***/ },
-/* 16 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.select_overlap = exports.hide = exports.show = undefined;
-	
-	var _structure = __webpack_require__(8);
-	
-	/*---------------- Kontroler Menu ----------------*/
-	
-	/**
-	 *    Defining private veriables
-	 */
-	
-	var $menu = $('#MENU'),
-	    $overlay = $menu.children('.overlay');
-	
-	/**
-	 *    Defining public functions
-	 */
-	
-	/**
-	 * Created by mrskull on 24.11.16.
-	 */
-	
-	var show = exports.show = function show() {
-	  $menu.animate({ 'right': '0px' }, 200);
-	  $overlay.show();
-	  $menu.add_data('wysuniete', 'tak');
-	};
-	
-	var hide = exports.hide = function hide() {
-	  $overlay.hide();
-	
-	  $menu.animate({ right: '-250px' }, 200);
-	  $menu.add_data('wysuniete', 'nie');
-	};
-	
-	var select_overlap = exports.select_overlap = function select_overlap() {
-	  var url = _structure.data_controller.get('all_url'),
-	      $overlap = $('.menu > li > a');
-	
-	  $overlap.removeClass('wybrany');
-	
-	  for (var i = 0; $overlap.length > i; ++i) {
-	    if ($overlap[i].href === url) $overlap.eq(i).addClass('wybrany');
-	  }
-	};
-
-/***/ },
-/* 17 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -782,19 +1221,19 @@
 	});
 	exports.define = undefined;
 	
-	var _main = __webpack_require__(18);
+	var _main = __webpack_require__(25);
 	
 	var form_controller = _interopRequireWildcard(_main);
 	
-	var _views = __webpack_require__(19);
+	var _views = __webpack_require__(26);
 	
 	var validator = _interopRequireWildcard(_views);
 	
-	var _view = __webpack_require__(23);
+	var _view = __webpack_require__(30);
 	
 	var mini_form = _interopRequireWildcard(_view);
 	
-	var _view2 = __webpack_require__(25);
+	var _view2 = __webpack_require__(32);
 	
 	var post_button = _interopRequireWildcard(_view2);
 	
@@ -842,7 +1281,7 @@
 	};
 
 /***/ },
-/* 18 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -852,7 +1291,7 @@
 	});
 	exports.send = undefined;
 	
-	var _main = __webpack_require__(12);
+	var _main = __webpack_require__(21);
 	
 	var content_controller = _interopRequireWildcard(_main);
 	
@@ -884,7 +1323,7 @@
 	};
 
 /***/ },
-/* 19 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -894,7 +1333,7 @@
 	});
 	exports.define = undefined;
 	
-	var _checkers = __webpack_require__(20);
+	var _checkers = __webpack_require__(27);
 	
 	var Validators = {};
 	
@@ -1013,7 +1452,7 @@
 	};
 
 /***/ },
-/* 20 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1023,7 +1462,7 @@
 	});
 	exports.Constructor_Validator = undefined;
 	
-	var _validator = __webpack_require__(21);
+	var _validator = __webpack_require__(28);
 	
 	Object.defineProperty(exports, 'Constructor_Validator', {
 	  enumerable: true,
@@ -1125,7 +1564,7 @@
 	////////////////////////////////////////////
 
 /***/ },
-/* 21 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1135,7 +1574,7 @@
 	});
 	exports.Constructor_Validator = exports.checker = undefined;
 	
-	var _config = __webpack_require__(22);
+	var _config = __webpack_require__(29);
 	
 	var _structure = __webpack_require__(8);
 	
@@ -1260,7 +1699,7 @@
 	};
 
 /***/ },
-/* 22 */
+/* 29 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1291,7 +1730,7 @@
 	};
 
 /***/ },
-/* 23 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1301,7 +1740,7 @@
 	});
 	exports.define = undefined;
 	
-	var _main = __webpack_require__(24);
+	var _main = __webpack_require__(31);
 	
 	var form = _interopRequireWildcard(_main);
 	
@@ -1367,7 +1806,7 @@
 	};
 
 /***/ },
-/* 24 */
+/* 31 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1404,7 +1843,7 @@
 	};
 
 /***/ },
-/* 25 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1414,7 +1853,7 @@
 	});
 	exports.define = undefined;
 	
-	var _main = __webpack_require__(26);
+	var _main = __webpack_require__(33);
 	
 	var mini_form = _interopRequireWildcard(_main);
 	
@@ -1461,7 +1900,7 @@
 	};
 
 /***/ },
-/* 26 */
+/* 33 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1484,250 +1923,6 @@
 	  var post_data = send_prepare_post(button_name, button_value);
 	
 	  window.APP.send_post(undefined, post_data, callback);
-	};
-
-/***/ },
-/* 27 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.define = undefined;
-	
-	var _models = __webpack_require__(28);
-	
-	var models = _interopRequireWildcard(_models);
-	
-	var _main = __webpack_require__(29);
-	
-	var dialogue_window_controller = _interopRequireWildcard(_main);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	/**
-	 *    Defining public functions
-	 */
-	
-	/**
-	 * Created by mrskull on 29.12.16.
-	 */
-	
-	var define = exports.define = function define() {
-	  var selectors = models.selectors,
-	      open_events = models.open_events;
-	
-	  $(selectors.container).click(close_window);
-	  $(selectors.dialogue_window).click(cancel_event);
-	
-	  APP.add_own_event(open_events.alert, open_alert_window);
-	  APP.add_own_event(open_events.prompt, open_prompt_window);
-	  APP.add_own_event(open_events.confirm, open_confirm_window);
-	
-	  $(selectors.submit + '.alert').click(function () {
-	    APP.throw_event(window.EVENTS.open_alert);
-	  });
-	
-	  $(selectors.submit + '.prompt').click(function () {
-	    APP.throw_event(window.EVENTS.open_prompt);
-	  });
-	
-	  $(selectors.submit + '.confirm').click(function () {
-	    APP.throw_event(window.EVENTS.open_confirm);
-	  });
-	};
-	
-	/**
-	 *    Defining events functions
-	 */
-	
-	var window_data = models.window_data,
-	    open_alert_window = function open_alert_window() {
-	  window_data.type = 'alert';
-	  window_data.title = 'This is alert';
-	  models.alert_content.admission = '<b>ble ble</b> aha, no ok...';
-	
-	  dialogue_window_controller.open_alert();
-	},
-	    open_prompt_window = function open_prompt_window() {
-	  window_data.type = 'prompt';
-	  window_data.name = 'authorisation';
-	  window_data.title = 'Authorisation';
-	  models.prompt_content.admission = 'If you want save the changes enter your password.';
-	
-	  dialogue_window_controller.open_prompt();
-	},
-	    open_confirm_window = function open_confirm_window() {
-	  window_data.type = 'confirm';
-	  window_data.name = 'stupid';
-	  window_data.title = 'You are stupid?';
-	  models.confirm_content.admission = 'You have to confirm that you are stupid.';
-	
-	  dialogue_window_controller.open_confirm();
-	},
-	    close_window = function close_window(event) {
-	  event.preventDefault();
-	  event.stopPropagation();
-	
-	  dialogue_window_controller.close_window();
-	},
-	    cancel_event = function cancel_event(event) {
-	  event.preventDefault();
-	  event.stopPropagation();
-	};
-
-/***/ },
-/* 28 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	/**
-	 * Created by mrskull on 29.12.16.
-	 */
-	
-	var selectors = exports.selectors = {
-	  container: '#DIALOGUE_WINDOW',
-	  dialogue_window: '#DIALOGUE_WINDOW > .window',
-	  header: '#DIALOGUE_WINDOW > .window > .window-header',
-	  content: '#DIALOGUE_WINDOW > .window > .window-content',
-	  submit: 'button.submit_secure'
-	},
-	    open_events = exports.open_events = {
-	  alert: 'open_alert',
-	  prompt: 'open_prompt',
-	  confirm: 'open_confirm'
-	},
-	    window_data = exports.window_data = {
-	  type: '',
-	  name: '',
-	  title: '',
-	  content: '',
-	  post_data: {}
-	},
-	    alert_content = exports.alert_content = {
-	  admission: '',
-	  ending: '<button>Ok</button>'
-	},
-	    prompt_content = exports.prompt_content = {
-	  admission: '',
-	  form: '<input type="password" name="password" placeholder="password" />',
-	  ending: '<button>Ok</button><button>Cancel</button>'
-	},
-	    confirm_content = exports.confirm_content = {
-	  admission: '',
-	  ending: '<button>Ok</button><button>Cancel</button>'
-	};
-
-/***/ },
-/* 29 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.open_confirm = exports.open_prompt = exports.open_alert = exports.close_window = exports.open_window = exports.window_data = exports.selectors = undefined;
-	
-	var _models = __webpack_require__(28);
-	
-	var models = _interopRequireWildcard(_models);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	/**
-	 *    Defining private functions
-	 */
-	
-	var selectors = exports.selectors = models.selectors,
-	    window_data = exports.window_data = models.window_data,
-	    open_window = exports.open_window = function open_window() {
-	  $(selectors.header).html(window_data.title);
-	
-	  $(selectors.content).html(window_data.content);
-	
-	  $(selectors.container).fadeIn(200);
-	},
-	    close_window = exports.close_window = function close_window(event) {
-	  $(models.selectors.container).fadeOut(200);
-	},
-	    open_alert = exports.open_alert = function open_alert() {
-	  window_data.content = models.alert_content.admission;
-	
-	  open_window();
-	},
-	    open_prompt = exports.open_prompt = function open_prompt() {
-	  window_data.content = models.prompt_content.admission + '<br />' + models.prompt_content.form + '<br />' + models.prompt_content.ending;
-	
-	  open_window();
-	},
-	    open_confirm = exports.open_confirm = function open_confirm() {
-	  window_data.content = models.confirm_content.admission + '<br />' + models.confirm_content.ending;
-	
-	  open_window();
-	}; /**
-	    * Created by mrskull on 29.12.16.
-	    */
-
-/***/ },
-/* 30 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.define = undefined;
-	
-	var _models = __webpack_require__(31);
-	
-	var models = _interopRequireWildcard(_models);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	/**
-	 *    Defining public functions
-	 */
-	
-	var define = exports.define = function define() {
-	  $(models.selectors.language_fields).change(change_language);
-	};
-	
-	/**
-	 *    Defining events functions
-	 */
-	
-	/**
-	 * Created by mrskull on 02.01.17.
-	 */
-	
-	var change_language = function change_language() {
-	  console.log('change');
-	  window.location = $(this).val();
-	};
-
-/***/ },
-/* 31 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	/**
-	 * Created by mrskull on 02.01.17.
-	 */
-	
-	var selectors = exports.selectors = {
-	  language_fields: '#extensions-left > .extension.change_language > .extension-text > *, #extensions-right > .extension.change_language > .extension-text > *'
 	};
 
 /***/ }

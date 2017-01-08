@@ -1,22 +1,9 @@
 
-.produkty > li.tytul
-  padding-left: 30px
-  margin-bottom: 10px
-  font-weight: bold
-
-  border: none
-  background-color: transparent
-
-
-.produkt
+.product
   overflow: hidden
   margin-bottom: 10px
   padding: 0
 
-  background-color: #fbfbfb
-  border: 1px solid
-    radius: 3px
-    color: #e5e6e9 #dfe0e4 #d0d1d5
   cursor: pointer
 
   >a
@@ -24,7 +11,7 @@
     height: 100%
     padding: 10px 15px
 
-    >.zdjecie
+    >.product-img
       height: 300px
       overflow: hidden
 
@@ -36,12 +23,12 @@
         margin: auto
 
 
-    >.tytul
+    >.product-title
       margin-bottom: 5px
       font-weight: bold
 
 
-    >.tresc
+    >.product-content
       padding-left: 15px
 
 
@@ -49,13 +36,13 @@
 //					  	EKRAN KOMPUTERA
 //-----------------------------------------
 
-@media (min-width: 768px)
+  @media (min-width: 768px)
 
-  .produkt
-    border: 1px solid
-      color: #e5e6e9 #dfe0e4 #d0d1d5
+    .product
+      border: 1px solid
+        color: #e5e6e9 #dfe0e4 #d0d1d5
 
-//
+
   @media (min-width: 870px)
 
 

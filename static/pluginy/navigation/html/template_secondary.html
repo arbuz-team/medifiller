@@ -1,0 +1,27 @@
+
+<li>
+  <a class="pole_menu link" href="/user/register/">
+    Sign up
+  </a>
+</li>
+|
+<li>
+  <a class="pole_menu link" href="/contact/">
+    Contact
+  </a>
+</li>
+|
+{% if request.session.user_login %}
+<li>
+  <a class="pole_menu link" href="/user/login/">
+    Cart
+  </a>
+</li>
+{% else %}
+<li>
+  <a class="pole_menu link" href="/user/login/">
+    Cart
+  </a>
+</li>
+{% endif %}
+

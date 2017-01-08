@@ -27,6 +27,7 @@ export let data_controller = new function Data_Controler()
 
     public_data = {
       can_do_redirect : false,
+      can_do_open_plugin : true,
       page_name : 'Spasungate',
       title : 'Loading... - Spasungate',
       description : 'This page is shop, which is ownership Spasungate.',

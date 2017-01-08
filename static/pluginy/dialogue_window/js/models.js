@@ -25,21 +25,28 @@ export let
     post_data: {}
   },
 
-
-  alert_content = {
-    admission: '',
-    ending: '<button>Ok</button>'
-  },
-
-
-  prompt_content = {
-    admission: '',
-    form: '<input type="password" name="password" placeholder="password" />',
-    ending: '<button>Ok</button><button>Cancel</button>'
-  },
+  html = {
+    part: {
+      begining: '<div class="window-content-part otoczka_pola">',
+      ending: '</div>'
+    },
 
 
-  confirm_content = {
-    admission: '',
-    ending: '<button>Ok</button><button>Cancel</button>'
+    alert_content: {
+      admission: '',
+      ending: '<button>Ok</button>'
+    },
+
+
+    prompt_content: {
+      admission: '',
+      form: '<input type="password" name="password" placeholder="password" />',
+      ending: '<button>Cancel</button><button>Ok</button>'
+    },
+
+
+    confirm_content: {
+      admission: '',
+      ending: '<button>Ok</button><button>Cancel</button>'
+    }
   };

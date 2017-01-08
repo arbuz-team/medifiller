@@ -1,11 +1,11 @@
 
-.fragment.RWD > div > .produkty.tresc
+.container-part > div > .products.tiles
   padding:
     left: 0
     right: 0
 
 
-.produkty.kafelki > .produkt
+.products.tiles > .product
   width: auto
   max-width: 400px
   height: 300px
@@ -14,7 +14,7 @@
     right: auto
 
   >a
-    >.zdjecie
+    >.product-img
       position: relative
       width: 100%
       height: 200px
@@ -23,14 +23,14 @@
 
       //>img
 
-    >.tytul
+    >.product-title
       margin:
         top: 10px
         bottom: 10px
       font-weight: bold
       padding-left: 30px
 
-    >.tresc
+    >.product-content
       max-width: 300px
       margin: 0 auto
       padding: 0
@@ -41,39 +41,39 @@
 //-----------------------------------------
 
 @media (min-width: 768px)
-  .produkty.kafelki
-    >.produkt
+  .products.tiles
+    >.product
       display: inline-block
       width: 285px
       max-width: none
 
       >a
-        >.zdjecie
+        >.product-img
           height: 200px
           overflow: hidden
 
-        >.tresc
+        >.product-content
           padding:
             left: 20px
             right: 20px
 
-    >.produkt:nth-child(2n)
+    >.product:nth-child(2n)
       margin-right: 5px
 
-    >.produkt:nth-child(2n+1)
+    >.product:nth-child(2n+1)
       margin-left: 5px
 
 
 @media (min-width: 870px)
-  .produkty.kafelki > .produkt
+  .products.tiles > .product
     width: 285px
 
 
 @media (min-width: 992px)
-  .produkty.kafelki > .produkt
+  .products.tiles > .product
     width: 360px
 
 
 @media (min-width: 1200px)
-  .produkty.kafelki > .produkt
+  .products.tiles > .product
     width: 445px

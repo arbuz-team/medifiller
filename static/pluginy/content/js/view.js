@@ -12,24 +12,44 @@ import {data_controller} from '../../arbuz/js/structure'
  *    Defining public functions
  */
 
-  export let define = function()
-  {
-    $( 'a' ).click( start_link );
+  export let
+    define = function()
+    {
+      $( 'a' ).click( start_link );
 
-    window.addEventListener('popstate', back_url );
+      window.addEventListener('popstate', back_url );
 
-    window.addEventListener('redirect', redirect, false);
+      window.addEventListener('redirect', redirect, false);
 
-    //////////////////////////////////////////
-    window.onload = () => {
-      content_controller.start();
+      //////////////////////////////////////////
+
+      $(window).resize(change_height_content);
+    },
+
+
+    start_first_load = function()
+    {
+      window.onload = () => {
+        change_height_content();
+        content_controller.start();
+      };
     };
-  };
 
 
 /**
  *    Defining private functions
  */
+
+  let change_height_content = function()
+  {
+    let
+      height = {
+        window: $('#CONTAINTER').innerHeight(),
+        header: $('#HEADER').outerHeight()
+    };
+    $('#CONTENT').height(height.window - height.header);
+  };
+
 
   let start_link = function( event )
   {

@@ -1,5 +1,36 @@
 
-//  Standard style elements
+
+//-----------------------------------------
+//  FILL ELEMENTS STYLES
+//
+//  fill - fill element
+//  abs - absolute
+//  rel - relative
+//  fix - static
+//-----------------------------------------
+
+=fill($position)
+  position: $position
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+
+
+.fill-abs
+  +fill(absolute)
+
+
+.fill-rel
+  +fill(relative)
+
+
+.fill-fix
+  +fill(fixed)
+
+
+
+// -- Standard style elements
 
 =background-img( $sciezka, $rozmiar: auto auto, $pozycja:0 0 )
   background:
@@ -26,8 +57,16 @@
   -moz-box-sizing: $param
   box-sizing: $param
 
+=order($number)
+  -ms-order: $number
+  -webkit-order: $number
+  -moz-order: $number
+  -ms-flex-order: $number
+  order: $number
 
-//  Own style elements
+
+
+// -- Own style elements
 
 =my-box()
   padding: 10px

@@ -65,60 +65,24 @@ a, a:hover, a:active, a:visited
 ul
   list-style: none
 
-
-//-----------------------------------------
-//  ZAKOTWICZENIE ELEMENTU WYPEŁNIAJĄCEGO
-//
-//  pelny - wypełnia element
-//  abs - absolutne
-//  rel - relatywne
-//  fix - stały
-//-----------------------------------------
-
-.abs_pelny
-  position: absolute
-  top: 0
-  right: 0
-  bottom: 0
-  left: 0
-
-
-.rel_pelny
-  position: relative
-  top: 0
-  right: 0
-  bottom: 0
-  left: 0
-
-
-.fix_pelny
-  position: fixed
-  top: 0
-  right: 0
-  bottom: 0
-  left: 0
-
+*
+  +box-sizing(border-box)
 
 //-----------------------------------------
 //      PODSTAWOWE ELEMENTY NA STRONIE
 //-----------------------------------------
 
-#NIEWIDZIALNY_OPIS
+//#INVISIBLE_DESCRIPTION
   display: none
 
 
-#BLOK_GLOWNY
+#CONTAINTER
   overflow: hidden
   z-index: 3
+  background-color: #f4f4f4
 
-
-  >div
-    overflow: auto
-    overflow-x: hidden
-
-
-    >.fragment
-      position: relative
-      z-index: 5
+  >.part
+    position: relative
+    z-index: 5
 
 

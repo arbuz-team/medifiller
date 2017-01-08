@@ -4,94 +4,93 @@
 //-----------------------------------------
 
 
-#TRESC
-  position: relative
-  opacity: 0.4
+#CONTENT
+  display: block
+  overflow-x: hidden
+  overflow-y: auto
 
-
-  >div.BLOK1
-    border-bottom: 1px solid #d8d8d8
-
-  >div
+  >.content
     position: relative
-    display: inline-block
-    padding-top: 0
-    margin: 0
-
-    width: 100%
-    min-height: 550px
+    opacity: 0.4
 
 
-    >.navigation
+    >.block-1
+      border-bottom: 1px solid #d8d8d8
+
+    >.content-block
       position: relative
-      z-index: 12
-      height: 52px
-      margin: 20px auto
+      display: inline-block
+      margin: 0
 
-      line-height: 32px
-      +my-box()
+      width: 100%
+      min-height: 550px
 
 
-      >*
-        display: inline-block
-        height: 32px
-        margin: auto 5px
+      >.navigation
+        position: relative
+        z-index: 12
+        height: 52px
+        margin: 0
+
         line-height: 32px
+        padding: 10px 15px
+        background: #d8d9dd
 
-
-        >i
+        >*
           display: inline-block
-          width: 30px
+          height: 32px
+          margin: auto 5px
           line-height: 32px
-          background:
-            image: url(/static/img/home.png)
-            position: center
-            size: 100%
-            repeat: no-repeat
 
 
-    >.tytul
-      position: relative
-      z-index: 12
-
-      margin-top: 15px
-      padding-left: 30px
-
-      color: #333
-      font-size: 18px
-      font-weight: bold
-
-    >.tresc
-      position: relative
-      z-index: 12
-
-      color: #333
-      font-size: 16px
-
-    >.tlo
-      z-index: 10
-      background-color: #f2f1ed
+          >i
+            display: inline-block
+            width: 30px
+            line-height: 32px
+            background:
+              image: url(/static/img/home.png)
+              position: center
+              size: 100%
+              repeat: no-repeat
 
 
-  >div.BLOK2 > .tlo
-    background-color: #fff
+      >.block-title
+        position: relative
+        z-index: 12
+
+        margin-top: 15px
+        padding-left: 30px
+
+        color: #333
+        font-size: 18px
+        font-weight: bold
+
+      >.block-content
+        position: relative
+        padding: 10px 15px
+        z-index: 12
+
+        color: #333
+        font-size: 16px
+
+      >.block-background
+        z-index: 10
+        background-color: #f4f4f4
 
 
-  .tresc
-    >.tytul
-      font-size: 18px
-      font-weight: bold
+    >.block-2 > .block-background
+      background-color: #f4f4f4
 
 
-    >.akapit
-      margin-bottom: 15px
-      margin-left: 15px
+    .block-content
+      >.title
+        font-size: 18px
+        font-weight: bold
 
-.fragment.RWD > div > .tresc
-  margin: 10px auto 30px auto
-  padding: 10px
-    left: 15px
-    right: 15px
+
+      >.paragraph
+        margin-bottom: 15px
+        margin-left: 15px
 
 
 
@@ -99,44 +98,43 @@
 //						 EKRAN KOMPUTERA
 //-----------------------------------------
 
-@media (min-width: 768px)
+  @media (min-width: 768px)
 
-  #TRESC > div > .tytul
-    margin-top: 15px
-    padding-right: 300px
-    text-align: center
+    #CONTENT > div > .content-block > .tytul
+      margin-top: 15px
+      padding-right: 300px
+      text-align: center
 
-
-  .fragment.RWD > div > .tresc,
-  .fragment.RWD > div > .navigation
-    width: 650px
-
-
-@media (min-width: 870px)
-
-  .fragment.RWD > div > .tresc
-      margin: 50px auto
-
-  .fragment.RWD:first-child > div
-    >.navigation
-      margin: 10px auto
-        top: 50px
-
-    >.tresc
-      margin: 10px auto
-        bottom: 50px
+  //
+    #CONTENT > div > .content-block
+      >.content, >.navigation
+        width: 650px
 
 
+  @media (min-width: 870px)
 
-@media (min-width: 992px)
+    #CONTENT > div > .content-block > .content
+        margin: 50px auto
 
-  .fragment.RWD > div > .tresc,
-  .fragment.RWD > div > .navigation
-    width: 800px
+    #CONTENT:first-child > div > .content-block
+      >.navigation
+        margin: 10px auto
+          top: 50px
+
+      >.content
+        margin: 10px auto
+          bottom: 50px
 
 
-@media (min-width: 1200px)
 
-  .fragment.RWD > div > .tresc,
-  .fragment.RWD > div > .navigation
-    width: 970px
+@media (min-width: 1000px)
+
+  #CONTENT
+    margin-left: 250px
+
+//
+  @media (min-width: 1200px)
+
+    #CONTENT > div > .content,
+    #CONTENT > div > .navigation
+      width: 970px

@@ -1,0 +1,125 @@
+//--------------------------------------
+//              STYLE NAGŁÓWKA
+//--------------------------------------
+
+#HEADER .header-nav-primary
+  display: block
+  position: relative
+  height: inherit
+
+
+  >li
+    display: inline-block
+    position: relative
+    z-index: 38
+
+    margin-top: 30px
+    height: 40px
+    min-width: 150px
+    border-top: 4px transparent solid
+
+    >a
+      font-size: 20px
+      text-align: center
+      color: #3b2915
+
+  >li.wybrany,
+  >li:hover
+    border-top-color: #3b2915
+
+    >a
+      color: #333
+
+  >li.guzik_menu
+    float: right
+    display: inline-block
+    position: relative
+
+    min-width: 40px !important
+    width: 40px !important
+    height: 34px
+
+    margin: 0 30px
+      top: 30px
+
+    background:
+      image: none //url( '../img/menu_b64.png' )
+      size: 100% 100%
+      position: center bottom
+      repeat: no-repeat
+
+//
+  @media (min-width: 750px)
+
+    #HEADER .header-nav-primary .pole_menu
+      display: inline-block
+
+
+    #HEADER .header-nav-primary .guzik_menu
+      display: none
+
+
+@media (min-width: 1000px)
+
+  #HEADER .header-nav-primary >li
+    margin-top: 40px
+
+
+//--------------------------------------
+//       STYLE PRZESUWANEGO MENU
+//--------------------------------------
+
+#NAVIGATION
+  position: absolute
+  top: -100%
+  right: 0
+  left: 0
+  z-index: 60
+
+  display: block
+  height: 100%
+
+  border-left: solid 1px #999
+  background-color: #666
+  color: #ddd
+
+
+  li
+    height: 45px
+    border-bottom: solid #ddd 1px
+
+
+  li:first-child
+    height: 70px
+
+
+  .header-nav-primary
+    .guzik_menu
+      //@extend #HEADER .menu .guzik_menu
+      margin: 0 30px
+        top: 20px
+
+
+  >li
+    >a
+      display: inline-block
+
+      width: 100%
+      margin: 0 20px
+      line-height: 45px
+
+      color: #888
+
+
+    >a:hover
+      color: #333
+
+
+
+//--------------------------------------
+//            EKRAN KOMPUTERA
+//--------------------------------------
+
+@media (min-width: 650px)
+  #NAVIGATION
+    top: -100% !important

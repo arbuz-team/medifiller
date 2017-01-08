@@ -9,6 +9,17 @@ import * as models from './models'
  *    Defining private functions
  */
 
+let
+  create_part = function(text)
+  {
+    return models.html.part.begining + text + models.html.part.ending;
+  };
+
+
+/**
+ *    Defining public functions
+ */
+
 export let
   selectors = models.selectors,
   window_data = models.window_data,
@@ -36,7 +47,7 @@ export let
 
   open_alert = function()
   {
-    window_data.content = models.alert_content.admission;
+    window_data.content = models.html.alert_content.admission;
 
     open_window();
   },
@@ -44,9 +55,9 @@ export let
 
   open_prompt = function()
   {
-    window_data.content = models.prompt_content.admission
-      +'<br />'+ models.prompt_content.form
-      +'<br />'+ models.prompt_content.ending;
+    window_data.content = create_part(models.html.prompt_content.admission)
+      + create_part(models.html.prompt_content.form)
+      + create_part(models.html.prompt_content.ending);
 
     open_window();
   },
@@ -54,8 +65,8 @@ export let
 
   open_confirm = function()
   {
-    window_data.content = models.confirm_content.admission
-      +'<br />'+ models.confirm_content.ending;
+    window_data.content = models.html.confirm_content.admission
+      +'<br />'+ models.html.confirm_content.ending;
 
     open_window();
   };
