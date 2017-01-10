@@ -2,10 +2,10 @@
  * Created by mrskull on 24.11.16.
  */
 
-import * as form_controller from './main'
-import * as validator from './validator/views'
-import * as mini_form from './mini_form/view'
-import * as post_button from './post_button/view'
+import * as form_controller from './views'
+import * as validator from './validator/controllers'
+import * as mini_form from './mini_form/controllers'
+import * as post_button from './post_button/controllers'
 
 
 /**

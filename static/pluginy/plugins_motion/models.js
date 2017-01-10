@@ -5,12 +5,14 @@
 import {data_controller} from '../arbuz/js/structure'
 
 
-export let Models = function Models(config)
+export let Plugins_Motion_Models = function(config)
 {
   let that = this;
 
   this.settings = {
     container : undefined,
+    content : undefined,
+
     width: undefined,
     height: undefined,
 
@@ -32,6 +34,11 @@ export let Models = function Models(config)
     // -- Container
       if(typeof config.container !== 'undefined')
         that.settings.container = config.container;
+
+
+    // -- Children container
+      if(typeof config.content !== 'undefined')
+        that.settings.content = config.container +' > '+ config.content;
 
 
     // -- Witdh & height
@@ -101,7 +108,8 @@ export let Models = function Models(config)
 /////////////////////////
 
   this.state = {
-    is_open: false
+    is_open: false,
+    is_not_set: true,
   };
 
 

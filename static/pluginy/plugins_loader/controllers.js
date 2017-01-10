@@ -3,31 +3,18 @@
  */
 
 import {data_controller} from '../arbuz/js/structure'
-import {Plugins_Loader_Controller} from './main'
+import {Plugins_Loader_Views} from './views'
 
 
-
-export let Plugins_Loader_Events = function(config)
+export let Plugins_Loader_Controllers = function(config)
 {
   let
-    controller = new Plugins_Loader_Controller(config),
-    settings = controller.models.settings;
+    controller = new Plugins_Loader_Views(config);
+
 
   this.define = function()
   {
-
-    //////////////////////////////////////////
-
-    $(window).resize(change_height_content);
-
-    this.start_first_load();
-  };
-
-
-  this.start_first_load = function()
-  {
     window.APP.add_own_event('load', () => {
-      change_height_content();
       controller.start();
     });
   };
@@ -37,23 +24,12 @@ export let Plugins_Loader_Events = function(config)
  *    Defining private functions
  */
 
-  let change_height_content = function()
-  {
-    let
-      height = {
-        window: $('#CONTAINTER').innerHeight(),
-        header: $('#HEADER').outerHeight(),
-      };
-
-    $(settings.container).height(height.window - height.header);
-  };
-
-
   this.start_link = function(event)
   {
     if(event.which === 1)
     {
       event.preventDefault();
+      window.APP.throw_event(EVENTS.close_plugins);
 
       let url = $(this).attr('href');
 
@@ -63,11 +39,7 @@ export let Plugins_Loader_Events = function(config)
   };
 
 
-  this.back_url = function()
-  {
-    event.preventDefault();
-    controller.start();
-  };
+  this.change_content = controller.change_content;
 
 
   this.redirect = function()

@@ -1,7 +1,7 @@
 /**
  * Created by mrskull on 17.12.16.
  */
-import * as form from './main'
+import * as form from './views'
 
 
 /**

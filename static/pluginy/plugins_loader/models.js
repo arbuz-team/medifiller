@@ -5,7 +5,7 @@
 import {data_controller} from '../arbuz/js/structure'
 
 
-export let Models = function Models(config)
+export let Plugins_Loader_Models = function(config)
 {
   let that = this;
 
@@ -15,8 +15,11 @@ export let Models = function Models(config)
  */
 
   this.settings = {
+    url: undefined,
+
     name: undefined,
     container: undefined,
+    first_element: '*',
 
     load_with_page: false,
 
@@ -32,13 +35,18 @@ export let Models = function Models(config)
   };
 
 
-  let load_settings = function()
+  // -- Load settings
+  (function()
   {
     if(typeof config !== 'undefined')
     {
     // -- Name
       if(typeof config.name !== 'undefined')
         that.settings.name = config.name;
+
+    // -- URL
+      if(typeof config.url !== 'undefined')
+        that.settings.url = config.url;
 
 
     // -- Container
@@ -76,9 +84,7 @@ export let Models = function Models(config)
           that.settings.opacity.hide = opacity.hide;
       }
     }
-  };
-
-  load_settings();
+  })();
 
 
 /**
@@ -104,8 +110,10 @@ export let Models = function Models(config)
   {
     if( response_url )
       this.variables.url = response_url;
+    else if(typeof this.settings.url !== 'undefined')
+      this.variables.url = this.settings.url;
     else
-      this.variables.url = data_controller.get( 'path' );
+      this.variables.url = data_controller.get('path');
   };
 
 

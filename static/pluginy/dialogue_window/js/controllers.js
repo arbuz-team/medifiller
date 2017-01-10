@@ -3,7 +3,7 @@
  */
 
 import * as models from './models'
-import * as dialogue_window_controller from './main'
+import * as dialogue_window_controller from './views'
 
 
 /**

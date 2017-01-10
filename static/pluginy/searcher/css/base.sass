@@ -1,0 +1,106 @@
+
+$searcher--width: 250px
+$searcher-field--height: 50px
+$searcher-logo_text--height: 100px
+
+$searcher--z-index: 60
+
+
+
+#SEARCHER
+  position: absolute
+  top: 0
+  left: -$searcher--width
+  bottom: 0
+  z-index: $searcher--z-index
+
+  display: block
+  min-width: $searcher--width
+  width: $searcher--width
+  overflow: hidden
+
+  background-color: $g-color_1
+  color: $g-color_3
+
+
+  >.searcher
+
+    >.logo_text
+      display: block
+      height: $searcher-logo_text--height
+
+      line-height: $searcher-logo_text--height
+      text-align: center
+      font-size: 20px
+      font-weight: bold
+
+    >.otoczka_pola
+
+      >input
+        padding-left: 5px
+
+      >*
+        display: block
+        width: ($searcher--width - 30px)
+        height: $searcher-field--height
+        margin: 10px 15px
+        padding: 0
+
+        background-color: transparent
+        color: inherit
+        border: none
+
+        >option
+          background-color: $g-color_1
+
+
+    >.filters
+      display: block
+      width: 100%
+
+      >.filters-title
+        display: block
+        height: $searcher-field--height
+
+        line-height: $searcher-field--height
+        font-weight: bold
+        text-align: center
+
+      >.filters-content
+        display: block
+        min-height: $searcher-field--height
+        padding: 10px 15px
+
+
+
+//
+  .logo
+  position: absolute
+  bottom: -10px
+  left: 10px
+  z-index: 38
+
+  width: 65px
+  height: 70px
+  min-height: 80px
+
+  +background-img( '/static/pluginy/arbuz/img/logo.png', 100%, auto )
+
+
+  >a
+    position: absolute
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+
+
+
+//-----------------------------------------
+//			  EKRAN KOMPUTERA
+//-----------------------------------------
+
+@media (min-width: 1000px)
+
+  #SEARCHER
+    left: 0 !important

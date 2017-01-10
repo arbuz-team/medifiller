@@ -14,11 +14,6 @@ export let data_controller = new function Data_Controler()
   this.reset = function()
   {
     private_data = {
-      protocol : location.protocol,
-      host_name : location.hostname,
-      all_hosta_name : location.host,
-      port : location.port,
-      domena : location.protocol +'://'+ location.host,
       path : location.pathname,
       all_url : location.href,
       history : [],

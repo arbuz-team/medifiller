@@ -1,16 +1,34 @@
 
+$cart--width: 250px
+$cart--z-index: 60
+
+$cart-title--height: 100px
+
+
 #CART
   position: absolute
   top: 0
-  right: -250px
+  right: -$cart--width
   bottom: 0
-  z-index: 60
+  z-index: $cart--z-index
 
   display: block
-  min-width: 249px
-  width: 249px
+  min-width: $cart--width
+  width: $cart--width
   overflow: hidden
 
-  border-left: solid 1px #999
-  background-color: #666
-  color: #ddd
+  background-color: $g-color_1
+  color: $g-color_3
+
+
+  >.cart-title
+    display: block
+    height: $cart-title--height
+
+    line-height: $cart-title--height
+    font-size: 18px
+    font-weight: bold
+
+  >.cart-list
+    display: block
+    min-height: $cart-title--height

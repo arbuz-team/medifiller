@@ -27,5 +27,5 @@ export let send = function(field, callback)
     field_value = $field.val(),
     post_data = send_prepare_post(field_name, field_value);
   
-  window.APP.send_post(undefined, post_data, callback)
+  window.APP.http_request(undefined, post_data, callback)
 };

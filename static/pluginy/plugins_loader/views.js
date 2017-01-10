@@ -3,13 +3,13 @@
  */
 
 import {data_controller} from '../arbuz/js/structure';
-import {Models} from './models'
+import {Plugins_Loader_Models} from './models'
 
 
-export let Plugins_Loader_Controller = function(config)
+export let Plugins_Loader_Views = function(config)
 {
   let
-    models = new Models(config);
+    models = new Plugins_Loader_Models(config);
 
   this.models = models;
 
@@ -34,16 +34,9 @@ export let Plugins_Loader_Controller = function(config)
     models.prepare_url(url);
     models.prepare_post_data(post_data);
 
-    change_url();
     models.refresh_data();
 
     hide_content();
-  };
-
-
-  let change_url = function()
-  {
-    history.pushState('', models.variables.url, models.variables.url);
   };
 
 
@@ -120,20 +113,8 @@ export let Plugins_Loader_Controller = function(config)
     $(container)
     .animate({opacity: opacity}, duration, function()
     {
-      if(models.settings.load_with_page && window.APP.DATA)
-        load_header_page(window.APP.DATA);
+      // if(models.settings.load_with_page && window.APP.DATA)
+      //   load_header_page(window.APP.DATA);
     });
-  };
-
-
-  let load_header_page = function(object)
-  {
-    data_controller.change_much({
-      title: object.title,
-      description: object.description
-    });
-
-    $('title').html(data_controller.get('title'));
-    $('meta[ name="description" ]').attr('content', data_controller.get('description'));
   };
 };

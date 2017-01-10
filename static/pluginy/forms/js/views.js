@@ -2,7 +2,7 @@
  * Created by mrskull on 24.11.16.
  */
 
-import * as content_controller from '../../ground/js/view';
+import * as ground_controller from '../../ground/js/controllers';
 
 
 /**
@@ -26,8 +26,8 @@ import * as content_controller from '../../ground/js/view';
 
   export let send = function(form_name, url, data_post)
   {
-    // data_post = _prepare_post_data(form_name, data_post);
-    // content_controller.change_content(url, data_post);
+    data_post = _prepare_post_data(form_name, data_post);
+    ground_controller.start(url, data_post);
   };
 
 

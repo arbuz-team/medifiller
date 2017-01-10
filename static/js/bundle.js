@@ -73,9 +73,9 @@
 	
 	__webpack_require__(7);
 	
-	var _view = __webpack_require__(10);
+	var _controllers = __webpack_require__(10);
 	
-	var page_controller = _interopRequireWildcard(_view);
+	var page_controller = _interopRequireWildcard(_controllers);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -207,11 +207,6 @@
 	
 	  this.reset = function () {
 	    private_data = {
-	      protocol: location.protocol,
-	      host_name: location.hostname,
-	      all_hosta_name: location.host,
-	      port: location.port,
-	      domena: location.protocol + '://' + location.host,
 	      path: location.pathname,
 	      all_url: location.href,
 	      history: [],
@@ -270,6 +265,8 @@
 	window.EVENTS = {
 	  define: new Event('define'),
 	  redirect: new Event('redirect'),
+	  close_plugins: new Event('close_plugins'),
+	
 	  open_alert: new Event('open_alert'),
 	  open_prompt: new Event('open_prompt'),
 	  open_confirm: new Event('open_confirm')
@@ -286,53 +283,62 @@
 	});
 	exports.start = undefined;
 	
-	var _view = __webpack_require__(11);
+	var _controllers = __webpack_require__(11);
 	
-	var filter_controller_events = _interopRequireWildcard(_view);
+	var searcher_controller = _interopRequireWildcard(_controllers);
 	
-	var _view2 = __webpack_require__(18);
+	var _controllers2 = __webpack_require__(18);
 	
-	var cart_controller_events = _interopRequireWildcard(_view2);
+	var cart_controller = _interopRequireWildcard(_controllers2);
 	
-	var _view3 = __webpack_require__(19);
+	var _controllers3 = __webpack_require__(19);
 	
-	var navigation_controller_events = _interopRequireWildcard(_view3);
+	var navigation_controller = _interopRequireWildcard(_controllers3);
 	
-	var _view4 = __webpack_require__(20);
+	var _controllers4 = __webpack_require__(20);
 	
-	var dialogue_window_events = _interopRequireWildcard(_view4);
+	var header_controller = _interopRequireWildcard(_controllers4);
 	
-	var _view5 = __webpack_require__(23);
+	var _controllers5 = __webpack_require__(21);
 	
-	var ground_controller_events = _interopRequireWildcard(_view5);
+	var dialogue_window = _interopRequireWildcard(_controllers5);
 	
-	var _view6 = __webpack_require__(25);
+	var _controllers6 = __webpack_require__(24);
 	
-	var form_controller_events = _interopRequireWildcard(_view6);
+	var ground_controller = _interopRequireWildcard(_controllers6);
+	
+	var _controllers7 = __webpack_require__(27);
+	
+	var form_controller = _interopRequireWildcard(_controllers7);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	/*---------------- Wydarzenia na stronie ----------------*/
 	
-	/**
-	 * Created by mrskull on 24.11.16.
-	 */
-	
 	var define = function define() {
 	  // Usuń wszystkie wydarzenia ze wszystkich elementów
 	  $('*').off();
 	
-	  filter_controller_events.define();
-	  cart_controller_events.define();
-	  navigation_controller_events.define();
-	  dialogue_window_events.define();
-	  ground_controller_events.define();
+	  searcher_controller.define();
+	  cart_controller.define();
+	  navigation_controller.define();
+	  header_controller.define();
+	  dialogue_window.define();
+	  ground_controller.define();
 	
-	  form_controller_events.define();
-	};
+	  form_controller.define();
+	}; /**
+	    * Created by mrskull on 24.11.16.
+	    */
 	
 	var start = exports.start = function start() {
 	  window.addEventListener('define', define, false);
+	
+	  searcher_controller.start();
+	  cart_controller.start();
+	  navigation_controller.start();
+	  header_controller.start();
+	  ground_controller.start();
 	
 	  define();
 	};
@@ -346,43 +352,55 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.define = undefined;
+	exports.start = exports.define = undefined;
 	
-	var _view = __webpack_require__(12);
+	var _controllers = __webpack_require__(12);
 	
-	var _view2 = __webpack_require__(15);
+	var _controllers2 = __webpack_require__(15);
 	
 	/**
-	 *    Defining public functions
+	 *    Defining private variables
 	 */
 	
 	/**
 	 * Created by mrskull on 07.01.17.
 	 */
 	
+	var searcher_loader_controllers = void 0,
+	    config_loader = {
+	  name: 'filters',
+	  url: '/about_us/',
+	
+	  container: '#SEARCHER > .searcher',
+	  first_element: '*',
+	
+	  load_with_page: false
+	},
+	    searcher_motion_controllers = void 0,
+	    config_motion = {
+	  container: '#SEARCHER',
+	  open: 'right',
+	  can_open_by: 'width',
+	  can_open_to: 1000,
+	  duration_open: 200,
+	  duration_close: 200
+	};
+	
+	/**
+	 *    Defining public functions
+	 */
+	
 	var define = exports.define = function define() {
-	  var config_loader = {
-	    name: 'filters',
-	    container: '#FILTERS > .filters',
-	    first_element: '*',
+	  searcher_motion_controllers.define();
+	},
+	    start = exports.start = function start() {
+	  // -- Loader configuration
+	  searcher_loader_controllers = new _controllers.Plugins_Loader_Controllers(config_loader);
+	  searcher_loader_controllers.define();
 	
-	    load_with_page: false
-	  },
-	      filters_loader_events = new _view.Plugins_Loader_Events(config_loader);
-	
-	  filters_loader_events.define();
-	
-	  var config_motion = {
-	    container: '#FILTERS',
-	    open: 'right',
-	    can_open_by: 'width',
-	    can_open_to: 1000,
-	    duration_open: 200,
-	    duration_close: 200
-	  },
-	      filters_motion_events = new _view2.Plugins_Motion_Events(config_motion);
-	
-	  filters_motion_events.define();
+	  // -- Motion configuration
+	  searcher_motion_controllers = new _controllers2.Plugins_Motion_Controllers(config_motion);
+	  searcher_motion_controllers.start();
 	};
 
 /***/ },
@@ -394,32 +412,21 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Plugins_Loader_Events = undefined;
+	exports.Plugins_Loader_Controllers = undefined;
 	
 	var _structure = __webpack_require__(8);
 	
-	var _main = __webpack_require__(13);
+	var _views = __webpack_require__(13);
 	
 	/**
 	 * Created by mrskull on 24.11.16.
 	 */
 	
-	var Plugins_Loader_Events = exports.Plugins_Loader_Events = function Plugins_Loader_Events(config) {
-	  var controller = new _main.Plugins_Loader_Controller(config),
-	      settings = controller.models.settings;
+	var Plugins_Loader_Controllers = exports.Plugins_Loader_Controllers = function Plugins_Loader_Controllers(config) {
+	  var controller = new _views.Plugins_Loader_Views(config);
 	
 	  this.define = function () {
-	
-	    //////////////////////////////////////////
-	
-	    $(window).resize(change_height_content);
-	
-	    this.start_first_load();
-	  };
-	
-	  this.start_first_load = function () {
 	    window.APP.add_own_event('load', function () {
-	      change_height_content();
 	      controller.start();
 	    });
 	  };
@@ -428,18 +435,10 @@
 	   *    Defining private functions
 	   */
 	
-	  var change_height_content = function change_height_content() {
-	    var height = {
-	      window: $('#CONTAINTER').innerHeight(),
-	      header: $('#HEADER').outerHeight()
-	    };
-	
-	    $(settings.container).height(height.window - height.header);
-	  };
-	
 	  this.start_link = function (event) {
 	    if (event.which === 1) {
 	      event.preventDefault();
+	      window.APP.throw_event(EVENTS.close_plugins);
 	
 	      var url = $(this).attr('href');
 	
@@ -447,10 +446,7 @@
 	    }
 	  };
 	
-	  this.back_url = function () {
-	    event.preventDefault();
-	    controller.start();
-	  };
+	  this.change_content = controller.change_content;
 	
 	  this.redirect = function () {
 	    var url = _structure.data_controller.get('path'),
@@ -479,7 +475,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Plugins_Loader_Controller = undefined;
+	exports.Plugins_Loader_Views = undefined;
 	
 	var _structure = __webpack_require__(8);
 	
@@ -489,8 +485,8 @@
 	 *    Created by mrskull on 24.11.16.
 	 */
 	
-	var Plugins_Loader_Controller = exports.Plugins_Loader_Controller = function Plugins_Loader_Controller(config) {
-	  var models = new _models.Models(config);
+	var Plugins_Loader_Views = exports.Plugins_Loader_Views = function Plugins_Loader_Views(config) {
+	  var models = new _models.Plugins_Loader_Models(config);
 	
 	  this.models = models;
 	
@@ -511,14 +507,9 @@
 	    models.prepare_url(url);
 	    models.prepare_post_data(post_data);
 	
-	    change_url();
 	    models.refresh_data();
 	
 	    hide_content();
-	  };
-	
-	  var change_url = function change_url() {
-	    history.pushState('', models.variables.url, models.variables.url);
 	  };
 	
 	  /**
@@ -574,18 +565,9 @@
 	        duration = models.settings.duration.show;
 	
 	    $(container).animate({ opacity: opacity }, duration, function () {
-	      if (models.settings.load_with_page && window.APP.DATA) load_header_page(window.APP.DATA);
+	      // if(models.settings.load_with_page && window.APP.DATA)
+	      //   load_header_page(window.APP.DATA);
 	    });
-	  };
-	
-	  var load_header_page = function load_header_page(object) {
-	    _structure.data_controller.change_much({
-	      title: object.title,
-	      description: object.description
-	    });
-	
-	    $('title').html(_structure.data_controller.get('title'));
-	    $('meta[ name="description" ]').attr('content', _structure.data_controller.get('description'));
 	  };
 	};
 
@@ -598,11 +580,11 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Models = undefined;
+	exports.Plugins_Loader_Models = undefined;
 	
 	var _structure = __webpack_require__(8);
 	
-	var Models = exports.Models = function Models(config) {
+	var Plugins_Loader_Models = exports.Plugins_Loader_Models = function Plugins_Loader_Models(config) {
 	  var that = this;
 	
 	  /**
@@ -610,8 +592,11 @@
 	   */
 	
 	  this.settings = {
+	    url: undefined,
+	
 	    name: undefined,
 	    container: undefined,
+	    first_element: '*',
 	
 	    load_with_page: false,
 	
@@ -626,10 +611,14 @@
 	    }
 	  };
 	
-	  var load_settings = function load_settings() {
+	  // -- Load settings
+	  (function () {
 	    if (typeof config !== 'undefined') {
 	      // -- Name
 	      if (typeof config.name !== 'undefined') that.settings.name = config.name;
+	
+	      // -- URL
+	      if (typeof config.url !== 'undefined') that.settings.url = config.url;
 	
 	      // -- Container
 	      if (typeof config.load_with_page !== 'undefined') that.settings.load_with_page = config.load_with_page;
@@ -655,9 +644,7 @@
 	        if (typeof opacity.hide !== 'undefined') that.settings.opacity.hide = opacity.hide;
 	      }
 	    }
-	  };
-	
-	  load_settings();
+	  })();
 	
 	  /**
 	   *    Plugin variables
@@ -678,7 +665,7 @@
 	   */
 	
 	  this.prepare_url = function (response_url) {
-	    if (response_url) this.variables.url = response_url;else this.variables.url = _structure.data_controller.get('path');
+	    if (response_url) this.variables.url = response_url;else if (typeof this.settings.url !== 'undefined') this.variables.url = this.settings.url;else this.variables.url = _structure.data_controller.get('path');
 	  };
 	
 	  this.prepare_post_data = function (object) {
@@ -714,36 +701,64 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Plugins_Motion_Events = undefined;
+	exports.Plugins_Motion_Controllers = undefined;
 	
-	var _main = __webpack_require__(16);
+	var _views = __webpack_require__(16);
 	
-	var Plugins_Motion_Events = exports.Plugins_Motion_Events = function Plugins_Motion_Events(config) {
-	  var controller = new _main.Plugins_Motion_Controller(config),
+	var Plugins_Motion_Controllers = exports.Plugins_Motion_Controllers = function Plugins_Motion_Controllers(config) {
+	  var controller = new _views.Plugins_Motion_Views(config),
 	      settings = controller.models.settings;
+	
+	  this.start = function () {
+	    set_start_position();
+	  };
 	
 	  this.define = function () {
 	    var $window = $(window),
 	        $body = $('body'),
-	        $container = $(settings.container);
+	        $content = $(settings.content);
 	
-	    if (settings.direction_open === 'top' || settings.direction_open === 'bottom') $body.hammer().on(settings.swipe_open, pre_filters_open);else $body.hammer().on(settings.swipe_open, controller.filters_open);
+	    // -- Swipe events
 	
-	    $body.hammer().on(settings.swipe_close, controller.filters_close);
+	    if (settings.direction_open === 'top' || settings.direction_open === 'bottom') $body.hammer().on(settings.swipe_open, pre_plugin_open);else $body.hammer().on(settings.swipe_open, controller.plugin_open);
+	
+	    $body.hammer().on(settings.swipe_close, controller.plugin_close);
 	
 	    $body.data('hammer').get('swipe').set({ direction: Hammer.DIRECTION_ALL });
 	
-	    $container.click(stop_propagation);
+	    // -- Other events
 	
-	    $body.click(controller.filters_close);
+	    $body.click(controller.plugin_close);
 	
-	    $window.resize(controller.filters_close);
+	    $window.resize(controller.plugin_close);
+	
+	    window.APP.add_own_event('close_plugins', controller.plugin_close);
+	
+	    $content.click(stop_propagation);
+	
+	    // -- Functions running during defining
+	
+	    set_start_position();
 	  };
 	
-	  var pre_filters_open = function pre_filters_open(event) {
+	  //////////////////////////////////////////
+	
+	
+	  var pre_plugin_open = function pre_plugin_open(event) {
 	    var y = event.gesture.center.y - event.gesture.distance;
 	
-	    if (y <= 70) controller.filters_open();
+	    if (y <= 70) controller.plugin_open();
+	  },
+	      set_start_position = function set_start_position() {
+	    var position = void 0,
+	        height = settings.height,
+	        width = settings.width,
+	        direction_open = settings.direction_open,
+	        direction_close = settings.direction_close;
+	
+	    if (direction_open === 'top' || direction_open === 'bottom') position = -height;else if (direction_open === 'left' || direction_open === 'right') position = -width;
+	
+	    if (position) $(settings.container).css(direction_close, position);
 	  },
 	      stop_propagation = function stop_propagation(event) {
 	    event.stopPropagation();
@@ -761,17 +776,17 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Plugins_Motion_Controller = undefined;
+	exports.Plugins_Motion_Views = undefined;
 	
 	var _models = __webpack_require__(17);
 	
-	var Plugins_Motion_Controller = exports.Plugins_Motion_Controller = function Plugins_Motion_Controller(config) {
-	  var models = new _models.Models(config),
+	var Plugins_Motion_Views = exports.Plugins_Motion_Views = function Plugins_Motion_Views(config) {
+	  var models = new _models.Plugins_Motion_Models(config),
 	      css = {};
 	
 	  this.models = models;
 	
-	  this.filters_open = function () {
+	  this.plugin_open = function () {
 	    if (models.check_possibility_of_opening()) {
 	      css[models.settings.direction_close] = 0;
 	
@@ -781,7 +796,7 @@
 	    }
 	  };
 	
-	  this.filters_close = function () {
+	  this.plugin_close = function () {
 	    if (models.check_is_open()) {
 	      if (models.settings.direction_open === 'top' || models.settings.direction_open === 'bottom') css[models.settings.direction_close] = -models.settings.height;else if (models.settings.direction_open === 'right' || models.settings.direction_open === 'left') css[models.settings.direction_close] = -models.settings.width;
 	
@@ -803,15 +818,17 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Models = undefined;
+	exports.Plugins_Motion_Models = undefined;
 	
 	var _structure = __webpack_require__(8);
 	
-	var Models = exports.Models = function Models(config) {
+	var Plugins_Motion_Models = exports.Plugins_Motion_Models = function Plugins_Motion_Models(config) {
 	  var that = this;
 	
 	  this.settings = {
 	    container: undefined,
+	    content: undefined,
+	
 	    width: undefined,
 	    height: undefined,
 	
@@ -830,6 +847,9 @@
 	    if (typeof config !== 'undefined') {
 	      // -- Container
 	      if (typeof config.container !== 'undefined') that.settings.container = config.container;
+	
+	      // -- Children container
+	      if (typeof config.content !== 'undefined') that.settings.content = config.container + ' > ' + config.content;
 	
 	      // -- Witdh & height
 	      var $container = $(that.settings.container);
@@ -888,7 +908,8 @@
 	  /////////////////////////
 	
 	  this.state = {
-	    is_open: false
+	    is_open: false,
+	    is_not_set: true
 	  };
 	
 	  this.check_is_open = function () {
@@ -939,43 +960,53 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.define = undefined;
+	exports.start = exports.define = undefined;
 	
-	var _view = __webpack_require__(12);
+	var _controllers = __webpack_require__(12);
 	
-	var _view2 = __webpack_require__(15);
+	var _controllers2 = __webpack_require__(15);
 	
 	/**
-	 *    Defining public functions
+	 *    Defining private variables
 	 */
 	
 	/**
 	 * Created by mrskull on 07.01.17.
 	 */
 	
+	var cart_loader_controllers = void 0,
+	    config_loader = {
+	  name: 'cart',
+	  container: '#CART > .cart',
+	  first_element: '*',
+	
+	  load_with_page: false
+	},
+	    cart_motion_controllers = void 0,
+	    config_motion = {
+	  container: '#CART',
+	  open: 'left',
+	  can_open_by: 'width',
+	  can_open_from: 0,
+	  duration_open: 200,
+	  duration_close: 200
+	};
+	
+	/**
+	 *    Defining public functions
+	 */
+	
 	var define = exports.define = function define() {
-	  var config_loader = {
-	    name: 'cart',
-	    container: '#CART > .cart',
-	    first_element: '*',
+	  cart_motion_controllers.define();
+	},
+	    start = exports.start = function start() {
+	  // -- Loader configuration
+	  cart_loader_controllers = new _controllers.Plugins_Loader_Controllers(config_loader);
+	  cart_loader_controllers.define();
 	
-	    load_with_page: false
-	  },
-	      cart_loader_events = new _view.Plugins_Loader_Events(config_loader);
-	
-	  cart_loader_events.define();
-	
-	  var config_motion = {
-	    container: '#CART',
-	    open: 'left',
-	    can_open_by: 'width',
-	    can_open_from: 0,
-	    duration_open: 200,
-	    duration_close: 200
-	  },
-	      cart_motion_events = new _view2.Plugins_Motion_Events(config_motion);
-	
-	  cart_motion_events.define();
+	  // -- Motion configuration
+	  cart_motion_controllers = new _controllers2.Plugins_Motion_Controllers(config_motion);
+	  cart_motion_controllers.start();
 	};
 
 /***/ },
@@ -987,43 +1018,56 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.define = undefined;
+	exports.start = exports.define = undefined;
 	
-	var _view = __webpack_require__(12);
+	var _controllers = __webpack_require__(12);
 	
-	var _view2 = __webpack_require__(15);
+	var _controllers2 = __webpack_require__(15);
 	
 	/**
-	 *    Defining public functions
+	 *    Defining private variables
 	 */
 	
 	/**
 	 * Created by mrskull on 24.11.16.
 	 */
 	
+	var navigation_loader_controllers = void 0,
+	    config_loader = {
+	  name: 'navigation',
+	  container: '#NAVIGATION > .navigation',
+	  first_element: '*',
+	
+	  load_with_page: false
+	},
+	    navigation_motion_controllers = void 0,
+	    config_motion = {
+	  container: '#NAVIGATION',
+	  content: '.navigation',
+	  open: 'down',
+	
+	  can_open_by: 'width',
+	  can_open_to: 650,
+	
+	  duration_open: 300,
+	  duration_close: 200
+	};
+	
+	/**
+	 *    Defining public functions
+	 */
+	
 	var define = exports.define = function define() {
-	  var config_loader = {
-	    name: 'navigation',
-	    container: '#NAVIGATION > .navigation',
-	    first_element: '*',
+	  navigation_motion_controllers.define();
+	},
+	    start = exports.start = function start() {
+	  // -- Loader configuration
+	  navigation_loader_controllers = new _controllers.Plugins_Loader_Controllers(config_loader);
+	  navigation_loader_controllers.define();
 	
-	    load_with_page: false
-	  },
-	      navigation_loader_events = new _view.Plugins_Loader_Events(config_loader);
-	
-	  navigation_loader_events.define();
-	
-	  var config_motion = {
-	    container: '#NAVIGATION',
-	    open: 'down',
-	    can_open_by: 'width',
-	    can_open_to: 650,
-	    duration_open: 300,
-	    duration_close: 200
-	  },
-	      navigation_motion_events = new _view2.Plugins_Motion_Events(config_motion);
-	
-	  navigation_motion_events.define();
+	  // -- Motion configuration
+	  navigation_motion_controllers = new _controllers2.Plugins_Motion_Controllers(config_motion);
+	  navigation_motion_controllers.start();
 	};
 
 /***/ },
@@ -1035,15 +1079,53 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.start = exports.define = undefined;
+	
+	var _controllers = __webpack_require__(12);
+	
+	/**
+	 *    Defining private variables
+	 */
+	
+	var header_loader_events = void 0,
+	    config_loader = {
+	  name: 'navigation',
+	  container: '#HEADER > .header',
+	  first_element: '*'
+	};
+	
+	/**
+	 *    Defining public functions
+	 */
+	
+	/**
+	 * Created by mrskull on 08.01.17.
+	 */
+	
+	var define = exports.define = function define() {},
+	    start = exports.start = function start() {
+	  header_loader_events = new _controllers.Plugins_Loader_Controllers(config_loader);
+	  header_loader_events.define();
+	};
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	exports.define = undefined;
 	
-	var _models = __webpack_require__(21);
+	var _models = __webpack_require__(22);
 	
 	var models = _interopRequireWildcard(_models);
 	
-	var _main = __webpack_require__(22);
+	var _views = __webpack_require__(23);
 	
-	var dialogue_window_controller = _interopRequireWildcard(_main);
+	var dialogue_window_controller = _interopRequireWildcard(_views);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -1119,7 +1201,7 @@
 	};
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1174,7 +1256,7 @@
 	};
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1184,7 +1266,7 @@
 	});
 	exports.open_confirm = exports.open_prompt = exports.open_alert = exports.close_window = exports.open_window = exports.window_data = exports.selectors = undefined;
 	
-	var _models = __webpack_require__(21);
+	var _models = __webpack_require__(22);
 	
 	var models = _interopRequireWildcard(_models);
 	
@@ -1235,7 +1317,7 @@
 	};
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1243,46 +1325,86 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.define = undefined;
+	exports.start_link = exports.start = exports.define = undefined;
 	
-	var _img_loader = __webpack_require__(24);
+	var _structure = __webpack_require__(8);
+	
+	var _img_loader = __webpack_require__(25);
 	
 	var img_loader = _interopRequireWildcard(_img_loader);
 	
-	var _view = __webpack_require__(12);
+	var _views = __webpack_require__(26);
+	
+	var views = _interopRequireWildcard(_views);
+	
+	var _controllers = __webpack_require__(12);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	/**
-	 *    Defining public functions
+	 *    Defining private variables
 	 */
 	
 	/**
 	 * Created by mrskull on 08.01.17.
 	 */
 	
+	var ground_loader_controllers = void 0,
+	    config_loader = {
+	  name: 'ground',
+	  container: '#GROUND > .ground',
+	  first_element: '.block_1'
+	};
+	
+	/**
+	 *    Defining public functions
+	 */
+	
 	var define = exports.define = function define() {
-	  var config = {
-	    name: 'ground',
-	    container: '#GROUND > .ground',
-	    first_element: '.block_1',
-	
-	    load_with_page: true
-	  },
-	      plugins_loader_events = new _view.Plugins_Loader_Events(config);
-	
-	  plugins_loader_events.define();
 	  img_loader.define();
 	
-	  $('a').click(plugins_loader_events.start_link);
+	  $('a').click(start_link);
 	
-	  window.APP.add_own_event('redirect', plugins_loader_events.redirect, false);
+	  window.APP.add_own_event('redirect', ground_loader_controllers.redirect, false);
 	
-	  window.addEventListener('popstate', plugins_loader_events.back_url);
+	  window.addEventListener('popstate', back_url);
+	
+	  $(window).resize(change_height_content);
+	
+	  change_height_content();
+	},
+	    start = exports.start = function start() {
+	  ground_loader_controllers = new _controllers.Plugins_Loader_Controllers(config_loader);
+	  ground_loader_controllers.define();
+	},
+	    start_link = exports.start_link = function start_link(event) {
+	  if (event.which === 1) {
+	    event.preventDefault();
+	    window.APP.throw_event(EVENTS.close_plugins);
+	
+	    var url = $(this).attr('href');
+	
+	    views.change_url(url);
+	
+	    if (_structure.data_controller.get('path') !== url) ground_loader_controllers.change_content(url);
+	  }
+	};
+	
+	var back_url = function back_url() {
+	  event.preventDefault();
+	  ground_loader_controllers.start();
+	},
+	    change_height_content = function change_height_content() {
+	  var height = {
+	    window: $('#CONTAINTER').innerHeight(),
+	    header: $('#HEADER').outerHeight()
+	  };
+	
+	  $(config_loader.container).height(height.window - height.header);
 	};
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1341,7 +1463,35 @@
 	};
 
 /***/ },
-/* 25 */
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.load_header_page = exports.change_url = undefined;
+	
+	var _structure = __webpack_require__(8);
+	
+	var change_url = exports.change_url = function change_url(url) {
+	  history.pushState('', url, url);
+	},
+	    load_header_page = exports.load_header_page = function load_header_page(object) {
+	  _structure.data_controller.change_much({
+	    title: object.title,
+	    description: object.description
+	  });
+	
+	  $('title').html(_structure.data_controller.get('title'));
+	  $('meta[ name="description" ]').attr('content', _structure.data_controller.get('description'));
+	}; /**
+	    * Created by mrskull on 09.01.17.
+	    */
+
+/***/ },
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1351,21 +1501,21 @@
 	});
 	exports.define = undefined;
 	
-	var _main = __webpack_require__(26);
+	var _views = __webpack_require__(28);
 	
-	var form_controller = _interopRequireWildcard(_main);
+	var form_controller = _interopRequireWildcard(_views);
 	
-	var _views = __webpack_require__(27);
+	var _controllers = __webpack_require__(29);
 	
-	var validator = _interopRequireWildcard(_views);
+	var validator = _interopRequireWildcard(_controllers);
 	
-	var _view = __webpack_require__(31);
+	var _controllers2 = __webpack_require__(33);
 	
-	var mini_form = _interopRequireWildcard(_view);
+	var mini_form = _interopRequireWildcard(_controllers2);
 	
-	var _view2 = __webpack_require__(33);
+	var _controllers3 = __webpack_require__(35);
 	
-	var post_button = _interopRequireWildcard(_view2);
+	var post_button = _interopRequireWildcard(_controllers3);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -1411,7 +1561,7 @@
 	};
 
 /***/ },
-/* 26 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1421,9 +1571,9 @@
 	});
 	exports.send = undefined;
 	
-	var _view = __webpack_require__(23);
+	var _controllers = __webpack_require__(24);
 	
-	var content_controller = _interopRequireWildcard(_view);
+	var ground_controller = _interopRequireWildcard(_controllers);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -1448,12 +1598,12 @@
 	 */
 	
 	var send = exports.send = function send(form_name, url, data_post) {
-	  // data_post = _prepare_post_data(form_name, data_post);
-	  // content_controller.change_content(url, data_post);
+	  data_post = _prepare_post_data(form_name, data_post);
+	  ground_controller.start(url, data_post);
 	};
 
 /***/ },
-/* 27 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1463,7 +1613,7 @@
 	});
 	exports.define = undefined;
 	
-	var _checkers = __webpack_require__(28);
+	var _checkers = __webpack_require__(30);
 	
 	var Validators = {};
 	
@@ -1582,7 +1732,7 @@
 	};
 
 /***/ },
-/* 28 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1592,101 +1742,101 @@
 	});
 	exports.Constructor_Validator = undefined;
 	
-	var _validator = __webpack_require__(29);
+	var _views = __webpack_require__(31);
 	
 	Object.defineProperty(exports, 'Constructor_Validator', {
 	  enumerable: true,
 	  get: function get() {
-	    return _validator.Constructor_Validator;
+	    return _views.Constructor_Validator;
 	  }
 	});
 	
 	
 	/////////////////////////////  Prepare checkers  ///////////////////////////////
 	
-	_validator.Constructor_Validator.prototype.types = {};
+	_views.Constructor_Validator.prototype.types = {};
 	
 	/////////////////////////////  Checkers  ///////////////////////////////
 	
-	_validator.checker.create_checker('email', function (value, callback) {
-	  var result = _validator.checker.create_result(),
+	_views.checker.create_checker('email', function (value, callback) {
+	  var result = _views.checker.create_result(),
 	      re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	
-	  if (_validator.checker.check_condition(re.test(value))) result = _validator.checker.create_error('It\'s not email.');
+	  if (_views.checker.check_condition(re.test(value))) result = _views.checker.create_error('It\'s not email.');
 	
 	  callback(result);
 	});
 	
-	_validator.checker.create_checker('email_db', function (value, callback) {
-	  var result = _validator.checker.create_result(),
+	_views.checker.create_checker('email_db', function (value, callback) {
+	  var result = _views.checker.create_result(),
 	      re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	
-	  if (_validator.checker.check_condition(re.test(value))) {
-	    result = _validator.checker.create_error('It\'s not email.');
+	  if (_views.checker.check_condition(re.test(value))) {
+	    result = _views.checker.create_error('It\'s not email.');
 	    callback(result);
 	  } else {
-	    _validator.checker.exist_in_db('email', value, callback, 'Someone already has that email. Try another?');
+	    _views.checker.exist_in_db('email', value, callback, 'Someone already has that email. Try another?');
 	  }
 	});
 	
-	_validator.checker.create_checker('password', function (value, callback) {
-	  var result = _validator.checker.create_result();
+	_views.checker.create_checker('password', function (value, callback) {
+	  var result = _views.checker.create_result();
 	
-	  if (_validator.checker.check_condition(value.length >= 8)) result = _validator.checker.create_error('Short passwords are easy to guess. Try one with at least 8 characters.');
+	  if (_views.checker.check_condition(value.length >= 8)) result = _views.checker.create_error('Short passwords are easy to guess. Try one with at least 8 characters.');
 	
 	  callback(result);
 	});
 	
-	_validator.checker.create_checker('proper_name', function (value, callback) {
+	_views.checker.create_checker('proper_name', function (value, callback) {
 	  value = value.charAt(0).toUpperCase() + value.slice(1);
 	
-	  var result = _validator.checker.create_result(value);
+	  var result = _views.checker.create_result(value);
 	
-	  if (_validator.checker.check_condition(value.length >= 3)) result = _validator.checker.create_error('The name is too short.', value);
+	  if (_views.checker.check_condition(value.length >= 3)) result = _views.checker.create_error('The name is too short.', value);
 	
 	  callback(result);
 	});
 	
-	_validator.checker.create_checker('number', function (value, callback) {
+	_views.checker.create_checker('number', function (value, callback) {
 	  value = value.replace(/\s/g, '');
 	
-	  var result = _validator.checker.create_result(value);
+	  var result = _views.checker.create_result(value);
 	
-	  if (_validator.checker.check_condition(value.length === 9)) result = _validator.checker.create_error('Number length is 9 digits.', value);
+	  if (_views.checker.check_condition(value.length === 9)) result = _views.checker.create_error('Number length is 9 digits.', value);
 	
-	  if (_validator.checker.check_condition(!isNaN(value))) result = _validator.checker.create_error('The number must consist of digits.', value);
+	  if (_views.checker.check_condition(!isNaN(value))) result = _views.checker.create_error('The number must consist of digits.', value);
 	
 	  callback(result);
 	});
 	
-	_validator.checker.create_checker('full_name', function (value, callback) {
+	_views.checker.create_checker('full_name', function (value, callback) {
 	  value = value.replace(/\w\S*/g, function (txt) {
 	    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
 	  });
 	  value = value.replace('  ', ' ');
 	
-	  var result = _validator.checker.create_result(value),
+	  var result = _views.checker.create_result(value),
 	      split = value.split(' ');
 	
-	  if (_validator.checker.check_condition(split.length >= 2 && split[0] !== '' && split[1] !== '')) result = _validator.checker.create_error('Full name consists of minimum 2 word.', value);
+	  if (_views.checker.check_condition(split.length >= 2 && split[0] !== '' && split[1] !== '')) result = _views.checker.create_error('Full name consists of minimum 2 word.', value);
 	
 	  callback(result);
 	});
 	
-	_validator.checker.create_checker('no_empty', function (value, callback) {
-	  var result = _validator.checker.create_result();
+	_views.checker.create_checker('no_empty', function (value, callback) {
+	  var result = _views.checker.create_result();
 	
-	  if (_validator.checker.check_condition(value !== '')) result = _validator.checker.create_error("You can't leave this empty.", value);
+	  if (_views.checker.check_condition(value !== '')) result = _views.checker.create_error("You can't leave this empty.", value);
 	
 	  callback(result);
 	});
 	
 	////////////////      LENGTH      ///////////////////
 	
-	_validator.checker.create_checker('length_3', function (value, callback) {
-	  var result = _validator.checker.create_result();
+	_views.checker.create_checker('length_3', function (value, callback) {
+	  var result = _views.checker.create_result();
 	
-	  if (_validator.checker.check_condition(value.length >= 3)) result = _validator.checker.create_error('It\'s too short.', value);
+	  if (_views.checker.check_condition(value.length >= 3)) result = _views.checker.create_error('It\'s too short.', value);
 	
 	  callback(result);
 	});
@@ -1694,7 +1844,7 @@
 	////////////////////////////////////////////
 
 /***/ },
-/* 29 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1704,7 +1854,7 @@
 	});
 	exports.Constructor_Validator = exports.checker = undefined;
 	
-	var _config = __webpack_require__(30);
+	var _config = __webpack_require__(32);
 	
 	var _structure = __webpack_require__(8);
 	
@@ -1829,7 +1979,7 @@
 	};
 
 /***/ },
-/* 30 */
+/* 32 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1860,7 +2010,7 @@
 	};
 
 /***/ },
-/* 31 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1870,9 +2020,9 @@
 	});
 	exports.define = undefined;
 	
-	var _main = __webpack_require__(32);
+	var _views = __webpack_require__(34);
 	
-	var form = _interopRequireWildcard(_main);
+	var form = _interopRequireWildcard(_views);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -1936,7 +2086,7 @@
 	};
 
 /***/ },
-/* 32 */
+/* 34 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1969,11 +2119,11 @@
 	      field_value = $field.val(),
 	      post_data = send_prepare_post(field_name, field_value);
 	
-	  window.APP.send_post(undefined, post_data, callback);
+	  window.APP.http_request(undefined, post_data, callback);
 	};
 
 /***/ },
-/* 33 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1983,9 +2133,9 @@
 	});
 	exports.define = undefined;
 	
-	var _main = __webpack_require__(34);
+	var _views = __webpack_require__(36);
 	
-	var mini_form = _interopRequireWildcard(_main);
+	var mini_form = _interopRequireWildcard(_views);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -2030,7 +2180,7 @@
 	};
 
 /***/ },
-/* 34 */
+/* 36 */
 /***/ function(module, exports) {
 
 	"use strict";

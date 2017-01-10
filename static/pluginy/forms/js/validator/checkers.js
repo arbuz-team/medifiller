@@ -1,7 +1,7 @@
 
-import {Constructor_Validator, checker} from './validator'
+import {Constructor_Validator, checker} from './views'
 
-export {Constructor_Validator} from './validator'
+export {Constructor_Validator} from './views'
 
 /////////////////////////////  Prepare checkers  ///////////////////////////////
 

@@ -2,7 +2,7 @@
  * Created by mrskull on 17.12.16.
  */
 
-import * as mini_form from './main'
+import * as mini_form from './views'
 
 
 export let define = function()
