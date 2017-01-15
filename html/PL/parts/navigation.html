@@ -1,0 +1,71 @@
+
+<ul class="navigation-primary">
+
+    <li>
+        <a class="link fill-abs" href="/">
+            Główna
+        </a>
+    </li>
+
+    <li>
+        <a class="link fill-abs" href="/produkty/">
+            Produkty
+        </a>
+    </li>
+
+    <li>
+        <a class="link fill-abs" href="/o_nas/">
+            O nas
+        </a>
+    </li>
+
+    {% if request.session.user_login %}
+    <li>
+        <a class="link fill-abs" href="/uzytkownik/konto/">
+            Konto
+        </a>
+    </li>
+    {% else %}
+    <li>
+        <a class="link fill-abs" href="/uzytkownik/zaloguj/">
+            Zaloguj
+        </a>
+    </li>
+    {% endif %}
+
+</ul>
+
+
+<ul class="navigation-secondary">
+
+    <li>
+        <a class="link fill-abs" href="/user/sign_up/">
+            Sign up
+        </a>
+    </li>
+
+    <li class="navigation-secondary-space"> | </li>
+
+    <li>
+        <a class="link fill-abs" href="/contact/">
+            Contact
+        </a>
+    </li>
+
+    <li class="navigation-secondary-space"> | </li>
+
+    {% if request.session.user_login %}
+    <li>
+        <a class="link fill-abs" href="/user/sign_in/">
+            Cart
+        </a>
+    </li>
+    {% else %}
+    <li>
+        <a class="link fill-abs" href="/user/sign_in/">
+            Cart
+        </a>
+    </li>
+    {% endif %}
+
+</ul>
