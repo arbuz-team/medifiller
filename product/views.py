@@ -2,6 +2,17 @@ from arbuz.views import *
 from .forms import *
 
 
+class Start_App(Dynamic_Event_Menager):
+
+    def Manage_Content_Ground(self):
+        return self.Render_HTML('product/start.html')
+
+    @staticmethod
+    def Launch(request):
+        return Start_App(request).HTML
+
+
+
 class Product_Details(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):

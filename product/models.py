@@ -39,6 +39,24 @@ class Where_Display(models.Model):
 
 
 
+class Brand(models.Model):
+
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+
+
+
+class Purpose(models.Model):
+
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+
+
+
 class Product(models.Model):
 
     details_en = models.ForeignKey(Details_EN)
@@ -49,6 +67,9 @@ class Product(models.Model):
     image = models.ImageField()
     price_eur = models.IntegerField()
     price_pln = models.IntegerField()
+
+    brand = models.ForeignKey(Brand)
+    purpose = models.ForeignKey(Purpose)
 
     def __str__(self):
         return self.details_en.name

@@ -58,7 +58,7 @@ class Contains_Products(Dynamic_Event_Menager):
         return Contains_Products(request).HTML
 
 
-class Contains_About_Us(Editable_Tab):
+class Contains_About(Editable_Tab):
 
     def Manage_Content_Ground(self):
         self.content['texts'] = Text_Content.objects.filter(tab_name='about_us')
@@ -67,10 +67,10 @@ class Contains_About_Us(Editable_Tab):
 
     @staticmethod
     def Launch(request):
-        return Contains_About_Us(request).HTML
+        return Contains_About(request).HTML
 
 
-class Contains_Contact_Us(Editable_Tab):
+class Contains_Contact(Editable_Tab):
 
     def Manage_Content_Ground(self):
         self.content['texts'] = Text_Content.objects.filter(tab_name='contact_us')
@@ -79,7 +79,7 @@ class Contains_Contact_Us(Editable_Tab):
 
     @staticmethod
     def Launch(request):
-        return Contains_Contact_Us(request).HTML
+        return Contains_Contact(request).HTML
 
 
 class Contains_Edit(Dynamic_Event_Menager):

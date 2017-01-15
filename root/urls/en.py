@@ -2,8 +2,9 @@ from django.conf.urls import url
 from root import views
 
 urlpatterns = [
-    url(r'^login/$', views.Login.Launch, name='root.login'),
-    url(r'^logout/$', views.Logout.Launch, name='root.logout'),
+    url(r'^$', views.Start_App.Launch, name='root.start'),
+    url(r'^sign_in/$', views.Sign_In.Launch, name='root.sign_in'),
+    url(r'^sign_out/$', views.Sign_Out.Launch, name='root.sign_out'),
     url(r'^create/$', views.Create.Launch, name='root.create'),
 ]
 

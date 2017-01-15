@@ -2,7 +2,35 @@ from arbuz.views import *
 from .forms import *
 import string, random
 
-class Login(Dynamic_Event_Menager):
+
+class Start_App(Dynamic_Event_Menager):
+
+    def Manage_Content_Ground(self):
+
+        self.content['apps'] = [
+            {
+                'name': 'Sign in',
+                'url':  '/root/sign_in/',
+            },
+            {
+                'name': 'Sign out',
+                'url': '/root/sign_out/',
+            },
+            {
+                'name': 'Create root',
+                'url': '/root/create/',
+            },
+        ]
+
+        return self.Render_HTML('arbuz/start_app.html')
+
+    @staticmethod
+    def Launch(request):
+        return Start_App(request).HTML
+
+
+
+class Sign_In(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
         self.content['form'] = Form_Root_Login()
@@ -30,11 +58,11 @@ class Login(Dynamic_Event_Menager):
 
     @staticmethod
     def Launch(request):
-        return Login(request).HTML
+        return Sign_In(request).HTML
 
 
 
-class Logout(Dynamic_Event_Menager):
+class Sign_Out(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
         self.request.session['root_login'] = False
@@ -51,7 +79,7 @@ class Logout(Dynamic_Event_Menager):
 
     @staticmethod
     def Launch(request):
-        return Logout(request, authorization=True).HTML
+        return Sign_Out(request, authorization=True).HTML
 
 
 

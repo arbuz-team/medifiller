@@ -1,6 +1,32 @@
 from product.views import *
 
-def Load_Default_Data():
+def Load_Default_Filters():
+
+    Brand(
+        name='Excellent'
+    ).save()
+
+    Brand(
+        name='Juvederm'
+    ).save()
+
+    Brand(
+        name='Teosyal'
+    ).save()
+
+    Purpose(
+        name='Cellulite'
+    ).save()
+
+    Purpose(
+        name='Anti-aging'
+    ).save()
+
+    Purpose(
+        name='Baldness'
+    ).save()
+
+def Load_Default_Product():
 
     for numer in [1, 2, 3]:
 
@@ -25,7 +51,7 @@ def Load_Default_Data():
         where_display_1 = Where_Display(
             display_en=True,
             display_pl=True,
-            display_de=True
+            display_de=True,
         )
         where_display_1.save()
 
@@ -37,5 +63,12 @@ def Load_Default_Data():
 
             image='/static/pluginy/arbuz/img/logo.png',
             price_eur=200*numer,
-            price_pln=500*numer
+            price_pln=500*numer,
+
+            brand=Brand.objects.get(pk=numer),
+            purpose=Purpose.objects.get(pk=numer),
         ).save()
+
+def Load_Default_Data():
+    Load_Default_Filters()
+    Load_Default_Product()

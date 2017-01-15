@@ -1,6 +1,6 @@
 from main.models import *
 
-def Load_Default_Data():
+def Load_Default_Text_Content():
 
     Text_Content(
         tab_name='contact_us',
@@ -24,24 +24,30 @@ def Load_Default_Data():
 
     Text_Content(
         tab_name='about_us',
-        text='''<a href="/user/login/">/user/login/</a><br />
-                <a href="/user/register/">/user/register/</a><br />
-                <a href="/user/logout/">/user/logout/</a><br />
-                <a href="/user/account/">/user/account/</a><br />
-                <br />
-                <a href="/root/create/">/root/create/</a><br />
-                <a href="/root/login/">/root/login/</a><br />
-                <a href="/root/logout/">/root/logout/</a><br />
-                <br />
-                <a href="/product/1/details/">/product/1/details/</a><br />
-                <a href="/product/2/details/">/product/2/details/</a><br />
-                <a href="/product/3/details/">/product/3/details/</a><br />
-                <br />
-                <a href="/setting/">/setting/</a><br />''',
+        text='''<a href="/user/sign_in/">/user/sign_in/</a><br />
+                    <a href="/user/sign_up/">/user/sign_up/</a><br />
+                    <a href="/user/sign_out/">/user/sign_out/</a><br />
+                    <a href="/user/account/">/user/account/</a><br />
+                    <br />
+                    <a href="/root/create/">/root/create/</a><br />
+                    <a href="/root/sign_in/">/root/sign_in/</a><br />
+                    <a href="/root/sign_out/">/root/sign_out/</a><br />
+                    <br />
+                    <a href="/product/1/details/">/product/1/details/</a><br />
+                    <a href="/product/2/details/">/product/2/details/</a><br />
+                    <a href="/product/3/details/">/product/3/details/</a><br />
+                    <br />
+                    <a href="/setting/">/setting/</a><br />''',
     ).save()
 
+def Load_Default_Image_Content():
+    pass
 
     # Image_Content(
     #     tab_name='',
     #     image='',
     # )
+
+def Load_Default_Data():
+    Load_Default_Text_Content()
+    Load_Default_Image_Content()

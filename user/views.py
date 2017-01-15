@@ -4,7 +4,38 @@ from .forms import *
 import os, binascii
 
 
-class Login(Dynamic_Event_Menager):
+class Start_App(Dynamic_Event_Menager):
+
+    def Manage_Content_Ground(self):
+
+        self.content['apps'] = [
+            {
+                'name': 'Sign in',
+                'url':  '/user/sign_in/',
+            },
+            {
+                'name': 'Sign up',
+                'url': '/user/sign_up/',
+            },
+            {
+                'name': 'Sign out',
+                'url': '/user/sign_out/',
+            },
+            {
+                'name': 'Account',
+                'url': '/user/account/',
+            },
+        ]
+
+        return self.Render_HTML('arbuz/start_app.html')
+
+    @staticmethod
+    def Launch(request):
+        return Start_App(request).HTML
+
+
+
+class Sign_In(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
         self.content['form'] = Form_Login()
@@ -39,11 +70,11 @@ class Login(Dynamic_Event_Menager):
 
     @staticmethod
     def Launch(request):
-        return Login(request).HTML
+        return Sign_In(request).HTML
 
 
 
-class Register(Dynamic_Event_Menager):
+class Sign_Up(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
         self.content['form'] = Form_Register()
@@ -131,11 +162,11 @@ class Register(Dynamic_Event_Menager):
 
     @staticmethod
     def Launch(request):
-        return Register(request).HTML
+        return Sign_Up(request).HTML
 
 
 
-class Logout(Dynamic_Event_Menager):
+class Sign_Out(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
         self.request.session['user_login'] = False
@@ -145,7 +176,7 @@ class Logout(Dynamic_Event_Menager):
 
     @staticmethod
     def Launch(request):
-        return Logout(request, authorization=True).HTML
+        return Sign_Out(request, authorization=True).HTML
 
 
 
