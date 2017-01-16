@@ -39,7 +39,7 @@ class Sign_In(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
         self.content['form'] = Form_Login()
-        return self.Render_HTML('user/login.html', 'login')
+        return self.Render_HTML('user/sign_in.html', 'login')
 
     def Manage_Form_Login(self):
 
@@ -57,9 +57,9 @@ class Sign_In(Dynamic_Event_Menager):
 
             self.content['form'] = None  # message of correct
 
-            return self.Render_HTML('user/login.html')
+            return self.Render_HTML('user/sign_in.html')
 
-        return self.Render_HTML('user/login.html', 'login')
+        return self.Render_HTML('user/sign_in.html', 'login')
 
     def Manage_Form(self):
 
@@ -78,7 +78,7 @@ class Sign_Up(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
         self.content['form'] = Form_Register()
-        return self.Render_HTML('user/register.html', 'register')
+        return self.Render_HTML('user/sign_up.html', 'register')
 
     def Manage_Form_Register(self):
 
@@ -95,9 +95,9 @@ class Sign_Up(Dynamic_Event_Menager):
             self.Send_Activate_Link()
 
             self.content['form'] = Form_User_Address()
-            return self.Render_HTML('user/register.html', 'user_address')
+            return self.Render_HTML('user/sign_up.html', 'user_address')
 
-        return self.Render_HTML('user/register.html', 'register')
+        return self.Render_HTML('user/sign_up.html', 'register')
 
     def Manage_Form_User_Address(self):
 
@@ -110,9 +110,9 @@ class Sign_Up(Dynamic_Event_Menager):
             address_user.save()  # create address_user
 
             self.content['form'] = None  # message of correct
-            return self.Render_HTML('user/register.html')
+            return self.Render_HTML('user/sign_up.html')
 
-        return self.Render_HTML('user/register.html', 'user_address')
+        return self.Render_HTML('user/sign_up.html', 'user_address')
 
     def Manage_Form(self):
 
@@ -172,7 +172,7 @@ class Sign_Out(Dynamic_Event_Menager):
         self.request.session['user_login'] = False
         self.request.session['user_unique'] = ''
         self.request.session['user_username'] = ''
-        return self.Render_HTML('user/logout.html')
+        return self.Render_HTML('user/sign_out.html')
 
     @staticmethod
     def Launch(request):

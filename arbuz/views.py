@@ -11,7 +11,7 @@ class Dynamic_Base:
 
     def Render_HTML(self, file_name, form_name = ''):
 
-        # example: EN/user/login.html
+        # example: EN/user/sign_in.html
         template = self.request.session['translator_language'] \
                    + '/' + file_name
 
@@ -163,8 +163,8 @@ class Updater(Dynamic_Base):
             'en': secure + 'en.' + url +
                   reverse(name, urlconf='arbuz.urls.en', kwargs=kwargs),
 
-            'pl': secure + 'pl.' + url +
-                  reverse(name, urlconf='arbuz.urls.pl', kwargs=kwargs),
+            #'pl': secure + 'pl.' + url +
+            #      reverse(name, urlconf='arbuz.urls.pl', kwargs=kwargs),
 
             #'de': secure + 'de.' + url +
             #      reverse(name, urlconf='arbuz.urls.de', kwargs=kwargs),
