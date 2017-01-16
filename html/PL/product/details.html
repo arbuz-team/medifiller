@@ -6,14 +6,19 @@
 </script>
 
 
-<div class="BLOK1">
+<div class="ground-block block-1">
 
-  <div class="tlo abs_pelny"></div>
-  {% include "content/html/navigation.html" %}
+  <div class="block-background"></div>
+  {% include "ground/html/navigation.html" %}
 
-  <div class="tresc">
+  <div class="block-content">
 
-    {{ message }}
+    <img data-src="{{ product.image }}" alt="image"><br>
+    {{ product.details_en.name }}<br>
+    {{ product.details_en.description }}<br>
+    price euro: {{ product.price_eur }}<br>
+    price pln:  {{ product.price_pln }}<br>
+    <br><br>
 
   </div>
 

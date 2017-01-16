@@ -7,16 +7,16 @@
 <script src='https://www.google.com/recaptcha/api.js'></script>
 
 
-<div class="BLOK1 BLOCK SMALL">
+<div class="ground-block block-1 SMALL">
 
-  <div class="tlo abs_pelny"></div>
-  {% include "content/html/navigation.html" %}
+  <div class="block-background fill-abs"></div>
+  {% include "ground/html/navigation.html" %}
 
-  <div class="tresc">
+  <div class="block-content">
 
     {% if not form %}
 
-      {{ message }}
+      Hello {{ self.request.session.user_username }}! You are registered. Visit your mailbox and active account ;)
       <script>
         window.APP.DATA.redirect = '/';
         window.APP.DATA.delay = 2000;

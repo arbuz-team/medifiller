@@ -5,24 +5,23 @@
   };
 </script>
 
+<div class="ground-block block-1">
 
-<div class="BLOK1">
+  <div class="block-background fill-abs"></div>
+  {% include "ground/html/navigation.html" %}
 
-  <div class="tlo abs_pelny"></div>
-  {% include "content/html/navigation.html" %}
+  <div id="test" class="block-content">
 
-  <div class="tresc">
-  
     <a href="/">Strona Główna</a>
 
-    Kartka (także: karta, arkusz) – część książki, gazety, czasopisma, zeszytu lub notesu. Najczęściej jest biała i prostokątna. Może być wykonana z papieru, pergaminu, welinu albo papirusu.
-<br /><br />
-    <a href="/fgasgasg/">Błędny link</a>
-    Jeśli jest czysta lub niezadrukowana to zwykle służy do pisania, rysowania lub drukowania.
-<br /><br />
-    Używana w wielu obszarach przemysłu, handlu, biurokracji, życia społecznego i codziennego ludzi, takich jak druk książek, czasopism i ulotek, prowadzenie korespondencji i dokonywania zapisków służbowych i prywatnych.
-<br /><br />
-    Kartka (a zwłaszcza strona) może stanowić jednostkę miary tekstu (np. ten rozdział ma/zawiera 20 kartek/stron maszynopisu). Należy jednak odróżniać strony od kartek (zwykle kartki mają dwie strony, zob. też model wstęgi Möbiusa).
+    <br><br>
+        {{ texts.0.text | safe }}
+    <br /><br />
+        {{ texts.1.text | safe }}
+    <br /><br />
+        {{ texts.2.text | safe }}
+    <br /><br />
+        {{ texts.3.text | safe }}
   
   </div>
 
