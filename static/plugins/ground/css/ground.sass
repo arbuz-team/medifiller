@@ -1,0 +1,147 @@
+
+//-----------------------------------------
+//			  ELEMENTY TREŚCI
+//-----------------------------------------
+
+
+#GROUND
+  display: block
+  overflow-y: auto
+
+  >.ground
+    position: relative
+    opacity: 0.4
+
+
+    >.block-1
+      border-bottom: 1px solid #d8d8d8
+
+    >.ground-block
+      position: relative
+      display: inline-block
+      margin: 0
+
+      width: 100%
+      min-height: 550px
+
+
+      >.navigation
+        position: relative
+        z-index: 12
+        height: 52px
+        margin: 0
+
+        line-height: 32px
+        padding: 10px 15px
+        background: #d8d9dd
+
+        >*
+          display: inline-block
+          height: 32px
+          margin: auto 5px
+          line-height: 32px
+
+
+          >i
+            display: inline-block
+            width: 30px
+            line-height: 32px
+            background:
+              image: url(/static/img/home.png)
+              position: center
+              size: 100%
+              repeat: no-repeat
+
+
+      >.block-title
+        position: relative
+        z-index: 12
+
+        margin-top: 15px
+        padding-left: 30px
+
+        color: #333
+        font-size: 18px
+        font-weight: bold
+
+      >.block-content
+        position: relative
+        padding: 10px 15px
+        z-index: 12
+
+        color: #333
+        font-size: 16px
+
+      >.block-background
+        z-index: 10
+        background-color: #f4f4f4
+
+
+    >.block-2 > .block-background
+      background-color: #f4f4f4
+
+
+    .block-content
+      >.title
+        font-size: 18px
+        font-weight: bold
+
+
+      >.paragraph
+        margin-bottom: 15px
+        margin-left: 15px
+
+
+
+.block-content
+  position: relative
+  padding: 10px 15px
+  z-index: 12
+
+.block-background
+  z-index: 10
+
+//-----------------------------------------
+//						 EKRAN KOMPUTERA
+//-----------------------------------------
+
+  @media (min-width: 768px)
+
+    #CONTENT > div > .content-block > .tytul
+      margin-top: 15px
+      padding-right: 300px
+      text-align: center
+
+  //
+    #CONTENT > div > .content-block
+      >.content, >.navigation
+        width: 650px
+
+
+  @media (min-width: 870px)
+
+    #CONTENT > div > .content-block > .content
+        margin: 50px auto
+
+    #CONTENT:first-child > div > .content-block
+      >.navigation
+        margin: 10px auto
+          top: 50px
+
+      >.content
+        margin: 10px auto
+          bottom: 50px
+
+
+
+@media (min-width: 1000px)
+
+  #GROUND
+    margin-left: 250px
+
+//
+  @media (min-width: 1200px)
+
+    #CONTENT > div > .content,
+    #CONTENT > div > .navigation
+      width: 970px

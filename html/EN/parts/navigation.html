@@ -1,4 +1,27 @@
 
+<ul class="navigation-mini">
+
+    <li class="navigation-mini-filter">
+        <button></button>
+    </li>
+
+    <li class="navigation-mini-navigation">
+        <button></button>
+    </li>
+
+    {% if request.session.user_login %}
+    <li class="navigation-mini-cart">
+        <button></button>
+    </li>
+    {% else %}
+    <li class="navigation-mini-cart">
+        <a href="/user/sign_in/"></a>
+    </li>
+    {% endif %}
+
+</ul>
+
+
 <ul class="navigation-primary">
 
     <li>

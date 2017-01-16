@@ -1,0 +1,75 @@
+
+$navigation--height: 100%
+$navigation-primery_secondery--height: 45px
+
+
+//--------------------------------------
+//       STYLE PRZESUWANEGO MENU
+//--------------------------------------
+
+#NAVIGATION
+  top: $navigation--height
+  right: 0
+  left: 0
+  height: auto
+
+
+  >.navigation
+    position: relative
+    height: auto
+
+    color: $g-color_3
+    background-color: $g-color_1
+
+
+    >.navigation-mini
+      display: none
+
+
+    >.navigation-primary, >.navigation-secondary
+
+      >.navigation-secondary-space
+        display: none
+
+      >li
+        position: relative
+        height: $navigation-primery_secondery--height
+        border-bottom: solid #666 1px
+        background-color: $g-color_3
+
+        >.link
+          padding: 0 15px
+          line-height: $navigation-primery_secondery--height
+
+          background-color: $g-color_1
+          -webkit-transition: left 0.2s, -webkit-transform 0.2s
+          transition: left 0.2s, transform 0.2s
+
+        >.link:hover, > .link.wybrany
+          left: 20px
+          color: $g-color_4
+
+
+      .guzik_menu
+        display: none
+        //@extend #HEADER .menu .guzik_menu
+        margin: 0 30px
+          top: 20px
+
+
+  >.hide
+    top: 100%
+    left: 0
+    right: 0
+
+    height: 200px
+    +linear-gradient(bottom, rgba(51, 51, 51, 0), rgba(51, 51, 51, 0.4))
+
+
+//--------------------------------------
+//            EKRAN KOMPUTERA
+//--------------------------------------
+
+@media (min-width: 650px)
+  #NAVIGATION
+    top: -$navigation--height !important

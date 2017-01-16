@@ -34,7 +34,7 @@ class Sign_In(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
         self.content['form'] = Form_Root_Login()
-        return self.Render_HTML('root/login.html', 'login')
+        return self.Render_HTML('root/sign_in.html', 'login')
 
     def Manage_Form_Login(self):
 
@@ -45,9 +45,9 @@ class Sign_In(Dynamic_Event_Menager):
             self.request.session['root_login'] = True
 
             self.content['form'] = None  # message of correct
-            return self.Render_HTML('root/login.html')
+            return self.Render_HTML('root/sign_in.html')
 
-        return self.Render_HTML('root/login.html', 'login')
+        return self.Render_HTML('root/sign_in.html', 'login')
 
     def Manage_Form(self):
 
@@ -66,7 +66,7 @@ class Sign_Out(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
         self.request.session['root_login'] = False
-        return self.Render_HTML('root/logout.html')
+        return self.Render_HTML('root/sign_out.html')
 
     def Check_Authorization(self):
 

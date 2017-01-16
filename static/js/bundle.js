@@ -352,7 +352,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.start = exports.define = undefined;
+	exports.plugin_open = exports.start = exports.define = undefined;
 	
 	var _controllers = __webpack_require__(12);
 	
@@ -369,7 +369,6 @@
 	var searcher_loader_controllers = void 0,
 	    config_loader = {
 	  name: 'filters',
-	  url: '/about_us/',
 	
 	  container: '#SEARCHER > .searcher',
 	  first_element: '*',
@@ -379,6 +378,7 @@
 	    searcher_motion_controllers = void 0,
 	    config_motion = {
 	  container: '#SEARCHER',
+	  content: '.searcher',
 	  open: 'right',
 	  can_open_by: 'width',
 	  can_open_to: 1000,
@@ -401,6 +401,9 @@
 	  // -- Motion configuration
 	  searcher_motion_controllers = new _controllers2.Plugins_Motion_Controllers(config_motion);
 	  searcher_motion_controllers.start();
+	},
+	    plugin_open = exports.plugin_open = function plugin_open() {
+	  searcher_motion_controllers.plugin_open();
 	};
 
 /***/ },
@@ -423,34 +426,18 @@
 	 */
 	
 	var Plugins_Loader_Controllers = exports.Plugins_Loader_Controllers = function Plugins_Loader_Controllers(config) {
-	  var controller = new _views.Plugins_Loader_Views(config);
+	  var plugin_loader_views = new _views.Plugins_Loader_Views(config);
 	
-	  this.define = function () {
-	    window.APP.add_own_event('load', function () {
-	      controller.start();
-	    });
-	  };
+	  this.change_content = plugin_loader_views.change_content;
 	
 	  /**
 	   *    Defining private functions
 	   */
 	
-	  this.start_link = function (event) {
-	    if (event.which === 1) {
-	      event.preventDefault();
-	      window.APP.throw_event(EVENTS.close_plugins);
-	
-	      var url = $(this).attr('href');
-	
-	      if (_structure.data_controller.get('path') !== url) controller.change_content(url);
-	    }
-	  };
-	
-	  this.change_content = controller.change_content;
-	
 	  this.redirect = function () {
 	    var url = _structure.data_controller.get('path'),
-	        delay = 0;
+	        delay = 0,
+	        variables = plugin_loader_views.models.variables;
 	
 	    if (typeof APP !== 'undefined' && typeof APP.DATA !== 'undefined') {
 	      if (typeof APP.DATA.redirect !== 'undefined') url = APP.DATA.redirect;
@@ -458,11 +445,21 @@
 	      if (typeof APP.DATA.delay !== 'undefined') delay = APP.DATA.delay;
 	    }
 	
-	    _structure.data_controller.change('can_do_redirect', true);
+	    plugin_loader_views.models.variables.can_do_redirect = true;
 	
 	    setTimeout(function () {
-	      if (_structure.data_controller.get('can_do_redirect') === true) controller.change_content(url);
+	      if (plugin_loader_views.models.variables.can_do_redirect === true) plugin_loader_views.change_content(url);
 	    }, delay);
+	  };
+	
+	  /**
+	   *    Defining public functions
+	   */
+	
+	  this.define = function () {
+	    window.APP.add_own_event('load', function () {
+	      plugin_loader_views.change_content();
+	    });
 	  };
 	};
 
@@ -477,13 +474,7 @@
 	});
 	exports.Plugins_Loader_Views = undefined;
 	
-	var _structure = __webpack_require__(8);
-	
 	var _models = __webpack_require__(14);
-	
-	/**
-	 *    Created by mrskull on 24.11.16.
-	 */
 	
 	var Plugins_Loader_Views = exports.Plugins_Loader_Views = function Plugins_Loader_Views(config) {
 	  var models = new _models.Plugins_Loader_Models(config);
@@ -491,75 +482,42 @@
 	  this.models = models;
 	
 	  /**
-	   *    Defining public functions
+	   *    Defining showing functions
 	   */
 	
-	  this.start = function () {
-	    models.refresh_data();
-	    models.prepare_post_data();
-	
-	    hide_content();
-	  };
-	
-	  this.change_content = function (url, post_data) {
-	    models.variables.can_do_redirect = false;
-	
-	    models.prepare_url(url);
-	    models.prepare_post_data(post_data);
-	
-	    models.refresh_data();
-	
-	    hide_content();
-	  };
-	
-	  /**
-	   *    Defining view functions
-	   */
-	
-	  var hide_content = function hide_content() {
+	  var check_for_errors = function check_for_errors(status, code) {
 	    var container = models.settings.container,
-	        opacity = models.settings.opacity.hide,
-	        duration = models.settings.duration.hide;
+	        error = models.variables.error;
 	
-	    $(container).animate({ opacity: opacity }, duration, function () {
-	      download_content();
-	    });
-	  };
-	
-	  /**
-	   *    Defining content functions
-	   */
-	
-	  var download_content = function download_content(url) {
-	    models.prepare_url(url);
-	
-	    window.APP.http_request(models.variables.url, models.variables.post_data, paste_content);
-	  };
-	
-	  var paste_content = function paste_content(response, status) {
-	    var html = response.responseText,
-	        code = response.status,
-	        container = models.settings.container;
-	
-	    if (status !== 'success') if (models.variables.error === true) $(container).html('An error has occurred while connecting to server. Please, refresh website or check your connect with network.');else {
-	      models.prepare_post_data();
+	    if (status !== 'success') if (error === true) $(container).html('An error has occurred while connecting to server. Please, refresh website or check your connect with network.');else {
 	      models.variables.error = true;
 	
-	      download_content('/statement/' + code + '/');
+	      models.prepare_post_data();
+	      models.download_content('/statement/' + code + '/', show_content);
 	
-	      return false;
+	      return true;
 	    }
+	    return false;
+	  },
+	      prepare_content_to_show = function prepare_content_to_show(response, status) {
+	    var html = response.responseText,
+	        code = response.status,
+	        container = models.settings.container,
+	        url = models.variables.url,
+	        error = models.variables.error;
 	
-	    if (models.variables.error !== true || status === 'success') $(container).html(html).add_data('url', models.variables.url);
+	    if (check_for_errors(status, code)) return false;
+	
+	    if (error !== true || status === 'success') $(container).html(html).add_data('url', url);
 	
 	    models.variables.error = false;
 	    models.variables.url = '';
+	
 	    models.refresh_events();
+	  },
+	      show_content = function show_content(response, status) {
+	    prepare_content_to_show(response, status);
 	
-	    show_content();
-	  };
-	
-	  var show_content = function show_content() {
 	    var container = models.settings.container,
 	        opacity = models.settings.opacity.show,
 	        duration = models.settings.duration.show;
@@ -569,7 +527,38 @@
 	      //   load_header_page(window.APP.DATA);
 	    });
 	  };
-	};
+	
+	  /**
+	   *    Defining hidding functions
+	   */
+	
+	  var prepare_content_to_hide = function prepare_content_to_hide(url, post_data) {
+	    models.variables.can_do_redirect = false;
+	
+	    models.refresh_data();
+	    models.prepare_url(url);
+	    models.prepare_post_data(post_data);
+	  },
+	      hide_content = function hide_content(url, post_data) {
+	    prepare_content_to_hide(url, post_data);
+	
+	    var container = models.settings.container,
+	        opacity = models.settings.opacity.hide,
+	        duration = models.settings.duration.hide;
+	
+	    $(container).animate({ opacity: opacity }, duration, function () {
+	      models.download_content(models.variables.url, show_content);
+	    });
+	  };
+	
+	  /**
+	   *    Defining public functions
+	   */
+	
+	  this.change_content = hide_content;
+	}; /**
+	    *    Created by mrskull on 24.11.16.
+	    */
 
 /***/ },
 /* 14 */
@@ -665,15 +654,17 @@
 	   */
 	
 	  this.prepare_url = function (response_url) {
-	    if (response_url) this.variables.url = response_url;else if (typeof this.settings.url !== 'undefined') this.variables.url = this.settings.url;else this.variables.url = _structure.data_controller.get('path');
+	    if (!response_url) if (typeof this.settings.url !== 'undefined') response_url = this.settings.url;else response_url = _structure.data_controller.get('path');
+	
+	    this.variables.url = response_url;
 	  };
 	
-	  this.prepare_post_data = function (object) {
-	    if (!object) object = {};
+	  this.prepare_post_data = function (response_data) {
+	    if (!response_data) response_data = {};
 	
-	    if (typeof object.__form__ === 'undefined') object['__content__'] = this.settings.name;
+	    if (typeof response_data.__form__ === 'undefined') response_data['__content__'] = this.settings.name;
 	
-	    this.variables.post_data = object;
+	    this.variables.post_data = response_data;
 	  };
 	
 	  /**
@@ -686,7 +677,16 @@
 	
 	  this.refresh_events = function () {
 	    APP.throw_event(window.EVENTS.define);
-	    //img_loader.define();
+	  };
+	
+	  /**
+	   *    Defining download functions
+	   */
+	
+	  this.download_content = function (url, callback) {
+	    this.prepare_url(url);
+	
+	    window.APP.http_request(this.variables.url, this.variables.post_data, callback);
 	  };
 	}; /**
 	    * Created by mrskull on 26.12.16.
@@ -706,63 +706,75 @@
 	var _views = __webpack_require__(16);
 	
 	var Plugins_Motion_Controllers = exports.Plugins_Motion_Controllers = function Plugins_Motion_Controllers(config) {
-	  var controller = new _views.Plugins_Motion_Views(config),
-	      settings = controller.models.settings;
+	  var plugin_motion_views = new _views.Plugins_Motion_Views(config),
+	      settings = plugin_motion_views.models.settings;
 	
-	  this.start = function () {
-	    set_start_position();
+	  ///////////////////////////////
+	
+	  var swipe_open = function swipe_open() {
+	    if (plugin_motion_views.models.check_possibility_of_swipe()) plugin_motion_views.plugin_open();
+	  },
+	      swipe_close = function swipe_close() {
+	    if (plugin_motion_views.models.check_possibility_of_swipe()) plugin_motion_views.plugin_close();
+	  },
+	      pre_swipe_open = function pre_swipe_open(event) {
+	    var y = event.gesture.center.y - event.gesture.distance;
+	
+	    if (y <= 70) swipe_open();
+	  },
+	      set_start_position = function set_start_position() {
+	    var $container = $(settings.container),
+	        $content = $container.children(settings.content),
+	        position = void 0,
+	        height = $content.outerHeight(),
+	        width = $content.outerWidth(),
+	        direction_open = settings.direction_open,
+	        direction_close = settings.direction_close;
+	
+	    settings.height = height;
+	    settings.width = width;
+	
+	    if (direction_open === 'top' || direction_open === 'bottom') position = -height;else if (direction_open === 'left' || direction_open === 'right') position = -width;
+	
+	    if (position) $($container).css(direction_close, position);
+	  },
+	      stop_propagation = function stop_propagation(event) {
+	    event.stopPropagation();
 	  };
+	
+	  //////////////////////////////////////////
 	
 	  this.define = function () {
 	    var $window = $(window),
 	        $body = $('body'),
-	        $content = $(settings.content);
+	        $container = $(settings.container),
+	        $hide = $(settings.container + ' > ' + settings.hide);
 	
 	    // -- Swipe events
 	
-	    if (settings.direction_open === 'top' || settings.direction_open === 'bottom') $body.hammer().on(settings.swipe_open, pre_plugin_open);else $body.hammer().on(settings.swipe_open, controller.plugin_open);
+	    if (settings.direction_open === 'top' || settings.direction_open === 'bottom') $body.hammer().on(settings.swipe_open, pre_swipe_open);else $body.hammer().on(settings.swipe_open, swipe_open);
 	
-	    $body.hammer().on(settings.swipe_close, controller.plugin_close);
+	    $body.hammer().on(settings.swipe_close, swipe_close);
 	
 	    $body.data('hammer').get('swipe').set({ direction: Hammer.DIRECTION_ALL });
 	
 	    // -- Other events
 	
-	    $body.click(controller.plugin_close);
+	    $body.click(swipe_close);
+	    $hide.click(swipe_close);
+	    $window.resize(swipe_close);
+	    window.APP.add_own_event('close_plugins', swipe_close);
 	
-	    $window.resize(controller.plugin_close);
-	
-	    window.APP.add_own_event('close_plugins', controller.plugin_close);
-	
-	    $content.click(stop_propagation);
-	
-	    // -- Functions running during defining
+	    $container.click(stop_propagation);
 	
 	    set_start_position();
 	  };
 	
-	  //////////////////////////////////////////
-	
-	
-	  var pre_plugin_open = function pre_plugin_open(event) {
-	    var y = event.gesture.center.y - event.gesture.distance;
-	
-	    if (y <= 70) controller.plugin_open();
-	  },
-	      set_start_position = function set_start_position() {
-	    var position = void 0,
-	        height = settings.height,
-	        width = settings.width,
-	        direction_open = settings.direction_open,
-	        direction_close = settings.direction_close;
-	
-	    if (direction_open === 'top' || direction_open === 'bottom') position = -height;else if (direction_open === 'left' || direction_open === 'right') position = -width;
-	
-	    if (position) $(settings.container).css(direction_close, position);
-	  },
-	      stop_propagation = function stop_propagation(event) {
-	    event.stopPropagation();
+	  this.start = function () {
+	    set_start_position();
 	  };
+	
+	  this.plugin_open = plugin_motion_views.plugin_open;
 	}; /**
 	    * Created by mrskull on 06.01.17.
 	    */
@@ -788,21 +800,34 @@
 	
 	  this.plugin_open = function () {
 	    if (models.check_possibility_of_opening()) {
-	      css[models.settings.direction_close] = 0;
+	      var container = models.settings.container,
+	          hide = models.settings.hide,
+	          direction_close = models.settings.direction_close,
+	          duration_open = models.settings.duration_open;
 	
-	      $(models.settings.container).stop().animate(css, models.settings.duration_open, function () {
+	      css[direction_close] = 0;
+	
+	      $(container).stop().animate(css, duration_open, function () {
 	        models.change_possibility_of_opening(false);
-	      });
+	      }).children(hide).fadeIn(duration_open);
 	    }
 	  };
 	
 	  this.plugin_close = function () {
 	    if (models.check_is_open()) {
-	      if (models.settings.direction_open === 'top' || models.settings.direction_open === 'bottom') css[models.settings.direction_close] = -models.settings.height;else if (models.settings.direction_open === 'right' || models.settings.direction_open === 'left') css[models.settings.direction_close] = -models.settings.width;
+	      var container = models.settings.container,
+	          hide = models.settings.hide,
+	          direction_open = models.settings.direction_open,
+	          direction_close = models.settings.direction_close,
+	          duration_close = models.settings.duration_close,
+	          width = models.settings.width,
+	          height = models.settings.height;
 	
-	      $(models.settings.container).stop().animate(css, models.settings.duration_close, function () {
+	      if (direction_open === 'top' || direction_open === 'bottom') css[direction_close] = -height;else if (direction_open === 'right' || direction_open === 'left') css[direction_close] = -width;
+	
+	      $(container).stop().animate(css, duration_close, function () {
 	        models.change_possibility_of_opening(true);
-	      });
+	      }).children(hide).fadeOut(duration_close);
 	    }
 	  };
 	}; /**
@@ -828,6 +853,7 @@
 	  this.settings = {
 	    container: undefined,
 	    content: undefined,
+	    hide: '.hide',
 	
 	    width: undefined,
 	    height: undefined,
@@ -912,24 +938,7 @@
 	    is_not_set: true
 	  };
 	
-	  this.check_is_open = function () {
-	    return this.state.is_open;
-	  };
-	
-	  this.check_is_close = function () {
-	    return !this.state.is_open;
-	  };
-	
-	  this.check_possibility_of_opening = function () {
-	    if (check_by_sizes()) if (_structure.data_controller.get('can_do_open_plugin')) return this.check_is_close();
-	
-	    return false;
-	  };
-	
-	  this.change_possibility_of_opening = function (bool) {
-	    this.state.is_open = !bool;
-	    _structure.data_controller.change('can_do_open_plugin', bool);
-	  };
+	  /////////////////////////
 	
 	  var check_by_sizes = function check_by_sizes() {
 	    var width_window = $(window).outerWidth(),
@@ -946,6 +955,35 @@
 	    }
 	
 	    return false;
+	  },
+	      check_mobile_by_sizes = function check_mobile_by_sizes() {
+	    var width_window = parseInt($(window).outerWidth()),
+	        max_mobile_width = 1000;
+	
+	    return width_window < max_mobile_width;
+	  };
+	
+	  this.check_is_open = function () {
+	    return this.state.is_open;
+	  };
+	
+	  this.check_is_close = function () {
+	    return !this.state.is_open;
+	  };
+	
+	  this.check_possibility_of_swipe = function () {
+	    return check_mobile_by_sizes();
+	  };
+	
+	  this.check_possibility_of_opening = function () {
+	    if (check_by_sizes()) if (_structure.data_controller.get('can_do_open_plugin')) return this.check_is_close();
+	
+	    return false;
+	  };
+	
+	  this.change_possibility_of_opening = function (bool) {
+	    this.state.is_open = !bool;
+	    _structure.data_controller.change('can_do_open_plugin', bool);
 	  };
 	}; /**
 	    * Created by mrskull on 06.01.17.
@@ -960,7 +998,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.start = exports.define = undefined;
+	exports.plugin_open = exports.start = exports.define = undefined;
 	
 	var _controllers = __webpack_require__(12);
 	
@@ -985,6 +1023,7 @@
 	    cart_motion_controllers = void 0,
 	    config_motion = {
 	  container: '#CART',
+	  content: '.cart',
 	  open: 'left',
 	  can_open_by: 'width',
 	  can_open_from: 0,
@@ -1007,6 +1046,9 @@
 	  // -- Motion configuration
 	  cart_motion_controllers = new _controllers2.Plugins_Motion_Controllers(config_motion);
 	  cart_motion_controllers.start();
+	},
+	    plugin_open = exports.plugin_open = function plugin_open() {
+	  cart_motion_controllers.plugin_open();
 	};
 
 /***/ },
@@ -1018,7 +1060,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.start = exports.define = undefined;
+	exports.plugin_open = exports.start = exports.define = undefined;
 	
 	var _controllers = __webpack_require__(12);
 	
@@ -1068,6 +1110,9 @@
 	  // -- Motion configuration
 	  navigation_motion_controllers = new _controllers2.Plugins_Motion_Controllers(config_motion);
 	  navigation_motion_controllers.start();
+	},
+	    plugin_open = exports.plugin_open = function plugin_open() {
+	  navigation_motion_controllers.plugin_open();
 	};
 
 /***/ },
@@ -1083,8 +1128,26 @@
 	
 	var _controllers = __webpack_require__(12);
 	
+	var _controllers2 = __webpack_require__(11);
+	
+	var searcher_controllers = _interopRequireWildcard(_controllers2);
+	
+	var _controllers3 = __webpack_require__(19);
+	
+	var navigation_controllers = _interopRequireWildcard(_controllers3);
+	
+	var _controllers4 = __webpack_require__(18);
+	
+	var cart_controllers = _interopRequireWildcard(_controllers4);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
 	/**
 	 *    Defining private variables
+	 */
+	
+	/**
+	 * Created by mrskull on 08.01.17.
 	 */
 	
 	var header_loader_events = void 0,
@@ -1098,11 +1161,13 @@
 	 *    Defining public functions
 	 */
 	
-	/**
-	 * Created by mrskull on 08.01.17.
-	 */
+	var define = exports.define = function define() {
+	  $('#HEADER .navigation-mini-filter > button').click(searcher_controllers.plugin_open);
 	
-	var define = exports.define = function define() {},
+	  $('#HEADER .navigation-mini-navigation > button').click(navigation_controllers.plugin_open);
+	
+	  $('#HEADER .navigation-mini-cart > button').click(cart_controllers.plugin_open);
+	},
 	    start = exports.start = function start() {
 	  header_loader_events = new _controllers.Plugins_Loader_Controllers(config_loader);
 	  header_loader_events.define();
@@ -1325,7 +1390,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.start_link = exports.start = exports.define = undefined;
+	exports.change_content = exports.start = exports.define = undefined;
 	
 	var _structure = __webpack_require__(8);
 	
@@ -1335,7 +1400,7 @@
 	
 	var _views = __webpack_require__(26);
 	
-	var views = _interopRequireWildcard(_views);
+	var ground_views = _interopRequireWildcard(_views);
 	
 	var _controllers = __webpack_require__(12);
 	
@@ -1357,42 +1422,24 @@
 	};
 	
 	/**
-	 *    Defining public functions
+	 *    Defining private functions
 	 */
 	
-	var define = exports.define = function define() {
-	  img_loader.define();
-	
-	  $('a').click(start_link);
-	
-	  window.APP.add_own_event('redirect', ground_loader_controllers.redirect, false);
-	
-	  window.addEventListener('popstate', back_url);
-	
-	  $(window).resize(change_height_content);
-	
-	  change_height_content();
-	},
-	    start = exports.start = function start() {
-	  ground_loader_controllers = new _controllers.Plugins_Loader_Controllers(config_loader);
-	  ground_loader_controllers.define();
-	},
-	    start_link = exports.start_link = function start_link(event) {
+	var go_to_link = function go_to_link(event) {
 	  if (event.which === 1) {
+	    var url = $(this).attr('href');
+	
 	    event.preventDefault();
 	    window.APP.throw_event(EVENTS.close_plugins);
 	
-	    var url = $(this).attr('href');
-	
-	    views.change_url(url);
+	    ground_views.change_url(url);
 	
 	    if (_structure.data_controller.get('path') !== url) ground_loader_controllers.change_content(url);
 	  }
-	};
-	
-	var back_url = function back_url() {
+	},
+	    back_url = function back_url() {
 	  event.preventDefault();
-	  ground_loader_controllers.start();
+	  ground_loader_controllers.change_content();
 	},
 	    change_height_content = function change_height_content() {
 	  var height = {
@@ -1401,6 +1448,27 @@
 	  };
 	
 	  $(config_loader.container).height(height.window - height.header);
+	};
+	
+	/**
+	 *    Defining public functions
+	 */
+	
+	var define = exports.define = function define() {
+	  img_loader.define();
+	  change_height_content();
+	
+	  $('a').click(go_to_link);
+	  window.APP.add_own_event('redirect', ground_loader_controllers.redirect);
+	  window.APP.add_own_event('popstate', back_url);
+	  $(window).resize(change_height_content);
+	},
+	    start = exports.start = function start() {
+	  ground_loader_controllers = new _controllers.Plugins_Loader_Controllers(config_loader);
+	  ground_loader_controllers.define();
+	},
+	    change_content = exports.change_content = function change_content(url, post_data) {
+	  ground_loader_controllers.change_content(url, post_data);
 	};
 
 /***/ },
@@ -1573,7 +1641,7 @@
 	
 	var _controllers = __webpack_require__(24);
 	
-	var ground_controller = _interopRequireWildcard(_controllers);
+	var ground_controllers = _interopRequireWildcard(_controllers);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -1581,7 +1649,7 @@
 	 *    Defining private functions
 	 */
 	
-	var _prepare_post_data = function _prepare_post_data(form_name, object) {
+	var prepare_post_data = function prepare_post_data(form_name, object) {
 	  if (!object) object = {};
 	
 	  object.__form__ = form_name;
@@ -1598,8 +1666,8 @@
 	 */
 	
 	var send = exports.send = function send(form_name, url, data_post) {
-	  data_post = _prepare_post_data(form_name, data_post);
-	  ground_controller.start(url, data_post);
+	  data_post = prepare_post_data(form_name, data_post);
+	  ground_controllers.change_content(url, data_post);
 	};
 
 /***/ },
