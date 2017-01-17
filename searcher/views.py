@@ -39,14 +39,19 @@ class Search_Engine:
 
     def Search_Products(self):
 
-        if self.request.session['translator_language'] == 'EN':
-            self.Search_Products_EN()
+        if not self.phrase: # phrase is empty
+            self.result = Product.objects.all()
 
-        if self.request.session['translator_language'] == 'PL':
-            self.Search_Products_PL()
+        else:
 
-        if self.request.session['translator_language'] == 'DE':
-            self.Search_Products_DE()
+            if self.request.session['translator_language'] == 'EN':
+                self.Search_Products_EN()
+
+            if self.request.session['translator_language'] == 'PL':
+                self.Search_Products_PL()
+
+            if self.request.session['translator_language'] == 'DE':
+                self.Search_Products_DE()
 
         return self.Sort_Result()
 
@@ -197,9 +202,5 @@ class Set_Phrase:
 
 
 def Filter_Products(request, phrase):
-
-    if not phrase:
-        return Product.objects.all()
-
     searcher = Search_Engine(request, phrase)
     return searcher.Search_Products()

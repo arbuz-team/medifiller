@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from abc import ABCMeta, abstractmethod
 from session.views import *
 from translator.views import *
+from product.models import *
 import re
 
 
@@ -34,6 +35,8 @@ class Manager(Dynamic_Base):
         return self.Render_HTML('parts/cart.html')
 
     def Manage_Content_Filters(self):
+        self.content['brand'] = Brand.objects.all()
+        self.content['purpose'] = Purpose.objects.all()
         return self.Render_HTML('parts/filters.html')
 
     def Manage_Content_Header(self):
