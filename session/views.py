@@ -49,7 +49,16 @@ class Session_Controller:
         if 'product_where_display' not in self.request.session:
             self.request.session['product_where_display'] = 0
 
-        Translator.Check_Subdomain_Language(self.request)
+    def Check_Session_Searcher(self):
+
+        if 'searcher_filter_brand' not in self.request.session:
+            self.request.session['searcher_filter_brand'] = []
+
+        if 'searcher_filter_purpose' not in self.request.session:
+            self.request.session['searcher_filter_purpose'] = []
+
+        if 'searcher_phrase' not in self.request.session:
+            self.request.session['searcher_phrase'] = ''
 
     def Check_Session(self):
 

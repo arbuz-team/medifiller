@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from product.views import *
+from searcher.views import *
 from .models import *
 
 
@@ -50,7 +51,11 @@ class Contains_Start(Dynamic_Event_Menager):
 class Contains_Products(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
-        self.content['products'] = Product.objects.all()
+        self.content['products'] = Filter_Products(
+            self.request,
+            self.request.session['searcher_phrase']
+        )
+
         return self.Render_HTML('main/products.html')
 
     @staticmethod
