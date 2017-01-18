@@ -51,20 +51,11 @@ class Session_Controller:
 
     def Check_Session_Searcher(self):
 
-        if 'searcher_filter_brand' not in self.request.session:
-            self.request.session['searcher_filter_brand'] = []
-
-        if 'searcher_filter_purpose' not in self.request.session:
-            self.request.session['searcher_filter_purpose'] = []
-
-        if 'searcher_phrase' not in self.request.session:
-            self.request.session['searcher_phrase'] = ''
-
-        if 'searcher_order_name' not in self.request.session:
-            self.request.session['searcher_order_name'] = 'search_accuracy'
-
-        if 'searcher_order_direction' not in self.request.session:
-            self.request.session['searcher_order_direction'] = 'descending'
+        self.request.session['searcher_filter_brand'] = []
+        self.request.session['searcher_filter_purpose'] = []
+        self.request.session['searcher_phrase'] = ''
+        self.request.session['searcher_order_name'] = 'search_accuracy'
+        self.request.session['searcher_order_direction'] = 'descending'
 
     def Check_Session(self):
 
