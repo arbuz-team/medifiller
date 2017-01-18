@@ -233,13 +233,13 @@ class Set_Filters:
 
     def Manage_Order(self):
 
-        if 'name' in self.request.POST:
+        if 'name' in self.request.POST['__filter__']:
             self.request.session['searcher_order_name'] = \
-                self.request.POST['name']
+                self.request.POST['value']
 
-        if 'direction' in self.request.POST:
+        if 'direction' in self.request.POST['__filter__']:
             self.request.session['searcher_order_direction'] = \
-                self.request.POST['direction']
+                self.request.POST['value']
 
         return JsonResponse({'__filter__': 'true'})
 
@@ -254,7 +254,7 @@ class Set_Filters:
         if self.request.POST['__filter__'] == 'phrase':
             return self.Manage_Phrase()
 
-        if self.request.POST['__filter__'] == 'order':
+        if 'order' in self.request.POST['__filter__']:
             return self.Manage_Order()
 
         return JsonResponse({'__filter__': 'false'})
