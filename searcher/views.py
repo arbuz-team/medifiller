@@ -14,7 +14,7 @@ class Search_Engine:
             reduce(operator.or_, (Q(details_en__description__icontains=s) for s in self.phrase))    |
             reduce(operator.or_, (Q(keywords__icontains=s) for s in self.phrase))                   |
             reduce(operator.or_, (Q(brand__name__icontains=s) for s in self.phrase))                |
-            reduce(operator.or_, (Q(purpose__name__icontains=s) for s in self.phrase))              |
+            reduce(operator.or_, (Q(purpose__name__icontains=s) for s in self.phrase))              &
             Q(where_display__display_en=True)
         )
 
@@ -25,7 +25,7 @@ class Search_Engine:
             reduce(operator.or_, (Q(details_pl__description__icontains=s) for s in self.phrase))    |
             reduce(operator.or_, (Q(keywords__icontains=s) for s in self.phrase))                   |
             reduce(operator.or_, (Q(brand__name__icontains=s) for s in self.phrase))                |
-            reduce(operator.or_, (Q(purpose__name__icontains=s) for s in self.phrase))              |
+            reduce(operator.or_, (Q(purpose__name__icontains=s) for s in self.phrase))              &
             Q(where_display__display_pl=True)
         )
 
@@ -36,7 +36,7 @@ class Search_Engine:
             reduce(operator.or_, (Q(details_de__description__icontains=s) for s in self.phrase))    |
             reduce(operator.or_, (Q(keywords__icontains=s) for s in self.phrase))                   |
             reduce(operator.or_, (Q(brand__name__icontains=s) for s in self.phrase))                |
-            reduce(operator.or_, (Q(purpose__name__icontains=s) for s in self.phrase))              |
+            reduce(operator.or_, (Q(purpose__name__icontains=s) for s in self.phrase))              &
             Q(where_display__display_de=True)
         )
 
@@ -56,7 +56,8 @@ class Search_Engine:
             if self.request.session['translator_language'] == 'DE':
                 self.Search_Products_DE()
 
-        return self.Sort_Result()
+        self.Sort_Result()
+        return self.result
 
     def Sort_Result_Order_By_Hits(self):
 
@@ -162,16 +163,23 @@ class Search_Engine:
 
         brand = self.request.session['searcher_filter_brand']
         purpose = self.request.session['searcher_filter_purpose']
+        result = self.result
+
+        if not brand and not purpose:
+            return
 
         if brand: # user chose filter
             for product in self.result:
                 if product.brand.name not in brand:
-                    self.result.remove(product)
+                    result.remove(product)
 
+        self.result = result
         if purpose: # user chose filter
             for product in self.result:
                 if product.purpose.name not in purpose:
-                    self.result.remove(product)
+                    result.remove(product)
+
+        self.result = result
 
     def Sort_Result(self):
 
@@ -189,7 +197,10 @@ class Search_Engine:
     def __init__(self, request, phrase):
         self.result = []
         self.request = request
-        self.phrase = phrase.split(' ')
+        self.phrase = phrase
+
+        if self.phrase:
+            self.phrase = phrase.split(' ')
 
 
 
@@ -200,13 +211,13 @@ class Set_Filters:
 
         if self.request.POST['action'] == 'append':#
             if self.request.POST['name'] not in filters:
-                self.request.session['searcher_filter_brand']\
-                    .append(self.request.POST['name'])
+                filters.append(self.request.POST['name'])
+                self.request.session['searcher_filter_brand'] = filters
 
         if self.request.POST['action'] == 'delete':
             if self.request.POST['name'] in filters:
-                self.request.session['searcher_filter_brand']\
-                    .remove(self.request.POST['name'])
+                filters.remove(self.request.POST['name'])
+                self.request.session['searcher_filter_brand'] = filters
 
         return JsonResponse({'__filter__': 'true'})
 
@@ -215,13 +226,13 @@ class Set_Filters:
 
         if self.request.POST['action'] == 'append':
             if self.request.POST['name'] not in filters:
-                self.request.session['searcher_filter_purpose']\
-                    .append(self.request.POST['name'])
+                filters.append(self.request.POST['name'])
+                self.request.session['searcher_filter_purpose'] = filters
 
         if self.request.POST['action'] == 'delete':
             if self.request.POST['name'] in filters:
-                self.request.session['searcher_filter_purpose']\
-                    .remove(self.request.POST['name'])
+                filters.remove(self.request.POST['name'])
+                self.request.session['searcher_filter_purpose'] = filters
 
         return JsonResponse({'__filter__': 'true'})
 
