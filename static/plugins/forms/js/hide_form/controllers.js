@@ -1,6 +1,7 @@
 /**
- * Created by mrskull on 17.12.16.
+ * Created by mrskull on 17.01.17.
  */
+
 import * as form from './views'
 
 
@@ -10,7 +11,7 @@ import * as form from './views'
 
 export let define = function()
 {
-  let $otoczka_pola = $('.mini_form > .otoczka_pola, .mini_form.otoczka_pola');
+  let $otoczka_pola = $('.hide_form > .otoczka_pola');
 
   $otoczka_pola.children('div')
     .click(edit_field);

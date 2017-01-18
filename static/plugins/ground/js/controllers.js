@@ -43,6 +43,12 @@ let
     }
   },
 
+  redirect = function(event)
+  {
+    ground_views.change_url(window.APP.DATA.redirect);
+    ground_loader_controllers.redirect(event);
+  },
+
 
   back_url = function()
   {
@@ -75,7 +81,7 @@ export let
     change_height_content();
 
     $('a').click(go_to_link);
-    window.APP.add_own_event('redirect', ground_loader_controllers.redirect);
+    window.APP.add_own_event('redirect', redirect);
     window.APP.add_own_event('popstate', back_url);
     $(window).resize(change_height_content);
   },

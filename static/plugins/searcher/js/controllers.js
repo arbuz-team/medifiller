@@ -3,7 +3,9 @@
  */
 
 import {Plugins_Loader_Controllers} from '../../plugins_loader/controllers'
+import {} from '../../forms/js/auto_form/controllers'
 import {Plugins_Motion_Controllers} from '../../plugins_motion/controllers'
+
 
 /**
  *    Defining private variables

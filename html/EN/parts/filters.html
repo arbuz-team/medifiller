@@ -7,37 +7,61 @@
 </div>
 
 
-<div class="otoczka_pola">
-    <input name="search" placeholder="search" type="text" />
+<div class="searcher-searcher auto_form">
+    <form class="otoczka_pola" action="/searcher/phrase/" data-origin="filter" data-target="ground">
+        <input name="search" placeholder="search" type="text" class="auto_field" data-name="phrase" />
+    </form>
 </div>
 
+<form class="searcher-filters auto_form" action="/searcher/filters/" data-origin="filter" data-target="ground">
 
-<div class="otoczka_pola">
-    <select name="sort_by">
-        <option selected>sort by</option>
-        <option> ble 1 </option>
-        <option> ble 2 </option>
-    </select>
-</div>
-
-
-<div class="otoczka_pola">
-    <select name="order_by">
-        <option selected>order by</option>
-        <option> ble 1 </option>
-        <option> ble 2 </option>
-    </select>
-</div>
+    <div class="searcher-sort">
+        <div class="otoczka_pola">
+            <select name="sort_by" class="auto_field" data-name="order_name">
+                <option value="search_accuracy" selected> search accuracy </option>
+                <option value="price"> price </option>
+                <option value="name_of_product"> name of product </option>
+            </select>
+        </div>
+    </div>
 
 
-<div class="filters">
-    <div class="filters-title">Filters</div>
+    <div class="searcher-order">
+        <div class="otoczka_pola">
+            <select name="order_by" class="auto_field" data-name="order_direction">
+                <option value="descending" selected> descending </option>
+                <option value="ascending"> ascending </option>
+            </select>
+        </div>
+    </div>
 
 
-    <ul class="filters-content">
-        <li>Bla</li>
-        <li>Bla</li>
-        <li>Bla</li>
-        <li>Bla</li>
-    </ul>
-</div>
+    <div class="searcher-filters-title">Brand</div>
+
+    <div class="searcher-filters-content">
+        <ul>
+            {% for brand in brands %}
+
+                <li> <input name="{{ brand.name }}" type="checkbox" class="auto_field" data-name="brand" /> <label>{{ brand.name }}</label> </li>
+
+            {% endfor %}
+
+            <!--<li> <input name="brand" value="brand_2" type="checkbox" class="auto_field" /> <label>Bla</label> </li>-->
+            <!--<li> <input name="brand" value="brand_3" type="checkbox" class="auto_field" /> <label>Bla</label> </li>-->
+            <!--<li> <input name="brand" value="brand_4" type="checkbox" class="auto_field" /> <label>Bla</label> </li>-->
+        </ul>
+    </div>
+
+
+    <div class="searcher-filters-title">Purpose</div>
+
+    <div class="searcher-filters-content">
+        <ul>
+            {% for purpose in purposes %}
+
+            <li> <input name="{{ purpose.name }}" type="checkbox" class="auto_field" data-name="purpose" /> <label>{{ purpose.name }}</label> </li>
+
+            {% endfor %}
+        </ul>
+    </div>
+</form>

@@ -35,8 +35,8 @@ class Manager(Dynamic_Base):
         return self.Render_HTML('parts/cart.html')
 
     def Manage_Content_Filters(self):
-        self.content['brand'] = Brand.objects.all()
-        self.content['purpose'] = Purpose.objects.all()
+        self.content['brands'] = Brand.objects.all()
+        self.content['purposes'] = Purpose.objects.all()
         return self.Render_HTML('parts/filters.html')
 
     def Manage_Content_Header(self):

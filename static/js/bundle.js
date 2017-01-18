@@ -131,6 +131,17 @@
 	  return this;
 	};
 	
+	$.prototype.serialize_object = function () {
+	  var fields = $(this).serializeArray(),
+	      form_object = {};
+	
+	  $.each(fields, function (i, field) {
+	    form_object[field.name] = field.value;
+	  });
+	
+	  return form_object;
+	};
+	
 	Array.prototype.delete_empty = function delete_empty() {
 	  var url_array = [];
 	
@@ -287,27 +298,27 @@
 	
 	var searcher_controller = _interopRequireWildcard(_controllers);
 	
-	var _controllers2 = __webpack_require__(18);
+	var _controllers2 = __webpack_require__(21);
 	
 	var cart_controller = _interopRequireWildcard(_controllers2);
 	
-	var _controllers3 = __webpack_require__(19);
+	var _controllers3 = __webpack_require__(22);
 	
 	var navigation_controller = _interopRequireWildcard(_controllers3);
 	
-	var _controllers4 = __webpack_require__(20);
+	var _controllers4 = __webpack_require__(23);
 	
 	var header_controller = _interopRequireWildcard(_controllers4);
 	
-	var _controllers5 = __webpack_require__(21);
+	var _controllers5 = __webpack_require__(24);
 	
 	var dialogue_window = _interopRequireWildcard(_controllers5);
 	
-	var _controllers6 = __webpack_require__(24);
+	var _controllers6 = __webpack_require__(27);
 	
 	var ground_controller = _interopRequireWildcard(_controllers6);
 	
-	var _controllers7 = __webpack_require__(27);
+	var _controllers7 = __webpack_require__(30);
 	
 	var form_controller = _interopRequireWildcard(_controllers7);
 	
@@ -356,14 +367,12 @@
 	
 	var _controllers = __webpack_require__(12);
 	
-	var _controllers2 = __webpack_require__(15);
+	__webpack_require__(15);
+	
+	var _controllers2 = __webpack_require__(18);
 	
 	/**
 	 *    Defining private variables
-	 */
-	
-	/**
-	 * Created by mrskull on 07.01.17.
 	 */
 	
 	var searcher_loader_controllers = void 0,
@@ -388,6 +397,10 @@
 	
 	/**
 	 *    Defining public functions
+	 */
+	
+	/**
+	 * Created by mrskull on 07.01.17.
 	 */
 	
 	var define = exports.define = function define() {
@@ -701,9 +714,164 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Plugins_Motion_Controllers = undefined;
+	exports.define = undefined;
 	
 	var _views = __webpack_require__(16);
+	
+	var add_event_on_fields = function add_event_on_fields(auto_form_views) {
+	  var settings = auto_form_views.models.settings,
+	      $field = void 0;
+	
+	  settings.fields.each(function () {
+	    $field = $(this);
+	
+	    if ($field.is(':checkbox')) $field.change(auto_form_views.send_checkbox);else if ($field.is(':text')) $field.change(auto_form_views.send_default);else if ($field.is('select')) $field.change(auto_form_views.send_default);
+	  });
+	}; /**
+	    * Created by mrskull on 17.01.17.
+	    */
+	
+	var define = exports.define = function define() {
+	  var $forms = $('form.auto_form, .auto_form form');
+	
+	  $forms.each(function () {
+	    var $form = $(this),
+	        config = {
+	      form: $form,
+	      fields: $('.auto_field', $form)
+	    },
+	        auto_form_views = new _views.Auto_Form_Views(config);
+	
+	    add_event_on_fields(auto_form_views);
+	  });
+	};
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Auto_Form_Views = undefined;
+	
+	var _models = __webpack_require__(17);
+	
+	var Auto_Form_Views = exports.Auto_Form_Views = function Auto_Form_Views(config) {
+	  var models = new _models.Auto_Form_Models(config);
+	
+	  this.models = models;
+	
+	  /**
+	   *    Defining public functions
+	   */
+	
+	  this.send_checkbox = function () {
+	    var $field = $(this),
+	        post_data = {};
+	
+	    post_data['__' + models.settings.origin + '__'] = $field.data('name');
+	    post_data['name'] = $field.attr('name');
+	
+	    if ($field.is(':checked')) post_data['action'] = 'append';else post_data['action'] = 'delete';
+	
+	    send(post_data);
+	  };
+	
+	  this.send_default = function () {
+	    var $field = $(this),
+	        post_data = {};
+	
+	    post_data['__' + models.settings.origin + '__'] = $field.data('name');
+	    post_data['value'] = $field.val();
+	
+	    send(post_data);
+	  };
+	
+	  /**
+	   *    Defining private functions
+	   */
+	
+	  var send = function send(post_data) {
+	    window.APP.http_request(models.settings.action, post_data, function () {
+	      APP.DATA = {
+	        redirect: '/products/',
+	        delay: 0
+	      };
+	      APP.throw_event(window.EVENTS.redirect);
+	    });
+	  };
+	}; /**
+	    * Created by mrskull on 17.01.17.
+	    */
+	
+	/**
+	 *    Defining private functions
+	 */
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Auto_Form_Models = undefined;
+	
+	var _structure = __webpack_require__(8);
+	
+	var Auto_Form_Models = exports.Auto_Form_Models = function Auto_Form_Models(config) {
+	  var that = this;
+	
+	  this.settings = {
+	    form: undefined,
+	    fields: undefined,
+	
+	    action: undefined,
+	    origin: undefined,
+	    target: undefined
+	  };
+	
+	  var load_settings = function load_settings() {
+	    if (typeof config !== 'undefined') {
+	      // -- Form
+	      if (typeof config.form !== 'undefined') {
+	        that.settings.form = config.form;
+	
+	        var $form = that.settings.form;
+	        that.settings.action = $form.attr('action');
+	        that.settings.origin = $form.data('origin');
+	        that.settings.target = $form.data('target');
+	      }
+	
+	      // -- Fields
+	      if (typeof config.fields !== 'undefined') that.settings.fields = config.fields;
+	    }
+	  };
+	
+	  load_settings();
+	
+	  /////////////////////////
+	}; /**
+	    * Created by mrskull on 17.01.17.
+	    */
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Plugins_Motion_Controllers = undefined;
+	
+	var _views = __webpack_require__(19);
 	
 	var Plugins_Motion_Controllers = exports.Plugins_Motion_Controllers = function Plugins_Motion_Controllers(config) {
 	  var plugin_motion_views = new _views.Plugins_Motion_Views(config),
@@ -780,7 +948,7 @@
 	    */
 
 /***/ },
-/* 16 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -790,7 +958,7 @@
 	});
 	exports.Plugins_Motion_Views = undefined;
 	
-	var _models = __webpack_require__(17);
+	var _models = __webpack_require__(20);
 	
 	var Plugins_Motion_Views = exports.Plugins_Motion_Views = function Plugins_Motion_Views(config) {
 	  var models = new _models.Plugins_Motion_Models(config),
@@ -835,7 +1003,7 @@
 	    */
 
 /***/ },
-/* 17 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -990,7 +1158,7 @@
 	    */
 
 /***/ },
-/* 18 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1002,7 +1170,7 @@
 	
 	var _controllers = __webpack_require__(12);
 	
-	var _controllers2 = __webpack_require__(15);
+	var _controllers2 = __webpack_require__(18);
 	
 	/**
 	 *    Defining private variables
@@ -1052,7 +1220,7 @@
 	};
 
 /***/ },
-/* 19 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1064,7 +1232,7 @@
 	
 	var _controllers = __webpack_require__(12);
 	
-	var _controllers2 = __webpack_require__(15);
+	var _controllers2 = __webpack_require__(18);
 	
 	/**
 	 *    Defining private variables
@@ -1116,7 +1284,7 @@
 	};
 
 /***/ },
-/* 20 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1132,11 +1300,11 @@
 	
 	var searcher_controllers = _interopRequireWildcard(_controllers2);
 	
-	var _controllers3 = __webpack_require__(19);
+	var _controllers3 = __webpack_require__(22);
 	
 	var navigation_controllers = _interopRequireWildcard(_controllers3);
 	
-	var _controllers4 = __webpack_require__(18);
+	var _controllers4 = __webpack_require__(21);
 	
 	var cart_controllers = _interopRequireWildcard(_controllers4);
 	
@@ -1174,7 +1342,7 @@
 	};
 
 /***/ },
-/* 21 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1184,11 +1352,11 @@
 	});
 	exports.define = undefined;
 	
-	var _models = __webpack_require__(22);
+	var _models = __webpack_require__(25);
 	
 	var models = _interopRequireWildcard(_models);
 	
-	var _views = __webpack_require__(23);
+	var _views = __webpack_require__(26);
 	
 	var dialogue_window_controller = _interopRequireWildcard(_views);
 	
@@ -1266,7 +1434,7 @@
 	};
 
 /***/ },
-/* 22 */
+/* 25 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1321,7 +1489,7 @@
 	};
 
 /***/ },
-/* 23 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1331,7 +1499,7 @@
 	});
 	exports.open_confirm = exports.open_prompt = exports.open_alert = exports.close_window = exports.open_window = exports.window_data = exports.selectors = undefined;
 	
-	var _models = __webpack_require__(22);
+	var _models = __webpack_require__(25);
 	
 	var models = _interopRequireWildcard(_models);
 	
@@ -1382,7 +1550,7 @@
 	};
 
 /***/ },
-/* 24 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1394,11 +1562,11 @@
 	
 	var _structure = __webpack_require__(8);
 	
-	var _img_loader = __webpack_require__(25);
+	var _img_loader = __webpack_require__(28);
 	
 	var img_loader = _interopRequireWildcard(_img_loader);
 	
-	var _views = __webpack_require__(26);
+	var _views = __webpack_require__(29);
 	
 	var ground_views = _interopRequireWildcard(_views);
 	
@@ -1437,6 +1605,10 @@
 	    if (_structure.data_controller.get('path') !== url) ground_loader_controllers.change_content(url);
 	  }
 	},
+	    redirect = function redirect(event) {
+	  ground_views.change_url(window.APP.DATA.redirect);
+	  ground_loader_controllers.redirect(event);
+	},
 	    back_url = function back_url() {
 	  event.preventDefault();
 	  ground_loader_controllers.change_content();
@@ -1459,7 +1631,7 @@
 	  change_height_content();
 	
 	  $('a').click(go_to_link);
-	  window.APP.add_own_event('redirect', ground_loader_controllers.redirect);
+	  window.APP.add_own_event('redirect', redirect);
 	  window.APP.add_own_event('popstate', back_url);
 	  $(window).resize(change_height_content);
 	},
@@ -1472,7 +1644,7 @@
 	};
 
 /***/ },
-/* 25 */
+/* 28 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1531,7 +1703,7 @@
 	};
 
 /***/ },
-/* 26 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1559,7 +1731,7 @@
 	    */
 
 /***/ },
-/* 27 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1569,21 +1741,25 @@
 	});
 	exports.define = undefined;
 	
-	var _views = __webpack_require__(28);
+	var _views = __webpack_require__(31);
 	
 	var form_controller = _interopRequireWildcard(_views);
 	
-	var _controllers = __webpack_require__(29);
+	var _controllers = __webpack_require__(32);
 	
 	var validator = _interopRequireWildcard(_controllers);
 	
-	var _controllers2 = __webpack_require__(33);
+	var _controllers2 = __webpack_require__(36);
 	
-	var mini_form = _interopRequireWildcard(_controllers2);
+	var hide_form = _interopRequireWildcard(_controllers2);
 	
-	var _controllers3 = __webpack_require__(35);
+	var _controllers3 = __webpack_require__(15);
 	
-	var post_button = _interopRequireWildcard(_controllers3);
+	var auto_form = _interopRequireWildcard(_controllers3);
+	
+	var _controllers4 = __webpack_require__(38);
+	
+	var post_button = _interopRequireWildcard(_controllers4);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -1591,15 +1767,12 @@
 	 *    Defining public functions
 	 */
 	
-	/**
-	 * Created by mrskull on 24.11.16.
-	 */
-	
 	var define = exports.define = function define() {
 	  $('form').submit(prepare_form_to_send);
 	
 	  validator.define();
-	  mini_form.define();
+	  hide_form.define();
+	  auto_form.define();
 	  post_button.define();
 	};
 	
@@ -1607,29 +1780,22 @@
 	 *    Defining private functions
 	 */
 	
-	var get_form_fields = function get_form_fields(element) {
-	  var $fields = $(element).serializeArray(),
-	      form_object = {};
-	
-	  $.each($fields, function (i, field) {
-	    form_object[field.name] = field.value;
-	  });
-	
-	  return form_object;
-	};
+	/**
+	 * Created by mrskull on 24.11.16.
+	 */
 	
 	var prepare_form_to_send = function prepare_form_to_send(event) {
 	  event.preventDefault();
 	
 	  var form_name = $(this).data('name'),
 	      url = $(this).attr('action'),
-	      form_object = get_form_fields(this);
+	      form_object = $(this).serialize_object();
 	
 	  form_controller.send(form_name, url, form_object);
 	};
 
 /***/ },
-/* 28 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1639,7 +1805,7 @@
 	});
 	exports.send = undefined;
 	
-	var _controllers = __webpack_require__(24);
+	var _controllers = __webpack_require__(27);
 	
 	var ground_controllers = _interopRequireWildcard(_controllers);
 	
@@ -1671,7 +1837,7 @@
 	};
 
 /***/ },
-/* 29 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1681,7 +1847,7 @@
 	});
 	exports.define = undefined;
 	
-	var _checkers = __webpack_require__(30);
+	var _checkers = __webpack_require__(33);
 	
 	var Validators = {};
 	
@@ -1800,7 +1966,7 @@
 	};
 
 /***/ },
-/* 30 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1810,7 +1976,7 @@
 	});
 	exports.Constructor_Validator = undefined;
 	
-	var _views = __webpack_require__(31);
+	var _views = __webpack_require__(34);
 	
 	Object.defineProperty(exports, 'Constructor_Validator', {
 	  enumerable: true,
@@ -1912,7 +2078,7 @@
 	////////////////////////////////////////////
 
 /***/ },
-/* 31 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1922,7 +2088,7 @@
 	});
 	exports.Constructor_Validator = exports.checker = undefined;
 	
-	var _config = __webpack_require__(32);
+	var _config = __webpack_require__(35);
 	
 	var _structure = __webpack_require__(8);
 	
@@ -2047,7 +2213,7 @@
 	};
 
 /***/ },
-/* 32 */
+/* 35 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2078,7 +2244,7 @@
 	};
 
 /***/ },
-/* 33 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2088,7 +2254,7 @@
 	});
 	exports.define = undefined;
 	
-	var _views = __webpack_require__(34);
+	var _views = __webpack_require__(37);
 	
 	var form = _interopRequireWildcard(_views);
 	
@@ -2099,7 +2265,7 @@
 	 */
 	
 	var define = exports.define = function define() {
-	  var $otoczka_pola = $('.mini_form > .otoczka_pola');
+	  var $otoczka_pola = $('.hide_form > .otoczka_pola');
 	
 	  $otoczka_pola.children('div').click(edit_field);
 	
@@ -2111,8 +2277,9 @@
 	 */
 	
 	/**
-	 * Created by mrskull on 17.12.16.
+	 * Created by mrskull on 17.01.17.
 	 */
+	
 	var edit_field = function edit_field() {
 	  var $div = $(this),
 	      $field = $div.parent().children('input'),
@@ -2154,7 +2321,7 @@
 	};
 
 /***/ },
-/* 34 */
+/* 37 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2163,7 +2330,7 @@
 	  value: true
 	});
 	/**
-	 * Created by mrskull on 18.12.16.
+	 * Created by mrskull on 17.01.17.
 	 */
 	
 	/**
@@ -2191,7 +2358,7 @@
 	};
 
 /***/ },
-/* 35 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2201,7 +2368,7 @@
 	});
 	exports.define = undefined;
 	
-	var _views = __webpack_require__(36);
+	var _views = __webpack_require__(39);
 	
 	var mini_form = _interopRequireWildcard(_views);
 	
@@ -2248,7 +2415,7 @@
 	};
 
 /***/ },
-/* 36 */
+/* 39 */
 /***/ function(module, exports) {
 
 	"use strict";

@@ -48,6 +48,21 @@ $.prototype.delete_data = function delete_data(name)
 };
 
 
+$.prototype.serialize_object = function()
+{
+  let
+    fields = $( this ).serializeArray(),
+    form_object = {};
+
+  $.each( fields , function( i, field )
+  {
+    form_object[ field.name ] = field.value;
+  });
+
+  return form_object;
+};
+
+
 Array.prototype.delete_empty = function delete_empty()
 {
   let url_array = [];

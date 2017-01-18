@@ -4,7 +4,8 @@
 
 import * as form_controller from './views'
 import * as validator from './validator/controllers'
-import * as mini_form from './mini_form/controllers'
+import * as hide_form from './hide_form/controllers'
+import * as auto_form from './auto_form/controllers'
 import * as post_button from './post_button/controllers'
 
 
@@ -17,7 +18,8 @@ import * as post_button from './post_button/controllers'
     $( 'form' ).submit( prepare_form_to_send );
 
     validator.define();
-    mini_form.define();
+    hide_form.define();
+    auto_form.define();
     post_button.define();
   };
 
@@ -26,22 +28,6 @@ import * as post_button from './post_button/controllers'
  *    Defining private functions
  */
 
-  let get_form_fields = function( element )
-  {
-    let
-      $fields = $( element ).serializeArray(),
-      form_object = {};
-
-    $.each( $fields , function( i, field )
-    {
-      form_object[ field.name ] = field.value;
-    });
-
-    return form_object;
-  };
-
-
-
   let prepare_form_to_send = function( event )
   {
     event.preventDefault();
@@ -49,7 +35,7 @@ import * as post_button from './post_button/controllers'
     let
       form_name = $(this).data('name'),
       url = $(this).attr( 'action' ),
-      form_object = get_form_fields( this );
+      form_object = $( this ).serialize_object();
 
     form_controller.send( form_name, url, form_object );
   };
