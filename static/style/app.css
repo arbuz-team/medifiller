@@ -59,6 +59,12 @@ body {
   position: absolute;
   overflow: hidden; }
 
+body.user_select_text {
+  -webkit-user-select: text !important; }
+
+body.user_select_none {
+  -webkit-user-select: none !important; }
+
 a, a:hover, a:active, a:visited {
   color: inherit;
   text-decoration: none;

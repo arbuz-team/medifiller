@@ -458,9 +458,10 @@
 	      if (typeof APP.DATA.delay !== 'undefined') delay = APP.DATA.delay;
 	    }
 	
-	    plugin_loader_views.models.variables.can_do_redirect = true;
+	    variables.can_do_redirect = true;
+	    clearTimeout(variables.redirect_time_out);
 	
-	    setTimeout(function () {
+	    variables.redirect_time_out = setTimeout(function () {
 	      if (plugin_loader_views.models.variables.can_do_redirect === true) plugin_loader_views.change_content(url);
 	    }, delay);
 	  };
@@ -659,7 +660,8 @@
 	    error: undefined,
 	
 	    can_do_load: true,
-	    can_do_redirect: true
+	    can_do_redirect: true,
+	    redirect_time_out: undefined
 	  };
 	
 	  /**
@@ -725,7 +727,9 @@
 	  settings.fields.each(function () {
 	    $field = $(this);
 	
-	    if ($field.is(':checkbox')) $field.change(auto_form_views.send_checkbox);else if ($field.is(':text')) $field.change(auto_form_views.send_default);else if ($field.is('select')) $field.change(auto_form_views.send_default);
+	    if ($field.is(':checkbox')) $field.change(auto_form_views.send_checkbox);else if ($field.is(':text')) {
+	      $field.change(auto_form_views.send_default).keyup(auto_form_views.send_on_key_up);
+	    } else if ($field.is('select')) $field.change(auto_form_views.send_default);
 	  });
 	}; /**
 	    * Created by mrskull on 17.01.17.
@@ -790,6 +794,18 @@
 	    send(post_data);
 	  };
 	
+	  this.send_on_key_up = function (event) {
+	    if (event.which !== 0) {
+	      var $field = $(this),
+	          post_data = {};
+	
+	      post_data['__' + models.settings.origin + '__'] = $field.data('name');
+	      post_data['value'] = $field.val();
+	
+	      send(post_data);
+	    }
+	  };
+	
 	  /**
 	   *    Defining private functions
 	   */
@@ -798,7 +814,7 @@
 	    window.APP.http_request(models.settings.action, post_data, function () {
 	      APP.DATA = {
 	        redirect: '/products/',
-	        delay: 0
+	        delay: 1000
 	      };
 	      APP.throw_event(window.EVENTS.redirect);
 	    });
@@ -906,6 +922,19 @@
 	
 	    if (position) $($container).css(direction_close, position);
 	  },
+	      set_user_select = function set_user_select() {
+	    var $body = $('body'),
+	        $container = $(settings.container),
+	        width = parseInt($container.outerWidth());
+	
+	    if (width >= 1000) {
+	      $body.removeClass('user_select_none');
+	      $body.addClass('user_select_text');
+	    } else {
+	      $body.removeClass('user_select_text');
+	      $body.addClass('user_select_none');
+	    }
+	  },
 	      stop_propagation = function stop_propagation(event) {
 	    event.stopPropagation();
 	  };
@@ -931,11 +960,13 @@
 	    $body.click(swipe_close);
 	    $hide.click(swipe_close);
 	    $window.resize(swipe_close);
+	    $window.resize(set_user_select);
 	    window.APP.add_own_event('close_plugins', swipe_close);
 	
 	    $container.click(stop_propagation);
 	
 	    set_start_position();
+	    set_user_select();
 	  };
 	
 	  this.start = function () {

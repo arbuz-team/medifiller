@@ -51,6 +51,22 @@ export let Auto_Form_Views = function(config)
   };
 
 
+  this.send_on_key_up = function(event)
+  {
+    if(event.which !== 0)
+    {
+      let
+        $field = $(this),
+        post_data = {};
+
+      post_data['__'+ models.settings.origin +'__'] = $field.data('name');
+      post_data['value'] = $field.val();
+
+      send(post_data);
+    }
+  };
+
+
   /**
    *    Defining private functions
    */
@@ -61,7 +77,7 @@ export let Auto_Form_Views = function(config)
     {
       APP.DATA = {
         redirect: '/products/',
-        delay: 0,
+        delay: 1000,
       };
       APP.throw_event(window.EVENTS.redirect);
     });

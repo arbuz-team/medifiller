@@ -63,6 +63,27 @@ export let Plugins_Motion_Controllers = function(config)
     },
 
 
+    set_user_select = function()
+    {
+      let
+        $body = $('body'),
+        $container = $(settings.container),
+        width = parseInt($container.outerWidth());
+
+      if(width >= 1000)
+      {
+        $body.removeClass('user_select_none');
+        $body.addClass('user_select_text');
+      }
+
+      else
+      {
+        $body.removeClass('user_select_text');
+        $body.addClass('user_select_none');
+      }
+    },
+
+
     stop_propagation = function(event)
     {
       event.stopPropagation();
@@ -96,11 +117,13 @@ export let Plugins_Motion_Controllers = function(config)
     $body.click(swipe_close);
     $hide.click(swipe_close);
     $window.resize(swipe_close);
+    $window.resize(set_user_select);
     window.APP.add_own_event('close_plugins', swipe_close);
 
     $container.click(stop_propagation);
 
     set_start_position();
+    set_user_select();
   };
 
 

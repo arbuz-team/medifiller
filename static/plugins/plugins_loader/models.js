@@ -99,6 +99,7 @@ export let Plugins_Loader_Models = function(config)
 
     can_do_load: true,
     can_do_redirect: true,
+    redirect_time_out: undefined,
   };
 
 

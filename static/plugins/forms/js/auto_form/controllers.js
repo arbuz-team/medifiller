@@ -19,7 +19,11 @@ let add_event_on_fields = function(auto_form_views)
       $field.change(auto_form_views.send_checkbox);
 
     else if($field.is(':text'))
-      $field.change(auto_form_views.send_default);
+    {
+      $field
+        .change(auto_form_views.send_default)
+        .keyup(auto_form_views.send_on_key_up);
+    }
 
     else if($field.is('select'))
       $field.change(auto_form_views.send_default);

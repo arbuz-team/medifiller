@@ -35,9 +35,10 @@ export let Plugins_Loader_Controllers = function(config)
         delay = APP.DATA.delay;
     }
 
-    plugin_loader_views.models.variables.can_do_redirect = true;
+    variables.can_do_redirect = true;
+    clearTimeout(variables.redirect_time_out);
 
-    setTimeout(() =>
+    variables.redirect_time_out = setTimeout(() =>
     {
       if(plugin_loader_views.models.variables.can_do_redirect === true)
         plugin_loader_views.change_content(url);
