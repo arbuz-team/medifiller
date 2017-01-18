@@ -60,6 +60,12 @@ class Session_Controller:
         if 'searcher_phrase' not in self.request.session:
             self.request.session['searcher_phrase'] = ''
 
+        if 'searcher_order_name' not in self.request.session:
+            self.request.session['searcher_order_name'] = 'search_accuracy'
+
+        if 'searcher_order_direction' not in self.request.session:
+            self.request.session['searcher_order_direction'] = 'descending'
+
     def Check_Session(self):
 
         methods = getmembers(self, predicate=ismethod)

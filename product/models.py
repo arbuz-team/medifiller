@@ -67,6 +67,7 @@ class Product(models.Model):
     image = models.ImageField()
     price_eur = models.IntegerField()
     price_pln = models.IntegerField()
+    keywords = models.TextField(blank=True)
 
     brand = models.ForeignKey(Brand)
     purpose = models.ForeignKey(Purpose)

@@ -66,7 +66,7 @@ class Sign_In(Dynamic_Event_Menager):
         if self.request.POST['__form__'] == 'login':
             return self.Manage_Form_Login()
 
-        return super(Login, self).Manage_Form()
+        return super(Sign_In, self).Manage_Form()
 
     @staticmethod
     def Launch(request):
@@ -86,7 +86,6 @@ class Sign_Up(Dynamic_Event_Menager):
 
         if self.content['form'].is_valid():
             user = self.content['form'].save(commit=False)
-            user.language = self.request.session['translator_language']
             user.unique = User.Generate_User_Unique()
             self.request.session['user_unique'] = user.unique
             user.save()
@@ -122,7 +121,7 @@ class Sign_Up(Dynamic_Event_Menager):
         if self.request.POST['__form__'] == 'user_address':
             return self.Manage_Form_User_Address()
 
-        return super(Register, self).Manage_Form()
+        return super(Sign_Up, self).Manage_Form()
 
     def Manage_Exist(self):
 

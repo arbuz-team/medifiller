@@ -7,7 +7,6 @@ def Load_Default_Data():
         email='93.endo@gmail.com',
         username='arbuz93',
         password=User.Encrypt('asdfasdf'),
-        language='EN',
         approved=True
     ).save()
 
@@ -16,7 +15,6 @@ def Load_Default_Data():
         email='dominik.betka@gmail.com',
         username='Drego31',
         password=User.Encrypt('kaktus88'),
-        language='EN',
         approved=True
     ).save()
 
