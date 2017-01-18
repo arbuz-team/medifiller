@@ -5,30 +5,43 @@
 import {Auto_Form_Views} from './views'
 
 
-let add_event_on_fields = function(auto_form_views)
-{
-  let
-    settings = auto_form_views.models.settings,
-    $field;
-
-  settings.fields.each(function()
+let
+  add_event_on_fields = function(auto_form_views)
   {
-    $field = $(this);
+    let
+      settings = auto_form_views.models.settings,
+      $field;
 
-    if($field.is(':checkbox'))
-      $field.change(auto_form_views.send_checkbox);
-
-    else if($field.is(':text'))
+    settings.fields.each(function()
     {
-      $field
-        .change(auto_form_views.send_default)
-        .keyup(auto_form_views.send_on_key_up);
-    }
+      $field = $(this);
 
-    else if($field.is('select'))
-      $field.change(auto_form_views.send_default);
-  });
-};
+      if($field.is(':checkbox'))
+        $field.change(auto_form_views.send_checkbox);
+
+      else if($field.is(':text'))
+        $field
+          .change(auto_form_views.send_default)
+          .keyup(auto_form_views.send_on_key_up)
+          .keydown(function(event){
+            if(event.keyCode == 13) {
+              event.preventDefault();
+              return false;
+            }
+          });
+
+      else if($field.is('select'))
+        $field.change(auto_form_views.send_default);
+    });
+  },
+
+
+  do_nothing = function(event)
+  {
+    console.log('co jest');
+    event.preventDefault();
+    return false;
+  };
 
 
 export let define = function()
@@ -46,6 +59,7 @@ export let define = function()
       },
       auto_form_views = new Auto_Form_Views(config);
 
+    $form.submit(do_nothing);
     add_event_on_fields(auto_form_views);
   });
 };

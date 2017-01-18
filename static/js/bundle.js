@@ -727,10 +727,18 @@
 	  settings.fields.each(function () {
 	    $field = $(this);
 	
-	    if ($field.is(':checkbox')) $field.change(auto_form_views.send_checkbox);else if ($field.is(':text')) {
-	      $field.change(auto_form_views.send_default).keyup(auto_form_views.send_on_key_up);
-	    } else if ($field.is('select')) $field.change(auto_form_views.send_default);
+	    if ($field.is(':checkbox')) $field.change(auto_form_views.send_checkbox);else if ($field.is(':text')) $field.change(auto_form_views.send_default).keyup(auto_form_views.send_on_key_up).keydown(function (event) {
+	      if (event.keyCode == 13) {
+	        event.preventDefault();
+	        return false;
+	      }
+	    });else if ($field.is('select')) $field.change(auto_form_views.send_default);
 	  });
+	},
+	    do_nothing = function do_nothing(event) {
+	  console.log('co jest');
+	  event.preventDefault();
+	  return false;
 	}; /**
 	    * Created by mrskull on 17.01.17.
 	    */
@@ -746,6 +754,7 @@
 	    },
 	        auto_form_views = new _views.Auto_Form_Views(config);
 	
+	    $form.submit(do_nothing);
 	    add_event_on_fields(auto_form_views);
 	  });
 	};
@@ -794,8 +803,22 @@
 	    send(post_data);
 	  };
 	
+	  var check_is_key_code_printable = function check_is_key_code_printable(event) {
+	    var keycode = event.keyCode;
+	
+	    var valid = keycode > 47 && keycode < 58 || // number keys
+	    keycode === 8 || keycode === 46 || // backspace & delete
+	    keycode === 32 || keycode === 13 || // spacebar & return key(s) (if you want to allow carriage returns)
+	    keycode > 64 && keycode < 91 || // letter keys
+	    keycode > 95 && keycode < 112 || // numpad keys
+	    keycode > 185 && keycode < 193 || // ;=,-./` (in order)
+	    keycode > 218 && keycode < 223; // [\]' (in order)
+	
+	    return valid;
+	  };
+	
 	  this.send_on_key_up = function (event) {
-	    if (event.which !== 0) {
+	    if (check_is_key_code_printable(event)) {
 	      var $field = $(this),
 	          post_data = {};
 	
