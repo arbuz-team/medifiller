@@ -7,8 +7,6 @@ class Dialog_Alert(Dynamic_Event_Menager):
     def Manage_Content_Ground(self):
         pass
 
-    def Manage_
-
     def Manage(self):
 
         # if self.request.POST['__dialog__'] == 'dialog':
