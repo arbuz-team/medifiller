@@ -6,7 +6,7 @@ import * as searcher_controller       from '../../searcher/js/controllers'
 import * as cart_controller         from '../../cart/js/controllers'
 import * as navigation_controller   from '../../navigation/js/controllers'
 import * as header_controller       from '../../header/js/controllers'
-import * as dialogue_window         from '../../dialogue_window/js/controllers'
+import * as dialogue_window         from '../../dialog/js/controllers'
 
 import * as ground_controller       from '../../ground/js/controllers'
 import * as form_controller         from '../../forms/js/controllers'

@@ -1404,7 +1404,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.define = undefined;
+	exports.close = exports.open = exports.define = undefined;
 	
 	var _models = __webpack_require__(25);
 	
@@ -1425,69 +1425,39 @@
 	 */
 	
 	var define = exports.define = function define() {
-	  var selectors = models.selectors,
-	      open_events = models.open_events;
+	  var selectors = models.selectors;
 	
-	  $(selectors.container).click(close_window);
-	  $(selectors.dialogue_window).click(cancel_event);
+	  $(selectors.container).click(close_with_cancel_event);
+	  $(selectors.window).click(cancel_event);
 	
-	  APP.add_own_event(open_events.alert, open_alert_window);
-	  APP.add_own_event(open_events.prompt, open_prompt_window);
-	  APP.add_own_event(open_events.confirm, open_confirm_window);
-	
-	  $(selectors.submit + '.alert').click(function () {
-	    APP.throw_event(window.EVENTS.open_alert);
-	  });
-	
-	  $(selectors.submit + '.prompt').click(function () {
-	    APP.throw_event(window.EVENTS.open_prompt);
-	  });
-	
-	  $(selectors.submit + '.confirm').click(function () {
-	    APP.throw_event(window.EVENTS.open_confirm);
-	  });
-	
-	  $('.dialog-button', selectors.dialogue_window).click(close_window);
+	  $(selectors.external_buttons).click(open);
 	};
 	
 	/**
 	 *    Defining events functions
 	 */
 	
-	var window_data = models.window_data,
-	    open_alert_window = function open_alert_window() {
-	  window_data.type = 'alert';
-	  window_data.title = 'This is alert';
-	  models.html.alert_content.admission = '<b>ble ble</b> aha, no ok...';
-	
-	  dialogue_window_controller.open_alert();
-	},
-	    open_prompt_window = function open_prompt_window() {
-	  window_data.type = 'prompt';
-	  window_data.name = 'authorisation';
-	  window_data.title = 'Authorisation';
-	  models.html.prompt_content.admission = '<div>If you want save the changes enter your password.</div>';
-	
-	  dialogue_window_controller.open_prompt();
-	},
-	    open_confirm_window = function open_confirm_window() {
-	  window_data.type = 'confirm';
-	  window_data.name = 'stupid';
-	  window_data.title = 'You are stupid?';
-	  models.html.confirm_content.admission = '<div>You have to confirm that you are stupid.</div>';
-	
-	  dialogue_window_controller.open_confirm();
-	},
-	    close_window = function close_window(event) {
-	  event.preventDefault();
-	  event.stopPropagation();
-	
-	  dialogue_window_controller.close_window();
+	var close_with_cancel_event = function close_with_cancel_event(event) {
+	  cancel_event(event);
+	  close();
 	},
 	    cancel_event = function cancel_event(event) {
 	  event.preventDefault();
 	  event.stopPropagation();
 	};
+	
+	/**
+	 *    Defining public functions
+	 */
+	
+	var open = exports.open = function open() {
+	  var $button = $(this),
+	      type = $button.data('type'),
+	      name = $button.data('name');
+	
+	  dialogue_window_controller.open(type, name);
+	},
+	    close = exports.close = dialogue_window_controller.close;
 
 /***/ },
 /* 25 */
@@ -1502,46 +1472,38 @@
 	 * Created by mrskull on 29.12.16.
 	 */
 	
-	var selectors = exports.selectors = {
-	  container: '#DIALOGUE_WINDOW',
-	  dialogue_window: '#DIALOGUE_WINDOW > .window',
-	  header: '#DIALOGUE_WINDOW > .window > .window-header',
-	  content: '#DIALOGUE_WINDOW > .window > .window-content',
-	  submit: 'button.submit_secure'
+	var settings = exports.settings = {
+	  url: '/dialog/'
 	},
-	    open_events = exports.open_events = {
-	  alert: 'open_alert',
-	  prompt: 'open_prompt',
-	  confirm: 'open_confirm'
+	    variables = exports.variables = {
+	  post_data: {}
 	},
-	    window_data = exports.window_data = {
+	    selectors = exports.selectors = {
+	  container: '#DIALOGUE_WINDOW'
+	};
+	
+	selectors.window = selectors.container + '> .window';
+	selectors.header = selectors.window + '> .window-header';
+	selectors.content = selectors.window + '> .window-content';
+	selectors.internal_buttons = selectors.content + ' button.dialog-button';
+	selectors.external_buttons = 'button.dialog-button';
+	
+	var window_data = exports.window_data = {
 	  type: '',
 	  name: '',
 	  title: '',
 	  content: '',
 	  post_data: {}
 	},
-	    html = exports.html = {
-	  part: {
-	    begining: '<div class="window-content-part otoczka_pola">',
-	    ending: '</div>'
-	  },
+	    prepare_post_data = exports.prepare_post_data = function prepare_post_data() {
+	  variables.post_data = {};
 	
-	  alert_content: {
-	    admission: '',
-	    ending: '<button>Ok</button>'
-	  },
-	
-	  prompt_content: {
-	    admission: '',
-	    form: '<input type="password" name="password" placeholder="password" />',
-	    ending: '<button class="dialog-button" data-name="cancel">Cancel</button><button class="dialog-button" data-name="ok">Ok</button>'
-	  },
-	
-	  confirm_content: {
-	    admission: '',
-	    ending: '<button>Ok</button><button>Cancel</button>'
-	  }
+	  variables.post_data.__dialog__ = window_data.type;
+	  variables.post_data.name = window_data.name;
+	},
+	    download_content = exports.download_content = function download_content(callback) {
+	  prepare_post_data();
+	  window.APP.http_request(settings.url, variables.post_data, callback);
 	};
 
 /***/ },
@@ -1553,7 +1515,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.open_confirm = exports.open_prompt = exports.open_alert = exports.close_window = exports.open_window = exports.window_data = exports.selectors = undefined;
+	exports.close = exports.open = exports.window_data = exports.selectors = undefined;
 	
 	var _models = __webpack_require__(25);
 	
@@ -1562,49 +1524,65 @@
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	/**
-	 *    Defining private functions
+	 *    Defining public functions
 	 */
 	
-	var create_part = function create_part(text) {
-	  return models.html.part.begining + text + models.html.part.ending;
-	};
+	var selectors = exports.selectors = models.selectors,
+	    window_data = exports.window_data = models.window_data;
 	
 	/**
-	 *    Defining public functions
+	 *    Defining private functions
 	 */
 	
 	/**
 	 * Created by mrskull on 29.12.16.
 	 */
 	
-	var selectors = exports.selectors = models.selectors,
-	    window_data = exports.window_data = models.window_data,
-	    open_window = exports.open_window = function open_window() {
+	var show = function show() {
+	  $(selectors.container).fadeIn(200);
+	},
+	    hide = function hide() {
+	  $(selectors.container).fadeOut(200);
+	},
+	    paste_data = function paste_data(response) {
+	  window_data.content = response.responseText;
+	
 	  $(selectors.header).html(window_data.title);
 	
 	  $(selectors.content).html(window_data.content);
 	
-	  $(selectors.container).fadeIn(200);
-	
-	  window.APP.throw_event(window.EVENTS.define);
+	  show();
 	},
-	    close_window = exports.close_window = function close_window() {
-	  $(models.selectors.container).fadeOut(200);
-	},
-	    open_alert = exports.open_alert = function open_alert() {
-	  window_data.content = models.html.alert_content.admission;
+	    clear_data = function clear_data() {
+	  $(selectors.header).html('Loading...');
 	
-	  open_window();
+	  $(selectors.content).html('Loading...');
 	},
-	    open_prompt = exports.open_prompt = function open_prompt() {
-	  window_data.content = create_part(models.html.prompt_content.admission) + create_part(models.html.prompt_content.form) + create_part(models.html.prompt_content.ending);
+	    save_type_and_name = function save_type_and_name(type, name) {
+	  var result_type = void 0,
+	      result_name = void 0,
+	      default_type = 'alert',
+	      default_name = 'default';
 	
-	  open_window();
+	  if (type) result_type = type;else result_type = default_type;
+	
+	  if (name) result_name = name;else result_name = default_name;
+	
+	  models.window_data.type = result_type;
+	  models.window_data.name = result_name;
+	};
+	
+	///////////////////////////////////////
+	
+	
+	var open = exports.open = function open(type, name) {
+	  save_type_and_name(type, name);
+	
+	  models.download_content(paste_data);
 	},
-	    open_confirm = exports.open_confirm = function open_confirm() {
-	  window_data.content = models.html.confirm_content.admission + '<br />' + models.html.confirm_content.ending;
-	
-	  open_window();
+	    close = exports.close = function close() {
+	  hide();
+	  clear_data();
 	};
 
 /***/ },

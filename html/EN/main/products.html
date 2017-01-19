@@ -11,9 +11,7 @@
   {% include "ground/html/navigation.html" %}
 
   <div class="block-content">
-    <button class="submit_secure alert">Alert</button>
-    <button class="submit_secure prompt">Prompt</button>
-    <button class="submit_secure confirm">Confirm</button>
+      <button type="button" class="dialog-button" data-type="prompt" data-name="create_brand"> Create brand </button>
 
     <br>
     {% for product in products %}
