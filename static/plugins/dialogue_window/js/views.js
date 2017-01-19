@@ -35,10 +35,12 @@ export let
 
     $(selectors.container)
       .fadeIn(200);
+
+    window.APP.throw_event(window.EVENTS.define);
   },
 
 
-  close_window = function(event)
+  close_window = function()
   {
     $(models.selectors.container)
       .fadeOut(200);

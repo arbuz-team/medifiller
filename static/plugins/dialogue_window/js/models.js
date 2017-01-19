@@ -41,7 +41,7 @@ export let
     prompt_content: {
       admission: '',
       form: '<input type="password" name="password" placeholder="password" />',
-      ending: '<button>Cancel</button><button>Ok</button>'
+      ending: '<button class="dialog-button" data-name="cancel">Cancel</button><button class="dialog-button" data-name="ok">Ok</button>'
     },
 
 

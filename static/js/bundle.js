@@ -803,7 +803,7 @@
 	    send(post_data);
 	  };
 	
-	  var check_is_key_code_printable = function check_is_key_code_printable(event) {
+	  var check_is_key_code_printable_or_functional = function check_is_key_code_printable_or_functional(event) {
 	    var keycode = event.keyCode;
 	
 	    var valid = keycode > 47 && keycode < 58 || // number keys
@@ -818,7 +818,7 @@
 	  };
 	
 	  this.send_on_key_up = function (event) {
-	    if (check_is_key_code_printable(event)) {
+	    if (check_is_key_code_printable_or_functional(event)) {
 	      var $field = $(this),
 	          post_data = {};
 	
@@ -1446,6 +1446,8 @@
 	  $(selectors.submit + '.confirm').click(function () {
 	    APP.throw_event(window.EVENTS.open_confirm);
 	  });
+	
+	  $('.dialog-button', selectors.dialogue_window).click(close_window);
 	};
 	
 	/**
@@ -1533,7 +1535,7 @@
 	  prompt_content: {
 	    admission: '',
 	    form: '<input type="password" name="password" placeholder="password" />',
-	    ending: '<button>Cancel</button><button>Ok</button>'
+	    ending: '<button class="dialog-button" data-name="cancel">Cancel</button><button class="dialog-button" data-name="ok">Ok</button>'
 	  },
 	
 	  confirm_content: {
@@ -1583,8 +1585,10 @@
 	  $(selectors.content).html(window_data.content);
 	
 	  $(selectors.container).fadeIn(200);
+	
+	  window.APP.throw_event(window.EVENTS.define);
 	},
-	    close_window = exports.close_window = function close_window(event) {
+	    close_window = exports.close_window = function close_window() {
 	  $(models.selectors.container).fadeOut(200);
 	},
 	    open_alert = exports.open_alert = function open_alert() {

@@ -35,6 +35,8 @@ import * as dialogue_window_controller from './views'
     $(selectors.submit +'.confirm').click(function(){
       APP.throw_event(window.EVENTS.open_confirm);
     });
+
+    $('.dialog-button', selectors.dialogue_window).click(close_window);
   };
 
 
@@ -42,52 +44,52 @@ import * as dialogue_window_controller from './views'
  *    Defining events functions
  */
 
-let
-  window_data = models.window_data,
+  let
+    window_data = models.window_data,
 
-  open_alert_window = function()
-  {
-    window_data.type = 'alert';
-    window_data.title = 'This is alert';
-    models.html.alert_content.admission = '<b>ble ble</b> aha, no ok...';
+    open_alert_window = function()
+    {
+      window_data.type = 'alert';
+      window_data.title = 'This is alert';
+      models.html.alert_content.admission = '<b>ble ble</b> aha, no ok...';
 
-    dialogue_window_controller.open_alert();
-  },
-
-
-  open_prompt_window = function()
-  {
-    window_data.type = 'prompt';
-    window_data.name = 'authorisation';
-    window_data.title = 'Authorisation';
-    models.html.prompt_content.admission = '<div>If you want save the changes enter your password.</div>';
-
-    dialogue_window_controller.open_prompt();
-  },
+      dialogue_window_controller.open_alert();
+    },
 
 
-  open_confirm_window = function()
-  {
-    window_data.type = 'confirm';
-    window_data.name = 'stupid';
-    window_data.title = 'You are stupid?';
-    models.html.confirm_content.admission = '<div>You have to confirm that you are stupid.</div>';
+    open_prompt_window = function()
+    {
+      window_data.type = 'prompt';
+      window_data.name = 'authorisation';
+      window_data.title = 'Authorisation';
+      models.html.prompt_content.admission = '<div>If you want save the changes enter your password.</div>';
 
-    dialogue_window_controller.open_confirm();
-  },
-
-
-  close_window = function(event)
-  {
-    event.preventDefault();
-    event.stopPropagation();
-
-    dialogue_window_controller.close_window();
-  },
+      dialogue_window_controller.open_prompt();
+    },
 
 
-  cancel_event = function(event)
-  {
-    event.preventDefault();
-    event.stopPropagation();
-  };
+    open_confirm_window = function()
+    {
+      window_data.type = 'confirm';
+      window_data.name = 'stupid';
+      window_data.title = 'You are stupid?';
+      models.html.confirm_content.admission = '<div>You have to confirm that you are stupid.</div>';
+
+      dialogue_window_controller.open_confirm();
+    },
+
+
+    close_window = function(event)
+    {
+      event.preventDefault();
+      event.stopPropagation();
+
+      dialogue_window_controller.close_window();
+    },
+
+
+    cancel_event = function(event)
+    {
+      event.preventDefault();
+      event.stopPropagation();
+    };
