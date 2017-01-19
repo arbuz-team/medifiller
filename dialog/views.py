@@ -78,7 +78,7 @@ class Dialog_Prompt(Dynamic_Event_Menager):
 
     @staticmethod
     def Launch(request):
-        return Dialog_Prompt(request, autostart=False).HTML
+        return Dialog_Prompt(request).HTML
 
 
 
