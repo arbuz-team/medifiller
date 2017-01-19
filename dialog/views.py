@@ -7,6 +7,8 @@ class Dialog_Alert(Dynamic_Event_Menager):
     def Manage_Content_Ground(self):
         pass
 
+    def Manage_
+
     def Manage(self):
 
         # if self.request.POST['__dialog__'] == 'dialog':
@@ -45,18 +47,32 @@ class Dialog_Prompt(Dynamic_Event_Menager):
         pass
 
     def Manage_New_Brand(self):
+        self.content['title'] = 'new_brand'
         self.content['form'] = Form_New_Brand()
         return self.Render_HTML('dialog/prompt.html', 'new_brand')
 
     def Manage_New_Purpose(self):
+        self.content['title'] = 'new_purpose'
         self.content['form'] = Form_New_Purpose()
         return self.Render_HTML('dialog/prompt.html', 'new_purpose')
 
-    def Manage_New_Details(self):
+    def Manage_New_Details_EN(self):
+        self.content['title'] = 'new_details_en'
         self.content['form'] = Form_New_Details_EN()
-        return self.Render_HTML('dialog/prompt.html', 'new_details')
+        return self.Render_HTML('dialog/prompt.html', 'new_details_en')
+
+    def Manage_New_Details_PL(self):
+        self.content['title'] = 'new_details_pl'
+        self.content['form'] = Form_New_Details_PL()
+        return self.Render_HTML('dialog/prompt.html', 'new_details_pl')
+
+    def Manage_New_Details_DE(self):
+        self.content['title'] = 'new_details_de'
+        self.content['form'] = Form_New_Details_EN()
+        return self.Render_HTML('dialog/prompt.html', 'new_details_de')
 
     def Manage_Where_Display(self):
+        self.content['title'] = 'where_display'
         self.content['form'] = Form_Where_Display()
         return self.Render_HTML('dialog/prompt.html', 'where_display')
 
@@ -66,13 +82,19 @@ class Dialog_Prompt(Dynamic_Event_Menager):
             return self.Manage_New_Brand()
 
         if self.request.POST['name'] == 'new_purpose':
-            return self.Manage_New_Brand()
+            return self.Manage_New_Purpose()
 
-        if self.request.POST['name'] == 'new_details':
-            return self.Manage_New_Brand()
+        if self.request.POST['name'] == 'new_details_en':
+            return self.Manage_New_Details_EN()
+
+        if self.request.POST['name'] == 'new_details_pl':
+            return self.Manage_New_Details_PL()
+
+        if self.request.POST['name'] == 'new_details_de':
+            return self.Manage_New_Details_DE()
 
         if self.request.POST['name'] == 'where_display':
-            return self.Manage_New_Brand()
+            return self.Manage_Where_Display()
 
         return super(Dialog_Prompt, self).Manage_Form()
 
