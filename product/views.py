@@ -54,50 +54,84 @@ class Insert_Product(Dynamic_Event_Menager):
 
         return self.Render_HTML('product/new.html', 'new_product')
 
-    def Manage_Form_New_Details_EN(self, language):
-
-        if 'name' in self.request.POST:
-            if 'description' in self.request.POST:
-
-                nazwa = self.request.POST['name']
-                description = self.request.POST['description']
-
-                if language == 'EN':
-                    details = Details_EN(nazwa=nazwa, description=description)
-                    details.save()
-                    self.request.session['product_new_details_en'] = details.pk
-
-                if language == 'PL':
-                    details = Details_PL(nazwa=nazwa, description=description)
-                    details.save()
-                    self.request.session['product_new_details_pl'] = details.pk
-
-                if language == 'DE':
-                    details = Details_DE(nazwa=nazwa, description=description)
-                    details.save()
-                    self.request.session['product_new_details_de'] = details.pk
-
-                return JsonResponse({'__form__': 'true'})
-
-        return JsonResponse({'__form__': 'false'})
-
     def Manage_Form_Where_Display(self):
 
-        if 'display_en' in self.request.POST:
-            if 'display_pl' in self.request.POST:
-                if 'display_de' in self.request.POST:
+        where_display = Form_Where_Display(self.request.POST)
 
-                    display_en = 1 if self.request.POST['display_en'] == 'true' else 0
-                    display_pl = 1 if self.request.POST['display_pl'] == 'true' else 0
-                    display_de = 1 if self.request.POST['display_de'] == 'true' else 0
+        if where_display.is_valid():
 
-                    where_display = Where_Display.objects.get(display_en=display_en,
-                              display_pl=display_pl, display_de=display_de)
+            display_en = where_display.cleaned_data['display_en']
+            display_pl = where_display.cleaned_data['display_pl']
+            display_de = where_display.cleaned_data['display_de']
 
-                    self.request.session['product_where_display'] = where_display.pk
-                    return JsonResponse({'__form__': 'true'})
+            where_display = Where_Display.objects.get(display_en=display_en,
+                      display_pl=display_pl, display_de=display_de)
 
-        return JsonResponse({'__form__': 'false'})
+            self.content['form'] = None
+            self.request.session['product_where_display'] = where_display
+            return self.Render_HTML('dialog/prompt.html', 'where_display')
+
+        self.content['form'] = None
+        return self.Render_HTML('dialog/prompt.html', 'where_display')
+
+    def Manage_Form_New_Brand(self):
+        brand = Form_New_Brand(self.request.POST)
+
+        if brand.is_valid():
+            brand.save()
+            self.request.session['product_new_brand'] = brand
+
+            self.content['form'] = None  # message of correct
+            return self.Render_HTML('dialog/prompt.html')
+
+        self.content['form'] = brand
+        return self.Render_HTML('dialog/prompt.html', 'new_brand')
+
+    def Manage_Form_New_Purpose(self):
+        purpose = Form_New_Purpose(self.request.POST)
+
+        if purpose.is_valid():
+            purpose.save()
+            self.request.session['product_new_purpose'] = purpose
+
+            self.content['form'] = None  # message of correct
+            return self.Render_HTML('dialog/prompt.html')
+
+        self.content['form'] = purpose
+        return self.Render_HTML('dialog/prompt.html', 'new_purpose')
+
+    def Manage_Form_New_Details(self, language):
+        details = None
+
+        if language == 'EN':
+            details = Form_New_Details_EN(self.request.POST)
+
+            if details.is_valid():
+                details.save()
+                self.request.session['product_new_details_en'] = details.pk
+                self.content['form'] = None
+                return self.Render_HTML('dialog/prompt.html')
+
+        if language == 'PL':
+            details = Form_New_Details_PL(self.request.POST)
+
+            if details.is_valid():
+                details.save()
+                self.request.session['product_new_details_pl'] = details.pk
+                self.content['form'] = None
+                return self.Render_HTML('dialog/prompt.html')
+
+        if language == 'DE':
+            details = Form_New_Details_DE(self.request.POST)
+
+            if details.is_valid():
+                details.save()
+                self.request.session['product_new_details_de'] = details.pk
+                self.content['form'] = None
+                return self.Render_HTML('dialog/prompt.html')
+
+        self.content['form'] = details
+        return self.Render_HTML('dialog/prompt.html', 'details')
 
     def Manage_Form(self):
 
@@ -107,8 +141,14 @@ class Insert_Product(Dynamic_Event_Menager):
         if self.request.POST['__form__'] == 'where_display':
             return self.Manage_Form_Where_Display()
 
+        if self.request.POST['__form__'] == 'new_brand':
+            return self.Manage_Form_New_Brand()
+
+        if self.request.POST['__form__'] == 'new_purpose':
+            return self.Manage_Form_New_Purpose()
+
         if 'new_details' in self.request.POST['__form__']:
-            return self.Manage_Form_New_Details_EN\
+            return self.Manage_Form_New_Details\
                     (self.request.POST['__form__'][-2:].upper())
 
         return super(Insert_Product, self).Manage_Form()

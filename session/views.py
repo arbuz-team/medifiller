@@ -26,7 +26,7 @@ class Session_Controller:
     def Check_Session_Root(self):
 
         if 'root_login' not in self.request.session:
-            self.request.session['root_login'] = False
+            self.request.session['root_login'] = True
 
     def Check_Session_Translator(self):
 
@@ -47,7 +47,13 @@ class Session_Controller:
             self.request.session['product_new_details_de'] = None
 
         if 'product_where_display' not in self.request.session:
-            self.request.session['product_where_display'] = 0
+            self.request.session['product_where_display'] = None
+
+        if 'product_new_brand' not in self.request.session:
+            self.request.session['product_new_brand'] = None
+
+        if 'product_new_purpose' not in self.request.session:
+            self.request.session['product_new_purpose'] = None
 
     def Check_Session_Searcher(self):
 
