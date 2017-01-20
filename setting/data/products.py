@@ -28,7 +28,7 @@ def Load_Default_Filters():
 
 def Load_Where_Display():
 
-    for number in range(0, 7):
+    for number in range(0, 8):
 
         en = False
         pl = False
@@ -82,7 +82,7 @@ def Load_Default_Product():
             details_de=Details_DE.objects.get(pk=details_de.pk),
             where_display=Where_Display.objects.get(pk=where_display.pk),
 
-            image='/static/plugins/arbuz/img/logo.png',
+            image='/_static/plugins/arbuz/img/logo.png',
             price_eur=200*numer,
             price_pln=500*numer,
 
@@ -92,4 +92,5 @@ def Load_Default_Product():
 
 def Load_Default_Data():
     Load_Default_Filters()
+    Load_Where_Display()
     Load_Default_Product()

@@ -39,7 +39,7 @@ class Sender:
         self.Send_Email(title, recipient)
 
     def Send_Email(self, title, recipient):
-        self.Attach_Image('static/pluginy/arbuz/img/logo.png', 'logo')
+        self.Attach_Image('_static/pluginy/arbuz/img/logo.png', 'logo')
 
         email = EmailMessage \
                 (
