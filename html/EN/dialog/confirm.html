@@ -1,12 +1,33 @@
 
-<div class="window-content-part otoczka_pola">
-    <!--dialog text-->
-    TEXT CONFIRM
+<div class="dialog-header">
+    {% if title == 'new_brand' %}
+    New brand
+    {% elif title == 'new_purpose' %}
+    New purpose
+    {% elif title == 'new_details_en' %}
+    New details in english
+    {% elif title == 'new_details_pl' %}
+    New details in polish
+    {% elif title == 'new_details_de' %}
+    New details in germany
+    {% elif title == 'where_display' %}
+    New details
+    {% endif %}
 </div>
 
 
-<div class="window-content-part otoczka_pola">
-    <!--buttons-->
-    <button class="dialog-button" data-name="cancel"> Cancel </button>
-    <button class="dialog-button" data-name="confirm"> Confirm </button>
+<div class="dialog-content">
+
+    <div class="dialog-content-part otoczka_pola">
+        <!--dialog text-->
+        TEXT CONFIRM
+    </div>
+
+
+    <div class="dialog-content-part otoczka_pola">
+        <!--buttons-->
+        <button class="dialog-button" data-name="cancel"> Cancel </button>
+        <button class="dialog-button" data-name="confirm"> Confirm </button>
+    </div>
+
 </div>

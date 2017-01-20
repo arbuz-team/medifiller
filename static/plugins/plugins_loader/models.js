@@ -58,7 +58,6 @@ export let Plugins_Loader_Models = function(config)
       if(typeof config.container !== 'undefined')
         that.settings.container = config.container;
 
-
     // -- Duration
       if(typeof config.duration !== 'undefined')
       {

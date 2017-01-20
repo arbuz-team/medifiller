@@ -30,18 +30,15 @@ let
   hide = function()
   {
     $(selectors.container)
-      .fadeOut(200);
+      .fadeOut(200, clear_data);
   },
 
 
   paste_data = function(response)
   {
-    window_data.content = response.responseText;
+    window_data.content = response;
 
-    $(selectors.header)
-      .html(window_data.title);
-
-    $(selectors.content)
+    $(selectors.window)
       .html(window_data.content);
 
     show();
@@ -98,5 +95,4 @@ export let
   close = function()
   {
     hide();
-    clear_data();
   };

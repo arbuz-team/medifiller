@@ -15,5 +15,5 @@ export let send = function(button_name, button_value, callback)
 {
   let post_data = send_prepare_post(button_name, button_value);
 
-  window.APP.send_post(undefined, post_data, callback);
+  window.APP.http_request(undefined, post_data, callback);
 };

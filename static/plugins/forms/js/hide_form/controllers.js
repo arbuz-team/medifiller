@@ -52,7 +52,7 @@ let save_or_edit = function()
     $field = $button.parent().children('input');
 
 
-  let save_data = function(response, status)
+  let save_data = function(html, status)
   {
     if(status === 'success')
       // Change input to words

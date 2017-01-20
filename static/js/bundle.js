@@ -175,10 +175,18 @@
 	  post_data[_structure.data_controller.get_crsf('name')] = _structure.data_controller.get_crsf('value');
 	
 	  return post_data;
+	},
+	    create_callback = function create_callback(callback) {
+	  return function (response, status) {
+	    var html = response.responseText,
+	        code = response.status;
+	
+	    callback(html, status, code);
+	  };
 	};
 	
 	/**
-	 *    Defining private functions
+	 *    Defining global functions
 	 */
 	
 	/**
@@ -193,7 +201,7 @@
 	    type: 'POST',
 	    url: url,
 	    data: data_post,
-	    complete: callback
+	    complete: create_callback(callback)
 	  });
 	};
 
@@ -513,10 +521,8 @@
 	    }
 	    return false;
 	  },
-	      prepare_content_to_show = function prepare_content_to_show(response, status) {
-	    var html = response.responseText,
-	        code = response.status,
-	        container = models.settings.container,
+	      prepare_content_to_show = function prepare_content_to_show(html, status, code) {
+	    var container = models.settings.container,
 	        url = models.variables.url,
 	        error = models.variables.error;
 	
@@ -1479,21 +1485,20 @@
 	  post_data: {}
 	},
 	    selectors = exports.selectors = {
-	  container: '#DIALOGUE_WINDOW'
+	  container: '#DIALOG'
 	};
 	
-	selectors.window = selectors.container + '> .window';
-	selectors.header = selectors.window + '> .window-header';
-	selectors.content = selectors.window + '> .window-content';
-	selectors.internal_buttons = selectors.content + ' button.dialog-button';
-	selectors.external_buttons = 'button.dialog-button';
+	selectors.window = selectors.container + ' > .dialog';
+	selectors.header = selectors.window + ' > .dialog-header';
+	selectors.content = selectors.window + ' > .dialog-content';
+	selectors.internal_buttons = selectors.content + ' button.dialog_button';
+	selectors.external_buttons = 'button.dialog_button';
 	
 	var window_data = exports.window_data = {
 	  type: '',
 	  name: '',
-	  title: '',
 	  content: '',
-	  post_data: {}
+	  external_data: {}
 	},
 	    prepare_post_data = exports.prepare_post_data = function prepare_post_data() {
 	  variables.post_data = {};
@@ -1542,14 +1547,12 @@
 	  $(selectors.container).fadeIn(200);
 	},
 	    hide = function hide() {
-	  $(selectors.container).fadeOut(200);
+	  $(selectors.container).fadeOut(200, clear_data);
 	},
 	    paste_data = function paste_data(response) {
-	  window_data.content = response.responseText;
+	  window_data.content = response;
 	
-	  $(selectors.header).html(window_data.title);
-	
-	  $(selectors.content).html(window_data.content);
+	  $(selectors.window).html(window_data.content);
 	
 	  show();
 	},
@@ -1582,7 +1585,6 @@
 	},
 	    close = exports.close = function close() {
 	  hide();
-	  clear_data();
 	};
 
 /***/ },
@@ -2336,7 +2338,7 @@
 	      $div = $button.parent().children('div'),
 	      $field = $button.parent().children('input');
 	
-	  var save_data = function save_data(response, status) {
+	  var save_data = function save_data(html, status) {
 	    if (status === 'success')
 	      // Change input to words
 	      $field.fadeOut(100, function () {
@@ -2473,7 +2475,7 @@
 	var send = exports.send = function send(button_name, button_value, callback) {
 	  var post_data = send_prepare_post(button_name, button_value);
 	
-	  window.APP.send_post(undefined, post_data, callback);
+	  window.APP.http_request(undefined, post_data, callback);
 	};
 
 /***/ }

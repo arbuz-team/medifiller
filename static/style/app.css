@@ -174,7 +174,7 @@ ul {
   #extensions-left, #extensions-right {
     top: 120px; } }
 
-#DIALOGUE_WINDOW {
+#DIALOG {
   display: none;
   position: fixed;
   top: 0;
@@ -183,7 +183,7 @@ ul {
   left: 0;
   z-index: 100;
   background: rgba(0, 0, 0, 0.4); }
-  #DIALOGUE_WINDOW > .dialog {
+  #DIALOG > .dialog {
     display: block;
     position: relative;
     width: 500px;
@@ -193,7 +193,7 @@ ul {
     box-shadow: 0 2px 26px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.1);
     border: 1px solid #ddd;
       border-radius: 3px; }
-    #DIALOGUE_WINDOW > .dialog > .dialog-header {
+    #DIALOG > .dialog > .dialog-header {
       padding: 10px 12px;
       line-height: 19px;
       background-color: #f6f7f9;
@@ -201,16 +201,16 @@ ul {
       border-radius: 3px 3px 0 0;
       color: #1d2129;
       font-weight: bold; }
-    #DIALOGUE_WINDOW > .dialog > .dialog-content {
+    #DIALOG > .dialog > .dialog-content {
       padding: 12px;
       font-size: 14px;
       line-height: 18px; }
-      #DIALOGUE_WINDOW > .dialog > .dialog-content > .dialog-content-part > div {
+      #DIALOG > .dialog > .dialog-content > .dialog-content-part > div {
         padding-bottom: 5px; }
-      #DIALOGUE_WINDOW > .dialog > .dialog-content > .dialog-content-part > input {
+      #DIALOG > .dialog > .dialog-content > .dialog-content-part > input {
         width: 468px;
         box-sizing: border-box; }
-      #DIALOGUE_WINDOW > .dialog > .dialog-content > .dialog-content-part:last-child {
+      #DIALOG > .dialog > .dialog-content > .dialog-content-part:last-child {
         text-align: right; }
 
 #CART {

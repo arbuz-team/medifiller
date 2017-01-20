@@ -16,23 +16,22 @@ export let
 
 
   selectors = {
-    container: '#DIALOGUE_WINDOW',
+    container: '#DIALOG',
   };
 
-selectors.window =            selectors.container +'> .window';
-selectors.header =            selectors.window +'> .window-header';
-selectors.content =           selectors.window +'> .window-content';
-selectors.internal_buttons =  selectors.content +' button.dialog-button';
-selectors.external_buttons =  'button.dialog-button';
+selectors.window =            selectors.container +' > .dialog';
+selectors.header =            selectors.window +' > .dialog-header';
+selectors.content =           selectors.window +' > .dialog-content';
+selectors.internal_buttons =  selectors.content +' button.dialog_button';
+selectors.external_buttons =  'button.dialog_button';
 
 export let
 
   window_data = {
     type: '',
     name: '',
-    title: '',
     content: '',
-    post_data: {}
+    external_data: {}
   },
 
 

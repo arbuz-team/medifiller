@@ -28,11 +28,24 @@ let
     post_data[data_controller.get_crsf('name')] = data_controller.get_crsf('value');
 
     return post_data;
+  },
+
+
+  create_callback = function(callback)
+  {
+    return function(response, status)
+    {
+      let
+        html = response.responseText,
+        code = response.status;
+
+      callback(html, status, code);
+    };
   };
 
 
 /**
- *    Defining private functions
+ *    Defining global functions
  */
 
   window.APP.http_request = function(url, data_post, callback)
@@ -44,6 +57,6 @@ let
       type: 'POST',
       url: url,
       data: data_post,
-      complete: callback,
+      complete: create_callback(callback),
     });
   };

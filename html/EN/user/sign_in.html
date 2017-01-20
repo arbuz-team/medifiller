@@ -19,14 +19,14 @@
       <script>
         window.APP.DATA.redirect = '/';
         window.APP.DATA.delay = 2000;
-        window.dispatchEvent(window.EVENTS.redirect);
+        window.APP.throw_event(window.EVENTS.redirect);
       </script>
 
     {% else %}
 
       <form method="post" action="" data-name="{{ form_name }}" data-type="{{ form_name }}" data-test="yes">
 
-        <div class="title"> Login </div>
+        <div class="title"> Sign in </div>
 
         {% for i in form %}
 

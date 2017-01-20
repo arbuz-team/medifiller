@@ -42,14 +42,13 @@ export let Plugins_Loader_Views = function(config)
     },
 
 
-    prepare_content_to_show = function(response, status)
+    prepare_content_to_show = function(html, status, code)
     {
       let
-        html = response.responseText,
-        code = response.status,
         container = models.settings.container,
         url = models.variables.url,
         error = models.variables.error;
+
 
       if(check_for_errors(status, code))
         return false;
