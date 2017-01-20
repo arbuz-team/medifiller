@@ -21,11 +21,11 @@
 
 @font-face {
   font-family: 'OS_Regular';
-  src: url("/static/img/czcionki/OpenSans-Regular.ttf"); }
+  src: url("/_static/img/czcionki/OpenSans-Regular.ttf"); }
 
 @font-face {
   font-family: 'OS_Bold';
-  src: url("/static/img/czcionki/OpenSans-Bold.ttf"); }
+  src: url("/_static/img/czcionki/OpenSans-Bold.ttf"); }
 
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small,
@@ -533,7 +533,7 @@ img {
             display: inline-block;
             width: 30px;
             line-height: 32px;
-            background-image: url(/static/img/home.png);
+            background-image: url(/_static/img/home.png);
             background-position: center;
             background-size: 100%;
             background-repeat: no-repeat; }

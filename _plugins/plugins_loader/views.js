@@ -3,6 +3,7 @@
  */
 
 import {Plugins_Loader_Models} from './models'
+import * as img_loader          from './img_loader';
 
 
 export let Plugins_Loader_Views = function(config)
@@ -60,6 +61,7 @@ export let Plugins_Loader_Views = function(config)
       models.variables.url = '';
 
       models.refresh_events();
+      img_loader.define();
     },
 
 

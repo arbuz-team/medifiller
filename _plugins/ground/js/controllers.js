@@ -3,7 +3,6 @@
  */
 
 import {data_controller} from '../../arbuz/js/structure'
-import * as img_loader          from './img_loader';
 import * as ground_views          from './views'
 import {Plugins_Loader_Controllers}  from '../../plugins_loader/controllers'
 
@@ -77,7 +76,6 @@ export let
 
   define = function()
   {
-    img_loader.define();
     change_height_content();
 
     $('a').click(go_to_link);

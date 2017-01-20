@@ -306,23 +306,23 @@
 	
 	var searcher_controller = _interopRequireWildcard(_controllers);
 	
-	var _controllers2 = __webpack_require__(21);
+	var _controllers2 = __webpack_require__(22);
 	
 	var cart_controller = _interopRequireWildcard(_controllers2);
 	
-	var _controllers3 = __webpack_require__(22);
+	var _controllers3 = __webpack_require__(23);
 	
 	var navigation_controller = _interopRequireWildcard(_controllers3);
 	
-	var _controllers4 = __webpack_require__(23);
+	var _controllers4 = __webpack_require__(24);
 	
 	var header_controller = _interopRequireWildcard(_controllers4);
 	
-	var _controllers5 = __webpack_require__(24);
+	var _controllers5 = __webpack_require__(25);
 	
 	var dialogue_window = _interopRequireWildcard(_controllers5);
 	
-	var _controllers6 = __webpack_require__(27);
+	var _controllers6 = __webpack_require__(28);
 	
 	var ground_controller = _interopRequireWildcard(_controllers6);
 	
@@ -375,9 +375,9 @@
 	
 	var _controllers = __webpack_require__(12);
 	
-	__webpack_require__(15);
+	__webpack_require__(16);
 	
-	var _controllers2 = __webpack_require__(18);
+	var _controllers2 = __webpack_require__(19);
 	
 	/**
 	 *    Defining private variables
@@ -498,6 +498,16 @@
 	
 	var _models = __webpack_require__(14);
 	
+	var _img_loader = __webpack_require__(15);
+	
+	var img_loader = _interopRequireWildcard(_img_loader);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	/**
+	 *    Created by mrskull on 24.11.16.
+	 */
+	
 	var Plugins_Loader_Views = exports.Plugins_Loader_Views = function Plugins_Loader_Views(config) {
 	  var models = new _models.Plugins_Loader_Models(config);
 	
@@ -534,6 +544,7 @@
 	    models.variables.url = '';
 	
 	    models.refresh_events();
+	    img_loader.define();
 	  },
 	      show_content = function show_content(response, status) {
 	    prepare_content_to_show(response, status);
@@ -576,9 +587,7 @@
 	   */
 	
 	  this.change_content = hide_content;
-	}; /**
-	    *    Created by mrskull on 24.11.16.
-	    */
+	};
 
 /***/ },
 /* 14 */
@@ -715,6 +724,65 @@
 
 /***/ },
 /* 15 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var $query = function $query(css_query) {
+	  return document.querySelectorAll(css_query);
+	};
+	
+	var attr = function attr(elem, name) {
+	  return elem.getAttribute(name);
+	};
+	
+	////////////////////////////////////////
+	
+	var define = exports.define = function define() {
+	  var $images = $query('img'),
+	      default_src = '/_static/img/load.jpg',
+	      image = new Image();
+	
+	  function download_img($imgs, i) {
+	    if (!$imgs[i]) return false;
+	
+	    var downloadingImage = new Image(),
+	        data_src = attr($imgs[i], 'data-src');
+	
+	    downloadingImage.onload = function () {
+	      $imgs[i].src = this.src;
+	      setTimeout(function () {
+	        $imgs[i].style = 'opacity: 1;';
+	        download_img($images, i + 1);
+	      }, 100);
+	    };
+	
+	    downloadingImage.onerror = function () {
+	      $imgs[i].src = default_src;
+	      $imgs[i].alt = 'Sorry, an error has occurred.';
+	      setTimeout(function () {
+	        $imgs[i].style = 'opacity: 1;';
+	        $imgs[i].setAttribute('class', 'error');
+	        download_img($images, i + 1);
+	      }, 100);
+	    };
+	
+	    downloadingImage.src = data_src;
+	  }
+	
+	  image.onload = function () {
+	    download_img($images, 0);
+	  };
+	
+	  image.src = default_src;
+	};
+
+/***/ },
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -724,7 +792,7 @@
 	});
 	exports.define = undefined;
 	
-	var _views = __webpack_require__(16);
+	var _views = __webpack_require__(17);
 	
 	var add_event_on_fields = function add_event_on_fields(auto_form_views) {
 	  var settings = auto_form_views.models.settings,
@@ -766,7 +834,7 @@
 	};
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -776,7 +844,7 @@
 	});
 	exports.Auto_Form_Views = undefined;
 	
-	var _models = __webpack_require__(17);
+	var _models = __webpack_require__(18);
 	
 	var Auto_Form_Views = exports.Auto_Form_Views = function Auto_Form_Views(config) {
 	  var models = new _models.Auto_Form_Models(config);
@@ -857,7 +925,7 @@
 	 */
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -906,7 +974,7 @@
 	    */
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -916,7 +984,7 @@
 	});
 	exports.Plugins_Motion_Controllers = undefined;
 	
-	var _views = __webpack_require__(19);
+	var _views = __webpack_require__(20);
 	
 	var Plugins_Motion_Controllers = exports.Plugins_Motion_Controllers = function Plugins_Motion_Controllers(config) {
 	  var plugin_motion_views = new _views.Plugins_Motion_Views(config),
@@ -1008,7 +1076,7 @@
 	    */
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1018,7 +1086,7 @@
 	});
 	exports.Plugins_Motion_Views = undefined;
 	
-	var _models = __webpack_require__(20);
+	var _models = __webpack_require__(21);
 	
 	var Plugins_Motion_Views = exports.Plugins_Motion_Views = function Plugins_Motion_Views(config) {
 	  var models = new _models.Plugins_Motion_Models(config),
@@ -1063,7 +1131,7 @@
 	    */
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1218,7 +1286,7 @@
 	    */
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1230,7 +1298,7 @@
 	
 	var _controllers = __webpack_require__(12);
 	
-	var _controllers2 = __webpack_require__(18);
+	var _controllers2 = __webpack_require__(19);
 	
 	/**
 	 *    Defining private variables
@@ -1280,7 +1348,7 @@
 	};
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1292,7 +1360,7 @@
 	
 	var _controllers = __webpack_require__(12);
 	
-	var _controllers2 = __webpack_require__(18);
+	var _controllers2 = __webpack_require__(19);
 	
 	/**
 	 *    Defining private variables
@@ -1344,7 +1412,7 @@
 	};
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1360,11 +1428,11 @@
 	
 	var searcher_controllers = _interopRequireWildcard(_controllers2);
 	
-	var _controllers3 = __webpack_require__(22);
+	var _controllers3 = __webpack_require__(23);
 	
 	var navigation_controllers = _interopRequireWildcard(_controllers3);
 	
-	var _controllers4 = __webpack_require__(21);
+	var _controllers4 = __webpack_require__(22);
 	
 	var cart_controllers = _interopRequireWildcard(_controllers4);
 	
@@ -1402,7 +1470,7 @@
 	};
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1412,11 +1480,11 @@
 	});
 	exports.close = exports.open = exports.define = undefined;
 	
-	var _models = __webpack_require__(25);
+	var _models = __webpack_require__(26);
 	
 	var models = _interopRequireWildcard(_models);
 	
-	var _views = __webpack_require__(26);
+	var _views = __webpack_require__(27);
 	
 	var dialogue_window_controller = _interopRequireWildcard(_views);
 	
@@ -1466,7 +1534,7 @@
 	    close = exports.close = dialogue_window_controller.close;
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1512,7 +1580,7 @@
 	};
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1522,7 +1590,7 @@
 	});
 	exports.close = exports.open = exports.window_data = exports.selectors = undefined;
 	
-	var _models = __webpack_require__(25);
+	var _models = __webpack_require__(26);
 	
 	var models = _interopRequireWildcard(_models);
 	
@@ -1588,7 +1656,7 @@
 	};
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1599,10 +1667,6 @@
 	exports.change_content = exports.start = exports.define = undefined;
 	
 	var _structure = __webpack_require__(8);
-	
-	var _img_loader = __webpack_require__(28);
-	
-	var img_loader = _interopRequireWildcard(_img_loader);
 	
 	var _views = __webpack_require__(29);
 	
@@ -1616,10 +1680,6 @@
 	 *    Defining private variables
 	 */
 	
-	/**
-	 * Created by mrskull on 08.01.17.
-	 */
-	
 	var ground_loader_controllers = void 0,
 	    config_loader = {
 	  name: 'ground',
@@ -1629,6 +1689,10 @@
 	
 	/**
 	 *    Defining private functions
+	 */
+	
+	/**
+	 * Created by mrskull on 08.01.17.
 	 */
 	
 	var go_to_link = function go_to_link(event) {
@@ -1665,7 +1729,6 @@
 	 */
 	
 	var define = exports.define = function define() {
-	  img_loader.define();
 	  change_height_content();
 	
 	  $('a').click(go_to_link);
@@ -1679,65 +1742,6 @@
 	},
 	    change_content = exports.change_content = function change_content(url, post_data) {
 	  ground_loader_controllers.change_content(url, post_data);
-	};
-
-/***/ },
-/* 28 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var $query = function $query(css_query) {
-	  return document.querySelectorAll(css_query);
-	};
-	
-	var attr = function attr(elem, name) {
-	  return elem.getAttribute(name);
-	};
-	
-	////////////////////////////////////////
-	
-	var define = exports.define = function define() {
-	  var $images = $query('img'),
-	      default_src = '/static/img/load.jpg',
-	      image = new Image();
-	
-	  function download_img($imgs, i) {
-	    if (!$imgs[i]) return false;
-	
-	    var downloadingImage = new Image(),
-	        data_src = attr($imgs[i], 'data-src');
-	
-	    downloadingImage.onload = function () {
-	      $imgs[i].src = this.src;
-	      setTimeout(function () {
-	        $imgs[i].style = 'opacity: 1;';
-	        download_img($images, i + 1);
-	      }, 100);
-	    };
-	
-	    downloadingImage.onerror = function () {
-	      $imgs[i].src = default_src;
-	      $imgs[i].alt = 'Sorry, an error has occurred.';
-	      setTimeout(function () {
-	        $imgs[i].style = 'opacity: 1;';
-	        $imgs[i].setAttribute('class', 'error');
-	        download_img($images, i + 1);
-	      }, 100);
-	    };
-	
-	    downloadingImage.src = data_src;
-	  }
-	
-	  image.onload = function () {
-	    download_img($images, 0);
-	  };
-	
-	  image.src = default_src;
 	};
 
 /***/ },
@@ -1791,7 +1795,7 @@
 	
 	var hide_form = _interopRequireWildcard(_controllers2);
 	
-	var _controllers3 = __webpack_require__(15);
+	var _controllers3 = __webpack_require__(16);
 	
 	var auto_form = _interopRequireWildcard(_controllers3);
 	
@@ -1843,7 +1847,7 @@
 	});
 	exports.send = undefined;
 	
-	var _controllers = __webpack_require__(27);
+	var _controllers = __webpack_require__(28);
 	
 	var ground_controllers = _interopRequireWildcard(_controllers);
 	
