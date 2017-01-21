@@ -1,48 +1,39 @@
-from arbuz.views import *
+from arbuz.base import *
 from product.forms import *
 
 
-class Dialog_Alert(Dynamic_Event_Menager):
+class Dialog_Alert(Dynamic_Base):
 
-    def Manage_Content_Ground(self):
-        pass
+    def Manage_Access_Denied(self):
+        self.content['title'] = 'access_denied'
+        return self.Render_HTML('dialog/alert.html')
 
     def Manage(self):
+
+        if self.request.POST['name'] == 'access_denied':
+            return self.Manage_Access_Denied()
+
+    def __init__(self, request):
+        super(Dialog_Alert, self).__init__(request)
+        self.HTML = self.Manage()
+
+
+
+class Dialog_Confirm(Dynamic_Base):
+
+    def Manage(self):
+        pass
 
         # if self.request.POST['name'] == 'new_brand':
         #     return self.Manage_New_Brand()
 
-        return self.Error_No_Event()
-
-    @staticmethod
-    def Launch(request):
-        return Dialog_Prompt(request, autostart=False).HTML
+    def __init__(self, request):
+        super(Dialog_Confirm, self).__init__(request)
+        self.HTML = self.Manage()
 
 
 
-class Dialog_Confirm(Dynamic_Event_Menager):
-
-    def Manage_Content_Ground(self):
-        pass
-
-    def Manage(self):
-
-        # if self.request.POST['name'] == 'new_brand':
-        #     return self.Manage_New_Brand()
-
-        return self.Error_No_Event()
-
-    @staticmethod
-    def Launch(request):
-        return Dialog_Prompt(request, autostart=False).HTML
-
-
-
-class Dialog_Prompt(Dynamic_Event_Menager):
-
-
-    def Manage_Content_Ground(self):
-        pass
+class Dialog_Prompt(Dynamic_Base):
 
     def Manage_New_Brand(self):
         self.content['title'] = 'new_brand'
@@ -94,8 +85,6 @@ class Dialog_Prompt(Dynamic_Event_Menager):
         if self.request.POST['name'] == 'where_display':
             return self.Manage_Where_Display()
 
-        return self.Error_No_Event()
-
-    @staticmethod
-    def Launch(request):
-        return Dialog_Prompt(request).HTML
+    def __init__(self, request):
+        super(Dialog_Prompt, self).__init__(request)
+        self.HTML = self.Manage()

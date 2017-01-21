@@ -1,28 +1,9 @@
-from django.shortcuts import render
 from django.core.urlresolvers import reverse, resolve
-from django.http import JsonResponse
 from abc import ABCMeta, abstractmethod
 from session.views import *
 from translator.views import *
-from dialog.views import Dialog_Prompt, Dialog_Confirm, Dialog_Alert
+from dialog.views import *
 import re
-
-
-class Dynamic_Base:
-
-    def Render_HTML(self, file_name, form_name = ''):
-
-        # example: EN/user/sign_in.html
-        template = self.request.session['translator_language'] \
-                   + '/' + file_name
-
-        self.content['form_name'] = form_name
-        return render(self.request, template, self.content)
-
-    def __init__(self, request):
-        self.request = request
-        self.content = {}
-
 
 
 class Manager(Dynamic_Base):
@@ -52,13 +33,13 @@ class Manager(Dynamic_Base):
     def Manage_Dialog(self):
 
         if self.request.POST['type'] == 'alert':
-            return Dialog_Alert.Launch(self.request)
+            return Dialog_Alert(self.request).HTML
 
         if self.request.POST['type'] == 'confirm':
-            return Dialog_Confirm.Launch(self.request)
+            return Dialog_Confirm(self.request).HTML
 
         if self.request.POST['type'] == 'prompt':
-            return Dialog_Prompt.Launch(self.request)
+            return Dialog_Prompt(self.request).HTML
 
     def Manage_Button(self):
         return JsonResponse({'__button__': 'false'})
