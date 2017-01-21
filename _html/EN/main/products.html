@@ -11,13 +11,14 @@
   {% include "ground/html/navigation.html" %}
 
   <div class="block-content">
+      <button type="button" class="dialog_button" data-type="alert" data-name="access_denied"> Alert </button>
       <button type="button" class="dialog_button" data-type="prompt" data-name="new_brand"> Create brand </button>
 
     <br>
     {% for product in products %}
 
       <a href="/product/{{ product.pk }}/{{ product.details_en.name }}">
-        <img data-src="{{ product.image }}" alt="image"><br>
+        <img data-src="{{ product.image }}" alt="image" /><br>
 
         {{ product.details_en.name }}<br>
         <!--{{ product.details_en.description }}<br>-->

@@ -38,16 +38,15 @@ let
 
   do_nothing = function(event)
   {
-    console.log('co jest');
     event.preventDefault();
     return false;
   };
 
 
-export let define = function()
+export let define = function($container)
 {
   let
-    $forms = $('form.auto_form, .auto_form form');
+    $forms = $('form.auto_form, .auto_form form', $container);
 
   $forms.each(function()
   {

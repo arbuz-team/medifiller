@@ -2,7 +2,8 @@
  * Created by mrskull on 29.12.16.
  */
 
-import * as models from './models'
+import * as dialog_models from './models'
+import * as interior_dialog_controllers from './interior/controllers'
 
 
 /**
@@ -10,9 +11,7 @@ import * as models from './models'
  */
 
 export let
-  selectors = models.selectors,
-  window_data = models.window_data;
-
+  selectors = dialog_models.selectors;
 
 /**
  *    Defining private functions
@@ -31,17 +30,6 @@ let
   {
     $(selectors.container)
       .fadeOut(200, clear_data);
-  },
-
-
-  paste_data = function(response)
-  {
-    window_data.content = response;
-
-    $(selectors.window)
-      .html(window_data.content);
-
-    show();
   },
 
 
@@ -74,13 +62,12 @@ let
       result_name = default_name;
 
 
-    models.window_data.type = result_type;
-    models.window_data.name = result_name;
+    dialog_models.variables.type = result_type;
+    dialog_models.variables.name = result_name;
   };
 
 
 ///////////////////////////////////////
-
 
 export let
 
@@ -88,7 +75,11 @@ export let
   {
     save_type_and_name(type, name);
 
-    models.download_content(paste_data);
+    let
+      type_from_models = dialog_models.variables.type,
+      name_from_models = dialog_models.variables.name;
+
+    interior_dialog_controllers.load(type_from_models, name_from_models, show);
   },
 
 

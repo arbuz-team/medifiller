@@ -5,10 +5,10 @@ let Validators = {};
 
 window.Validators = Validators;
 
-export let define = function()
+export let define = function($container)
 {
 
-	$('form[data-test=yes]').each(function(){
+	$('form[data-test=yes]', $container).each(function(){
 		let name = $(this).data('name'),
       type = $(this).data('type');
 		if(name || type)

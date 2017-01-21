@@ -2,25 +2,29 @@
  * Created by mrskull on 29.12.16.
  */
 
-import * as models from './models'
-import * as dialogue_window_controller from './views'
+import * as dialog_views from './views'
+import * as interior_dialog_controllers from './interior/controllers'
 
 
 /**
  *    Defining public functions
  */
 
-  export let define = function()
-  {
-    let
-      selectors = models.selectors;
+  export let
 
-    $(selectors.container).click(close_with_cancel_event);
-    $(selectors.window).click(cancel_event);
+    define = function()
+    {
+      let
+        selectors = dialog_views.selectors;
+
+      $(selectors.container).click(close_with_cancel_event);
+      $(selectors.window).click(cancel_event);
 
 
-    $(selectors.external_buttons).click(open);
-  };
+      $(selectors.external_buttons).click(open);
+
+      interior_dialog_controllers.define();
+    };
 
 
 /**
@@ -56,8 +60,8 @@ export let
       type = $button.data('type'),
       name = $button.data('name');
 
-    dialogue_window_controller.open(type, name)
+    dialog_views.open(type, name)
   },
 
 
-  close = dialogue_window_controller.close;
+  close = dialog_views.close;

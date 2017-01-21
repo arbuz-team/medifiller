@@ -14,10 +14,11 @@ let
   navigation_loader_controllers,
   config_loader = {
     name: 'navigation',
-    container: '#NAVIGATION > .navigation',
-    first_element: '*',
+    url: '/navigation/',
 
-    load_with_page: false,
+    container: '#NAVIGATION > .navigation',
+
+    auto_first_loading: true,
   },
 
   navigation_motion_controllers,

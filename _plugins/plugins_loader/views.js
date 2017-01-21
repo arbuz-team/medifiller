@@ -9,7 +9,8 @@ import * as img_loader          from './img_loader';
 export let Plugins_Loader_Views = function(config)
 {
   let
-    models = new Plugins_Loader_Models(config);
+    models = new Plugins_Loader_Models(config),
+    external_callback;
 
   this.models = models;
 
@@ -34,7 +35,7 @@ export let Plugins_Loader_Views = function(config)
         {
           models.variables.error = true;
 
-          models.prepare_post_data();
+          models.prepare_post_data({__content__: 'ground'});
           models.download_content('/statement/' + code + '/', show_content);
 
           return true;
@@ -65,21 +66,25 @@ export let Plugins_Loader_Views = function(config)
     },
 
 
-    show_content = function(response, status)
+    show_content = function(response, status, code)
     {
-      prepare_content_to_show(response, status);
+      prepare_content_to_show(response, status, code);
 
       let
         container = models.settings.container,
         opacity = models.settings.opacity.show,
         duration = models.settings.duration.show;
 
+
       $(container)
-      .animate({opacity: opacity}, duration, function()
-      {
-        // if(models.settings.load_with_page && window.APP.DATA)
-        //   load_header_page(window.APP.DATA);
-      });
+        .animate({opacity: opacity}, duration, function()
+        {
+          if(external_callback)
+            external_callback();
+
+          // if(models.settings.load_with_page && window.APP.DATA)
+          //   load_header_page(window.APP.DATA);
+        });
     };
 
 
@@ -99,8 +104,9 @@ export let Plugins_Loader_Views = function(config)
     },
 
 
-    hide_content = function(url, post_data)
+    hide_content = function(url, post_data, callback)
     {
+      external_callback = callback;
       prepare_content_to_hide(url, post_data);
 
       let

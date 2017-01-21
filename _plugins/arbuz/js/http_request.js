@@ -48,15 +48,15 @@ let
  *    Defining global functions
  */
 
-  window.APP.http_request = function(url, data_post, callback)
+  window.APP.http_request = function(url, post_data, callback)
   {
     url = send_post_preprocess_url(url);
-    data_post = send_post_prepare(data_post);
+    post_data = send_post_prepare(post_data);
 
     $.ajax({
       type: 'POST',
       url: url,
-      data: data_post,
+      data: post_data,
       complete: create_callback(callback),
     });
   };

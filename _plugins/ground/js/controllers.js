@@ -2,9 +2,9 @@
  * Created by mrskull on 08.01.17.
  */
 
-import {data_controller} from '../../arbuz/js/structure'
 import * as ground_views          from './views'
 import {Plugins_Loader_Controllers}  from '../../plugins_loader/controllers'
+import {Form_Controllers}  from '../../forms/js/controllers'
 
 
 /**
@@ -12,12 +12,18 @@ import {Plugins_Loader_Controllers}  from '../../plugins_loader/controllers'
  */
 
 let
-  ground_loader_controllers,
   config_loader = {
     name: 'ground',
+
     container: '#GROUND > .ground',
     first_element: '.block_1',
-  };
+
+    auto_first_loading: true,
+    load_with_page: true,
+  },
+  ground_loader_controllers = new Plugins_Loader_Controllers(config_loader),
+
+  ground_form_controllers = new Form_Controllers(ground_loader_controllers);
 
 
 /**
@@ -37,8 +43,7 @@ let
 
       ground_views.change_url(url);
 
-      if(data_controller.get('path') !== url)
-        ground_loader_controllers.change_content(url);
+      ground_loader_controllers.load(url);
     }
   },
 
@@ -52,7 +57,7 @@ let
   back_url = function()
   {
     event.preventDefault();
-    ground_loader_controllers.change_content();
+    ground_loader_controllers.load();
   },
 
 
@@ -82,17 +87,18 @@ export let
     window.APP.add_own_event('redirect', redirect);
     window.APP.add_own_event('popstate', back_url);
     $(window).resize(change_height_content);
+
+    ground_form_controllers.define();
   },
 
 
   start = function()
   {
-    ground_loader_controllers = new Plugins_Loader_Controllers(config_loader);
     ground_loader_controllers.define();
   },
 
 
   change_content = function(url, post_data)
   {
-    ground_loader_controllers.change_content(url, post_data);
+    ground_loader_controllers.load(url, post_data);
   };

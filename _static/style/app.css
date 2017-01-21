@@ -205,12 +205,12 @@ ul {
       padding: 12px;
       font-size: 14px;
       line-height: 18px; }
-      #DIALOG > .dialog > .dialog-content > .dialog-content-part > div {
+      #DIALOG > .dialog > .dialog-content .dialog-content-part > div {
         padding-bottom: 5px; }
-      #DIALOG > .dialog > .dialog-content > .dialog-content-part > input {
+      #DIALOG > .dialog > .dialog-content .dialog-content-part > input {
         width: 468px;
         box-sizing: border-box; }
-      #DIALOG > .dialog > .dialog-content > .dialog-content-part:last-child {
+      #DIALOG > .dialog > .dialog-content .dialog-content-part:last-child {
         text-align: right; }
 
 #CART {
@@ -394,14 +394,14 @@ ul {
     float: left;
     text-align: left; }
     #HEADER > .header > .navigation-mini > li.navigation-mini-filter > button, #HEADER > .header > .navigation-mini > li.navigation-mini-filter > a {
-      background-image: url("/static/img/filter.png");
+      background-image: url("/_static/img/filter.png");
       background-size: 100% 100%;
       background-position: 0 0;
       background-repeat: no-repeat; }
   #HEADER > .header > .navigation-mini > li.navigation-mini-navigation {
     text-align: center; }
     #HEADER > .header > .navigation-mini > li.navigation-mini-navigation > button, #HEADER > .header > .navigation-mini > li.navigation-mini-navigation > a {
-      background-image: url("/static/img/menu_black.png");
+      background-image: url("/_static/img/menu_black.png");
       background-size: 100% 100%;
       background-position: 0 0;
       background-repeat: no-repeat; }
@@ -409,7 +409,7 @@ ul {
     float: right;
     text-align: right; }
     #HEADER > .header > .navigation-mini > li.navigation-mini-cart > button, #HEADER > .header > .navigation-mini > li.navigation-mini-cart > a {
-      background-image: url("/static/img/cart.png");
+      background-image: url("/_static/img/cart.png");
       background-size: 100% 100%;
       background-position: 0 0;
       background-repeat: no-repeat; }

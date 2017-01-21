@@ -15,21 +15,22 @@ export let Plugins_Loader_Models = function(config)
  */
 
   this.settings = {
+    name: undefined,
     url: undefined,
 
-    name: undefined,
     container: undefined,
     first_element: '*',
 
+    auto_first_loading: false,
     load_with_page: false,
 
     duration: {
       show: 150,
-      hide: 1,
+      hide: 100,
     },
 
     opacity: {
-      show: 100,
+      show: 1,
       hide: 0.4,
     },
   };
@@ -52,6 +53,11 @@ export let Plugins_Loader_Models = function(config)
     // -- Container
       if(typeof config.load_with_page !== 'undefined')
         that.settings.load_with_page = config.load_with_page;
+
+
+    // -- Container
+      if(typeof config.auto_first_loading !== 'undefined')
+        that.settings.auto_first_loading = config.auto_first_loading;
 
 
     // -- Load with page
@@ -95,6 +101,7 @@ export let Plugins_Loader_Models = function(config)
     post_data: undefined,
 
     error: undefined,
+    external_callback: undefined,
 
     can_do_load: true,
     can_do_redirect: true,
@@ -124,7 +131,8 @@ export let Plugins_Loader_Models = function(config)
       response_data = {};
 
     if( typeof response_data.__form__ === 'undefined')
-      response_data['__content__'] = this.settings.name;
+      if( typeof response_data.__content__ === 'undefined')
+        response_data['__content__'] = this.settings.name;
 
     this.variables.post_data = response_data;
   };
@@ -153,7 +161,6 @@ export let Plugins_Loader_Models = function(config)
   this.download_content = function(url, callback)
   {
     this.prepare_url(url);
-
     window.APP.http_request(this.variables.url, this.variables.post_data, callback);
   };
 };

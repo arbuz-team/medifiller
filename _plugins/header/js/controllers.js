@@ -16,8 +16,11 @@ let
   header_loader_events,
   config_loader = {
     name: 'navigation',
+    url: '/navigation/',
+
     container: '#HEADER > .header',
-    first_element: '*',
+
+    auto_first_loading: true,
   };
 
 

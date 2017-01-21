@@ -9,9 +9,9 @@ import * as form from './views'
  *    Defining events
  */
 
-export let define = function()
+export let define = function($container)
 {
-  let $otoczka_pola = $('.hide_form > .otoczka_pola');
+  let $otoczka_pola = $('.hide_form > .otoczka_pola', $container);
 
   $otoczka_pola.children('div')
     .click(edit_field);

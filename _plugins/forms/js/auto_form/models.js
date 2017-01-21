@@ -2,8 +2,6 @@
  * Created by mrskull on 17.01.17.
  */
 
-import {data_controller} from '../../../arbuz/js/structure'
-
 
 export let Auto_Form_Models = function(config)
 {

@@ -9,15 +9,12 @@ import * as ground_controllers from '../../ground/js/controllers';
  *    Defining private functions
  */
 
-  let prepare_post_data = function(form_name, object)
-  {
-    if(!object)
-      object = {};
-
-    object.__form__ = form_name;
-
-    return object;
-  };
+  // let
+  //
+  //   prepare_post_data = function()
+  //   {
+  //
+  //   };
 
 
 /**

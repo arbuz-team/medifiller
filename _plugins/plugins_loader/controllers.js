@@ -11,8 +11,8 @@ export let Plugins_Loader_Controllers = function(config)
   let
     plugin_loader_views = new Plugins_Loader_Views(config);
 
-  this.change_content = plugin_loader_views.change_content;
-
+  this.load = plugin_loader_views.change_content;
+  this.container = plugin_loader_views.models.settings.container;
 
   /**
    *    Defining private functions
@@ -41,7 +41,7 @@ export let Plugins_Loader_Controllers = function(config)
     variables.redirect_time_out = setTimeout(() =>
     {
       if(plugin_loader_views.models.variables.can_do_redirect === true)
-        plugin_loader_views.change_content(url);
+        this.load(url);
     }, delay);
   };
 
@@ -52,9 +52,10 @@ export let Plugins_Loader_Controllers = function(config)
 
   this.define = function()
   {
-    window.APP.add_own_event('load', () => {
-      plugin_loader_views.change_content();
-    });
+    if(plugin_loader_views.models.settings.auto_first_loading)
+      window.APP.add_own_event('load', () => {
+        plugin_loader_views.change_content();
+      });
   };
 };
 

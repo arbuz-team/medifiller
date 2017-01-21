@@ -3,8 +3,8 @@
  */
 
 import {Plugins_Loader_Controllers} from '../../plugins_loader/controllers'
-import {} from '../../forms/js/auto_form/controllers'
 import {Plugins_Motion_Controllers} from '../../plugins_motion/controllers'
+import {Form_Controllers}  from '../../forms/js/controllers'
 
 
 /**
@@ -12,17 +12,16 @@ import {Plugins_Motion_Controllers} from '../../plugins_motion/controllers'
  */
 
 let
-  searcher_loader_controllers,
   config_loader = {
-    name: 'filters',
+    name: 'searcher',
+    url: '/searcher/',
 
     container: '#SEARCHER > .searcher',
-    first_element: '*',
 
-    load_with_page: false,
+    auto_first_loading: true,
   },
+  searcher_loader_controllers = new Plugins_Loader_Controllers(config_loader),
 
-  searcher_motion_controllers,
   config_motion = {
     container: '#SEARCHER',
     content: '.searcher',
@@ -31,7 +30,10 @@ let
     can_open_to: 1000,
     duration_open: 200,
     duration_close: 200,
-  };
+  },
+  searcher_motion_controllers = new Plugins_Motion_Controllers(config_motion),
+
+  searcher_form_controllers = new Form_Controllers(searcher_loader_controllers);
 
 
 /**
@@ -43,18 +45,13 @@ export let
   define = function()
   {
     searcher_motion_controllers.define();
+    searcher_form_controllers.define();
   },
 
 
   start = function()
   {
-    // -- Loader configuration
-    searcher_loader_controllers = new Plugins_Loader_Controllers(config_loader);
     searcher_loader_controllers.define();
-
-
-    // -- Motion configuration
-    searcher_motion_controllers = new Plugins_Motion_Controllers(config_motion);
     searcher_motion_controllers.start();
   },
 
