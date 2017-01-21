@@ -4,7 +4,17 @@ from arbuz.views import *
 class Cart(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
+        pass
+
+    def Manage_Content_Cart(self):
         return self.Render_HTML('cart/cart.html')
+
+    def Manage_Content(self):
+
+        if self.request.POST['__content__'] == 'cart':
+            return self.Manage_Content_Cart()
+
+        return super(Cart, self).Manage_Content()
 
     def Manage_Cart_Append(self):
 
@@ -38,15 +48,11 @@ class Cart(Dynamic_Event_Menager):
 
     def Manage(self):
 
-        # parts of pages
-        if '__content__' in self.request.POST:
-            return self.Manage_Content()
-
         # cart
         if '__cart__' in self.request.POST:
             return self.Manage_Cart()
 
-        return self.Error_No_Event()
+        return super(Cart, self).Manage()
 
     @staticmethod
     def Launch(request):

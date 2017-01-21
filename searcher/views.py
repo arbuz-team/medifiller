@@ -207,9 +207,19 @@ class Search_Engine:
 class Searcher(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
+        pass
+
+    def Manage_Content_Searcher(self):
         self.content['brands'] = Brand.objects.all()
         self.content['purposes'] = Purpose.objects.all()
         return self.Render_HTML('searcher/searcher.html')
+
+    def Manage_Content(self):
+
+        if self.request.POST['__content__'] == 'searcher':
+            return self.Manage_Content_Searcher()
+
+        return super(Searcher, self).Manage_Content()
 
     def Manage_Filter_Brand(self):
         filters = self.request.session['searcher_filter_brand']
@@ -277,15 +287,11 @@ class Searcher(Dynamic_Event_Menager):
 
     def Manage(self):
 
-        # parts of pages
-        if '__content__' in self.request.POST:
-            return self.Manage_Content()
-
         # filters
         if '__filter__' in self.request.POST:
             return self.Manage_Filter()
 
-        return self.Error_No_Event()
+        return super(Searcher, self).Manage()
 
     @staticmethod
     def Launch(request):
