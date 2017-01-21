@@ -9,7 +9,7 @@ class Dialog_Alert(Dynamic_Event_Menager):
 
     def Manage(self):
 
-        # if self.request.POST['type'] == 'new_brand':
+        # if self.request.POST['name'] == 'new_brand':
         #     return self.Manage_New_Brand()
 
         return self.Error_No_Event()
@@ -27,7 +27,7 @@ class Dialog_Confirm(Dynamic_Event_Menager):
 
     def Manage(self):
 
-        # if self.request.POST['type'] == 'new_brand':
+        # if self.request.POST['name'] == 'new_brand':
         #     return self.Manage_New_Brand()
 
         return self.Error_No_Event()
@@ -76,22 +76,22 @@ class Dialog_Prompt(Dynamic_Event_Menager):
 
     def Manage(self):
 
-        if self.request.POST['type'] == 'new_brand':
+        if self.request.POST['name'] == 'new_brand':
             return self.Manage_New_Brand()
 
-        if self.request.POST['type'] == 'new_purpose':
+        if self.request.POST['name'] == 'new_purpose':
             return self.Manage_New_Purpose()
 
-        if self.request.POST['type'] == 'new_details_en':
+        if self.request.POST['name'] == 'new_details_en':
             return self.Manage_New_Details_EN()
 
-        if self.request.POST['type'] == 'new_details_pl':
+        if self.request.POST['name'] == 'new_details_pl':
             return self.Manage_New_Details_PL()
 
-        if self.request.POST['type'] == 'new_details_de':
+        if self.request.POST['name'] == 'new_details_de':
             return self.Manage_New_Details_DE()
 
-        if self.request.POST['type'] == 'where_display':
+        if self.request.POST['name'] == 'where_display':
             return self.Manage_Where_Display()
 
         return self.Error_No_Event()
@@ -99,20 +99,3 @@ class Dialog_Prompt(Dynamic_Event_Menager):
     @staticmethod
     def Launch(request):
         return Dialog_Prompt(request).HTML
-
-
-
-class Dialog:
-
-    @staticmethod
-    def Launch(request):
-
-        if request.POST['__content__'] == 'alert':
-            return Dialog_Alert.Launch(request)
-
-        if request.POST['__content__'] == 'confirm':
-            return Dialog_Confirm.Launch(request)
-
-        if request.POST['__content__'] == 'prompt':
-            return Dialog_Prompt.Launch(request)
-

@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from abc import ABCMeta, abstractmethod
 from session.views import *
 from translator.views import *
-from product.models import *
+from dialog.views import Dialog_Prompt, Dialog_Confirm, Dialog_Alert
 import re
 
 
@@ -48,6 +48,17 @@ class Manager(Dynamic_Base):
 
     def Manage_Exist(self):
         return JsonResponse({'__exist__': 'false'})
+
+    def Manage_Dialog(self):
+
+        if self.request.POST['type'] == 'alert':
+            return Dialog_Alert.Launch(self.request)
+
+        if self.request.POST['type'] == 'confirm':
+            return Dialog_Confirm.Launch(self.request)
+
+        if self.request.POST['type'] == 'prompt':
+            return Dialog_Prompt.Launch(self.request)
 
     def Manage_Button(self):
         return JsonResponse({'__button__': 'false'})
@@ -203,6 +214,10 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
         # checkers
         if '__exist__' in self.request.POST:
             return self.Manage_Exist()
+
+        # dialogs
+        if '__dialog__' in self.request.POST:
+            return self.Manage_Dialog()
 
         # options
         if '__button__' in self.request.POST:
