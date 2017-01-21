@@ -12,10 +12,24 @@ class Manager(Dynamic_Base):
     def Manage_Content_Ground(self):
         pass
 
+    def Manage_Content_Dialog(self):
+
+        if self.request.POST['type'] == 'alert':
+            return Dialog_Alert(self.request).HTML
+
+        if self.request.POST['type'] == 'confirm':
+            return Dialog_Confirm(self.request).HTML
+
+        if self.request.POST['type'] == 'prompt':
+            return Dialog_Prompt(self.request).HTML
+
     def Manage_Content(self):
 
         if self.request.POST['__content__'] == 'ground':
             return self.Manage_Content_Ground()
+
+        if self.request.POST['__content__'] == 'dialog':
+            return self.Manage_Content_Dialog()
 
         self.content['error'] = 'no_event'
         return self.Render_HTML('arbuz/error.html')
@@ -29,17 +43,6 @@ class Manager(Dynamic_Base):
 
     def Manage_Exist(self):
         return JsonResponse({'__exist__': 'false'})
-
-    def Manage_Dialog(self):
-
-        if self.request.POST['type'] == 'alert':
-            return Dialog_Alert(self.request).HTML
-
-        if self.request.POST['type'] == 'confirm':
-            return Dialog_Confirm(self.request).HTML
-
-        if self.request.POST['type'] == 'prompt':
-            return Dialog_Prompt(self.request).HTML
 
     def Manage_Button(self):
         return JsonResponse({'__button__': 'false'})
@@ -195,10 +198,6 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
         # checkers
         if '__exist__' in self.request.POST:
             return self.Manage_Exist()
-
-        # dialogs
-        if '__dialog__' in self.request.POST:
-            return self.Manage_Dialog()
 
         # options
         if '__button__' in self.request.POST:
