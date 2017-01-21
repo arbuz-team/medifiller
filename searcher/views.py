@@ -204,9 +204,14 @@ class Search_Engine:
 
 
 
-class Set_Filters:
+class Searcher(Dynamic_Event_Menager):
 
-    def Manage_Brand(self):
+    def Manage_Content_Ground(self):
+        self.content['brands'] = Brand.objects.all()
+        self.content['purposes'] = Purpose.objects.all()
+        return self.Render_HTML('searcher/searcher.html')
+
+    def Manage_Filter_Brand(self):
         filters = self.request.session['searcher_filter_brand']
 
         if self.request.POST['action'] == 'append':#
@@ -221,7 +226,7 @@ class Set_Filters:
 
         return JsonResponse({'__filter__': 'true'})
 
-    def Manage_Purpose(self):
+    def Manage_Filter_Purpose(self):
         filters = self.request.session['searcher_filter_purpose']
 
         if self.request.POST['action'] == 'append':
@@ -236,13 +241,13 @@ class Set_Filters:
 
         return JsonResponse({'__filter__': 'true'})
 
-    def Manage_Phrase(self):
+    def Manage_Filter_Phrase(self):
         self.request.session['searcher_phrase'] = \
             self.request.POST['value']
 
         return JsonResponse({'__filter__': 'true'})
 
-    def Manage_Order(self):
+    def Manage_Filter_Order(self):
 
         if 'name' in self.request.POST['__filter__']:
             self.request.session['searcher_order_name'] = \
@@ -254,29 +259,37 @@ class Set_Filters:
 
         return JsonResponse({'__filter__': 'true'})
 
-    def Manage(self):
+    def Manage_Filter(self):
 
         if self.request.POST['__filter__'] == 'brand':
-            return self.Manage_Brand()
+            return self.Manage_Filter_Brand()
 
         if self.request.POST['__filter__'] == 'purpose':
-            return self.Manage_Purpose()
+            return self.Manage_Filter_Purpose()
 
         if self.request.POST['__filter__'] == 'phrase':
-            return self.Manage_Phrase()
+            return self.Manage_Filter_Phrase()
 
         if 'order' in self.request.POST['__filter__']:
-            return self.Manage_Order()
+            return self.Manage_Filter_Order()
 
         return JsonResponse({'__filter__': 'false'})
 
-    def __init__(self, request):
-        self.request = request
-        self.HTML = self.Manage()
+    def Manage(self):
+
+        # parts of pages
+        if '__content__' in self.request.POST:
+            return self.Manage_Content()
+
+        # filters
+        if '__filter__' in self.request.POST:
+            return self.Manage_Filter()
+
+        return self.Error_No_Event()
 
     @staticmethod
     def Launch(request):
-        return Set_Filters(request).HTML
+        return Searcher(request).HTML
 
 
 

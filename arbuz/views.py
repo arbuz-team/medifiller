@@ -31,36 +31,10 @@ class Manager(Dynamic_Base):
     def Manage_Content_Ground(self):
         pass
 
-    def Manage_Content_Cart(self):
-        return self.Render_HTML('parts/cart.html')
-
-    def Manage_Content_Filters(self):
-        self.content['brands'] = Brand.objects.all()
-        self.content['purposes'] = Purpose.objects.all()
-        return self.Render_HTML('parts/filters.html')
-
-    def Manage_Content_Header(self):
-        return self.Render_HTML('parts/header.html')
-
-    def Manage_Content_Navigation(self):
-        return self.Render_HTML('parts/navigation.html')
-
     def Manage_Content(self):
 
         if self.request.POST['__content__'] == 'ground':
             return self.Manage_Content_Ground()
-
-        if self.request.POST['__content__'] == 'cart':
-            return self.Manage_Content_Cart()
-
-        if self.request.POST['__content__'] == 'filters':
-            return self.Manage_Content_Filters()
-
-        if self.request.POST['__content__'] == 'header':
-            return self.Manage_Content_Header()
-
-        if self.request.POST['__content__'] == 'navigation':
-            return self.Manage_Content_Navigation()
 
         self.content['error'] = 'no_event'
         return self.Render_HTML('arbuz/error.html')
@@ -74,9 +48,6 @@ class Manager(Dynamic_Base):
 
     def Manage_Exist(self):
         return JsonResponse({'__exist__': 'false'})
-
-    #def Manage_Secure(self):
-    #    return JsonResponse({'__secure__': 'false'})
 
     def Manage_Button(self):
         return JsonResponse({'__button__': 'false'})
@@ -218,34 +189,35 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
 
     def Manage(self):
 
+        # parts of pages
+        if '__content__' in self.request.POST:
+            return self.Manage_Content()
+
+        # manage forms
+        if '__form__' in self.request.POST:
+            return self.Manage_Form()
+
+        if '__edit__' in self.request.POST:
+            return self.Manage_Edit()
+
+        # checkers
+        if '__exist__' in self.request.POST:
+            return self.Manage_Exist()
+
+        # options
+        if '__button__' in self.request.POST:
+            return self.Manage_Button()
+
+        return self.Error_No_Event()
+
+    def Initialize(self):
+
         self.Update()
 
         if self.request.method == 'POST':
             if self.Check():
+                return self.Manage()
 
-                # parts of pages
-                if '__content__' in self.request.POST:
-                    return self.Manage_Content()
-
-                # manage forms
-                if '__form__' in self.request.POST:
-                    return self.Manage_Form()
-
-                if '__edit__' in self.request.POST:
-                    return self.Manage_Edit()
-
-                # checkers
-                if '__exist__' in self.request.POST:
-                    return self.Manage_Exist()
-
-                #if '__secure__' in self.request.POST:
-                #    return self.Manage_Secure()
-
-                # options
-                if '__button__' in self.request.POST:
-                    return self.Manage_Button()
-
-                return self.Error_No_Event()
             return self.ERROR_HTML
 
         if self.request.method == 'GET':
@@ -268,7 +240,7 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
         self.only_root = only_root
 
         if autostart:
-            self.HTML = self.Manage()
+            self.HTML = self.Initialize()
 
     @staticmethod
     @abstractmethod

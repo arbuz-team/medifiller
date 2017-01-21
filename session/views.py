@@ -55,6 +55,11 @@ class Session_Controller:
         if 'product_new_purpose' not in self.request.session:
             self.request.session['product_new_purpose'] = None
 
+    def Check_Session_Cart(self):
+
+        if 'cart_products' not in self.request.session:
+            self.request.session['cart_products'] = []
+
     def Check_Session_Searcher(self):
 
         self.request.session['searcher_filter_brand'] = []

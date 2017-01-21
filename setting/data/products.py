@@ -82,7 +82,7 @@ def Load_Default_Product():
             details_de=Details_DE.objects.get(pk=details_de.pk),
             where_display=Where_Display.objects.get(pk=where_display.pk),
 
-            image='/_static/plugins/arbuz/img/logo.png',
+            image='/_static/img/logo.png',
             price_eur=200*numer,
             price_pln=500*numer,
 

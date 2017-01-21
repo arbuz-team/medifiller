@@ -2,6 +2,9 @@
 <div class="cart-title"> Shopping cart </div>
 
 <ul class="cart-list">
+
+    {{ request.session.cart_products }}
+
     <li>
         <div class="cart-list-name"> Product 1 </div>
         <div class="cart-list-price"> $35 </div>
