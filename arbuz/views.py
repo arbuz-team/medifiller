@@ -152,7 +152,7 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
             self.ERROR_HTML = self.Error()
             return False
 
-        methods = getmembers(self, predicate=ismethod)
+        methods = getmembers(Checker(self.request), predicate=ismethod)
         methods = [method[0] for method in methods]
 
         # call all of methods Check_*
