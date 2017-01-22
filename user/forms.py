@@ -12,6 +12,7 @@ class Form_Login(forms.Form):
             {
                 'placeholder': 'Email',
                 'class': 'test',
+                'autofocus': 'true',
             }),
         max_length=50
     )
@@ -91,6 +92,7 @@ class Form_Register(forms.ModelForm):
                 {
                     'placeholder': 'Email',
                     'class': 'test',
+                    'autofocus': 'true',
                 }),
         }
 
@@ -127,6 +129,7 @@ class Form_User_Address(forms.ModelForm):
                 {
                     'placeholder': 'Full Name',
                     'class': 'test',
+                    'autofocus': 'true',
                 }),
 
             'address_line_1': forms.TextInput(
@@ -182,6 +185,7 @@ class Form_Forgot_Password(forms.Form):
             {
                 'placeholder': 'Email',
                 'class': 'test',
+                'autofocus': 'true',
             }),
         max_length=50
     )
@@ -210,6 +214,7 @@ class Form_Change_Password(forms.Form):
             {
                 'placeholder': 'Password',
                 'class': 'test',
+                'autofocus': 'true',
             }),
         max_length=100
     )

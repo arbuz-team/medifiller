@@ -11,6 +11,7 @@ class Form_Root_Login(forms.Form):
             {
                 'placeholder': 'Password',
                 'class': 'test',
+                'autofocus': 'true',
             }),
         max_length=100
     )

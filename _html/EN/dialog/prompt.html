@@ -17,30 +17,45 @@
 
 
 <div class="dialog-content">
-    <!--data-type="{{ form_name }}" data-test="yes"-->
-    <form method="post" data-name="{{ form_name }}" >
+
+    {% if not form %}
 
         <div class="dialog-content-part field_shell">
-            <!--fields of form-->
-            {% for field in form %}
+            New record has been append to database.
+            <script>
+                window.APP.DATA.delay = 1000;
+                window.APP.throw_event(window.EVENTS.close_dialog);
+            </script>
+        </div>
 
-            <div>
-                {{ field }}
-                {{ field.errors }}
+    {% else %}
 
-                <div class="status"></div>
+        <!--data-type="{{ form_name }}" data-test="yes"-->
+        <form method="post" data-name="{{ form_name }}" >
+
+            <div class="dialog-content-part field_shell">
+                <!--fields of form-->
+                {% for field in form %}
+
+                <div>
+                    {{ field }}
+                    {{ field.errors }}
+
+                    <div class="status"></div>
+                </div>
+
+                {% endfor %}
             </div>
 
-            {% endfor %}
-        </div>
 
+            <div class="dialog-content-part field_shell">
+                <!--buttons-->
+                <button type="button" class="dialog-content-button" data-name="cancel"> Cancel </button>
+                <button type="button" class="dialog-content-button" data-name="send"> Accept </button>
+            </div>
 
-        <div class="dialog-content-part field_shell">
-            <!--buttons-->
-            <button type="button" class="dialog-content-button" data-name="cancel"> Cancel </button>
-            <button type="button" class="dialog-content-button" data-name="send"> Accept </button>
-        </div>
+        </form>
 
-    </form>
+    {% endif %}
 
 </div>

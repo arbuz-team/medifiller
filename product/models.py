@@ -64,7 +64,7 @@ class Product(models.Model):
     details_de = models.ForeignKey(Details_DE, null=True)
     where_display = models.ForeignKey(Where_Display)
 
-    image = models.ImageField()
+    image = models.ImageField(blank=True)
     price_eur = models.IntegerField()
     price_pln = models.IntegerField()
     keywords = models.TextField(blank=True)

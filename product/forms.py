@@ -12,7 +12,18 @@ class Form_New_Product(forms.ModelForm):
             'image',
             'price_eur',
             'price_pln',
+            'keywords',
         )
+
+        widgets = \
+        {
+            'keywords': forms.TextInput(
+                attrs=
+                {
+                    'placeholder': 'Keywords',
+                    'class': 'test',
+                }),
+        }
 
 
 
@@ -25,6 +36,25 @@ class Form_New_Details_EN(forms.ModelForm):
         {
             'name',
             'description',
+        }
+
+        widgets = \
+        {
+            'name': forms.TextInput(
+                attrs=
+                {
+                    'placeholder': 'Name',
+                    'class': 'test',
+                    'autofocus': 'true',
+                }),
+
+            'description': forms.TextInput(
+                attrs=
+                {
+                    'placeholder': 'Name',
+                    'class': 'test',
+                    'autofocus': 'true',
+                }),
         }
 
 
@@ -40,6 +70,25 @@ class Form_New_Details_PL(forms.ModelForm):
             'description',
         }
 
+        widgets = \
+        {
+            'name': forms.TextInput(
+                attrs=
+                {
+                    'placeholder': 'Name',
+                    'class': 'test',
+                    'autofocus': 'true',
+                }),
+
+            'description': forms.TextInput(
+                attrs=
+                {
+                    'placeholder': 'Name',
+                    'class': 'test',
+                    'autofocus': 'true',
+                }),
+        }
+
 
 
 class Form_New_Details_DE(forms.ModelForm):
@@ -51,6 +100,25 @@ class Form_New_Details_DE(forms.ModelForm):
         {
             'name',
             'description',
+        }
+
+        widgets = \
+        {
+            'name': forms.TextInput(
+                attrs=
+                {
+                    'placeholder': 'Name',
+                    'class': 'test',
+                    'autofocus': 'true',
+                }),
+
+            'description': forms.TextInput(
+                attrs=
+                {
+                    'placeholder': 'Name',
+                    'class': 'test',
+                    'autofocus': 'true',
+                }),
         }
 
 
@@ -79,6 +147,17 @@ class Form_New_Brand(forms.ModelForm):
             'name',
         }
 
+        widgets = \
+        {
+            'name': forms.TextInput(
+                attrs=
+                {
+                    'placeholder': 'Name',
+                    'class': 'test',
+                    'autofocus': 'true',
+                }),
+        }
+
 
 
 class Form_New_Purpose(forms.ModelForm):
@@ -89,4 +168,15 @@ class Form_New_Purpose(forms.ModelForm):
         fields = \
         {
             'name',
+        }
+
+        widgets = \
+        {
+            'name': forms.TextInput(
+                attrs=
+                {
+                    'placeholder': 'Name',
+                    'class': 'test',
+                    'autofocus': 'true',
+                }),
         }

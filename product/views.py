@@ -78,7 +78,7 @@ class Insert_Product(Dynamic_Event_Menager):
         brand = Form_New_Brand(self.request.POST)
 
         if brand.is_valid():
-            brand.save()
+            brand = brand.save(commit=False)
             self.request.session['product_new_brand'] = brand
 
             self.content['form'] = None  # message of correct
@@ -91,7 +91,7 @@ class Insert_Product(Dynamic_Event_Menager):
         purpose = Form_New_Purpose(self.request.POST)
 
         if purpose.is_valid():
-            purpose.save()
+            purpose = purpose.save(commit=False)
             self.request.session['product_new_purpose'] = purpose
 
             self.content['form'] = None  # message of correct
@@ -107,8 +107,9 @@ class Insert_Product(Dynamic_Event_Menager):
             details = Form_New_Details_EN(self.request.POST)
 
             if details.is_valid():
+                details = details.save(commit=False)
                 details.save()
-                self.request.session['product_new_details_en'] = details.pk
+                self.request.session['product_new_details_en'] = details
                 self.content['form'] = None
                 return self.Render_HTML('dialog/prompt.html')
 
@@ -116,8 +117,9 @@ class Insert_Product(Dynamic_Event_Menager):
             details = Form_New_Details_PL(self.request.POST)
 
             if details.is_valid():
+                details = details.save(commit=False)
                 details.save()
-                self.request.session['product_new_details_pl'] = details.pk
+                self.request.session['product_new_details_pl'] = details
                 self.content['form'] = None
                 return self.Render_HTML('dialog/prompt.html')
 
@@ -125,8 +127,9 @@ class Insert_Product(Dynamic_Event_Menager):
             details = Form_New_Details_DE(self.request.POST)
 
             if details.is_valid():
+                details = details.save(commit=False)
                 details.save()
-                self.request.session['product_new_details_de'] = details.pk
+                self.request.session['product_new_details_de'] = details
                 self.content['form'] = None
                 return self.Render_HTML('dialog/prompt.html')
 
