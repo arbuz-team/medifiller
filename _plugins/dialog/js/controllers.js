@@ -20,8 +20,9 @@ import * as interior_dialog_controllers from './interior/controllers'
       $(selectors.container).click(close_with_cancel_event);
       $(selectors.window).click(cancel_event);
 
-
       $(selectors.external_buttons).click(open);
+
+      window.APP.add_own_event('close_dialog', close);
 
       interior_dialog_controllers.define();
     };

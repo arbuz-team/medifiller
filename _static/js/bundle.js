@@ -286,9 +286,7 @@
 	  redirect: new Event('redirect'),
 	  close_plugins: new Event('close_plugins'),
 	
-	  open_alert: new Event('open_alert'),
-	  open_prompt: new Event('open_prompt'),
-	  open_confirm: new Event('open_confirm')
+	  close_dialog: new Event('close_dialog')
 	};
 
 /***/ },
@@ -2229,6 +2227,8 @@
 	  $(selectors.window).click(cancel_event);
 	
 	  $(selectors.external_buttons).click(open);
+	
+	  window.APP.add_own_event('close_dialog', close);
 	
 	  interior_dialog_controllers.define();
 	};
