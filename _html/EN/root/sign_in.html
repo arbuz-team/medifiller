@@ -16,6 +16,8 @@
 
       Hello root! You are logged on. ;)
       <script>
+        window.APP.throw_event(window.EVENTS.plugins.reload_sign_in);
+
         window.APP.DATA.redirect = '/';
         window.APP.DATA.delay = 2000;
         window.dispatchEvent(window.EVENTS.redirect);

@@ -14,7 +14,7 @@ export let Plugins_Motion_Views = function(config)
   this.models = models;
 
 
-  this.plugin_open = function()
+  this.plugin_open = function(event)
   {
     if(models.check_possibility_of_opening())
     {

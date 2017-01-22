@@ -39,7 +39,7 @@ let
       let url = $(this).attr('href');
 
       event.preventDefault();
-      window.APP.throw_event(EVENTS.close_plugins);
+      window.APP.throw_event(window.EVENTS.plugins.close);
 
       ground_views.change_url(url);
 

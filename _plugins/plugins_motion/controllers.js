@@ -114,14 +114,15 @@ export let Plugins_Motion_Controllers = function(config)
 
     // -- Other events
 
-    $body.click(swipe_close);
-    $hide.click(swipe_close);
-    $window.resize(swipe_close);
+    $body.click(plugin_motion_views.plugin_close);
+    $hide.click(plugin_motion_views.plugin_close);
+    $window.resize(plugin_motion_views.plugin_close);
     $window.resize(set_user_select);
-    window.APP.add_own_event('close_plugins', swipe_close);
+    window.APP.add_own_event('plugins_close', plugin_motion_views.plugin_close);
 
     $container.click(stop_propagation);
 
+    window.APP.throw_event(window.EVENTS.plugins.close);
     set_start_position();
     set_user_select();
   };

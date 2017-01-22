@@ -17,12 +17,13 @@ window.APP.DATA = {};
 
 APP.add_own_event = function add_own_event(name, callback)
 {
+  window.removeEventListener(name, callback, false);
   window.addEventListener(name, callback, false);
 };
 
 APP.throw_event = function throw_event(event)
 {
-  window.dispatchEvent( event );
+  window.dispatchEvent(event);
 };
 
 

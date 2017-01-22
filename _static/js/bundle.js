@@ -107,6 +107,7 @@
 	 */
 	
 	APP.add_own_event = function add_own_event(name, callback) {
+	  window.removeEventListener(name, callback, false);
 	  window.addEventListener(name, callback, false);
 	};
 	
@@ -284,9 +285,20 @@
 	window.EVENTS = {
 	  define: new Event('define'),
 	  redirect: new Event('redirect'),
-	  close_plugins: new Event('close_plugins'),
 	
-	  close_dialog: new Event('close_dialog')
+	  plugins: {
+	    close: new Event('plugins_close'),
+	
+	    reload_sign_in: new Event('plugins_reload_sign_in'),
+	
+	    reload_header: new Event('plugin_header_reload'),
+	    reload_navigation: new Event('plugin_navigation_reload'),
+	    reload_cart: new Event('plugin_cart_reload'),
+	    reload_searcher: new Event('plugin_searcher_reload'),
+	    reload_ground: new Event('plugin_ground_reload')
+	  },
+	
+	  dialog_close: new Event('dialog_close')
 	};
 
 /***/ },
@@ -332,7 +344,16 @@
 	 * Created by mrskull on 24.11.16.
 	 */
 	
-	var define = function define() {
+	var reload_for_sign_in = function reload_for_sign_in() {
+	  var delay = window.APP.DATA.delay,
+	      reload = function reload() {
+	    window.APP.throw_event(window.EVENTS.plugins.reload_navigation);
+	    window.APP.throw_event(window.EVENTS.plugins.reload_cart);
+	  };
+	
+	  if (delay) setTimeout(reload, delay);else reload();
+	},
+	    define = function define() {
 	  // Usuń wszystkie wydarzenia ze wszystkich elementów
 	  $('*').off();
 	
@@ -346,6 +367,7 @@
 	
 	var start = exports.start = function start() {
 	  window.addEventListener('define', define, false);
+	  window.APP.add_own_event('plugins_reload_sign_in', reload_for_sign_in);
 	
 	  searcher_controllers.start();
 	  cart_controllers.start();
@@ -468,12 +490,23 @@
 	    }, delay);
 	  };
 	
+	  this.reload = function () {
+	    var delay = window.APP.DATA.delay;
+	
+	    if (delay) setTimeout(plugin_loader_views.change_content, delay);else plugin_loader_views.change_content();
+	  };
+	
 	  /**
 	   *    Defining public functions
 	   */
 	
 	  this.define = function () {
-	    if (plugin_loader_views.models.settings.auto_first_loading) window.APP.add_own_event('load', function () {
+	    var plugin_name = plugin_loader_views.models.settings.name,
+	        auto_first_loading = plugin_loader_views.models.settings.auto_first_loading;
+	
+	    window.APP.add_own_event('plugin_' + plugin_name + '_reload', this.reload);
+	
+	    if (auto_first_loading) window.APP.add_own_event('load', function () {
 	      plugin_loader_views.change_content();
 	    });
 	  };
@@ -567,9 +600,9 @@
 	    models.prepare_url(url);
 	    models.prepare_post_data(post_data);
 	  },
-	      hide_content = function hide_content(url, post_data_2, callback) {
+	      hide_content = function hide_content(url, post_data, callback) {
 	    external_callback = callback;
-	    prepare_content_to_hide(url, post_data_2);
+	    prepare_content_to_hide(url, post_data);
 	
 	    var container = models.settings.container,
 	        opacity = models.settings.opacity.hide,
@@ -864,14 +897,15 @@
 	
 	    // -- Other events
 	
-	    $body.click(swipe_close);
-	    $hide.click(swipe_close);
-	    $window.resize(swipe_close);
+	    $body.click(plugin_motion_views.plugin_close);
+	    $hide.click(plugin_motion_views.plugin_close);
+	    $window.resize(plugin_motion_views.plugin_close);
 	    $window.resize(set_user_select);
-	    window.APP.add_own_event('close_plugins', swipe_close);
+	    window.APP.add_own_event('plugins_close', plugin_motion_views.plugin_close);
 	
 	    $container.click(stop_propagation);
 	
+	    window.APP.throw_event(window.EVENTS.plugins.close);
 	    set_start_position();
 	    set_user_select();
 	  };
@@ -904,7 +938,7 @@
 	
 	  this.models = models;
 	
-	  this.plugin_open = function () {
+	  this.plugin_open = function (event) {
 	    if (models.check_possibility_of_opening()) {
 	      var container = models.settings.container,
 	          hide = models.settings.hide,
@@ -2080,12 +2114,14 @@
 	
 	var _controllers2 = __webpack_require__(16);
 	
-	/**
-	 *    Defining private variables
-	 */
+	var _controllers3 = __webpack_require__(32);
+	
+	var cart_controllers = _interopRequireWildcard(_controllers3);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	/**
-	 * Created by mrskull on 24.11.16.
+	 *    Defining private variables
 	 */
 	
 	var navigation_loader_controllers = void 0,
@@ -2114,8 +2150,14 @@
 	 *    Defining public functions
 	 */
 	
+	/**
+	 * Created by mrskull on 24.11.16.
+	 */
+	
 	var define = exports.define = function define() {
 	  navigation_motion_controllers.define();
+	
+	  $('#NAVIGATION .navigation-secondary-cart > *').click(cart_controllers.plugin_open);
 	},
 	    start = exports.start = function start() {
 	  // -- Loader configuration
@@ -2185,6 +2227,8 @@
 	  $('#HEADER .navigation-mini-navigation > button').click(navigation_controllers.plugin_open);
 	
 	  $('#HEADER .navigation-mini-cart > button').click(cart_controllers.plugin_open);
+	
+	  $('#HEADER .navigation-secondary-cart > *').click(cart_controllers.plugin_open);
 	},
 	    start = exports.start = function start() {
 	  header_loader_events = new _controllers.Plugins_Loader_Controllers(config_loader);
@@ -2554,7 +2598,7 @@
 	    var url = $(this).attr('href');
 	
 	    event.preventDefault();
-	    window.APP.throw_event(EVENTS.close_plugins);
+	    window.APP.throw_event(window.EVENTS.plugins.close);
 	
 	    ground_views.change_url(url);
 	

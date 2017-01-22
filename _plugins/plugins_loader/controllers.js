@@ -46,13 +46,30 @@ export let Plugins_Loader_Controllers = function(config)
   };
 
 
+  this.reload = function()
+  {
+    let delay = window.APP.DATA.delay;
+
+    if(delay)
+      setTimeout(plugin_loader_views.change_content, delay);
+    else
+      plugin_loader_views.change_content();
+  };
+
+
   /**
    *    Defining public functions
    */
 
   this.define = function()
   {
-    if(plugin_loader_views.models.settings.auto_first_loading)
+    let
+      plugin_name = plugin_loader_views.models.settings.name,
+      auto_first_loading = plugin_loader_views.models.settings.auto_first_loading;
+
+    window.APP.add_own_event('plugin_'+ plugin_name +'_reload', this.reload);
+
+    if(auto_first_loading)
       window.APP.add_own_event('load', () => {
         plugin_loader_views.change_content();
       });

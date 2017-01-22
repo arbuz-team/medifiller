@@ -17,6 +17,8 @@
 
       Hello {{ self.request.session.user_username }} You are logged on. ;)
       <script>
+        window.APP.throw_event(window.EVENTS.plugins.reload_sign_in);
+
         window.APP.DATA.redirect = '/';
         window.APP.DATA.delay = 2000;
         window.APP.throw_event(window.EVENTS.redirect);

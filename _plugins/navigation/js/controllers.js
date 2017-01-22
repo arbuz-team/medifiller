@@ -4,6 +4,7 @@
 
 import {Plugins_Loader_Controllers} from '../../plugins_loader/controllers'
 import {Plugins_Motion_Controllers} from '../../plugins_motion/controllers'
+import * as cart_controllers from '../../cart/js/controllers'
 
 
 /**
@@ -43,6 +44,8 @@ export let
   define = function()
   {
     navigation_motion_controllers.define();
+
+    $('#NAVIGATION .navigation-secondary-cart > *').click(cart_controllers.plugin_open);
   },
 
 
