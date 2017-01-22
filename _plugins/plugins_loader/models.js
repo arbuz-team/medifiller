@@ -125,16 +125,17 @@ export let Plugins_Loader_Models = function(config)
   };
 
 
-  this.prepare_post_data = function(response_data)
+  this.prepare_post_data = function(post_data)
   {
-    if(!response_data)
-      response_data = {};
+    if(!post_data)
+      post_data = {};
 
-    if( typeof response_data.__form__ === 'undefined')
-      if( typeof response_data.__content__ === 'undefined')
-        response_data['__content__'] = this.settings.name;
+    if( typeof post_data.__form__ === 'undefined')
+      if( typeof post_data.__content__ === 'undefined')
+        post_data['__content__'] = this.settings.name;
 
-    this.variables.post_data = response_data;
+
+    this.variables.post_data = post_data;
   };
 
 

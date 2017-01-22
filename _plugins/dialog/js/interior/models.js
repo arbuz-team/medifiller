@@ -33,22 +33,29 @@ export let
 
 
   variables = {
+    button_type: '',
+    button_name: '',
     post_data: {}
   },
 
 
-  prepare_post_data = function(type, name)
+  prepare_post_data = function(post_data)
   {
-    variables.post_data = {};
+    if(!post_data)
+    {
+      variables.post_data = {};
 
-    variables.post_data.type = type;
-    variables.post_data.name = name;
+      variables.post_data.type = variables.button_type;
+      variables.post_data.name = variables.button_name;
+    }
+    else
+      variables.post_data = post_data;
   },
 
 
-  load = function(type, name, callback)
+  load = function(url, post_data, callback)
   {
-    prepare_post_data(type, name);
+    prepare_post_data(post_data);
 
-    dialog_loader_controllers.load(undefined, variables.post_data, callback);
+    dialog_loader_controllers.load(url, variables.post_data, callback);
   };

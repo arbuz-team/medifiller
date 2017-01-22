@@ -18,16 +18,16 @@ export let Form_Controllers = function(content_loader_controllers)
    *    Defining private functions
    */
 
-  let prepare_form_to_send = function( event )
+  let prepare_form_to_send = function(event)
   {
     event.preventDefault();
 
     let
       form_name = $(this).data('name'),
-      url = $(this).attr( 'action' ),
-      form_object = $( this ).serialize_object();
+      url = $(this).attr('action'),
+      form_object = $(this).serialize_object();
 
-    form_models.send( form_name, url, form_object );
+    form_models.send(form_name, url, form_object);
   };
 
 
@@ -39,7 +39,7 @@ export let Form_Controllers = function(content_loader_controllers)
   {
     let $container = $(content_loader_controllers.container);
 
-    $('form', $container).submit( prepare_form_to_send );
+    $('form', $container).submit(prepare_form_to_send);
 
     validator.define($container);
     hide_form.define($container);

@@ -4,6 +4,7 @@
 
 import * as dialog_models from './models'
 import * as interior_dialog_controllers from './interior/controllers'
+import * as interior_dialog_models from './interior/models'
 
 
 /**
@@ -64,6 +65,8 @@ let
 
     dialog_models.variables.type = result_type;
     dialog_models.variables.name = result_name;
+    interior_dialog_models.variables.button_type = result_type;
+    interior_dialog_models.variables.button_name = result_name;
   };
 
 
@@ -75,11 +78,7 @@ export let
   {
     save_type_and_name(type, name);
 
-    let
-      type_from_models = dialog_models.variables.type,
-      name_from_models = dialog_models.variables.name;
-
-    interior_dialog_controllers.load(type_from_models, name_from_models, show);
+    interior_dialog_controllers.load(undefined, undefined, show);
   },
 
 

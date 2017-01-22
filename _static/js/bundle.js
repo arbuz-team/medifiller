@@ -569,9 +569,9 @@
 	    models.prepare_url(url);
 	    models.prepare_post_data(post_data);
 	  },
-	      hide_content = function hide_content(url, post_data, callback) {
+	      hide_content = function hide_content(url, post_data_2, callback) {
 	    external_callback = callback;
-	    prepare_content_to_hide(url, post_data);
+	    prepare_content_to_hide(url, post_data_2);
 	
 	    var container = models.settings.container,
 	        opacity = models.settings.opacity.hide,
@@ -694,12 +694,12 @@
 	    this.variables.url = response_url;
 	  };
 	
-	  this.prepare_post_data = function (response_data) {
-	    if (!response_data) response_data = {};
+	  this.prepare_post_data = function (post_data) {
+	    if (!post_data) post_data = {};
 	
-	    if (typeof response_data.__form__ === 'undefined') if (typeof response_data.__content__ === 'undefined') response_data['__content__'] = this.settings.name;
+	    if (typeof post_data.__form__ === 'undefined') if (typeof post_data.__content__ === 'undefined') post_data['__content__'] = this.settings.name;
 	
-	    this.variables.post_data = response_data;
+	    this.variables.post_data = post_data;
 	  };
 	
 	  /**
@@ -1192,24 +1192,22 @@
 	   *    Defining private functions
 	   */
 	
-	  var prepare_post_data = function prepare_post_data(form_name, object) {
-	    if (!object) object = {};
+	  var prepare_post_data = function prepare_post_data(form_name, post_data) {
+	    if (!post_data) post_data = {};
 	
-	    object.__form__ = form_name;
+	    post_data.__form__ = form_name;
 	
-	    return object;
+	    return post_data;
 	  };
 	
 	  /**
 	   *    Defining public functions
 	   */
 	
-	  this.send = function (form_name, url, data_post) {
-	    data_post = prepare_post_data(form_name, data_post);
+	  this.send = function (form_name, url, post_data) {
+	    post_data = prepare_post_data(form_name, post_data);
 	
-	    console.log(data_post);
-	
-	    if (typeof this.loader_controllers !== 'undefined') this.loader_controllers.load(url, data_post);else console.error('Valid config object.');
+	    if (typeof this.loader_controllers !== 'undefined') this.loader_controllers.load(url, post_data);else console.error('Valid config object.');
 	  };
 	};
 
@@ -2280,20 +2278,24 @@
 	
 	var interior_dialog_controllers = _interopRequireWildcard(_controllers);
 	
+	var _models2 = __webpack_require__(40);
+	
+	var interior_dialog_models = _interopRequireWildcard(_models2);
+	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	/**
 	 *    Defining public functions
 	 */
 	
-	/**
-	 * Created by mrskull on 29.12.16.
-	 */
-	
 	var selectors = exports.selectors = dialog_models.selectors;
 	
 	/**
 	 *    Defining private functions
+	 */
+	
+	/**
+	 * Created by mrskull on 29.12.16.
 	 */
 	
 	var show = function show() {
@@ -2319,6 +2321,8 @@
 	
 	  dialog_models.variables.type = result_type;
 	  dialog_models.variables.name = result_name;
+	  interior_dialog_models.variables.button_type = result_type;
+	  interior_dialog_models.variables.button_name = result_name;
 	};
 	
 	///////////////////////////////////////
@@ -2326,10 +2330,7 @@
 	var open = exports.open = function open(type, name) {
 	  save_type_and_name(type, name);
 	
-	  var type_from_models = dialog_models.variables.type,
-	      name_from_models = dialog_models.variables.name;
-	
-	  interior_dialog_controllers.load(type_from_models, name_from_models, show);
+	  interior_dialog_controllers.load(undefined, undefined, show);
 	},
 	    close = exports.close = function close() {
 	  hide();
@@ -2393,13 +2394,16 @@
 	                                                       */
 	
 	var selectors = interior_dialog_views.selectors,
+	    variables = interior_dialog_views.variables,
 	    dialog_form_controllers = new _controllers2.Form_Controllers(interior_dialog_views);
 	
 	var recognize_button = exports.recognize_button = function recognize_button(event) {
-	  var $button = $(this),
-	      name = $button.data('name');
+	  var $button = $(this);
 	
-	  switch (name) {
+	  variables.button_type = $button.data('type');
+	  variables.button_name = $button.data('name');
+	
+	  switch (variables.button_name) {
 	    case 'cancel':
 	      (0, _controllers.close)();
 	      break;
@@ -2423,7 +2427,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.load = exports.container = exports.selectors = undefined;
+	exports.load = exports.container = exports.variables = exports.selectors = undefined;
 	
 	var _models = __webpack_require__(40);
 	
@@ -2432,6 +2436,7 @@
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	var selectors = exports.selectors = interior_dialog_models.selectors,
+	    variables = exports.variables = interior_dialog_models.variables,
 	    container = exports.container = selectors.container,
 	    load = exports.load = interior_dialog_models.load; /**
 	                                                        * Created by mrskull on 21.01.17.
@@ -2475,18 +2480,22 @@
 	  buttons: _models.selectors.content + ' button.dialog-content-button'
 	},
 	    variables = exports.variables = {
+	  button_type: '',
+	  button_name: '',
 	  post_data: {}
 	},
-	    prepare_post_data = exports.prepare_post_data = function prepare_post_data(type, name) {
-	  variables.post_data = {};
+	    prepare_post_data = exports.prepare_post_data = function prepare_post_data(post_data) {
+	  if (!post_data) {
+	    variables.post_data = {};
 	
-	  variables.post_data.type = type;
-	  variables.post_data.name = name;
+	    variables.post_data.type = variables.button_type;
+	    variables.post_data.name = variables.button_name;
+	  } else variables.post_data = post_data;
 	},
-	    load = exports.load = function load(type, name, callback) {
-	  prepare_post_data(type, name);
+	    load = exports.load = function load(url, post_data, callback) {
+	  prepare_post_data(post_data);
 	
-	  dialog_loader_controllers.load(undefined, variables.post_data, callback);
+	  dialog_loader_controllers.load(url, variables.post_data, callback);
 	};
 
 /***/ },

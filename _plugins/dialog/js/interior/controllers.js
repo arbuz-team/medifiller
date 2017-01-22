@@ -19,6 +19,7 @@ export let
 let
 
   selectors = interior_dialog_views.selectors,
+  variables = interior_dialog_views.variables,
 
   dialog_form_controllers = new Form_Controllers(interior_dialog_views);
 
@@ -28,10 +29,12 @@ export let
   recognize_button = function(event)
   {
     let
-      $button = $(this),
-      name = $button.data('name');
+      $button = $(this);
 
-    switch(name)
+    variables.button_type = $button.data('type');
+    variables.button_name = $button.data('name');
+
+    switch(variables.button_name)
     {
       case 'cancel': dialog_close();
         break;

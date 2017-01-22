@@ -104,10 +104,10 @@ export let Plugins_Loader_Views = function(config)
     },
 
 
-    hide_content = function(url, post_data, callback)
+    hide_content = function(url, post_data_2, callback)
     {
       external_callback = callback;
-      prepare_content_to_hide(url, post_data);
+      prepare_content_to_hide(url, post_data_2);
 
       let
         container = models.settings.container,

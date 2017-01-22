@@ -21,14 +21,14 @@ export let Form_Models = function(content_loader_controllers)
    *    Defining private functions
    */
 
-  let prepare_post_data = function(form_name, object)
+  let prepare_post_data = function(form_name, post_data)
   {
-    if(!object)
-      object = {};
+    if(!post_data)
+      post_data = {};
 
-    object.__form__ = form_name;
+    post_data.__form__ = form_name;
 
-    return object;
+    return post_data;
   };
 
 
@@ -36,14 +36,12 @@ export let Form_Models = function(content_loader_controllers)
    *    Defining public functions
    */
 
-  this.send = function(form_name, url, data_post)
+  this.send = function(form_name, url, post_data)
   {
-    data_post = prepare_post_data(form_name, data_post);
-
-    console.log(data_post);
+    post_data = prepare_post_data(form_name, post_data);
 
     if(typeof this.loader_controllers !== 'undefined')
-      this.loader_controllers.load(url, data_post);
+      this.loader_controllers.load(url, post_data);
     else
       console.error('Valid config object.');
   };
