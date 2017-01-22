@@ -8,15 +8,15 @@
 
 
 <div class="searcher-searcher auto_form">
-    <form class="otoczka_pola" action="/searcher/" data-origin="filter" data-target="ground">
+    <form class="field_shell" action="/searcher/" data-origin="filter" data-target="ground">
         <input name="search" placeholder="search" type="text" class="auto_field" data-name="phrase" />
     </form>
 </div>
 
-<form class="searcher-filters auto_form" action="/searcher/" data-origin="filter" data-target="ground" class=" class="field_shell"">
+<form class="searcher-filters auto_form" action="/searcher/" data-origin="filter" data-target="ground">
 
     <div class="searcher-sort">
-        <div>
+        <div class="field_shell">
             <select name="sort_by" class="auto_field" data-name="order_name">
                 <option value="search_accuracy" selected> search accuracy </option>
                 <option value="price"> price </option>
@@ -27,7 +27,7 @@
 
 
     <div class="searcher-order">
-        <div>
+        <div class="field_shell">
             <select name="order_by" class="auto_field" data-name="order_direction">
                 <option value="descending" selected> descending </option>
                 <option value="ascending"> ascending </option>
@@ -39,7 +39,7 @@
     <div class="searcher-filters-title">Brand</div>
 
     <div class="searcher-filters-content">
-        <ul>
+        <ul class="field_shell">
             {% for brand in brands %}
 
                 <li> <input name="{{ brand.name }}" type="checkbox" class="auto_field" data-name="brand" /> <label>{{ brand.name }}</label> </li>
@@ -56,7 +56,7 @@
     <div class="searcher-filters-title">Purpose</div>
 
     <div class="searcher-filters-content">
-        <ul>
+        <ul class="field_shell">
             {% for purpose in purposes %}
 
             <li> <input name="{{ purpose.name }}" type="checkbox" class="auto_field" data-name="purpose" /> <label for>{{ purpose.name }}</label> </li>

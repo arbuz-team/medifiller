@@ -8,26 +8,9 @@
 <div class="ground-block block-1">
 
   <div class="block-background fill-abs"></div>
-  {% include "ground/html/navigation.html" %}
+    {% include "ground/html/navigation.html" %}
 
-  <div class="block-content">
-      <button type="button" class="dialog_button" data-type="alert" data-name="access_denied"> Alert </button>
-
-    <br>
-    {% for product in products %}
-
-      <a href="/product/{{ product.pk }}/{{ product.details_en.name }}">
-        <img data-src="{{ product.image }}" alt="image" /><br>
-
-        {{ product.details_en.name }}<br>
-        <!--{{ product.details_en.description }}<br>-->
-
-        price euro: {{ product.price_eur }}<br>
-        price pln:  {{ product.price_pln }}<br>
-        <br><br>
-      </a>
-
-    {% endfor %}
+    {% include 'products/html/list.html' %}
   
   </div>
 

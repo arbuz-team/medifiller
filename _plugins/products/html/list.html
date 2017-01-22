@@ -1,11 +1,8 @@
 <ul class="block-content products tiles">
+    {% for product in products %}
 
-  {% include 'products/html/product.html' %}
-  {% include 'products/html/product.html' %}
-  {% include 'products/html/product.html' %}
-  {% include 'products/html/product.html' %}
-  {% include 'products/html/product.html' %}
-  {% include 'products/html/product.html' %}
+        {% include 'products/html/product.html' %}
 
+    {% endfor %}
 </ul>
 
