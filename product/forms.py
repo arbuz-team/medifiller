@@ -1,5 +1,7 @@
 from django import forms
 from .models import *
+from io import StringIO
+import imghdr
 
 
 class Form_New_Product(forms.ModelForm):
@@ -9,7 +11,6 @@ class Form_New_Product(forms.ModelForm):
         model = Product
         fields = \
         (
-            'image',
             'price_eur',
             'price_pln',
             'keywords',
@@ -17,7 +18,7 @@ class Form_New_Product(forms.ModelForm):
 
         widgets = \
         {
-            'keywords': forms.TextInput(
+            'keywords': forms.Textarea(
                 attrs=
                 {
                     'placeholder': 'Keywords',
@@ -48,10 +49,10 @@ class Form_New_Details_EN(forms.ModelForm):
                     'autofocus': 'true',
                 }),
 
-            'description': forms.TextInput(
+            'description': forms.Textarea(
                 attrs=
                 {
-                    'placeholder': 'Name',
+                    'placeholder': 'Description',
                     'class': 'test',
                     'autofocus': 'true',
                 }),
@@ -80,10 +81,10 @@ class Form_New_Details_PL(forms.ModelForm):
                     'autofocus': 'true',
                 }),
 
-            'description': forms.TextInput(
+            'description': forms.Textarea(
                 attrs=
                 {
-                    'placeholder': 'Name',
+                    'placeholder': 'Description',
                     'class': 'test',
                     'autofocus': 'true',
                 }),
@@ -112,10 +113,10 @@ class Form_New_Details_DE(forms.ModelForm):
                     'autofocus': 'true',
                 }),
 
-            'description': forms.TextInput(
+            'description': forms.Textarea(
                 attrs=
                 {
-                    'placeholder': 'Name',
+                    'placeholder': 'Description',
                     'class': 'test',
                     'autofocus': 'true',
                 }),
@@ -134,6 +135,47 @@ class Form_Where_Display(forms.ModelForm):
             'display_pl',
             'display_de',
         }
+
+
+
+class Form_Image(forms.Form):
+
+    image = forms.ImageField(required=False)
+    url = forms.URLField\
+    (
+        required=False,
+        widget=forms.TextInput(
+            attrs=
+            {
+                'placeholder': 'Paste image address url'
+            }),
+    )
+
+    def clean_image(self):
+        url = self.data['url']
+        image = self.cleaned_data['image']
+
+        if url and image:
+            raise forms.ValidationError(
+                'Only one image can save.')
+
+        if not url and not image:
+            raise forms.ValidationError(
+                'Please select image.')
+
+        return image
+
+    def clean_url(self):
+        url = self.cleaned_data['url']
+
+        if url:
+            plik = StringIO(urlopen(url).read())
+
+            if not imghdr.what(plik):
+                raise forms.ValidationError(
+                    'It\'s not image.')
+
+        return url
 
 
 

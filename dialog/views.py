@@ -65,6 +65,11 @@ class Dialog_Prompt(Dynamic_Base):
         self.content['form'] = Form_Where_Display()
         return self.Render_HTML('dialog/prompt.html', 'where_display')
 
+    def Manage_New_Image(self):
+        self.content['title'] = 'new_image'
+        self.content['form'] = Form_Image()
+        return self.Render_HTML('dialog/prompt.html', 'new_image')
+
     def Manage(self):
 
         if self.request.POST['name'] == 'new_brand':
@@ -84,6 +89,9 @@ class Dialog_Prompt(Dynamic_Base):
 
         if self.request.POST['name'] == 'where_display':
             return self.Manage_Where_Display()
+
+        if self.request.POST['name'] == 'new_image':
+            return self.Manage_New_Image()
 
     def __init__(self, request):
         super(Dialog_Prompt, self).__init__(request)

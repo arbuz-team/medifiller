@@ -47,7 +47,12 @@ class Insert_Product(Dynamic_Event_Menager):
             product.details_pl = self.request.session['product_new_details_pl']
             product.details_de = self.request.session['product_new_details_de']
             product.where_display = self.request.session['product_where_display']
+            product.brand = self.request.session['product_new_brand']
+            product.purpose = self.request.session['product_new_purpose']
             product.save()
+
+            manage_image = self.request.session['product_new_image']
+            manage_image['method'](product, manage_image['path'])
 
             self.content['form'] = None  # message of correct
             return self.Render_HTML('product/new.html')
@@ -79,6 +84,7 @@ class Insert_Product(Dynamic_Event_Menager):
 
         if brand.is_valid():
             brand = brand.save(commit=False)
+            brand.save()
             self.request.session['product_new_brand'] = brand
 
             self.content['form'] = None  # message of correct
@@ -92,6 +98,7 @@ class Insert_Product(Dynamic_Event_Menager):
 
         if purpose.is_valid():
             purpose = purpose.save(commit=False)
+            purpose.save()
             self.request.session['product_new_purpose'] = purpose
 
             self.content['form'] = None  # message of correct
@@ -99,6 +106,34 @@ class Insert_Product(Dynamic_Event_Menager):
 
         self.content['form'] = purpose
         return self.Render_HTML('dialog/prompt.html', 'new_purpose')
+
+    def Manage_Form_Image(self):
+        image = Form_Image(self.request.POST)
+
+        if image.is_valid():
+
+            image_path = image.cleaned_data['image']
+            url_path = image.cleaned_data['url']
+
+            if image_path:
+                self.request.session['product_new_image'] = \
+                    {
+                        'method': Product.Save_Image_From_Form,
+                        'path' : image_path
+                    }
+
+            if url_path:
+                self.request.session['product_new_image'] = \
+                    {
+                        'method': Product.Save_Image_From_URL,
+                        'path' : url_path
+                    }
+
+            self.content['form'] = None  # message of correct
+            return self.Render_HTML('dialog/prompt.html')
+
+        self.content['form'] = image
+        return self.Render_HTML('dialog/prompt.html', 'new_image')
 
     def Manage_Form_New_Details(self, language):
         details = None
@@ -149,6 +184,9 @@ class Insert_Product(Dynamic_Event_Menager):
 
         if self.request.POST['__form__'] == 'new_purpose':
             return self.Manage_Form_New_Purpose()
+
+        if self.request.POST['__form__'] == 'new_image':
+            return self.Manage_Form_Image()
 
         if 'new_details' in self.request.POST['__form__']:
             return self.Manage_Form_New_Details\
