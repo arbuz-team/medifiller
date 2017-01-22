@@ -11,13 +11,13 @@
   <div class="block-background fill-abs"></div>
   {% include "ground/html/navigation.html" %}
 
-  <div class="block-content">
+  <div class="block-content field_shell">
   
     <div class="title"> User details: </div>
 
     <div class="hide_form">
       <div class="label"> Email: </div>
-      <div class="otoczka_pola">
+      <div>
         <div> {{ user.email }} </div>
         <input name="email" id="id_email" value="{{ user.email }}" type="text" />
         <button data-type="edit" type="button"> Edit </button>
@@ -26,7 +26,7 @@
 
     <div class="hide_form">
       <div class="label"> Username: </div>
-      <div class="otoczka_pola">
+      <div>
         <div> {{ user.username }} </div>
         <input name="username" id="id_username" value="{{ user.username }}" type="text" />
         <button data-type="edit" type="button"> Edit </button>
@@ -42,14 +42,14 @@
         <div class="title"> Address {{ id_address }} </div>
         {% for address in edit_form_address %}
 
-          <div class="otoczka_pola">
+          <div>
             {{ address }}
             {{ address.errors }}
           </div>
 
         {% endfor %}
 
-        <div class="otoczka_pola">
+        <div>
           <button disabled type="submit"> Update </button>
           <button class="post_button" data-name="delete_address" data-value="{{ id_address }}" type="button"> Delete </button>
         </div>
@@ -64,14 +64,14 @@
         <div class="title"> Add address </div>
         {% for address in new_form_address %}
 
-          <div class="otoczka_pola">
+          <div>
             {{ address }}
             {{ address.errors }}
           </div>
 
         {% endfor %}
 
-        <div class="otoczka_pola">
+        <div>
           <button disabled type="submit"> Add address </button>
         </div>
 

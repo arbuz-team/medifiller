@@ -23,24 +23,24 @@
 
     {% else %}
 
-      <form method="post" action="" data-name="{{ form_name }}" data-type="{{ form_name }}" data-test="yes">
+      <form method="post" action="" data-name="{{ form_name }}" data-type="{{ form_name }}" data-test="yes" class=" class="field_shell"">
 
         <div class="title"> Root login </div>
 
-        <div class="otoczka_pola">
+        <div>
           <input disabled type="text" value="root" />
         </div>
 
         {% for i in form %}
 
-          <div class="otoczka_pola">
+          <div>
             {{ i }}
             {{ i.errors }}
           </div>
 
         {% endfor %}
 
-        <div class="otoczka_pola">
+        <div>
           <button disabled type="submit"> Done </button>
         </div>
 

@@ -20,11 +20,11 @@
     <!--data-type="{{ form_name }}" data-test="yes"-->
     <form method="post" data-name="{{ form_name }}" >
 
-        <div class="dialog-content-part otoczka_pola">
+        <div class="dialog-content-part field_shell">
             <!--fields of form-->
             {% for field in form %}
 
-            <div class="otoczka_pola">
+            <div>
                 {{ field }}
                 {{ field.errors }}
 
@@ -35,7 +35,7 @@
         </div>
 
 
-        <div class="dialog-content-part otoczka_pola">
+        <div class="dialog-content-part field_shell">
             <!--buttons-->
             <button type="button" class="dialog-content-button" data-name="cancel"> Cancel </button>
             <button type="button" class="dialog-content-button" data-name="send"> Accept </button>

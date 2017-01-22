@@ -721,7 +721,7 @@ img {
   .products.tiles > .product {
     width: 445px; } }
 
-.otoczka_pola input[type=text], .otoczka_pola input[type=email], .otoczka_pola input[type=password], .otoczka_pola input[type=number], .otoczka_pola select, .otoczka_pola button, .otoczka_pola textarea {
+.field_shell input[type=text], .field_shell input[type=email], .field_shell input[type=password], .field_shell input[type=number], .field_shell select, .field_shell button, .field_shell textarea {
   margin: 2px 3px;
     margin-bottom: 8px;
   outline: none;
@@ -733,32 +733,32 @@ img {
   font-size: 14px;
   font-family: 'OS_Regular', sans-serif; }
 
-.otoczka_pola input[type=text]:disabled, .otoczka_pola input[type=email]:disabled, .otoczka_pola input[type=password]:disabled, .otoczka_pola input[type=number]:disabled, .otoczka_pola select:disabled, .otoczka_pola button:disabled, .otoczka_pola textarea:disabled {
+.field_shell input[type=text]:disabled, .field_shell input[type=email]:disabled, .field_shell input[type=password]:disabled, .field_shell input[type=number]:disabled, .field_shell select:disabled, .field_shell button:disabled, .field_shell textarea:disabled {
   background-color: #efefef;
   border: 1px solid #d9d9d9; }
 
-.otoczka_pola input[type=text]:focus, .otoczka_pola input[type=email]:focus, .otoczka_pola input[type=password]:focus, .otoczka_pola input[type=number]:focus, .otoczka_pola select:focus, .otoczka_pola button:focus, .otoczka_pola textarea:focus {
+.field_shell input[type=text]:focus, .field_shell input[type=email]:focus, .field_shell input[type=password]:focus, .field_shell input[type=number]:focus, .field_shell select:focus, .field_shell button:focus, .field_shell textarea:focus {
   border: 1px solid #b9b9b9;
     border-top: 1px solid #a0a0a0;
   -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); }
 
-.otoczka_pola button {
+.field_shell button {
   background-image: -webkit-linear-gradient(top, #f5f5f5, #f1f1f1);
   background-color: #f2f2f2;
   border: 1px solid #f2f2f2; }
 
-.otoczka_pola button:hover {
+.field_shell button:hover {
   background-image: -webkit-linear-gradient(top, #f8f8f8, #f1f1f1);
   background-color: #f8f8f8;
   border: 1px solid #c6c6c6; }
 
-.otoczka_pola button:focus {
+.field_shell button:focus {
   background-image: -webkit-linear-gradient(top, #f5f5f5, #f1f1f1);
   border: 1px solid #4d90fe; }
 
-.otoczka_pola button[type=submit] {
+.field_shell button[type=submit] {
   background-color: #4d90fe;
   background-image: -webkit-linear-gradient(top, #4d90fe, #4787ed);
   background-image: -moz-linear-gradient(top, #4d90fe, #4787ed);
@@ -768,18 +768,18 @@ img {
   border: 1px solid #3079ed;
   color: #fff; }
 
-.otoczka_pola button[type=submit]:disabled {
+.field_shell button[type=submit]:disabled {
   background-color: #efefef;
   background-image: none;
   border: 1px solid #d9d9d9;
   color: #333; }
 
-.otoczka_pola .status {
+.field_shell .status {
   display: none;
   margin: 2px 3px;
   color: #dd4b39; }
 
-.otoczka_pola .form_error {
+.field_shell .form_error {
   border: 1px solid #dd4b39 !important; }
 
 #TRESC > .BLOCK > .tresc {

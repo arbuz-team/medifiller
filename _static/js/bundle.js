@@ -2242,7 +2242,6 @@
 	  close();
 	},
 	    cancel_event = function cancel_event(event) {
-	  event.preventDefault();
 	  event.stopPropagation();
 	};
 	

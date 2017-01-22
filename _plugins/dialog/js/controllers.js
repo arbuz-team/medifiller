@@ -42,7 +42,6 @@ import * as interior_dialog_controllers from './interior/controllers'
 
     cancel_event = function(event)
     {
-      event.preventDefault();
       event.stopPropagation();
     };
 
