@@ -6,12 +6,12 @@
 </script>
 
 
-<div class="BLOK1">
+<div class="ground-block block-1">
 
-  <div class="tlo abs_pelny"></div>
+  <div class="block-background fill-abs"></div>
   {% include "ground/html/navigation.html" %}
 
-  <div class="tresc">
+  <div class="block-content">
 
     {% if not form %}
 
@@ -28,9 +28,20 @@
 
         <div class="title"> Create new product </div>
 
-        <button type="button" class="dialog_button" data-type="prompt" data-name="new_details_en"> New details for English </button>
-        <button type="button" class="dialog_button" data-type="prompt" data-name="new_details_pl"> New details for Polish </button>
-        <button type="button" class="dialog_button" data-type="prompt" data-name="new_details_de"> New details for Germany </button>
+        <div class="otoczka_pola">
+            <button type="button" class="dialog_button" data-type="prompt" data-name="new_brand"> Create brand </button>
+            <button type="button" class="dialog_button" data-type="prompt" data-name="new_purpose"> Create purpose </button>
+        </div>
+
+        <div class="otoczka_pola">
+            <button type="button" class="dialog_button" data-type="prompt" data-name="new_details_en"> New details for English </button>
+            <button type="button" class="dialog_button" data-type="prompt" data-name="new_details_pl"> New details for Polish </button>
+            <button type="button" class="dialog_button" data-type="prompt" data-name="new_details_de"> New details for Germany </button>
+        </div>
+
+        <div class="otoczka_pola">
+            <button type="button" class="dialog_button" data-type="prompt" data-name="where_display"> Where display </button>
+        </div>
 
         {% for i in form %}
 
