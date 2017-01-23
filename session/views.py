@@ -58,6 +58,17 @@ class Session_Controller:
         if 'product_new_image' not in self.request.session:
             self.request.session['product_new_image'] = None
 
+    @staticmethod
+    def Clear_Session_Product(request):
+
+        request.session['product_new_details_en'] = None
+        request.session['product_new_details_pl'] = None
+        request.session['product_new_details_de'] = None
+        request.session['product_where_display'] = None
+        request.session['product_new_brand'] = None
+        request.session['product_new_purpose'] = None
+        request.session['product_new_image'] = None
+
     def Check_Session_Cart(self):
 
         if 'cart_products' not in self.request.session:

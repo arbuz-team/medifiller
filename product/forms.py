@@ -169,7 +169,7 @@ class Form_Image(forms.Form):
         url = self.cleaned_data['url']
 
         if url:
-            plik = StringIO(urlopen(url).read())
+            plik = BytesIO(urlopen(url).read())
 
             if not imghdr.what(plik):
                 raise forms.ValidationError(

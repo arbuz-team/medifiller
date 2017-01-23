@@ -54,6 +54,7 @@ class Insert_Product(Dynamic_Event_Menager):
             manage_image = self.request.session['product_new_image']
             manage_image['method'](product, manage_image['path'])
 
+            Session_Controller.Clear_Session_Product(self.request)
             self.content['form'] = None  # message of correct
             return self.Render_HTML('product/new.html')
 

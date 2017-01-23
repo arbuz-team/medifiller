@@ -92,7 +92,7 @@ class Product(models.Model):
     def Save_Image_From_URL(self, url):
         binary_file = BytesIO(urlopen(url).read())
         image = Image.open(binary_file)
-        new_path = '/static/img/produkt/{0}.{1}' \
+        new_path = '/_static/img/product/{0}.{1}' \
             .format(self.pk, image.format.lower())
 
         image.save(BASE_DIR + new_path)
