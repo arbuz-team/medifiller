@@ -167,6 +167,17 @@ class Form_Where_Display(forms.ModelForm):
 class Form_Image(forms.Form):
 
     image = forms.ImageField(required=False)
+
+    image_base64 = forms.CharField\
+    (
+        required=False,
+        widget=forms.TextInput(
+            attrs=
+            {
+                'hidden': 'true'
+            }),
+    )
+
     url = forms.URLField\
     (
         required=False,
@@ -206,6 +217,8 @@ class Form_Image(forms.Form):
 
 
 class Form_New_Brand(forms.ModelForm):
+
+    # exists =
 
     class Meta:
 
