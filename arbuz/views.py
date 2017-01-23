@@ -44,6 +44,24 @@ class Manager(Dynamic_Base):
     def Manage_Exist(self):
         return JsonResponse({'__exist__': 'false'})
 
+    def Manage_Clear_Session(self, key_contain):
+
+        keys = list(self.request.session.keys())
+        for key in keys:
+            if key_contain in key:
+                del self.request.session[key]
+
+        Check_Session(self.request)
+
+    def Manage_Clear(self):
+
+        if self.request.POST['__clear__'] == 'session':
+            if self.clear_session:
+                return self.Manage_Clear_Session(self.app_name)
+
+        self.content['error'] = 'no_event'
+        return self.Render_HTML('arbuz/error.html')
+
     def Manage_Button(self):
         return JsonResponse({'__button__': 'false'})
 
@@ -54,10 +72,16 @@ class Manager(Dynamic_Base):
         if lang_redirect:
             return lang_redirect
 
+        if self.index_clear_session:
+            self.Manage_Clear_Session()
+
         return render(self.request, 'index.html', {})
 
     def __init__(self, request):
         Dynamic_Base.__init__(self, request)
+
+        self.clear_session = False
+        self.index_clear_session = False
 
 
 
@@ -199,6 +223,10 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
         if '__exist__' in self.request.POST:
             return self.Manage_Exist()
 
+        # session
+        if '__clear__' in self.request.POST:
+            return self.Manage_Clear()
+
         # options
         if '__button__' in self.request.POST:
             return self.Manage_Button()
@@ -223,7 +251,9 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
                  authorization=False,
                  error_method=None,
                  other_value=None,
-                 only_root=False):
+                 only_root=False,
+                 clear_session=False,
+                 index_clear_session=False):
 
         Manager.__init__(self, request)
         Checker.__init__(self, request)
@@ -233,6 +263,8 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
         self.error_method = error_method
         self.other_value = other_value
         self.only_root = only_root
+        self.clear_session = clear_session
+        self.index_clear_session = index_clear_session
 
         if autostart:
             self.HTML = self.Initialize()

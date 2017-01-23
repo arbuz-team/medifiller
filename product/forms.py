@@ -6,6 +6,28 @@ import imghdr
 
 class Form_New_Product(forms.ModelForm):
 
+    def clean(self):
+
+        if not self.request.session['product_new_details_en']:
+            raise forms.ValidationError(
+                'English details is required.')
+
+        if not self.request.session['product_new_where_display']:
+            raise forms.ValidationError(
+                'Displays is required.')
+
+        if not self.request.session['product_new_brand']:
+            raise forms.ValidationError(
+                'Brand name is required.')
+
+        if not self.request.session['product_new_purpose']:
+            raise forms.ValidationError(
+                'Purpose is required.')
+
+        if not self.request.session['product_new_image']:
+            raise forms.ValidationError(
+                'Product image is required.')
+
     class Meta:
 
         model = Product
@@ -25,6 +47,10 @@ class Form_New_Product(forms.ModelForm):
                     'class': 'test',
                 }),
         }
+
+    def __init__(self, request=None, *args, **kwargs):
+        super(Form_New_Product, self).__init__(*args, **kwargs)
+        self.request = request
 
 
 
@@ -151,8 +177,8 @@ class Form_Image(forms.Form):
             }),
     )
 
-    def clean_image(self):
-        url = self.data['url']
+    def clean(self):
+        url = self.cleaned_data['url']
         image = self.cleaned_data['image']
 
         if url and image:

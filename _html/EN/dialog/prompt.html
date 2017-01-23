@@ -33,6 +33,8 @@
         <!--data-type="{{ form_name }}" data-test="yes"-->
         <form method="post" data-name="{{ form_name }}">
 
+            {{ form.non_field_errors }}
+
             <div class="dialog-content-part field_shell">
                 <!--fields of form-->
                 {% for field in form %}
@@ -46,7 +48,6 @@
 
                 {% endfor %}
             </div>
-
 
             <div class="dialog-content-part field_shell">
                 <!--buttons-->

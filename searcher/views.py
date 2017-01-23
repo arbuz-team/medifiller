@@ -163,7 +163,7 @@ class Search_Engine:
 
         brand = self.request.session['searcher_filter_brand']
         purpose = self.request.session['searcher_filter_purpose']
-        result = self.result
+        result = self.result[:]
 
         if not brand and not purpose:
             return
@@ -173,7 +173,7 @@ class Search_Engine:
                 if product.brand.name not in brand:
                     result.remove(product)
 
-        self.result = result
+        self.result = result[:]
         if purpose: # user chose filter
             for product in self.result:
                 if product.purpose.name not in purpose:
@@ -295,7 +295,7 @@ class Searcher(Dynamic_Event_Menager):
 
     @staticmethod
     def Launch(request):
-        return Searcher(request).HTML
+        return Searcher(request, index_clear_session=True, clear_session=True).HTML
 
 
 

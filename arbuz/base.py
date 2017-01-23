@@ -16,3 +16,4 @@ class Dynamic_Base:
     def __init__(self, request):
         self.request = request
         self.content = {}
+        self.app_name = self.__module__.split('.')[0]

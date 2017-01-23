@@ -1,5 +1,6 @@
 from arbuz.base import *
 from product.forms import *
+from inspect import getmembers, ismethod
 
 
 class Dialog_Alert(Dynamic_Base):
@@ -72,26 +73,13 @@ class Dialog_Prompt(Dynamic_Base):
 
     def Manage(self):
 
-        if self.request.POST['name'] == 'new_brand':
-            return self.Manage_New_Brand()
+        methods = getmembers(self, predicate=ismethod)
+        methods = [method[0] for method in methods]
+        form_name = self.request.POST['name']
 
-        if self.request.POST['name'] == 'new_purpose':
-            return self.Manage_New_Purpose()
-
-        if self.request.POST['name'] == 'new_details_en':
-            return self.Manage_New_Details_EN()
-
-        if self.request.POST['name'] == 'new_details_pl':
-            return self.Manage_New_Details_PL()
-
-        if self.request.POST['name'] == 'new_details_de':
-            return self.Manage_New_Details_DE()
-
-        if self.request.POST['name'] == 'where_display':
-            return self.Manage_Where_Display()
-
-        if self.request.POST['name'] == 'new_image':
-            return self.Manage_New_Image()
+        for method in methods:
+            if form_name in method.lower():
+                return getattr(Dialog_Prompt, method)(self)
 
     def __init__(self, request):
         super(Dialog_Prompt, self).__init__(request)

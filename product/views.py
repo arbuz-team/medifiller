@@ -31,7 +31,7 @@ class Product_Details(Dynamic_Event_Menager):
 
 
 
-class Insert_Product(Dynamic_Event_Menager):
+class New_Product(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
         self.content['form'] = Form_New_Product()
@@ -39,14 +39,15 @@ class Insert_Product(Dynamic_Event_Menager):
 
     def Manage_Form_New_Product(self):
 
-        self.content['form'] = Form_New_Product(self.request.POST)
+        self.content['form'] = Form_New_Product(
+            self.request, self.request.POST)
 
         if self.content['form'].is_valid():
             product = self.content['form'].save(commit=False)
             product.details_en = self.request.session['product_new_details_en']
             product.details_pl = self.request.session['product_new_details_pl']
             product.details_de = self.request.session['product_new_details_de']
-            product.where_display = self.request.session['product_where_display']
+            product.where_display = self.request.session['product_new_where_display']
             product.brand = self.request.session['product_new_brand']
             product.purpose = self.request.session['product_new_purpose']
             product.save()
@@ -54,7 +55,7 @@ class Insert_Product(Dynamic_Event_Menager):
             manage_image = self.request.session['product_new_image']
             manage_image['method'](product, manage_image['path'])
 
-            Session_Controller.Clear_Session_Product(self.request)
+            self.Manage_Clear_Session('product_new')
             self.content['form'] = None  # message of correct
             return self.Render_HTML('product/new.html')
 
@@ -74,7 +75,7 @@ class Insert_Product(Dynamic_Event_Menager):
                       display_pl=display_pl, display_de=display_de)
 
             self.content['form'] = None
-            self.request.session['product_where_display'] = where_display
+            self.request.session['product_new_where_display'] = where_display
             return self.Render_HTML('dialog/prompt.html', 'where_display')
 
         self.content['form'] = None
@@ -193,8 +194,8 @@ class Insert_Product(Dynamic_Event_Menager):
             return self.Manage_Form_New_Details\
                     (self.request.POST['__form__'][-2:].upper())
 
-        return super(Insert_Product, self).Manage_Form()
+        return super(New_Product, self).Manage_Form()
 
     @staticmethod
     def Launch(request):
-        return Insert_Product(request, only_root=True).HTML
+        return New_Product(request, only_root=True).HTML
