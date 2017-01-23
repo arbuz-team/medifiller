@@ -6,7 +6,8 @@ import {Form_Models} from './models'
 import * as validator from './validator/controllers'
 import * as hide_form from './hide_form/controllers'
 import * as auto_form from './auto_form/controllers'
-import * as post_button from './post_button/controllers'
+import * as file_converter from './file_converter/controllers'
+// import * as post_button from './post_button/controllers'
 
 export let Form_Controllers = function(content_loader_controllers)
 {
@@ -44,6 +45,7 @@ export let Form_Controllers = function(content_loader_controllers)
     validator.define($container);
     hide_form.define($container);
     auto_form.define($container);
+    file_converter.define($container);
     //post_button.define($container);
   };
 

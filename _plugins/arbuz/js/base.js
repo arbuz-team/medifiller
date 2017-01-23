@@ -52,9 +52,10 @@ $.prototype.delete_data = function delete_data(name)
 $.prototype.serialize_object = function()
 {
   let
-    fields = $( this ).serializeArray(),
+    fields = $(this).serializeArray(),
     form_object = {};
 
+  // Appending normal fields to array
   $.each( fields , function( i, field )
   {
     form_object[ field.name ] = field.value;
@@ -62,6 +63,10 @@ $.prototype.serialize_object = function()
 
   return form_object;
 };
+
+
+
+
 
 
 Array.prototype.delete_empty = function delete_empty()

@@ -136,6 +136,7 @@
 	  var fields = $(this).serializeArray(),
 	      form_object = {};
 	
+	  // Appending normal fields to array
 	  $.each(fields, function (i, field) {
 	    form_object[field.name] = field.value;
 	  });
@@ -316,23 +317,23 @@
 	
 	var searcher_controllers = _interopRequireWildcard(_controllers);
 	
-	var _controllers2 = __webpack_require__(32);
+	var _controllers2 = __webpack_require__(33);
 	
 	var cart_controllers = _interopRequireWildcard(_controllers2);
 	
-	var _controllers3 = __webpack_require__(33);
+	var _controllers3 = __webpack_require__(34);
 	
 	var navigation_controllers = _interopRequireWildcard(_controllers3);
 	
-	var _controllers4 = __webpack_require__(34);
+	var _controllers4 = __webpack_require__(35);
 	
 	var header_controllers = _interopRequireWildcard(_controllers4);
 	
-	var _controllers5 = __webpack_require__(35);
+	var _controllers5 = __webpack_require__(36);
 	
 	var dialog_controllers = _interopRequireWildcard(_controllers5);
 	
-	var _controllers6 = __webpack_require__(41);
+	var _controllers6 = __webpack_require__(42);
 	
 	var ground_controllers = _interopRequireWildcard(_controllers6);
 	
@@ -1156,9 +1157,11 @@
 	
 	var _controllers4 = __webpack_require__(30);
 	
-	var post_button = _interopRequireWildcard(_controllers4);
+	var image_converter = _interopRequireWildcard(_controllers4);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	// import * as post_button from './post_button/controllers'
 	
 	var Form_Controllers = exports.Form_Controllers = function Form_Controllers(content_loader_controllers) {
 	  var form_models = new _models.Form_Models(content_loader_controllers);
@@ -1189,6 +1192,7 @@
 	    validator.define($container);
 	    hide_form.define($container);
 	    auto_form.define($container);
+	    image_converter.define($container);
 	    //post_button.define($container);
 	  };
 	}; /**
@@ -1966,78 +1970,95 @@
 	
 	var _views = __webpack_require__(31);
 	
-	var mini_form = _interopRequireWildcard(_views);
+	var image_convert_views = _interopRequireWildcard(_views);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
-	var define = exports.define = function define() {
-	  $('.post_button').click(send_post_button);
+	var define = exports.define = function define($container) {
+	  var views = image_convert_views,
+	      settings = views.models.settings,
+	      $forms = $(settings.form, $container),
+	      $file_fields = $(settings.input_file, $forms);
+	
+	  $file_fields.each(function (i, field) {
+	    $(field).change(function () {
+	      if (field.files[0]) views.get_base64(field.files[0], views.create_convert_done(field), views.create_convert_error(field));
+	    });
+	  });
 	}; /**
-	    * Created by mrskull on 17.12.16.
+	    * Created by mrskull on 23.01.17.
 	    */
-	
-	var send_post_button_is_running = false;
-	
-	var send_post_button = function send_post_button() {
-	  if (send_post_button_is_running) return false;
-	
-	  send_post_button_is_running = true;
-	
-	  var $button = $(this),
-	      text_button = $.trim($button.text()),
-	      // Delete white spaces
-	  data_name = $button.data('name'),
-	      data_value = $button.data('value');
-	
-	  // Change input on disabled
-	  $button.prop('disabled', true).html('Loading...');
-	
-	  var show_answer = function show_answer(response, status) {
-	    if (status === 'success') {
-	      $button.html(text_button).prop('disabled', false);
-	      window.APP.DATA.redirect = undefined;
-	      window.APP.DATA.delay = undefined;
-	      APP.throw_event(window.EVENTS.redirect);
-	    } else {
-	      $button.html(text_button + ': Error').prop('disabled', false);
-	    }
-	
-	    send_post_button_is_running = false;
-	  };
-	
-	  setTimeout(function () {
-	    mini_form.send(data_name, data_value, show_answer);
-	  }, 100);
-	};
 
 /***/ },
 /* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.create_convert_error = exports.create_convert_done = exports.get_base64 = exports.settings = exports.models = undefined;
+	
+	var _models = __webpack_require__(32);
+	
+	var image_convert_models = _interopRequireWildcard(_models);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	var models = exports.models = image_convert_models,
+	    settings = exports.settings = models.settings,
+	    get_base64 = exports.get_base64 = function get_base64(file, done_callback, error_callback) {
+	  var reader = new FileReader();
+	
+	  reader.readAsDataURL(file);
+	  reader.onload = function () {
+	    done_callback(reader.result);
+	  };
+	  reader.onerror = function (error) {
+	    error_callback(error);
+	  };
+	},
+	    create_convert_done = exports.create_convert_done = function create_convert_done(field) {
+	  return function (result) {
+	    var hidden_input = settings.input_base64.start + field.name + settings.input_base64.end;
+	
+	    $(hidden_input).val(result);
+	  };
+	},
+	    create_convert_error = exports.create_convert_error = function create_convert_error(field) {
+	  return function (error) {
+	    console.log(field);
+	    console.log(error);
+	  };
+	}; /**
+	    * Created by mrskull on 23.01.17.
+	    */
+
+/***/ },
+/* 32 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	/**
-	 * Created by mrskull on 18.12.16.
+	 * Created by mrskull on 23.01.17.
 	 */
 	
-	var send_prepare_post = function send_prepare_post(button_name, button_value) {
-	  return {
-	    __button__: button_name,
-	    value: button_value
-	  };
-	};
-	
-	var send = exports.send = function send(button_name, button_value, callback) {
-	  var post_data = send_prepare_post(button_name, button_value);
-	
-	  window.APP.http_request(undefined, post_data, callback);
+	var settings = exports.settings = {
+	  form: 'form',
+	  input_file: 'input[type=file]',
+	  input_base64: {
+	    start: 'input[name=',
+	    end: '_base64]'
+	  }
 	};
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2100,7 +2121,7 @@
 	};
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2114,7 +2135,7 @@
 	
 	var _controllers2 = __webpack_require__(16);
 	
-	var _controllers3 = __webpack_require__(32);
+	var _controllers3 = __webpack_require__(33);
 	
 	var cart_controllers = _interopRequireWildcard(_controllers3);
 	
@@ -2173,7 +2194,7 @@
 	};
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2189,11 +2210,11 @@
 	
 	var searcher_controllers = _interopRequireWildcard(_controllers2);
 	
-	var _controllers3 = __webpack_require__(33);
+	var _controllers3 = __webpack_require__(34);
 	
 	var navigation_controllers = _interopRequireWildcard(_controllers3);
 	
-	var _controllers4 = __webpack_require__(32);
+	var _controllers4 = __webpack_require__(33);
 	
 	var cart_controllers = _interopRequireWildcard(_controllers4);
 	
@@ -2236,7 +2257,7 @@
 	};
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2246,11 +2267,11 @@
 	});
 	exports.close = exports.open = exports.define = undefined;
 	
-	var _views = __webpack_require__(36);
+	var _views = __webpack_require__(37);
 	
 	var dialog_views = _interopRequireWildcard(_views);
 	
-	var _controllers = __webpack_require__(38);
+	var _controllers = __webpack_require__(39);
 	
 	var interior_dialog_controllers = _interopRequireWildcard(_controllers);
 	
@@ -2310,7 +2331,7 @@
 	    close = exports.close = dialog_views.close;
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2320,15 +2341,15 @@
 	});
 	exports.close = exports.open = exports.selectors = undefined;
 	
-	var _models = __webpack_require__(37);
+	var _models = __webpack_require__(38);
 	
 	var dialog_models = _interopRequireWildcard(_models);
 	
-	var _controllers = __webpack_require__(38);
+	var _controllers = __webpack_require__(39);
 	
 	var interior_dialog_controllers = _interopRequireWildcard(_controllers);
 	
-	var _models2 = __webpack_require__(40);
+	var _models2 = __webpack_require__(41);
 	
 	var interior_dialog_models = _interopRequireWildcard(_models2);
 	
@@ -2387,7 +2408,7 @@
 	};
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2417,7 +2438,7 @@
 	selectors.external_buttons = 'button.dialog_button';
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2427,11 +2448,11 @@
 	});
 	exports.define = exports.recognize_button = exports.load = undefined;
 	
-	var _views = __webpack_require__(39);
+	var _views = __webpack_require__(40);
 	
 	var interior_dialog_views = _interopRequireWildcard(_views);
 	
-	var _controllers = __webpack_require__(35);
+	var _controllers = __webpack_require__(36);
 	
 	var _controllers2 = __webpack_require__(19);
 	
@@ -2469,7 +2490,7 @@
 	};
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2479,7 +2500,7 @@
 	});
 	exports.load = exports.container = exports.variables = exports.selectors = undefined;
 	
-	var _models = __webpack_require__(40);
+	var _models = __webpack_require__(41);
 	
 	var interior_dialog_models = _interopRequireWildcard(_models);
 	
@@ -2493,7 +2514,7 @@
 	                                                        */
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2505,7 +2526,7 @@
 	
 	var _controllers = __webpack_require__(12);
 	
-	var _models = __webpack_require__(37);
+	var _models = __webpack_require__(38);
 	
 	/**
 	 * Created by mrskull on 21.01.17.
@@ -2549,7 +2570,7 @@
 	};
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2559,7 +2580,7 @@
 	});
 	exports.change_content = exports.start = exports.define = undefined;
 	
-	var _views = __webpack_require__(42);
+	var _views = __webpack_require__(43);
 	
 	var ground_views = _interopRequireWildcard(_views);
 	
@@ -2644,7 +2665,7 @@
 	};
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
