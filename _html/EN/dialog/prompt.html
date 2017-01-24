@@ -1,3 +1,4 @@
+{% load tags %}
 
 <div class="dialog-header">
     {% if title == 'new_brand' %}
@@ -24,7 +25,7 @@
             New record has been append to database.
             <script>
                 window.APP.DATA.delay = 1000;
-                window.APP.throw_event(window.EVENTS.close_dialog);
+                window.APP.throw_event(window.EVENTS.dialog_close);
             </script>
         </div>
 
@@ -39,12 +40,21 @@
                 <!--fields of form-->
                 {% for field in form %}
 
-                <div>
-                    {{ field }}
-                    {{ field.errors }}
+                    <div>
+                        {% if field|fieldtype == 'ClearableFileInput'%}
 
-                    <div class="status"></div>
-                </div>
+                            {{ field }}
+                            <button type="button" class="file_shell">Select file</button>
+                            {{ field.errors }}
+
+                        {% else %}
+
+                            {{ field }}
+                            {{ field.errors }}
+
+                        {% endif %}
+                        <div class="status"></div>
+                    </div>
 
                 {% endfor %}
             </div>

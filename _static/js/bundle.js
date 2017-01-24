@@ -1983,6 +1983,8 @@
 	  $file_fields.each(function (i, field) {
 	    $(field).change(function () {
 	      if (field.files[0]) views.get_base64(field.files[0], views.create_convert_done(field), views.create_convert_error(field));
+	    }).parent().children(settings.button_shell).click(function () {
+	      $(field).click();
 	    });
 	  });
 	}; /**
@@ -2051,6 +2053,7 @@
 	var settings = exports.settings = {
 	  form: 'form',
 	  input_file: 'input[type=file]',
+	  button_shell: 'button.file_shell',
 	  input_base64: {
 	    start: 'input[name=',
 	    end: '_base64]'

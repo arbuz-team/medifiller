@@ -19,6 +19,13 @@ export let define = function($container)
     {
       if(field.files[0])
         views.get_base64(field.files[0], views.create_convert_done(field), views.create_convert_error(field));
-    });
+    })
+      .parent().children(settings.button_shell).click(function()
+      {
+        $(field).click();
+      });
+
   });
+
+
 };
