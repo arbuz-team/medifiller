@@ -74,12 +74,10 @@ class New_Product(Dynamic_Event_Menager):
             where_display = Where_Display.objects.get(display_en=display_en,
                       display_pl=display_pl, display_de=display_de)
 
-            self.content['form'] = None
             self.request.session['product_new_where_display'] = where_display
-            return self.Render_HTML('dialog/prompt.html', 'where_display')
 
-        self.content['form'] = None
-        return self.Render_HTML('dialog/prompt.html', 'where_display')
+            return Dialog_Prompt(self.request, response=True).HTML
+        return Dialog_Prompt(self.request, not_valid=True).HTML
 
     def Manage_Form_New_Brand(self):
         brand = Form_New_Brand(self.request.POST)
@@ -89,11 +87,8 @@ class New_Product(Dynamic_Event_Menager):
             brand.save()
             self.request.session['product_new_brand'] = brand
 
-            self.content['form'] = None  # message of correct
-            return self.Render_HTML('dialog/prompt.html')
-
-        self.content['form'] = brand
-        return self.Render_HTML('dialog/prompt.html', 'new_brand')
+            return Dialog_Prompt(self.request, response=True).HTML
+        return Dialog_Prompt(self.request, not_valid=True).HTML
 
     def Manage_Form_New_Purpose(self):
         purpose = Form_New_Purpose(self.request.POST)
@@ -103,11 +98,8 @@ class New_Product(Dynamic_Event_Menager):
             purpose.save()
             self.request.session['product_new_purpose'] = purpose
 
-            self.content['form'] = None  # message of correct
-            return self.Render_HTML('dialog/prompt.html')
-
-        self.content['form'] = purpose
-        return self.Render_HTML('dialog/prompt.html', 'new_purpose')
+            return Dialog_Prompt(self.request, response=True).HTML
+        return Dialog_Prompt(self.request, not_valid=True).HTML
 
     def Manage_Form_Image(self):
         image = Form_Image(self.request.POST)
@@ -131,14 +123,10 @@ class New_Product(Dynamic_Event_Menager):
                         'path' : url_path
                     }
 
-            self.content['form'] = None  # message of correct
-            return self.Render_HTML('dialog/prompt.html')
-
-        self.content['form'] = image
-        return self.Render_HTML('dialog/prompt.html', 'new_image')
+            return Dialog_Prompt(self.request, response=True).HTML
+        return Dialog_Prompt(self.request, not_valid=True).HTML
 
     def Manage_Form_New_Details(self, language):
-        details = None
 
         if language == 'EN':
             details = Form_New_Details_EN(self.request.POST)
@@ -147,8 +135,7 @@ class New_Product(Dynamic_Event_Menager):
                 details = details.save(commit=False)
                 details.save()
                 self.request.session['product_new_details_en'] = details
-                self.content['form'] = None
-                return self.Render_HTML('dialog/prompt.html')
+                return Dialog_Prompt(self.request, response=True).HTML
 
         if language == 'PL':
             details = Form_New_Details_PL(self.request.POST)
@@ -157,8 +144,7 @@ class New_Product(Dynamic_Event_Menager):
                 details = details.save(commit=False)
                 details.save()
                 self.request.session['product_new_details_pl'] = details
-                self.content['form'] = None
-                return self.Render_HTML('dialog/prompt.html')
+                return Dialog_Prompt(self.request, response=True).HTML
 
         if language == 'DE':
             details = Form_New_Details_DE(self.request.POST)
@@ -167,11 +153,9 @@ class New_Product(Dynamic_Event_Menager):
                 details = details.save(commit=False)
                 details.save()
                 self.request.session['product_new_details_de'] = details
-                self.content['form'] = None
-                return self.Render_HTML('dialog/prompt.html')
+                return Dialog_Prompt(self.request, response=True).HTML
 
-        self.content['form'] = details
-        return self.Render_HTML('dialog/prompt.html', 'details')
+        return Dialog_Prompt(self.request, not_valid=True).HTML
 
     def Manage_Form(self):
 

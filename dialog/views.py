@@ -38,7 +38,7 @@ class Dialog_Prompt(Dynamic_Base):
 
     def Manage_New_Brand(self):
         self.content['title'] = 'new_brand'
-        self.content['form'] = Form_New_Brand()
+        self.content['form'] = Form_New_Brand(self.Get_POST())
         return self.Render_HTML('dialog/prompt.html', 'new_brand')
 
     def Manage_New_Purpose(self):
@@ -71,16 +71,40 @@ class Dialog_Prompt(Dynamic_Base):
         self.content['form'] = Form_Image()
         return self.Render_HTML('dialog/prompt.html', 'new_image')
 
+    def Response(self):
+        self.content['title'] = 'response'
+        self.content['form'] = None  # message of correct
+        return self.Render_HTML('dialog/prompt.html')
+
+    def Get_POST(self):
+
+        if self.not_valid:
+            return self.request.POST
+
+        else: return None
+
+    def Get_Form_Name(self):
+
+        if 'form_name' in self.request.POST:
+            return self.request.POST['form_name']
+
+        else: return self.request.POST['__form__']
+
     def Manage(self):
+
+        if self.response:
+            return self.Response()
 
         methods = getmembers(self, predicate=ismethod)
         methods = [method[0] for method in methods]
-        form_name = self.request.POST['name']
+        form_name = self.Get_Form_Name()
 
         for method in methods:
             if form_name in method.lower():
                 return getattr(Dialog_Prompt, method)(self)
 
-    def __init__(self, request):
+    def __init__(self, request, response=False, not_valid=False):
         super(Dialog_Prompt, self).__init__(request)
+        self.response = response
+        self.not_valid = not_valid
         self.HTML = self.Manage()
