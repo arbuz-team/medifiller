@@ -46,7 +46,7 @@ export let
       variables.post_data = {};
 
       variables.post_data.type = variables.button_type;
-      variables.post_data.name = variables.button_name;
+      variables.post_data.form_name = variables.button_name;
     }
     else
       variables.post_data = post_data;
