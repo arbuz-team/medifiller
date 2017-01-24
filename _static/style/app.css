@@ -782,11 +782,11 @@ img {
 .field_shell .form_error {
   border: 1px solid #dd4b39 !important; }
 
-#TRESC > .BLOCK > .tresc {
+#GROUND .ground-block > .block-content {
   background: #fff;
   border: 1px solid #ddd;
     border-radius: 3px; }
-  #TRESC > .BLOCK > .tresc > .title, #TRESC > .BLOCK > .tresc form > .title {
+  #GROUND .ground-block > .block-content > .title, #GROUND .ground-block > .block-content form > .title {
     padding: 10px 0;
     margin-bottom: 10px;
     border-bottom: 1px solid #eee;
@@ -794,43 +794,45 @@ img {
     font-weight: bold;
     font-size: 18px;
     text-align: center; }
-  #TRESC > .BLOCK > .tresc .otoczka_pola {
+  #GROUND .ground-block > .block-content .field_shell, #GROUND .ground-block > .block-content form > div {
     position: relative; }
-    #TRESC > .BLOCK > .tresc .otoczka_pola input[type=text], #TRESC > .BLOCK > .tresc .otoczka_pola input[type=email], #TRESC > .BLOCK > .tresc .otoczka_pola input[type=password], #TRESC > .BLOCK > .tresc .otoczka_pola input[type=number], #TRESC > .BLOCK > .tresc .otoczka_pola select, #TRESC > .BLOCK > .tresc .otoczka_pola button, #TRESC > .BLOCK > .tresc .otoczka_pola textarea {
+    #GROUND .ground-block > .block-content .field_shell input[type=text], #GROUND .ground-block > .block-content .field_shell input[type=email], #GROUND .ground-block > .block-content .field_shell input[type=password], #GROUND .ground-block > .block-content .field_shell input[type=number], #GROUND .ground-block > .block-content .field_shell select, #GROUND .ground-block > .block-content .field_shell button, #GROUND .ground-block > .block-content .field_shell textarea, #GROUND .ground-block > .block-content form > div input[type=text], #GROUND .ground-block > .block-content form > div input[type=email], #GROUND .ground-block > .block-content form > div input[type=password], #GROUND .ground-block > .block-content form > div input[type=number], #GROUND .ground-block > .block-content form > div select, #GROUND .ground-block > .block-content form > div button, #GROUND .ground-block > .block-content form > div textarea {
       margin-left: 0;
       margin-right: 0;
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       box-sizing: border-box; }
-    #TRESC > .BLOCK > .tresc .otoczka_pola input[type=checkbox] {
+    #GROUND .ground-block > .block-content .field_shell input[type=checkbox], #GROUND .ground-block > .block-content form > div input[type=checkbox] {
       position: absolute;
       right: 8px;
       top: 9px;
       width: 18px;
       height: 18px; }
-  #TRESC > .BLOCK > .tresc .otoczka_pola:last-child {
+  #GROUND .ground-block > .block-content form > div:last-child {
     padding-top: 10px;
     margin-top: 10px;
     border-top: 1px solid #eee; }
 
-#TRESC > .BLOCK.SMALL > .tresc {
-  width: 330px; }
-  #TRESC > .BLOCK.SMALL > .tresc .otoczka_pola input[type=text], #TRESC > .BLOCK.SMALL > .tresc .otoczka_pola input[type=email], #TRESC > .BLOCK.SMALL > .tresc .otoczka_pola input[type=password], #TRESC > .BLOCK.SMALL > .tresc .otoczka_pola input[type=number], #TRESC > .BLOCK.SMALL > .tresc .otoczka_pola select, #TRESC > .BLOCK.SMALL > .tresc .otoczka_pola button, #TRESC > .BLOCK.SMALL > .tresc .otoczka_pola textarea {
+#GROUND .ground-block.SMALL > .block-content {
+  width: 330px;
+  margin: 30px auto; }
+  #GROUND .ground-block.SMALL > .block-content .field_shell input[type=text], #GROUND .ground-block.SMALL > .block-content .field_shell input[type=email], #GROUND .ground-block.SMALL > .block-content .field_shell input[type=password], #GROUND .ground-block.SMALL > .block-content .field_shell input[type=number], #GROUND .ground-block.SMALL > .block-content .field_shell select, #GROUND .ground-block.SMALL > .block-content .field_shell button, #GROUND .ground-block.SMALL > .block-content .field_shell textarea {
     width: 100%; }
 
-#TRESC > .BLOCK.BIG > .tresc {
-  width: 660px; }
-  #TRESC > .BLOCK.BIG > .tresc .edit_address {
+#GROUND .ground-block.BIG > .block-content {
+  width: 660px;
+  margin: 30px auto; }
+  #GROUND .ground-block.BIG > .block-content .edit_address {
     display: inline-block;
     width: 215px; }
-    #TRESC > .BLOCK.BIG > .tresc .edit_address .title {
+    #GROUND .ground-block.BIG > .block-content .edit_address .title {
       font-size: 14px;
       color: #999;
       text-align: left;
       padding-bottom: 5px; }
-    #TRESC > .BLOCK.BIG > .tresc .edit_address .otoczka_pola input[type=text], #TRESC > .BLOCK.BIG > .tresc .edit_address .otoczka_pola input[type=email], #TRESC > .BLOCK.BIG > .tresc .edit_address .otoczka_pola input[type=password], #TRESC > .BLOCK.BIG > .tresc .edit_address .otoczka_pola input[type=number], #TRESC > .BLOCK.BIG > .tresc .edit_address .otoczka_pola select, #TRESC > .BLOCK.BIG > .tresc .edit_address .otoczka_pola textarea {
+    #GROUND .ground-block.BIG > .block-content .edit_address .field_shell input[type=text], #GROUND .ground-block.BIG > .block-content .edit_address .field_shell input[type=email], #GROUND .ground-block.BIG > .block-content .edit_address .field_shell input[type=password], #GROUND .ground-block.BIG > .block-content .edit_address .field_shell input[type=number], #GROUND .ground-block.BIG > .block-content .edit_address .field_shell select, #GROUND .ground-block.BIG > .block-content .edit_address .field_shell textarea {
       width: 90%; }
-  #TRESC > .BLOCK.BIG > .tresc .otoczka_pola input[type=text], #TRESC > .BLOCK.BIG > .tresc .otoczka_pola input[type=email], #TRESC > .BLOCK.BIG > .tresc .otoczka_pola input[type=password], #TRESC > .BLOCK.BIG > .tresc .otoczka_pola input[type=number], #TRESC > .BLOCK.BIG > .tresc .otoczka_pola select, #TRESC > .BLOCK.BIG > .tresc .otoczka_pola button, #TRESC > .BLOCK.BIG > .tresc .otoczka_pola textarea {
+  #GROUND .ground-block.BIG > .block-content .field_shell input[type=text], #GROUND .ground-block.BIG > .block-content .field_shell input[type=email], #GROUND .ground-block.BIG > .block-content .field_shell input[type=password], #GROUND .ground-block.BIG > .block-content .field_shell input[type=number], #GROUND .ground-block.BIG > .block-content .field_shell select, #GROUND .ground-block.BIG > .block-content .field_shell button, #GROUND .ground-block.BIG > .block-content .field_shell textarea {
     width: auto; }
 
 .mini_form {

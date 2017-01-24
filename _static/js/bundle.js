@@ -1157,7 +1157,7 @@
 	
 	var _controllers4 = __webpack_require__(30);
 	
-	var image_converter = _interopRequireWildcard(_controllers4);
+	var file_converter = _interopRequireWildcard(_controllers4);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -1192,7 +1192,7 @@
 	    validator.define($container);
 	    hide_form.define($container);
 	    auto_form.define($container);
-	    image_converter.define($container);
+	    file_converter.define($container);
 	    //post_button.define($container);
 	  };
 	}; /**

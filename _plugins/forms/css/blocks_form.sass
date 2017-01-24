@@ -1,7 +1,7 @@
 
-#TRESC > .BLOCK
+#GROUND .ground-block
 
-  >.tresc
+  >.block-content
     background: #fff
     border: 1px solid #ddd
       radius: 3px
@@ -15,7 +15,7 @@
       font-size: 18px
       text-align: center
 
-    .otoczka_pola
+    .field_shell, form > div
       position: relative
 
       input[type=text], input[type=email], input[type=password], input[type=number], select, button, textarea
@@ -32,23 +32,25 @@
         height: 18px
 
 
-    .otoczka_pola:last-child
+    form > div:last-child
       padding-top: 10px
       margin-top: 10px
       border-top: 1px solid #eee
 
 
-#TRESC > .BLOCK.SMALL > .tresc
+#GROUND .ground-block.SMALL > .block-content
   width: 330px
+  margin: 30px auto
 
-  .otoczka_pola
+  .field_shell
 
     input[type=text], input[type=email], input[type=password], input[type=number], select, button, textarea
       width: 100%
 
 
-#TRESC > .BLOCK.BIG > .tresc
+#GROUND .ground-block.BIG > .block-content
   width: 660px
+  margin: 30px auto
 
   .edit_address
     display: inline-block
@@ -60,12 +62,12 @@
       text-align: left
       padding-bottom: 5px
 
-    .otoczka_pola
+    .field_shell
 
       input[type=text], input[type=email], input[type=password], input[type=number], select, textarea
         width: 90%
 
-  .otoczka_pola
+  .field_shell
 
     input[type=text], input[type=email], input[type=password], input[type=number], select, button, textarea
       width: auto
