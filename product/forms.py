@@ -1,7 +1,6 @@
 from django import forms
 from .models import *
-from io import StringIO
-import imghdr
+from arbuz.base import *
 
 
 class Form_New_Product(forms.ModelForm):
@@ -190,9 +189,10 @@ class Form_Image(forms.Form):
 
     def clean(self):
         url = self.cleaned_data['url']
-        image = self.cleaned_data['image']
+        image = self.cleaned_data['image_base64']
 
         if url and image:
+            os.remove(BASE_DIR + image)
             raise forms.ValidationError(
                 'Only one image can save.')
 
@@ -200,7 +200,20 @@ class Form_Image(forms.Form):
             raise forms.ValidationError(
                 'Please select image.')
 
-        return image
+        return self.cleaned_data
+
+    def clean_image_base64(self):
+        image_base64 = self.cleaned_data['image_base64']
+
+        if image_base64:
+            image_base64 = Dynamic_Base.\
+                Save_Image_From_Base64(image_base64)
+
+            if not image_base64:
+                raise forms.ValidationError(
+                    'It\'s not image.')
+
+        return image_base64
 
     def clean_url(self):
         url = self.cleaned_data['url']

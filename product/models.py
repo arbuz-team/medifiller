@@ -79,11 +79,9 @@ class Product(models.Model):
 
     def Save_Image_From_Form(self, name):
         image_format = os.path.splitext(name)[1]
+        old_path = BASE_DIR + name
         new_path = '/_static/img/product/{0}{1}' \
             .format(self.pk, image_format)
-
-        old_path = MEDIA_ROOT + '/{0}' \
-            .format(os.path.basename(self.image.name))
 
         os.rename(old_path, BASE_DIR + new_path)
         self.image.name = new_path

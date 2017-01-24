@@ -114,7 +114,7 @@ class New_Product(Dynamic_Event_Menager):
 
         if image.is_valid():
 
-            image_path = image.cleaned_data['image']
+            image_path = image.cleaned_data['image_base64']
             url_path = image.cleaned_data['url']
 
             if image_path:
