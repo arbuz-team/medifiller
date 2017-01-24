@@ -11,36 +11,53 @@ export let
   settings = models.settings,
 
 
-  get_base64 = function(file, done_callback, error_callback)
+  get_base64 = function(file, callback)
   {
-    let reader = new FileReader();
+    callback.loading();
 
+    let reader = new FileReader();
     reader.readAsDataURL(file);
+
     reader.onload = function(){
-      done_callback(reader.result);
+      callback.done(reader.result);
     };
+
     reader.onerror = function(error){
-      error_callback(error);
+      callback.error(error);
     };
   },
 
 
-  create_convert_done = function(field)
+  Callback_Functions = function(field)
   {
-    return function(result)
+    let
+      $field = $(field),
+      $parent_field = $field.parent(),
+      $button_shell = $parent_field.children(settings.button_shell);
+
+
+    this.loading = function()
+    {
+      $button_shell.html('Coverting...');
+    };
+
+
+    this.done = function(result)
     {
       let hidden_input = settings.input_base64.start + field.name + settings.input_base64.end;
 
       $(hidden_input).val(result);
+      setTimeout(() => {
+        $button_shell.html('Is ready / change');
+      }, 500);
     };
-  },
 
 
-  create_convert_error = function(field)
-  {
-    return function(error)
+    this.error = function()
     {
-      console.log(field);
-      console.log(error);
+      setTimeout(() => {
+        $button_shell.html('Error / select again');
+      }, 500);
     };
+
   };

@@ -1982,7 +1982,11 @@
 	
 	  $file_fields.each(function (i, field) {
 	    $(field).change(function () {
-	      if (field.files[0]) views.get_base64(field.files[0], views.create_convert_done(field), views.create_convert_error(field));
+	      if (field.files[0]) {
+	        var callback = new views.Callback_Functions(field);
+	
+	        views.get_base64(field.files[0], callback);
+	      }
 	    }).parent().children(settings.button_shell).click(function () {
 	      $(field).click();
 	    });
@@ -2000,7 +2004,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.create_convert_error = exports.create_convert_done = exports.get_base64 = exports.settings = exports.models = undefined;
+	exports.Callback_Functions = exports.get_base64 = exports.settings = exports.models = undefined;
 	
 	var _models = __webpack_require__(32);
 	
@@ -2010,28 +2014,42 @@
 	
 	var models = exports.models = image_convert_models,
 	    settings = exports.settings = models.settings,
-	    get_base64 = exports.get_base64 = function get_base64(file, done_callback, error_callback) {
-	  var reader = new FileReader();
+	    get_base64 = exports.get_base64 = function get_base64(file, callback) {
+	  callback.loading();
 	
+	  var reader = new FileReader();
 	  reader.readAsDataURL(file);
+	
 	  reader.onload = function () {
-	    done_callback(reader.result);
+	    callback.done(reader.result);
 	  };
+	
 	  reader.onerror = function (error) {
-	    error_callback(error);
+	    callback.error(error);
 	  };
 	},
-	    create_convert_done = exports.create_convert_done = function create_convert_done(field) {
-	  return function (result) {
+	    Callback_Functions = exports.Callback_Functions = function Callback_Functions(field) {
+	  var $field = $(field),
+	      $parent_field = $field.parent(),
+	      $button_shell = $parent_field.children(settings.button_shell);
+	
+	  this.loading = function () {
+	    $button_shell.html('Coverting...');
+	  };
+	
+	  this.done = function (result) {
 	    var hidden_input = settings.input_base64.start + field.name + settings.input_base64.end;
 	
 	    $(hidden_input).val(result);
+	    setTimeout(function () {
+	      $button_shell.html('Is ready / change');
+	    }, 500);
 	  };
-	},
-	    create_convert_error = exports.create_convert_error = function create_convert_error(field) {
-	  return function (error) {
-	    console.log(field);
-	    console.log(error);
+	
+	  this.error = function () {
+	    setTimeout(function () {
+	      $button_shell.html('Error / select again');
+	    }, 500);
 	  };
 	}; /**
 	    * Created by mrskull on 23.01.17.

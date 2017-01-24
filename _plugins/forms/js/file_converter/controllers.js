@@ -18,7 +18,11 @@ export let define = function($container)
     $(field).change(function()
     {
       if(field.files[0])
-        views.get_base64(field.files[0], views.create_convert_done(field), views.create_convert_error(field));
+      {
+        let callback = new views.Callback_Functions(field);
+
+        views.get_base64(field.files[0], callback);
+      }
     })
       .parent().children(settings.button_shell).click(function()
       {
