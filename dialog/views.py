@@ -1,5 +1,5 @@
-from arbuz.base import *
 from product.forms import *
+from translator.views import *
 from inspect import getmembers, ismethod
 
 
@@ -37,42 +37,42 @@ class Dialog_Confirm(Dynamic_Base):
 class Dialog_Prompt(Dynamic_Base):
 
     def Manage_New_Brand(self):
-        self.content['title'] = 'new_brand'
+        self.content['title'] = Text(self.request, 1)
         self.content['form'] = Form_New_Brand(self.Get_POST())
         return self.Render_HTML('dialog/prompt.html', 'new_brand')
 
     def Manage_New_Purpose(self):
-        self.content['title'] = 'new_purpose'
-        self.content['form'] = Form_New_Purpose()
+        self.content['title'] = Text(self.request, 2)
+        self.content['form'] = Form_New_Purpose(self.Get_POST())
         return self.Render_HTML('dialog/prompt.html', 'new_purpose')
 
     def Manage_New_Details_EN(self):
-        self.content['title'] = 'new_details_en'
-        self.content['form'] = Form_New_Details_EN()
+        self.content['title'] = Text(self.request, 3)
+        self.content['form'] = Form_New_Details_EN(self.Get_POST())
         return self.Render_HTML('dialog/prompt.html', 'new_details_en')
 
     def Manage_New_Details_PL(self):
-        self.content['title'] = 'new_details_pl'
-        self.content['form'] = Form_New_Details_PL()
+        self.content['title'] = Text(self.request, 4)
+        self.content['form'] = Form_New_Details_PL(self.Get_POST())
         return self.Render_HTML('dialog/prompt.html', 'new_details_pl')
 
     def Manage_New_Details_DE(self):
-        self.content['title'] = 'new_details_de'
-        self.content['form'] = Form_New_Details_EN()
+        self.content['title'] = Text(self.request, 5)
+        self.content['form'] = Form_New_Details_EN(self.Get_POST())
         return self.Render_HTML('dialog/prompt.html', 'new_details_de')
 
     def Manage_Where_Display(self):
-        self.content['title'] = 'where_display'
-        self.content['form'] = Form_Where_Display()
+        self.content['title'] = Text(self.request, 6)
+        self.content['form'] = Form_Where_Display(self.Get_POST())
         return self.Render_HTML('dialog/prompt.html', 'where_display')
 
     def Manage_New_Image(self):
-        self.content['title'] = 'new_image'
-        self.content['form'] = Form_Image()
+        self.content['title'] = Text(self.request, 7)
+        self.content['form'] = Form_Image(self.Get_POST())
         return self.Render_HTML('dialog/prompt.html', 'new_image')
 
     def Response(self):
-        self.content['title'] = 'response'
+        self.content['title'] = Text(self.request, 8)
         self.content['form'] = None  # message of correct
         return self.Render_HTML('dialog/prompt.html')
 

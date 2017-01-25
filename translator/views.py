@@ -6,15 +6,15 @@ from .models import *
 class Translator:
 
     @staticmethod
-    def __Translate_EN(pk):
+    def Translate_EN(pk):
         return Language_EN.objects.get(id=pk).value
 
     @staticmethod
-    def __Translate_PL(pk):
+    def Translate_PL(pk):
         return Language_PL.objects.get(id=pk).value
 
     @staticmethod
-    def __Translate_DE(pk):
+    def Translate_DE(pk):
         return Language_DE.objects.get(id=pk).value
 
     @staticmethod
@@ -24,7 +24,7 @@ class Translator:
             raise Exception('This value does not exist. '
                             '<translator.Translator.Translate>')
 
-        method = '__Translate_' + request.session['translator_language']
+        method = 'Translate_' + request.session['translator_language']
         return getattr(Translator, method)(pk)
 
     @staticmethod

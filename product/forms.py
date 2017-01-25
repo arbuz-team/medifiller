@@ -231,7 +231,35 @@ class Form_Image(forms.Form):
 
 class Form_New_Brand(forms.ModelForm):
 
-    # exists =
+    exists = forms.ModelChoiceField\
+    (
+        required=False,
+        queryset=Brand.objects.all()
+    )
+
+    name = forms.ChoiceField\
+    (
+        required=False,
+        widget=forms.TextInput(
+            attrs=
+            {
+                'placeholder': 'Name',
+                'class': 'test',
+                'autofocus': 'true',
+            }),
+    )
+
+    def clean(self):
+        new_brand = self.data['name']
+        select_brand = self.data['exists']
+
+        if not new_brand and not select_brand:
+            raise forms.ValidationError(
+                'Please select or append brand.')
+
+        if new_brand and select_brand:
+            raise forms.ValidationError(
+                'Select exist or create new brand. Not both.')
 
     class Meta:
 
@@ -239,17 +267,6 @@ class Form_New_Brand(forms.ModelForm):
         fields = \
         {
             'name',
-        }
-
-        widgets = \
-        {
-            'name': forms.TextInput(
-                attrs=
-                {
-                    'placeholder': 'Name',
-                    'class': 'test',
-                    'autofocus': 'true',
-                }),
         }
 
 
