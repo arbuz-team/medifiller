@@ -3,27 +3,27 @@ from .models import *
 from arbuz.base import *
 
 
-class Form_New_Product(forms.ModelForm):
+class Form_Product(forms.ModelForm):
 
     def clean(self):
 
-        if not self.request.session['product_new_details_en']:
+        if not self.request.session['product_details_en']:
             raise forms.ValidationError(
                 'English details is required.')
 
-        if not self.request.session['product_new_where_display']:
+        if not self.request.session['product_where_display']:
             raise forms.ValidationError(
                 'Displays is required.')
 
-        if not self.request.session['product_new_brand']:
+        if not self.request.session['product_brand']:
             raise forms.ValidationError(
                 'Brand name is required.')
 
-        if not self.request.session['product_new_purpose']:
+        if not self.request.session['product_purpose']:
             raise forms.ValidationError(
                 'Purpose is required.')
 
-        if not self.request.session['product_new_image']:
+        if not self.request.session['product_image']:
             raise forms.ValidationError(
                 'Product image is required.')
 
@@ -48,12 +48,12 @@ class Form_New_Product(forms.ModelForm):
         }
 
     def __init__(self, request=None, *args, **kwargs):
-        super(Form_New_Product, self).__init__(*args, **kwargs)
+        super(Form_Product, self).__init__(*args, **kwargs)
         self.request = request
 
 
 
-class Form_New_Details_EN(forms.ModelForm):
+class Form_Details_EN(forms.ModelForm):
 
     class Meta:
 
@@ -85,7 +85,7 @@ class Form_New_Details_EN(forms.ModelForm):
 
 
 
-class Form_New_Details_PL(forms.ModelForm):
+class Form_Details_PL(forms.ModelForm):
 
     class Meta:
 
@@ -117,7 +117,7 @@ class Form_New_Details_PL(forms.ModelForm):
 
 
 
-class Form_New_Details_DE(forms.ModelForm):
+class Form_Details_DE(forms.ModelForm):
 
     class Meta:
 
@@ -216,20 +216,21 @@ class Form_Image(forms.Form):
         return image_base64
 
     def clean_url(self):
-        url = self.cleaned_data['url']
+        image_url = self.cleaned_data['url']
 
-        if url:
-            plik = BytesIO(urlopen(url).read())
+        if image_url:
+            image_url = Dynamic_Base.\
+                Save_Image_From_URL(image_url)
 
-            if not imghdr.what(plik):
+            if not image_url:
                 raise forms.ValidationError(
                     'It\'s not image.')
 
-        return url
+        return image_url
 
 
 
-class Form_New_Brand(forms.ModelForm):
+class Form_Brand(forms.ModelForm):
 
     exists = forms.ModelChoiceField\
     (
@@ -237,7 +238,7 @@ class Form_New_Brand(forms.ModelForm):
         queryset=Brand.objects.all()
     )
 
-    name = forms.ChoiceField\
+    name = forms.CharField\
     (
         required=False,
         widget=forms.TextInput(
@@ -248,6 +249,19 @@ class Form_New_Brand(forms.ModelForm):
                 'autofocus': 'true',
             }),
     )
+
+    def Get_Brand(self):
+        new_brand = self.data['name']
+        select_brand = self.data['exists']
+
+        if new_brand:
+            brand = self.save(commit=False)
+            brand.save()
+            return brand
+
+        if select_brand:
+            brand = Brand.objects.get(pk=select_brand)
+            return brand
 
     def clean(self):
         new_brand = self.data['name']
@@ -271,7 +285,50 @@ class Form_New_Brand(forms.ModelForm):
 
 
 
-class Form_New_Purpose(forms.ModelForm):
+class Form_Purpose(forms.ModelForm):
+
+    exists = forms.ModelChoiceField \
+    (
+        required=False,
+        queryset=Purpose.objects.all()
+    )
+
+    name = forms.CharField \
+    (
+        required=False,
+        widget=forms.TextInput(
+            attrs=
+            {
+                'placeholder': 'Name',
+                'class': 'test',
+                'autofocus': 'true',
+            }),
+    )
+
+    def Get_Purpose(self):
+        new_purpose = self.data['name']
+        select_purpose = self.data['exists']
+
+        if new_purpose:
+            purpose = self.save(commit=False)
+            purpose.save()
+            return purpose
+
+        if select_purpose:
+            purpose = Purpose.objects.get(pk=select_purpose)
+            return purpose
+
+    def clean(self):
+        new_purpose = self.data['name']
+        select_purpose = self.data['exists']
+
+        if not new_purpose and not select_purpose:
+            raise forms.ValidationError(
+                'Please select or append purpose.')
+
+        if new_purpose and select_purpose:
+            raise forms.ValidationError(
+                'Select exist or create new purpose. Not both.')
 
     class Meta:
 
@@ -279,15 +336,4 @@ class Form_New_Purpose(forms.ModelForm):
         fields = \
         {
             'name',
-        }
-
-        widgets = \
-        {
-            'name': forms.TextInput(
-                attrs=
-                {
-                    'placeholder': 'Name',
-                    'class': 'test',
-                    'autofocus': 'true',
-                }),
         }

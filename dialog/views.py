@@ -25,7 +25,7 @@ class Dialog_Confirm(Dynamic_Base):
     def Manage(self):
         pass
 
-        # if self.request.POST['name'] == 'new_brand':
+        # if self.request.POST['name'] == 'brand':
         #     return self.Manage_New_Brand()
 
     def __init__(self, request):
@@ -36,40 +36,64 @@ class Dialog_Confirm(Dynamic_Base):
 
 class Dialog_Prompt(Dynamic_Base):
 
-    def Manage_New_Brand(self):
+    def Manage_Brand(self):
+        initial = self.Get_Session_Variable()
+        initial = initial.pk if initial else None
+
         self.content['title'] = Text(self.request, 1)
-        self.content['form'] = Form_New_Brand(self.Get_POST())
-        return self.Render_HTML('dialog/prompt.html', 'new_brand')
+        self.content['form'] = Form_Brand(self.Get_POST(),
+                    initial={'exists': initial})
 
-    def Manage_New_Purpose(self):
+        return self.Render_HTML('dialog/prompt.html', 'brand')
+
+    def Manage_Purpose(self):
+        initial = self.Get_Session_Variable()
+        initial = initial.pk if initial else None
+
         self.content['title'] = Text(self.request, 2)
-        self.content['form'] = Form_New_Purpose(self.Get_POST())
-        return self.Render_HTML('dialog/prompt.html', 'new_purpose')
+        self.content['form'] = Form_Purpose(self.Get_POST(),
+                    initial={'exists': initial})
 
-    def Manage_New_Details_EN(self):
+        return self.Render_HTML('dialog/prompt.html', 'purpose')
+
+    def Manage_Details_EN(self):
         self.content['title'] = Text(self.request, 3)
-        self.content['form'] = Form_New_Details_EN(self.Get_POST())
-        return self.Render_HTML('dialog/prompt.html', 'new_details_en')
+        self.content['form'] = Form_Details_EN(self.Get_POST(),
+                    instance=self.Get_Session_Variable())
 
-    def Manage_New_Details_PL(self):
+        return self.Render_HTML('dialog/prompt.html', 'details_en')
+
+    def Manage_Details_PL(self):
         self.content['title'] = Text(self.request, 4)
-        self.content['form'] = Form_New_Details_PL(self.Get_POST())
-        return self.Render_HTML('dialog/prompt.html', 'new_details_pl')
+        self.content['form'] = Form_Details_PL(self.Get_POST(),
+                    instance=self.Get_Session_Variable())
 
-    def Manage_New_Details_DE(self):
+        return self.Render_HTML('dialog/prompt.html', 'details_pl')
+
+    def Manage_Details_DE(self):
         self.content['title'] = Text(self.request, 5)
-        self.content['form'] = Form_New_Details_EN(self.Get_POST())
-        return self.Render_HTML('dialog/prompt.html', 'new_details_de')
+        self.content['form'] = Form_Details_EN(self.Get_POST(),
+                    instance=self.Get_Session_Variable())
+
+        return self.Render_HTML('dialog/prompt.html', 'details_de')
 
     def Manage_Where_Display(self):
         self.content['title'] = Text(self.request, 6)
-        self.content['form'] = Form_Where_Display(self.Get_POST())
+        self.content['form'] = Form_Where_Display(self.Get_POST(),
+                    instance=self.Get_Session_Variable())
+
         return self.Render_HTML('dialog/prompt.html', 'where_display')
 
-    def Manage_New_Image(self):
+    def Manage_Image(self):
+        initial = self.Get_Session_Variable()
+        url = self.request.session['product_image_url']
+
         self.content['title'] = Text(self.request, 7)
-        self.content['form'] = Form_Image(self.Get_POST())
-        return self.Render_HTML('dialog/prompt.html', 'new_image')
+        self.content['image'] = initial
+        self.content['form'] = Form_Image(self.Get_POST(),
+                    initial={'url': url})
+
+        return self.Render_HTML('dialog/prompt.html', 'image')
 
     def Response(self):
         self.content['title'] = Text(self.request, 8)
@@ -81,14 +105,23 @@ class Dialog_Prompt(Dynamic_Base):
         if self.not_valid:
             return self.request.POST
 
-        else: return None
+        return None
+
+    def Get_Session_Variable(self):
+
+        session_variable = 'product_' + self.Get_Form_Name()
+        if session_variable in self.request.session:
+            if self.request.session[session_variable]:
+                return self.request.session[session_variable]
+
+        return None
 
     def Get_Form_Name(self):
 
         if 'form_name' in self.request.POST:
             return self.request.POST['form_name']
 
-        else: return self.request.POST['__form__']
+        return self.request.POST['__form__']
 
     def Manage(self):
 

@@ -45,6 +45,11 @@
                     </div>
 
                 {% endfor %}
+
+                {% if image %}
+                    <img data-src="{{ image }}" alt="image">
+                {% endif %}
+
             </div>
 
             <div class="dialog-content-part field_shell">

@@ -1,8 +1,5 @@
 from django.db import models
-from arbuz.settings import BASE_DIR, MEDIA_ROOT
-from PIL import Image
-from io import BytesIO
-from urllib.request import urlopen
+from arbuz.settings import BASE_DIR
 import os
 
 
@@ -77,23 +74,13 @@ class Product(models.Model):
     brand = models.ForeignKey(Brand)
     purpose = models.ForeignKey(Purpose)
 
-    def Save_Image_From_Form(self, name):
+    def Save_Image(self, name):
         image_format = os.path.splitext(name)[1]
         old_path = BASE_DIR + name
         new_path = '/_static/img/product/{0}{1}' \
             .format(self.pk, image_format)
 
         os.rename(old_path, BASE_DIR + new_path)
-        self.image.name = new_path
-        self.save()
-
-    def Save_Image_From_URL(self, url):
-        binary_file = BytesIO(urlopen(url).read())
-        image = Image.open(binary_file)
-        new_path = '/_static/img/product/{0}.{1}' \
-            .format(self.pk, image.format.lower())
-
-        image.save(BASE_DIR + new_path)
         self.image.name = new_path
         self.save()
 

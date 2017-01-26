@@ -31,35 +31,10 @@ class Product_Details(Dynamic_Event_Menager):
 
 
 
-class New_Product(Dynamic_Event_Menager):
+class Product_Elements(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
-        self.content['form'] = Form_New_Product()
-        return self.Render_HTML('product/new.html', 'new_product')
-
-    def Manage_Form_New_Product(self):
-
-        self.content['form'] = Form_New_Product(
-            self.request, self.request.POST)
-
-        if self.content['form'].is_valid():
-            product = self.content['form'].save(commit=False)
-            product.details_en = self.request.session['product_new_details_en']
-            product.details_pl = self.request.session['product_new_details_pl']
-            product.details_de = self.request.session['product_new_details_de']
-            product.where_display = self.request.session['product_new_where_display']
-            product.brand = self.request.session['product_new_brand']
-            product.purpose = self.request.session['product_new_purpose']
-            product.save()
-
-            manage_image = self.request.session['product_new_image']
-            manage_image['method'](product, manage_image['path'])
-
-            self.Manage_Clear_Session('product_new')
-            self.content['form'] = None  # message of correct
-            return self.Render_HTML('product/new.html')
-
-        return self.Render_HTML('product/new.html', 'new_product')
+        pass
 
     def Manage_Form_Where_Display(self):
 
@@ -74,29 +49,27 @@ class New_Product(Dynamic_Event_Menager):
             where_display = Where_Display.objects.get(display_en=display_en,
                       display_pl=display_pl, display_de=display_de)
 
-            self.request.session['product_new_where_display'] = where_display
+            self.request.session['product_where_display'] = where_display
 
             return Dialog_Prompt(self.request, response=True).HTML
         return Dialog_Prompt(self.request, not_valid=True).HTML
 
-    def Manage_Form_New_Brand(self):
-        brand = Form_New_Brand(self.request.POST)
+    def Manage_Form_Brand(self):
+        brand = Form_Brand(self.request.POST)
 
         if brand.is_valid():
-            brand = brand.save(commit=False)
-            brand.save()
-            self.request.session['product_new_brand'] = brand
+            brand = brand.Get_Brand()
+            self.request.session['product_brand'] = brand
 
             return Dialog_Prompt(self.request, response=True).HTML
         return Dialog_Prompt(self.request, not_valid=True).HTML
 
-    def Manage_Form_New_Purpose(self):
-        purpose = Form_New_Purpose(self.request.POST)
+    def Manage_Form_Purpose(self):
+        purpose = Form_Purpose(self.request.POST)
 
         if purpose.is_valid():
-            purpose = purpose.save(commit=False)
-            purpose.save()
-            self.request.session['product_new_purpose'] = purpose
+            purpose = purpose.Get_Purpose()
+            self.request.session['product_purpose'] = purpose
 
             return Dialog_Prompt(self.request, response=True).HTML
         return Dialog_Prompt(self.request, not_valid=True).HTML
@@ -105,81 +78,118 @@ class New_Product(Dynamic_Event_Menager):
         image = Form_Image(self.request.POST)
 
         if image.is_valid():
+            self.request.session['product_image_url'] = image.data['url']
+            image_base64 = image.cleaned_data['image_base64']
+            image_url = image.cleaned_data['url']
 
-            image_path = image.cleaned_data['image_base64']
-            url_path = image.cleaned_data['url']
+            if image_base64:
+                self.request.session['product_image'] = image_base64
 
-            if image_path:
-                self.request.session['product_new_image'] = \
-                    {
-                        'method': Product.Save_Image_From_Form,
-                        'path' : image_path
-                    }
-
-            if url_path:
-                self.request.session['product_new_image'] = \
-                    {
-                        'method': Product.Save_Image_From_URL,
-                        'path' : url_path
-                    }
+            if image_url:
+                self.request.session['product_image'] = image_url
 
             return Dialog_Prompt(self.request, response=True).HTML
         return Dialog_Prompt(self.request, not_valid=True).HTML
 
-    def Manage_Form_New_Details(self, language):
+    def Manage_Form_Details(self, language):
 
         if language == 'EN':
-            details = Form_New_Details_EN(self.request.POST)
+            details = Form_Details_EN(self.request.POST)
 
             if details.is_valid():
                 details = details.save(commit=False)
                 details.save()
-                self.request.session['product_new_details_en'] = details
+                self.request.session['product_details_en'] = details
                 return Dialog_Prompt(self.request, response=True).HTML
 
         if language == 'PL':
-            details = Form_New_Details_PL(self.request.POST)
+            details = Form_Details_PL(self.request.POST)
 
             if details.is_valid():
                 details = details.save(commit=False)
                 details.save()
-                self.request.session['product_new_details_pl'] = details
+                self.request.session['product_details_pl'] = details
                 return Dialog_Prompt(self.request, response=True).HTML
 
         if language == 'DE':
-            details = Form_New_Details_DE(self.request.POST)
+            details = Form_Details_DE(self.request.POST)
 
             if details.is_valid():
                 details = details.save(commit=False)
                 details.save()
-                self.request.session['product_new_details_de'] = details
+                self.request.session['product_details_de'] = details
                 return Dialog_Prompt(self.request, response=True).HTML
 
         return Dialog_Prompt(self.request, not_valid=True).HTML
 
     def Manage_Form(self):
 
-        if self.request.POST['__form__'] == 'new_product':
-            return self.Manage_Form_New_Product()
-
         if self.request.POST['__form__'] == 'where_display':
             return self.Manage_Form_Where_Display()
 
-        if self.request.POST['__form__'] == 'new_brand':
-            return self.Manage_Form_New_Brand()
+        if self.request.POST['__form__'] == 'brand':
+            return self.Manage_Form_Brand()
 
-        if self.request.POST['__form__'] == 'new_purpose':
-            return self.Manage_Form_New_Purpose()
+        if self.request.POST['__form__'] == 'purpose':
+            return self.Manage_Form_Purpose()
 
-        if self.request.POST['__form__'] == 'new_image':
+        if self.request.POST['__form__'] == 'image':
             return self.Manage_Form_Image()
 
-        if 'new_details' in self.request.POST['__form__']:
-            return self.Manage_Form_New_Details\
+        if 'details' in self.request.POST['__form__']:
+            return self.Manage_Form_Details\
                     (self.request.POST['__form__'][-2:].upper())
+
+        return super(Product_Elements, self).Manage_Form()
+
+    @staticmethod
+    def Launch(request):
+        return New_Product(request, only_root=True).HTML
+
+
+
+class New_Product(Product_Elements):
+
+    def Manage_Content_Ground(self):
+        self.content['form'] = Form_Product()
+        return self.Render_HTML('product/new.html', 'product')
+
+    def Manage_Form_New_Product(self):
+
+        self.content['form'] = Form_Product(
+            self.request, self.request.POST)
+
+        if self.content['form'].is_valid():
+            product = self.content['form'].save(commit=False)
+            product.details_en = self.request.session['product_details_en']
+            product.details_pl = self.request.session['product_details_pl']
+            product.details_de = self.request.session['product_details_de']
+            product.where_display = self.request.session['product_where_display']
+            product.brand = self.request.session['product_brand']
+            product.purpose = self.request.session['product_purpose']
+            product.save()
+
+            # save image to /_static/img/product/<id>.<format>
+            product.Save_Image(self.request.session['product_image'])
+
+            self.Manage_Clear_Session('product')
+            self.content['form'] = None  # message of correct
+            return self.Render_HTML('product/new.html')
+
+        return self.Render_HTML('product/new.html', 'product')
+
+    def Manage_Form(self):
+
+        if self.request.POST['__form__'] == 'product':
+            return self.Manage_Form_New_Product()
 
         return super(New_Product, self).Manage_Form()
 
     @staticmethod
     def Launch(request):
         return New_Product(request, only_root=True).HTML
+
+
+
+class Edit_Product(Dynamic_Event_Menager):
+    pass

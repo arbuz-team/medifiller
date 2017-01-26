@@ -1,5 +1,6 @@
 from inspect import getmembers, ismethod
 from translator.views import *
+from product.models import Where_Display
 
 
 class Session_Controller:
@@ -37,26 +38,31 @@ class Session_Controller:
 
     def Check_Session_Product(self):
 
-        if 'product_new_details_en' not in self.request.session:
-            self.request.session['product_new_details_en'] = None
+        if 'product_details_en' not in self.request.session:
+            self.request.session['product_details_en'] = None
 
-        if 'product_new_details_pl' not in self.request.session:
-            self.request.session['product_new_details_pl'] = None
+        if 'product_details_pl' not in self.request.session:
+            self.request.session['product_details_pl'] = None
 
-        if 'product_new_details_de' not in self.request.session:
-            self.request.session['product_new_details_de'] = None
+        if 'product_details_de' not in self.request.session:
+            self.request.session['product_details_de'] = None
 
-        if 'product_new_where_display' not in self.request.session:
-            self.request.session['product_new_where_display'] = None
+        if 'product_where_display' not in self.request.session:
+            self.request.session['product_where_display'] = \
+                Where_Display.objects.get(display_en=True,
+                      display_pl=True, display_de=True)
 
-        if 'product_new_brand' not in self.request.session:
-            self.request.session['product_new_brand'] = None
+        if 'product_brand' not in self.request.session:
+            self.request.session['product_brand'] = None
 
-        if 'product_new_purpose' not in self.request.session:
-            self.request.session['product_new_purpose'] = None
+        if 'product_purpose' not in self.request.session:
+            self.request.session['product_purpose'] = None
 
-        if 'product_new_image' not in self.request.session:
-            self.request.session['product_new_image'] = None
+        if 'product_image' not in self.request.session:
+            self.request.session['product_image'] = None
+
+        if 'product_image_url' not in self.request.session:
+            self.request.session['product_image_url'] = None
 
     def Check_Session_Cart(self):
 
