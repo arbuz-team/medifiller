@@ -1,5 +1,6 @@
 from django.contrib.gis.geoip import GeoIP
 from django.shortcuts import redirect
+from arbuz.base import *
 from .models import *
 
 
@@ -31,21 +32,21 @@ class Translator:
     def Load_Languages():
 
         # load EN language
-        file = open('translator/language/EN')
+        file = open(BASE_DIR + '/translator/language/EN')
         lines = file.readlines()
         file.close()
         for line in lines:
             Language_EN(value=line).save()
 
         # load PL language
-        file = open('translator/language/PL')
+        file = open(BASE_DIR + '/translator/language/PL')
         lines = file.readlines()
         file.close()
         for line in lines:
             Language_PL(value=line).save()
 
         # load DE language
-        file = open('translator/language/DE')
+        file = open(BASE_DIR + '/translator/language/DE')
         lines = file.readlines()
         file.close()
         for line in lines:

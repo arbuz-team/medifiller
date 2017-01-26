@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from arbuz.settings import MEDIA_ROOT, MEDIA_URL
+from arbuz.settings import MEDIA_ROOT, MEDIA_URL, BASE_DIR
 import base64, imghdr, os, random
 from PIL import Image
 from io import BytesIO
