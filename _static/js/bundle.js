@@ -2337,7 +2337,7 @@
 	
 	  $(selectors.external_buttons).click(open);
 	
-	  window.APP.add_own_event('close_dialog', close_with_delay);
+	  window.APP.add_own_event('dialog_close', close_with_delay);
 	
 	  interior_dialog_controllers.define();
 	};
