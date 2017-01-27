@@ -22,7 +22,7 @@ class Product_Details(Dynamic_Event_Menager):
         return self.Render_HTML('product/details.html')
 
     @staticmethod
-    def Product(request, pk):
+    def Details(request, pk):
         return Product_Details(request, other_value={'pk': pk}).HTML
 
     @staticmethod
@@ -191,5 +191,116 @@ class New_Product(Product_Elements):
 
 
 
-class Edit_Product(Dynamic_Event_Menager):
-    pass
+class Edit_Product(Product_Elements):
+
+    def Manage_Content_Ground(self):
+
+        product = Product.objects.get(pk=self.other_value['pk'])
+        self.request.session['product_details_en'] = product.details_en
+        self.request.session['product_details_pl'] = product.details_pl
+        self.request.session['product_details_de'] = product.details_de
+        self.request.session['product_where_display'] = product.where_display
+        self.request.session['product_brand'] = product.brand
+        self.request.session['product_purpose'] = product.purpose
+        self.request.session['product_image'] = product.image
+
+        self.content['form'] = Form_Product(instance=product)
+        return self.Render_HTML('product/edit.html', 'product')
+
+    def Manage_Form_Edit_Product(self):
+
+        self.content['form'] = Form_Product(
+            self.request, self.request.POST)
+
+        if self.content['form'].is_valid():
+            product = Product.objects.get(pk=self.other_value['pk'])
+            product.details_en = self.request.session['product_details_en']
+            product.details_pl = self.request.session['product_details_pl']
+            product.details_de = self.request.session['product_details_de']
+            product.where_display = self.request.session['product_where_display']
+            product.brand = self.request.session['product_brand']
+            product.purpose = self.request.session['product_purpose']
+            product.price_eur = self.content['form'].cleaned_data['price_eur']
+            product.price_pln = self.content['form'].cleaned_data['price_pln']
+            product.keywords = self.content['form'].cleaned_data['keywords']
+            product.save()
+
+            # save image to /_static/img/product/<id>.<format>
+            product.Save_Image(self.request.session['product_image'])
+
+            self.Manage_Clear_Session('product')
+            self.content['form'] = None  # message of correct
+            return self.Render_HTML('product/edit.html')
+
+        return self.Render_HTML('product/edit.html', 'product')
+
+    def Manage_Form(self):
+
+        if self.request.POST['__form__'] == 'product':
+            return self.Manage_Form_Edit_Product()
+
+        return super(Edit_Product, self).Manage_Form()
+
+    @staticmethod
+    def Edit(request, pk):
+        return Edit_Product(request, only_root=True, other_value={'pk': pk}).HTML
+
+
+
+class Delete_Product(Dynamic_Event_Menager):
+
+    def Manage_Content_Ground(self):
+        pass
+
+    def Manage_Button(self):
+        product = Product.objects.get(pk=self.other_value['pk'])
+        product.delete()
+        return JsonResponse({'__button__': 'true'})
+
+    @staticmethod
+    def Delete(request, pk):
+        return Delete_Product(request, only_root=True, other_value={'pk': pk}).HTML
+
+    @staticmethod
+    def Launch(request):
+        pass
+
+
+
+class Delete_Brand(Dynamic_Event_Menager):
+
+    def Manage_Content_Ground(self):
+        pass
+
+    def Manage_Button(self):
+        brand = Brand.objects.get(pk=self.other_value['pk'])
+        brand.delete()
+        return JsonResponse({'__button__': 'true'})
+
+    @staticmethod
+    def Delete(request, pk):
+        return Delete_Brand(request, only_root=True, other_value={'pk': pk}).HTML
+
+    @staticmethod
+    def Launch(request):
+        pass
+
+
+
+class Delete_Purpose(Dynamic_Event_Menager):
+
+    def Manage_Content_Ground(self):
+        pass
+
+    def Manage_Button(self):
+        purpose = Purpose.objects.get(pk=self.other_value['pk'])
+        purpose.delete()
+        return JsonResponse({'__button__': 'true'})
+
+    @staticmethod
+    def Delete(request, pk):
+        return Delete_Purpose(request, only_root=True, other_value={'pk': pk}).HTML
+
+    @staticmethod
+    def Launch(request):
+        pass

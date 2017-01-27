@@ -75,6 +75,10 @@ class Product(models.Model):
     purpose = models.ForeignKey(Purpose)
 
     def Save_Image(self, name):
+
+        if '/_static/img/product/' in str(name):
+            return 
+
         image_format = os.path.splitext(name)[1]
         old_path = BASE_DIR + name
         new_path = '/_static/img/product/{0}{1}' \
