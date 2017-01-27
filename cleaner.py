@@ -11,5 +11,5 @@ for file in listdir(IMG_DIR):
         modification_time = datetime.fromtimestamp(modification_time)
 
         exist_time = datetime.now() - modification_time
-        if exist_time.seconds > 60:
+        if exist_time.seconds > 86400:
             remove(path.join(IMG_DIR, file))
