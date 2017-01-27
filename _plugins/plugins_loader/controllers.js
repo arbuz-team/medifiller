@@ -69,6 +69,8 @@ export let Plugins_Loader_Controllers = function(config)
 
     window.APP.add_own_event('plugin_'+ plugin_name +'_reload', this.reload);
 
+
+
     if(auto_first_loading)
       window.APP.add_own_event('load', () => {
         plugin_loader_views.change_content();

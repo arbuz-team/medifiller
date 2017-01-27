@@ -62,6 +62,7 @@ export let Plugins_Loader_Views = function(config)
       models.variables.url = '';
 
       models.refresh_events();
+      models.refresh_scroll();
       img_loader.define();
     },
 

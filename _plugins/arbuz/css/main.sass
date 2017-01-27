@@ -54,12 +54,11 @@ body
   position: absolute
 
   overflow: hidden
-
-body.user_select_text
   -webkit-user-select: text !important
 
-body.user_select_none
-  -webkit-user-select: none !important
+@media (min-width: 1000px)
+  body
+    -webkit-user-select: none !important
 
 
 a, a:hover, a:active, a:visited
@@ -70,6 +69,9 @@ a, a:hover, a:active, a:visited
 
 ul
   list-style: none
+
+strong
+  font-weight: bold
 
 *
   +box-sizing(border-box)

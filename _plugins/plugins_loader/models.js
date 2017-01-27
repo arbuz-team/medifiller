@@ -155,6 +155,13 @@ export let Plugins_Loader_Models = function(config)
   };
 
 
+  this.refresh_scroll = function()
+  {
+    $(this.settings.container)
+      .parent().scrollTop(0);
+  };
+
+
 /**
  *    Defining download functions
  */

@@ -155,6 +155,24 @@
 	  }
 	  return url_array;
 	};
+	
+	if (!String.prototype.splice) {
+	  /**
+	   * {JSDoc}
+	   *
+	   * The splice() method changes the content of a string by removing a range of
+	   * characters and/or adding new characters.
+	   *
+	   * @this {String}
+	   * @param {number} start Index at which to start changing the string.
+	   * @param {number} delCount An integer indicating the number of old chars to remove.
+	   * @param {string} newSubStr The String that is spliced in.
+	   * @return {string} A new string with the spliced substring.
+	   */
+	  String.prototype.splice = function (start, delCount, newSubStr) {
+	    return this.slice(0, start) + newSubStr + this.slice(start + Math.abs(delCount));
+	  };
+	}
 
 /***/ },
 /* 7 */
@@ -573,6 +591,7 @@
 	    models.variables.url = '';
 	
 	    models.refresh_events();
+	    models.refresh_scroll();
 	    img_loader.define();
 	  },
 	      show_content = function show_content(response, status, code) {
@@ -744,6 +763,10 @@
 	
 	  this.refresh_events = function () {
 	    APP.throw_event(window.EVENTS.define);
+	  };
+	
+	  this.refresh_scroll = function () {
+	    $(this.settings.container).parent().scrollTop(0);
 	  };
 	
 	  /**
@@ -2611,6 +2634,9 @@
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
+	// import {Content_Editable_Controllers}  from '../../content_editable/js/controllers'
+	
+	
 	/**
 	 *    Defining private variables
 	 */
@@ -2626,6 +2652,10 @@
 	},
 	    ground_loader_controllers = new _controllers.Plugins_Loader_Controllers(config_loader),
 	    ground_form_controllers = new _controllers2.Form_Controllers(ground_loader_controllers);
+	
+	// config_content_editable = {},
+	// content_editable_controllers = new Content_Editable_Controllers(config_content_editable);
+	
 	
 	/**
 	 *    Defining private functions
@@ -2677,6 +2707,7 @@
 	  $(window).resize(change_height_content);
 	
 	  ground_form_controllers.define();
+	  // content_editable_controllers.define();
 	},
 	    start = exports.start = function start() {
 	  ground_loader_controllers.define();

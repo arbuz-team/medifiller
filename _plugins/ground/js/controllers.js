@@ -5,6 +5,7 @@
 import * as ground_views          from './views'
 import {Plugins_Loader_Controllers}  from '../../plugins_loader/controllers'
 import {Form_Controllers}  from '../../forms/js/controllers'
+// import {Content_Editable_Controllers}  from '../../content_editable/js/controllers'
 
 
 /**
@@ -24,6 +25,10 @@ let
   ground_loader_controllers = new Plugins_Loader_Controllers(config_loader),
 
   ground_form_controllers = new Form_Controllers(ground_loader_controllers);
+
+
+  // config_content_editable = {},
+  // content_editable_controllers = new Content_Editable_Controllers(config_content_editable);
 
 
 /**
@@ -89,6 +94,7 @@ export let
     $(window).resize(change_height_content);
 
     ground_form_controllers.define();
+    // content_editable_controllers.define();
   },
 
 
