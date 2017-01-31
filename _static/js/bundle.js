@@ -2632,13 +2632,16 @@
 	
 	var _controllers2 = __webpack_require__(19);
 	
+	var _controllers3 = __webpack_require__(44);
+	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	// import {Content_Editable_Controllers}  from '../../content_editable/js/controllers'
-	
 	
 	/**
 	 *    Defining private variables
+	 */
+	
+	/**
+	 * Created by mrskull on 08.01.17.
 	 */
 	
 	var config_loader = {
@@ -2651,18 +2654,15 @@
 	  load_with_page: true
 	},
 	    ground_loader_controllers = new _controllers.Plugins_Loader_Controllers(config_loader),
+	    config_post_button = {
+	  container: '#GROUND > .ground',
+	  callback: ground_loader_controllers.reload
+	},
+	    post_button_controllers = new _controllers3.Post_Button_Controllers(config_post_button),
 	    ground_form_controllers = new _controllers2.Form_Controllers(ground_loader_controllers);
-	
-	// config_content_editable = {},
-	// content_editable_controllers = new Content_Editable_Controllers(config_content_editable);
-	
 	
 	/**
 	 *    Defining private functions
-	 */
-	
-	/**
-	 * Created by mrskull on 08.01.17.
 	 */
 	
 	var go_to_link = function go_to_link(event) {
@@ -2707,7 +2707,7 @@
 	  $(window).resize(change_height_content);
 	
 	  ground_form_controllers.define();
-	  // content_editable_controllers.define();
+	  post_button_controllers.define();
 	},
 	    start = exports.start = function start() {
 	  ground_loader_controllers.define();
@@ -2743,6 +2743,184 @@
 	}; /**
 	    * Created by mrskull on 09.01.17.
 	    */
+
+/***/ },
+/* 44 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Post_Button_Controllers = undefined;
+	
+	var _views = __webpack_require__(45);
+	
+	var Post_Button_Controllers = exports.Post_Button_Controllers = function Post_Button_Controllers(config) {
+	  if (typeof config === 'undefined' && typeof config.container === 'undefined') {
+	    console.error('Exeption error: invalid container.');
+	    return {};
+	  }
+	
+	  var buttons_views = {},
+	      manage_buttons = function manage_buttons(event) {
+	    event.preventDefault();
+	    event.stopPropagation();
+	
+	    var button_name = $(this).data('name');
+	
+	    buttons_views[button_name].start();
+	  },
+	      create_button_views = function create_button_views() {
+	    var button_name = $(this).data('name');
+	    config.button = this;
+	    config.button_name = button_name;
+	    config.button_url = $(this).data('url');
+	    config.button_html = $(this).html();
+	
+	    buttons_views[button_name] = new _views.Post_Button_Views(config);
+	  };
+	
+	  this.define = function () {
+	    var $post_buttons = $('.post_button', config.container);
+	
+	    $post_buttons.each(create_button_views);
+	
+	    $post_buttons.click(manage_buttons);
+	  };
+	}; /**
+	    * Created by mrskull on 17.12.16.
+	    */
+
+/***/ },
+/* 45 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Post_Button_Views = undefined;
+	
+	var _models = __webpack_require__(46);
+	
+	var Post_Button_Views = exports.Post_Button_Views = function Post_Button_Views(config) {
+	  var models = new _models.Post_Button_Models(config),
+	      start_loading = function start_loading() {
+	    models.state.is_loading = true;
+	    $(models.settings.button).html(models.settings.text_loading);
+	  },
+	      is_error = function is_error(JSON_response, status) {
+	    if (status !== 'success') {
+	      $(models.settings.button).html(models.settings.text_error);
+	      return true;
+	    }
+	
+	    var response = JSON.parse(JSON_response);
+	
+	    if (response.__button__ !== 'true') {
+	      $(models.settings.button).html(models.settings.text_error);
+	      return true;
+	    }
+	
+	    return false;
+	  },
+	      end_loading = function end_loading(JSON_response, status) {
+	    models.state.is_loading = false;
+	
+	    if (is_error(JSON_response, status)) return false;
+	
+	    $(models.settings.button).html(models.settings.text_done);
+	
+	    setTimeout(function () {
+	      if (typeof models.settings.callback === 'function') models.settings.callback();else $(models.settings.button).html(models.settings.text_standard);
+	    }, 1000);
+	  };
+	
+	  this.start = function () {
+	    if (models.is_loading()) return false;
+	
+	    start_loading();
+	    models.send_post(end_loading);
+	  };
+	
+	  this.models = models;
+	}; /**
+	    * Created by mrskull on 18.12.16.
+	    */
+
+/***/ },
+/* 46 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	 * Created by mrskull on 31.01.17.
+	 */
+	
+	var Post_Button_Models = exports.Post_Button_Models = function Post_Button_Models(config) {
+	  var that = this;
+	
+	  this.settings = {
+	    container: undefined,
+	    button: undefined,
+	    button_name: undefined,
+	    url: undefined,
+	
+	    text_loading: 'Sending...',
+	    text_done: "It's done!",
+	    text_error: 'Error / Resend',
+	    text_standard: undefined
+	  };
+	
+	  var load_settings = function load_settings() {
+	    if (typeof config !== 'undefined') {
+	      // -- Container
+	      if (typeof config.container !== 'undefined') that.settings.container = config.container;
+	
+	      // -- Callback
+	      if (typeof config.callback !== 'undefined') that.settings.callback = config.callback;
+	
+	      // -- Button
+	      if (typeof config.button !== 'undefined') that.settings.button = config.button;
+	
+	      // -- Button name
+	      if (typeof config.button_name !== 'undefined') that.settings.button_name = config.button_name;
+	
+	      // -- Button url
+	      if (typeof config.button_url !== 'undefined') that.settings.url = config.button_url;
+	
+	      // -- Button button_html
+	      if (typeof config.button_html !== 'undefined') that.settings.text_standard = config.button_html;
+	    }
+	  };
+	
+	  load_settings();
+	
+	  /////////////////////////
+	
+	  this.state = {
+	    is_loading: false
+	  };
+	
+	  this.is_loading = function () {
+	    return that.state.is_loading;
+	  };
+	
+	  /////////////////////////
+	
+	  this.send_post = function (callback) {
+	    setTimeout(function () {
+	      window.APP.http_request(that.settings.url, { __button__: true }, callback);
+	    }, 200);
+	  };
+	};
 
 /***/ }
 /******/ ]);

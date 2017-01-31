@@ -9,7 +9,7 @@
     <div class="product-content">
       <div class="otoczka_pola">
           /product/edit/{{ product.pk }}/ <br>
-          /product/delete/{{ product.pk }}/ <br>
+          <button class="post_button" type="button" data-name="Delete_{{ product.pk }}" data-url="/product/delete/{{ product.pk }}/">Delete</button> <br>
           price euro: {{ product.price_eur }}<br>
           price pln:  {{ product.price_pln }}<br>
           <button type="button"> Details... </button>
