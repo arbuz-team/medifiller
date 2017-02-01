@@ -44,6 +44,9 @@ class Manager(Dynamic_Base):
     def Manage_Exist(self):
         return JsonResponse({'__exist__': 'false'})
 
+    def Manage_Get(self):
+        return JsonResponse({'__get__': 'false'})
+
     def Manage_Clear_Session(self, key_contain):
 
         keys = list(self.request.session.keys())
@@ -216,12 +219,17 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
         if '__form__' in self.request.POST:
             return self.Manage_Form()
 
+        # mini forms - edit single value database
         if '__edit__' in self.request.POST:
             return self.Manage_Edit()
 
         # checkers
         if '__exist__' in self.request.POST:
             return self.Manage_Exist()
+
+        # getters
+        if '__get__' in self.request.POST:
+            return self.Manage_Get()
 
         # session
         if '__clear__' in self.request.POST:

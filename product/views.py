@@ -1,4 +1,5 @@
 from arbuz.views import *
+from searcher.views import Search_Engine
 from .forms import *
 
 
@@ -184,6 +185,30 @@ class New_Product(Product_Elements):
             return self.Manage_Form_New_Product()
 
         return super(New_Product, self).Manage_Form()
+
+    def Manage_Get_Keywords(self):
+        details_pl = self.request.session['product_details_pl']
+
+        if details_pl:
+
+            keywords = details_pl.keywords
+            name = details_pl.name
+            result = keywords
+
+            for word in name:
+                result += Search_Engine.\
+                    Get_Polish_Word_Variations(word)
+
+            return JsonResponse({'__get__': result})
+
+        return JsonResponse({'__get__': ''})
+
+    def Manage_Get(self):
+
+        if self.request.POST['__get__'] == 'keywords':
+            return self.Manage_Form_New_Product()
+
+        return super(New_Product, self).Manage_Get()
 
     @staticmethod
     def Launch(request):
