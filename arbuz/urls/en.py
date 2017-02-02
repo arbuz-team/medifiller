@@ -9,5 +9,8 @@ urlpatterns = [
     url(r'^searcher/', include('searcher.urls.en'), name='searcher'),
     url(r'^cart/', include('cart.urls.en'), name='cart'),
     url(r'^navigation/', include('navigation.urls.en'), name='navigation'),
+    url(r'^payment/', include('payment.urls.en'), name='payment'),
+    url(r'^paypal/', include('paypal.standard.ipn.urls')),
     url(r'', include('main.urls.en'), name='main'),
 ]
+

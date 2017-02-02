@@ -1,4 +1,3 @@
-from django.core.urlresolvers import reverse, resolve
 from abc import ABCMeta, abstractmethod
 from session.views import *
 from translator.views import *
@@ -43,6 +42,9 @@ class Manager(Dynamic_Base):
 
     def Manage_Exist(self):
         return JsonResponse({'__exist__': 'false'})
+
+    def Manage_Get(self):
+        return JsonResponse({'__get__': 'false'})
 
     def Manage_Clear_Session(self, key_contain):
 
@@ -145,23 +147,7 @@ class Updater(Dynamic_Base):
                 .append((element, page))
 
     def Update_Current_Url(self):
-
-        name = resolve(self.request.path_info).url_name
-        kwargs = resolve(self.request.path_info).kwargs
-        secure = 'https://' if self.request.is_secure() else 'http://'
-        url = self.request.get_host()[3:]
-
-        self.request.session['arbuz_url'] = \
-        {
-            'en': secure + 'en.' + url +
-                  reverse(name, urlconf='arbuz.urls.en', kwargs=kwargs),
-
-            #'pl': secure + 'pl.' + url +
-            #      reverse(name, urlconf='arbuz.urls.pl', kwargs=kwargs),
-
-            #'de': secure + 'de.' + url +
-            #      reverse(name, urlconf='arbuz.urls.de', kwargs=kwargs),
-        }
+        self.request.session['arbuz_url'] = self.Get_Urls()
 
     def __init__(self, request):
         Dynamic_Base.__init__(self, request)
@@ -216,12 +202,17 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
         if '__form__' in self.request.POST:
             return self.Manage_Form()
 
+        # mini forms - edit single value database
         if '__edit__' in self.request.POST:
             return self.Manage_Edit()
 
         # checkers
         if '__exist__' in self.request.POST:
             return self.Manage_Exist()
+
+        # getters
+        if '__get__' in self.request.POST:
+            return self.Manage_Get()
 
         # session
         if '__clear__' in self.request.POST:

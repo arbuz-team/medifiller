@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.core.urlresolvers import reverse, resolve
 from django.http import JsonResponse
 from arbuz.settings import MEDIA_ROOT, MEDIA_URL, BASE_DIR
 import base64, imghdr, os, random
@@ -17,6 +18,36 @@ class Dynamic_Base:
 
         self.content['form_name'] = form_name
         return render(self.request, template, self.content)
+
+    def Get_Urls(self, name=None, kwargs=None,
+                 language=None, current_language=False):
+
+        if not name:
+            name = resolve(self.request.path_info).url_name
+            kwargs = resolve(self.request.path_info).kwargs
+
+        secure = 'https://' if self.request.is_secure() else 'http://'
+        domain = self.request.get_host()[3:]
+
+        urls = \
+        {
+            'en': secure + 'en.' + domain +
+                  reverse(name, urlconf='arbuz.urls.en', kwargs=kwargs),
+
+            # 'pl': secure + 'pl.' + domain +
+            #      reverse(name, urlconf='arbuz.urls.pl', kwargs=kwargs),
+
+            # 'de': secure + 'de.' + domain +
+            #      reverse(name, urlconf='arbuz.urls.de', kwargs=kwargs),
+        }
+
+        if language:
+            return urls[language.lower()]
+
+        if current_language:
+            return urls[self.request.session['translator_language'].lower()]
+
+        return urls
 
     @staticmethod
     def Generate_Image_Details(image_format):

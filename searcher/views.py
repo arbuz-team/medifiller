@@ -1,4 +1,5 @@
 from arbuz.views import *
+from searcher.models import *
 from product.models import *
 from django.db.models import Q
 from functools import reduce
@@ -193,6 +194,16 @@ class Search_Engine:
             self.Sort_Result_Order_By_Name()
 
         self.Sort_Result_Filters()
+
+    @staticmethod
+    def Get_Polish_Word_Variations(word):
+
+        file = open(BASE_DIR + '/searcher/variations/PL')
+        lines = file.readlines()
+        file.close()
+        for line in lines:
+            if word in line:
+                return line
 
     def __init__(self, request, phrase):
         self.result = []

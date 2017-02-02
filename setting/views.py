@@ -14,18 +14,28 @@ class Control_Panel(Dynamic_Event_Menager):
         return self.Render_HTML('setting/control_panel.html')
 
     @staticmethod
-    def Reset_Databases(request):
-        os.system(BASE_DIR + '/reset.sh')
-        return Control_Panel.Launch(request)
-
-    @staticmethod
     def Load_Default_Data(request):
         main.Load_Default_Data()
         setting.Load_Default_Data()
         products.Load_Default_Data()
         users.Load_Default_Data()
-        return Control_Panel.Launch(request)
+        return JsonResponse({})
 
     @staticmethod
     def Launch(request):
         return Control_Panel(request).HTML
+
+
+
+class Reset_Database(Dynamic_Event_Menager):
+
+    def Manage_Content_Ground(self):
+        pass
+
+    def Manage_Button(self):
+        os.system(BASE_DIR + '/reset.sh')
+        return JsonResponse({'__button__': 'true'})
+
+    @staticmethod
+    def Launch(request):
+        return Reset_Database(request).HTML
