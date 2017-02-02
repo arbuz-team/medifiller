@@ -13,20 +13,20 @@ class Payment(Dynamic_Event_Menager):
         self.content['cart'] = Cart.objects.filter(user=user)
 
         self.content['suma'] = 0
-        for product in self.content['cart']:
-            self.content['suma'] += product.price_eur
+        for in_cart in self.content['cart']:
+            self.content['suma'] += in_cart.product.price_eur
 
 
         # What you want the button to do.
         paypal_dict = {
-            'business': 'dominik.betka@gmail.com',
-            'amount': '1.00',
+            'business': '93.endo-facilitator@gmail.com',
+            'amount': self.content['suma'],
             'item_name': 'name of the item',
             #'invoice': 'unique-invoice-id',  # id faktury
             'notify_url': self.Get_Urls('main.start', current_language=True) + reverse('paypal-ipn'),
             'return': self.Get_Urls('BBB', current_language=True), # 'https://www.example.com/your-return-location/',
             'cancel_return': self.Get_Urls('BBB', current_language=True), # 'https://www.example.com/your-cancel-location/',
-            'custom': 0,
+            'custom': user.unique,
         }
 
         # Create the instance.
@@ -58,7 +58,7 @@ class Payment(Dynamic_Event_Menager):
 
     @staticmethod
     def Launch(request):
-        return Payment(request).HTML
+        return Payment(request, authorization=True).HTML
 
 
 valid_ipn_received.connect(Payment.AAA)

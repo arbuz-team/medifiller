@@ -12,6 +12,14 @@
 
   <div class="block-content">
 
+    {% for in_cart in cart %}
+
+        {{ in_cart }} <br>
+
+    {% endfor %}
+
+    {{ suma }}
+
     {{ form.render }}
 
   </div>

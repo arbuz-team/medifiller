@@ -10,4 +10,4 @@ class Cart(models.Model):
     approved = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.user.username
+        return self.product.details_en.name
