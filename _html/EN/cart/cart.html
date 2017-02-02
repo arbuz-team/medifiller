@@ -5,30 +5,14 @@
 
     <ul class="cart-list">
 
-        {{ request.session.cart_products }}
+        {% for product in cart %}
 
-        <li>
-            <div class="cart-list-name"> Product 1 </div>
-            <div class="cart-list-price"> $35 </div>
-            <div class="cart-list-remove"></div>
-        </li>
+            {{ product }} <br>
 
-        <li>
-            <div class="cart-list-name"> Product 2 </div>
-            <div class="cart-list-price"> $25 </div>
-            <div class="cart-list-remove"></div>
-        </li>
+        {% endfor %}
 
-        <li>
-            <div class="cart-list-name"> Product 3 </div>
-            <div class="cart-list-price"> $245 </div>
-            <div class="cart-list-remove"></div>
-        </li>
+        {{ suma }}
 
-        <li class="cart-buttons">
-            <button class="cart-button-remove"> Remove </button>
-            <button class="cart-button-pay"> Pay </button>
-        </li>
     </ul>
 
 {% else %}

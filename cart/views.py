@@ -1,4 +1,5 @@
 from arbuz.views import *
+from cart.models import *
 
 
 class Cart(Dynamic_Event_Menager):
@@ -16,43 +17,44 @@ class Cart(Dynamic_Event_Menager):
 
         return super(Cart, self).Manage_Content()
 
-    def Manage_Cart_Append(self):
+    def Manage_Button_Append(self):
+        user = User.objects.get(unique=self.request.session['user_unique'])
+        product = Product.objects.get(pk=self.request.POST['product_id'])
 
-        pk = self.request.POST['product_id']
-        cart = self.request.session['cart_products']
+        Cart(user=user, product=product).save()
 
-        cart.append(Product.objects.get(pk=pk))
-        self.request.session['cart_products'] = cart
+        return JsonResponse({'__button__': 'true'})
 
-    def Manage_Cart_Delete(self):
+    def Manage_Button_Delete(self):
+        user = User.objects.get(unique=self.request.session['user_unique'])
+        product = Product.objects.get(pk=self.request.POST['product_id'])
 
-        pk = self.request.POST['product_id']
-        cart = self.request.session['cart_products']
+        cart = Cart.objects.get(user=user, product=product)
+        cart.delete()
 
-        cart.remove(Product.objects.get(pk=pk))
-        self.request.session['cart_products'] = cart
+        return JsonResponse({'__button__': 'true'})
 
-    def Manage_Cart_Clear(self):
-        self.request.session['cart_products'] = []
+    def Manage_Button_Clear(self):
+        user = User.objects.get(unique=self.request.session['user_unique'])
 
-    def Manage_Cart(self):
+        cart = Cart.objects.filter(user=user)
+        for product in cart:
+            product.delete()
 
-        if self.request.POST['__cart__'] == 'append':
-            return self.Manage_Cart_Append()
+        return JsonResponse({'__button__': 'true'})
 
-        if self.request.POST['__cart__'] == 'delete':
-            return self.Manage_Cart_Delete()
+    def Manage_Button(self):
 
-        if self.request.POST['__cart__'] == 'clear':
-            return self.Manage_Cart_Clear()
+        if self.request.POST['__button__'] == 'append':
+            return self.Manage_Button_Append()
 
-    def Manage(self):
+        if self.request.POST['__button__'] == 'delete':
+            return self.Manage_Button_Delete()
 
-        # cart
-        if '__cart__' in self.request.POST:
-            return self.Manage_Cart()
+        if self.request.POST['__button__'] == 'clear':
+            return self.Manage_Button_Clear()
 
-        return super(Cart, self).Manage()
+        return super(Cart, self).Manage_Button()
 
     @staticmethod
     def Launch(request):
