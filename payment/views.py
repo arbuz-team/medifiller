@@ -1,5 +1,6 @@
 from arbuz.views import *
 from cart.models import *
+from django.views.decorators.csrf import csrf_exempt
 from paypal.standard.forms import PayPalPaymentsForm
 from paypal.standard.models import ST_PP_COMPLETED
 from paypal.standard.ipn.signals import valid_ipn_received
@@ -53,6 +54,7 @@ class Payment(Dynamic_Event_Menager):
                 pass#Users.objects.update(paid=True)
 
     @staticmethod
+    @csrf_exempt
     def BBB(request):
         return JsonResponse({'BBB': 'HURRA!'})
 
