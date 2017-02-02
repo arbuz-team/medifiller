@@ -1,4 +1,3 @@
-from django.core.urlresolvers import reverse, resolve
 from abc import ABCMeta, abstractmethod
 from session.views import *
 from translator.views import *
@@ -148,23 +147,7 @@ class Updater(Dynamic_Base):
                 .append((element, page))
 
     def Update_Current_Url(self):
-
-        name = resolve(self.request.path_info).url_name
-        kwargs = resolve(self.request.path_info).kwargs
-        secure = 'https://' if self.request.is_secure() else 'http://'
-        url = self.request.get_host()[3:]
-
-        self.request.session['arbuz_url'] = \
-        {
-            'en': secure + 'en.' + url +
-                  reverse(name, urlconf='arbuz.urls.en', kwargs=kwargs),
-
-            #'pl': secure + 'pl.' + url +
-            #      reverse(name, urlconf='arbuz.urls.pl', kwargs=kwargs),
-
-            #'de': secure + 'de.' + url +
-            #      reverse(name, urlconf='arbuz.urls.de', kwargs=kwargs),
-        }
+        self.request.session['arbuz_url'] = self.Get_Urls()
 
     def __init__(self, request):
         Dynamic_Base.__init__(self, request)
