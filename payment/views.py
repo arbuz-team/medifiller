@@ -9,10 +9,10 @@ class Payment(Dynamic_Event_Menager):
 
         # What you want the button to do.
         paypal_dict = {
-            'business': 'receiver_email@example.com',
-            'amount': '10000000.00',
+            'business': '93.endo@gmail.com',
+            'amount': '0.00',
             'item_name': 'name of the item',
-            'invoice': 'unique-invoice-id',  # id faktury
+            #'invoice': 'unique-invoice-id',  # id faktury
             'notify_url': self.Get_Urls('main.start', current_language=True) + reverse('paypal-ipn'),
             'return': self.Get_Urls('BBB', current_language=True), # 'https://www.example.com/your-return-location/',
             'cancel_return': self.Get_Urls('BBB', current_language=True), # 'https://www.example.com/your-cancel-location/',
@@ -23,7 +23,7 @@ class Payment(Dynamic_Event_Menager):
         return self.Render_HTML('payment/payment.html', 'paypal')
 
     @staticmethod
-    def AAA(sender, ** kwargs):
+    def AAA(sender, **kwargs):
         return JsonResponse({'AAA': 'HURRA!'})
 
     @staticmethod

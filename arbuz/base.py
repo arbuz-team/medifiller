@@ -27,7 +27,10 @@ class Dynamic_Base:
             kwargs = resolve(self.request.path_info).kwargs
 
         secure = 'https://' if self.request.is_secure() else 'http://'
-        domain = self.request.get_host()[3:]
+        domain = self.request.get_host()
+
+        if self.request.get_host()[:3] in ['en.', 'pl', 'de']:
+            domain = self.request.get_host()[3:]
 
         urls = \
         {
