@@ -49,8 +49,8 @@ body, html {
   max-height: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: #fff;
-  color: #333;
+  background-color: #FFFFFF;
+  color: #382B1B;
   font-family: 'OS_Regular', sans-serif;
   font-size: 19px;
   line-height: 1.45; }
@@ -83,7 +83,7 @@ strong {
 #CONTAINTER {
   overflow: hidden;
   z-index: 3;
-  background-color: #f4f4f4; }
+  background-color: #FFFFFF; }
   #CONTAINTER > .part {
     position: relative;
     z-index: 5; }
@@ -191,7 +191,7 @@ img {
     position: relative;
     opacity: 0.4; }
     #GROUND > .ground > .block-1 {
-      border-bottom: 1px solid #d8d8d8; }
+      border-bottom: 1px solid #E1E7DD; }
     #GROUND > .ground > .ground-block {
       position: relative;
       display: inline-block;
@@ -205,7 +205,7 @@ img {
         margin: 0;
         line-height: 32px;
         padding: 10px 15px;
-        background: #d8d9dd; }
+        background-color: #c6a68d; }
         #GROUND > .ground > .ground-block > .navigation > * {
           display: inline-block;
           height: 32px;
@@ -224,20 +224,20 @@ img {
         z-index: 12;
         margin-top: 15px;
         padding-left: 30px;
-        color: #333;
+        color: #382B1B;
         font-size: 18px;
         font-weight: bold; }
       #GROUND > .ground > .ground-block > .block-content {
         position: relative;
         padding: 10px 15px;
         z-index: 12;
-        color: #333;
+        color: #382B1B;
         font-size: 16px; }
       #GROUND > .ground > .ground-block > .block-background {
         z-index: 10;
-        background-color: #f4f4f4; }
+        background-color: #E1E7DD; }
     #GROUND > .ground > .block-2 > .block-background {
-      background-color: #f4f4f4; }
+      background-color: #E1E7DD; }
     #GROUND > .ground .block-content .title {
       margin-top: 15px;
       margin-bottom: 8px;
@@ -286,6 +286,24 @@ img {
 @media (min-width: 1200px) {
   #GROUND > .ground > .ground-block > .block-content > .block-content-right {
     height: 500px; } }
+
+.block-link_tiles {
+  background-color: #E1E7DD; }
+  .block-link_tiles > li {
+    display: inline-block;
+    position: relative;
+    width: 185px;
+    height: 100px;
+    background-color: #FFFFFF; }
+    .block-link_tiles > li > a {
+      text-align: center;
+      line-height: 100px; }
+    .block-link_tiles > li > a:hover {
+      background-color: #E1E7DD;
+      border-radius: 3px;
+      -moz-box-shadow: inset 1px 1px 3px 0px rgba(153, 153, 153, 0.75);
+      -webkit-box-shadow: inset 1px 1px 3px 0px rgba(153, 153, 153, 0.75);
+      box-shadow: inset 1px 1px 3px 0px rgba(153, 153, 153, 0.75); }
 
 .content-footer {
   position: relative;
@@ -629,8 +647,8 @@ img {
   bottom: 0;
   min-width: 250px;
   width: 250px;
-  background-color: #3b2915;
-  color: #d8d9dd; }
+  background-color: #774D34;
+  color: #E1E7DD; }
   #CART > .cart > .cart-title {
     display: block;
     height: 100px;
@@ -661,8 +679,8 @@ img {
   bottom: 0;
   min-width: 250px;
   width: 250px;
-  background-color: #3b2915;
-  color: #d8d9dd; }
+  background-color: #382B1B;
+  color: #FFFFFF; }
   #SEARCHER > .searcher > .logo_text {
     display: block;
     height: 100px;
@@ -682,7 +700,7 @@ img {
     color: inherit;
     border: none; }
     #SEARCHER > .searcher > div > .otoczka_pola > * > option {
-      background-color: #3b2915; }
+      background-color: #382B1B; }
   #SEARCHER > .searcher > .searcher-filters {
     display: block;
     width: 100%; }
@@ -719,8 +737,8 @@ img {
   #NAVIGATION > .navigation {
     position: relative;
     height: auto;
-    color: #d8d9dd;
-    background-color: #3b2915; }
+    color: #E1E7DD;
+    background-color: #774D34; }
     #NAVIGATION > .navigation > .navigation-mini {
       display: none; }
     #NAVIGATION > .navigation > .navigation-primary > .navigation-secondary-space, #NAVIGATION > .navigation > .navigation-secondary > .navigation-secondary-space {
@@ -729,16 +747,16 @@ img {
       position: relative;
       height: 45px;
       border-bottom: solid #666 1px;
-      background-color: #d8d9dd; }
+      background-color: #E1E7DD; }
       #NAVIGATION > .navigation > .navigation-primary > li > .link, #NAVIGATION > .navigation > .navigation-secondary > li > .link {
         padding: 0 15px;
         line-height: 45px;
-        background-color: #3b2915;
+        background-color: #774D34;
         -webkit-transition: left 0.2s, -webkit-transform 0.2s;
         transition: left 0.2s, transform 0.2s; }
       #NAVIGATION > .navigation > .navigation-primary > li > .link:hover, #NAVIGATION > .navigation > .navigation-primary > li > .link.wybrany, #NAVIGATION > .navigation > .navigation-secondary > li > .link:hover, #NAVIGATION > .navigation > .navigation-secondary > li > .link.wybrany {
         left: 20px;
-        color: #f4f4f4; }
+        color: #FFFFFF; }
     #NAVIGATION > .navigation > .navigation-primary .guzik_menu, #NAVIGATION > .navigation > .navigation-secondary .guzik_menu {
       display: none;
       margin: 0 30px;
@@ -767,8 +785,8 @@ img {
   #HEADER > .header {
     position: relative;
     height: inherit;
-    background-color: #f4f4f4;
-    border-bottom: 1px solid #d8d8d8; }
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #c6a68d; }
 
 @media screen and (min-width: 1000px) {
   #HEADER {
@@ -847,13 +865,13 @@ img {
       #HEADER > .header > .navigation-primary > li > a {
         font-size: 20px;
         text-align: center;
-        color: #3b2915; }
+        color: #382B1B; }
     #HEADER > .header > .navigation-primary > li.wybrany,
     #HEADER > .header > .navigation-primary > li:hover {
-      border-top-color: #3b2915; }
+      border-top-color: #382B1B; }
       #HEADER > .header > .navigation-primary > li.wybrany > a,
       #HEADER > .header > .navigation-primary > li:hover > a {
-        color: #333; }
+        color: #382B1B; }
     #HEADER > .header > .navigation-primary > li.guzik_menu {
       float: right;
       display: none;
@@ -884,8 +902,8 @@ img {
     display: block;
     height: 30px;
     padding-right: 15px;
-    background-color: #9d948a;
-    color: #f4f4f4;
+    background-color: #774D34;
+    color: #FFFFFF;
     text-align: right; }
     #HEADER > .header > .navigation-secondary > li {
       display: inline-block;
@@ -903,6 +921,9 @@ img {
   .container-motion > .hide {
     position: absolute;
     display: none; }
+
+.container-part-loading {
+  padding: 10px 15px; }
 
 .content_editable {
   position: relative;

@@ -12,6 +12,7 @@ export let Post_Button_Models = function(config)
     button: undefined,
     button_name: undefined,
     url: undefined,
+    callback: undefined,
 
     text_loading: 'Sending...',
     text_done: "It's done!",

@@ -2656,8 +2656,7 @@
 	    ground_loader_controllers = new _controllers.Plugins_Loader_Controllers(config_loader),
 	    config_post_button = {
 	  container: '#GROUND > .ground',
-	  callback: ground_loader_controllers.reload
-	},
+	  callback: ground_loader_controllers.reload },
 	    post_button_controllers = new _controllers3.Post_Button_Controllers(config_post_button),
 	    ground_form_controllers = new _controllers2.Form_Controllers(ground_loader_controllers);
 	
@@ -2872,6 +2871,7 @@
 	    button: undefined,
 	    button_name: undefined,
 	    url: undefined,
+	    callback: undefined,
 	
 	    text_loading: 'Sending...',
 	    text_done: "It's done!",

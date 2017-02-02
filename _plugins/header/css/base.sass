@@ -1,8 +1,16 @@
 // -----------------------------------------
 //			  DEFINIOWANIE ZMIENNYCH
 // -----------------------------------------
+
 $wysokosc_naglowka_m: 70px
 $wysokosc_naglowka_d: 90px
+
+$header-navigation-secondary--color: $g-color_4
+$header-navigation-secondary--background-color: $g-color_1
+
+$header--color: $g-color_0
+$header--background-color: $g-color_4
+$header--border-color: $g-color_2
 
 
 // -----------------------------------------
@@ -22,8 +30,8 @@ $wysokosc_naglowka_d: 90px
   >.header
     position: relative
     height: inherit
-    background-color: #f4f4f4
-    border-bottom: 1px solid #d8d8d8
+    background-color: $header--background-color
+    border-bottom: 1px solid $header--border-color
 
 
 @media screen and (min-width: 1000px)
@@ -133,14 +141,14 @@ $wysokosc_naglowka_d: 90px
       >a
         font-size: 20px
         text-align: center
-        color: #3b2915
+        color: $header--color //#3b2915
 
     >li.wybrany,
     >li:hover
-      border-top-color: #3b2915
+      border-top-color: $header--color //#3b2915
 
       >a
-        color: #333
+        color: $header--color
 
     >li.guzik_menu
       float: right
@@ -187,8 +195,8 @@ $wysokosc_naglowka_d: 90px
     height: 30px
     padding-right: 15px
 
-    background-color: #9d948a
-    color: #f4f4f4
+    background-color: $header-navigation-secondary--background-color // #9d948a
+    color: $header-navigation-secondary--color
     text-align: right
 
 

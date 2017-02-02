@@ -10,14 +10,16 @@
   <div class="block-background fill-abs"></div>
   {% include "ground/html/navigation.html" %}
 
-  <div class="block-content">
+  <ul class="block-content block-link_tiles">
 
     {% for app in apps %}
 
-      <a href="{{ app.url }}">{{ app.name }}</a> <br>
+      <li>
+          <a href="{{ app.url }}" class="fill-abs">{{ app.name }}</a>
+      </li>
 
     {% endfor %}
 
-  </div>
+  </ul>
 
 </div>

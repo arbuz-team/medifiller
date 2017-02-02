@@ -1,9 +1,17 @@
+// -----------------------------------------
+//			  DEFINIOWANIE ZMIENNYCH
+// -----------------------------------------
 
 $searcher--width: 250px
 $searcher-field--height: 50px
 $searcher-logo_text--height: 100px
+$searcher--background-color: $g-color_0
+$searcher--color: $g-color_4
 
 
+//-----------------------------------------
+//			  ELEMENTY TREŚCI
+//-----------------------------------------
 
 #SEARCHER
   top: 0
@@ -13,8 +21,8 @@ $searcher-logo_text--height: 100px
   min-width: $searcher--width
   width: $searcher--width
 
-  background-color: $g-color_1
-  color: $g-color_3
+  background-color: $searcher--background-color
+  color: $searcher--color
 
 
   >.searcher
@@ -46,7 +54,7 @@ $searcher-logo_text--height: 100px
         border: none
 
         >option
-          background-color: $g-color_1
+          background-color: $searcher--background-color
 
 
     >.searcher-filters

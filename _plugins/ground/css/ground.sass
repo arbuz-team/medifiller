@@ -1,3 +1,13 @@
+// -----------------------------------------
+//			  DEFINIOWANIE ZMIENNYCH
+// -----------------------------------------
+
+$ground-navigation--background-color: $g-color_2
+
+$ground--background-color: $g-color_3
+$ground--color: $g-color_0
+$ground--border-color: $g-color_3
+
 
 //-----------------------------------------
 //			  ELEMENTY TREŚCI
@@ -14,7 +24,7 @@
 
 
     >.block-1
-      border-bottom: 1px solid #d8d8d8
+      border-bottom: 1px solid $ground--border-color
 
     >.ground-block
       position: relative
@@ -33,7 +43,7 @@
 
         line-height: 32px
         padding: 10px 15px
-        background: #d8d9dd
+        background-color: $ground-navigation--background-color
 
         >*
           display: inline-block
@@ -60,7 +70,7 @@
         margin-top: 15px
         padding-left: 30px
 
-        color: #333
+        color: $ground--color
         font-size: 18px
         font-weight: bold
 
@@ -69,16 +79,16 @@
         padding: 10px 15px
         z-index: 12
 
-        color: #333
+        color: $ground--color
         font-size: 16px
 
       >.block-background
         z-index: 10
-        background-color: #f4f4f4
+        background-color: $ground--background-color
 
 
     >.block-2 > .block-background
-      background-color: #f4f4f4
+      background-color: $ground--background-color
 
 
     .block-content
