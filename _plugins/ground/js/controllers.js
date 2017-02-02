@@ -41,17 +41,22 @@ let
 
   go_to_link = function(event)
   {
-    if(event.which === 1)
-    {
-      let url = $(this).attr('href');
+    let
+      url = $(this).attr('href'),
+      protocol = url.substring(0, 4);
 
-      event.preventDefault();
-      window.APP.throw_event(window.EVENTS.plugins.close);
+    console.log(protocol);
 
-      ground_views.change_url(url);
+    if(protocol !== 'http')
+      if(event.which === 1)
+      {
+        event.preventDefault();
+        window.APP.throw_event(window.EVENTS.plugins.close);
 
-      ground_loader_controllers.load(url);
-    }
+        ground_views.change_url(url);
+
+        ground_loader_controllers.load(url);
+      }
   },
 
   redirect = function(event)

@@ -21,14 +21,23 @@ export let Form_Controllers = function(content_loader_controllers)
 
   let prepare_form_to_send = function(event)
   {
-    event.preventDefault();
-
     let
-      form_name = $(this).data('name'),
-      url = $(this).attr('action'),
-      form_object = $(this).serialize_object();
+      form_action = $(this).attr('action'),
+      protocol = form_action.substring(0, 4);
 
-    form_models.send(form_name, url, form_object);
+    if(protocol !== 'http')
+    {
+      event.preventDefault();
+
+      let
+        form_name = $(this).data('name'),
+        url = $(this).attr('action'),
+        form_object = $(this).serialize_object();
+
+      form_models.send(form_name, url, form_object);
+    }
+    else
+      console.log('adres zewnętrzny');
   };
 
 

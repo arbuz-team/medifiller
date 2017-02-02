@@ -1194,13 +1194,18 @@
 	   */
 	
 	  var prepare_form_to_send = function prepare_form_to_send(event) {
-	    event.preventDefault();
+	    var form_action = $(this).attr('action'),
+	        protocol = form_action.substring(0, 4);
 	
-	    var form_name = $(this).data('name'),
-	        url = $(this).attr('action'),
-	        form_object = $(this).serialize_object();
+	    if (protocol !== 'http') {
+	      event.preventDefault();
 	
-	    form_models.send(form_name, url, form_object);
+	      var form_name = $(this).data('name'),
+	          url = $(this).attr('action'),
+	          form_object = $(this).serialize_object();
+	
+	      form_models.send(form_name, url, form_object);
+	    } else console.log('adres zewnętrzny');
 	  };
 	
 	  /**
@@ -2665,9 +2670,12 @@
 	 */
 	
 	var go_to_link = function go_to_link(event) {
-	  if (event.which === 1) {
-	    var url = $(this).attr('href');
+	  var url = $(this).attr('href'),
+	      protocol = url.substring(0, 4);
 	
+	  console.log(protocol);
+	
+	  if (protocol !== 'http') if (event.which === 1) {
 	    event.preventDefault();
 	    window.APP.throw_event(window.EVENTS.plugins.close);
 	
