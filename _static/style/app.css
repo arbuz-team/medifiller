@@ -152,10 +152,10 @@ strong {
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       box-sizing: border-box;
-      color: #333;
+      color: #382B1B;
       font-size: 16px;
-      background: #fff;
-      border: 1px solid #ddd;
+      background: #FFFFFF;
+      border: 1px solid transparent;
         border-radius: 3px;
       padding-left: 10px;
       padding-right: 10px; }
@@ -191,7 +191,7 @@ img {
     position: relative;
     opacity: 0.4; }
     #GROUND > .ground > .block-1 {
-      border-bottom: 1px solid #E1E7DD; }
+      border-bottom: 1px solid transparent; }
     #GROUND > .ground > .ground-block {
       position: relative;
       display: inline-block;
@@ -235,9 +235,9 @@ img {
         font-size: 16px; }
       #GROUND > .ground > .ground-block > .block-background {
         z-index: 10;
-        background-color: #E1E7DD; }
+        background-color: #FFFFFF; }
     #GROUND > .ground > .block-2 > .block-background {
-      background-color: #E1E7DD; }
+      background-color: #FFFFFF; }
     #GROUND > .ground .block-content .title {
       margin-top: 15px;
       margin-bottom: 8px;
@@ -288,7 +288,7 @@ img {
     height: 500px; } }
 
 .block-link_tiles {
-  background-color: #E1E7DD; }
+  background-color: #e2e2e2; }
   .block-link_tiles > li {
     display: inline-block;
     position: relative;
@@ -299,7 +299,7 @@ img {
       text-align: center;
       line-height: 100px; }
     .block-link_tiles > li > a:hover {
-      background-color: #E1E7DD;
+      background-color: #e2e2e2;
       border-radius: 3px;
       -moz-box-shadow: inset 1px 1px 3px 0px rgba(153, 153, 153, 0.75);
       -webkit-box-shadow: inset 1px 1px 3px 0px rgba(153, 153, 153, 0.75);
@@ -341,12 +341,6 @@ img {
   .posty > li {
     border: 1px solid;
       border-color: #e5e6e9 #dfe0e4 #d0d1d5; } }
-
-#GROUND > div[data-url='/'] > .block-1 {
-  min-height: 115px; }
-  #GROUND > div[data-url='/'] > .block-1 > .block-content {
-    margin-top: 10px;
-    margin-bottom: 10px; }
 
 /* -------------------------------- */
 #BLOK_WYSZUKAJ > .naglowek {
@@ -451,6 +445,23 @@ img {
   .products.tiles > .product {
     width: 445px; } }
 
+.product_details > .product_details-image {
+  width: 400px;
+  height: 400px;
+  background-color: #FFFFFF;
+  border: solid 1px #e2e2e2;
+    border-radius: 3px;
+  -moz-box-shadow: 1px 1px 3px 0px #c6a68d;
+  -webkit-box-shadow: 1px 1px 3px 0px #c6a68d;
+  box-shadow: 1px 1px 3px 0px #c6a68d;
+  text-align: center; }
+  .product_details > .product_details-image > img {
+    width: auto;
+    height: auto;
+    max-width: 400px;
+    max-height: 400px;
+    vertical-align: middle; }
+
 .field_shell input[type=text], .field_shell input[type=email], .field_shell input[type=password], .field_shell input[type=number], .field_shell select, .field_shell button, .field_shell .button, .field_shell textarea {
   margin: 2px 3px;
     margin-bottom: 8px;
@@ -513,8 +524,8 @@ img {
   border: 1px solid #dd4b39 !important; }
 
 #GROUND .ground-block > .block-content {
-  background: #fff;
-  border: 1px solid #ddd;
+  background: #e2e2e2;
+  border: 1px solid transparent;
     border-radius: 3px; }
   #GROUND .ground-block > .block-content > .title, #GROUND .ground-block > .block-content form > .title {
     padding: 10px 0;
@@ -648,7 +659,7 @@ img {
   min-width: 250px;
   width: 250px;
   background-color: #774D34;
-  color: #E1E7DD; }
+  color: #e2e2e2; }
   #CART > .cart > .cart-title {
     display: block;
     height: 100px;
@@ -688,9 +699,9 @@ img {
     text-align: center;
     font-size: 20px;
     font-weight: bold; }
-  #SEARCHER > .searcher > div > .otoczka_pola > input {
+  #SEARCHER > .searcher > div > .field_shell > input {
     padding-left: 5px; }
-  #SEARCHER > .searcher > div > .otoczka_pola > * {
+  #SEARCHER > .searcher > div > .field_shell select, #SEARCHER > .searcher > div > .field_shell input {
     display: block;
     width: 220px;
     height: 50px;
@@ -699,7 +710,7 @@ img {
     background-color: transparent;
     color: inherit;
     border: none; }
-    #SEARCHER > .searcher > div > .otoczka_pola > * > option {
+    #SEARCHER > .searcher > div > .field_shell select > option, #SEARCHER > .searcher > div > .field_shell input > option {
       background-color: #382B1B; }
   #SEARCHER > .searcher > .searcher-filters {
     display: block;
@@ -709,11 +720,13 @@ img {
       height: 50px;
       line-height: 50px;
       font-weight: bold;
-      text-align: center; }
+      text-align: center;
+      background-color: transparent; }
     #SEARCHER > .searcher > .searcher-filters > .searcher-filters-content {
       display: block;
       min-height: 50px;
-      padding: 10px 15px; }
+      padding: 10px 15px;
+      background-color: transparent; }
   #SEARCHER > .hide {
     left: 100%;
     top: 0;
@@ -737,7 +750,7 @@ img {
   #NAVIGATION > .navigation {
     position: relative;
     height: auto;
-    color: #E1E7DD;
+    color: #e2e2e2;
     background-color: #774D34; }
     #NAVIGATION > .navigation > .navigation-mini {
       display: none; }
@@ -747,7 +760,7 @@ img {
       position: relative;
       height: 45px;
       border-bottom: solid #666 1px;
-      background-color: #E1E7DD; }
+      background-color: #e2e2e2; }
       #NAVIGATION > .navigation > .navigation-primary > li > .link, #NAVIGATION > .navigation > .navigation-secondary > li > .link {
         padding: 0 15px;
         line-height: 45px;

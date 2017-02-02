@@ -1,25 +1,44 @@
 <script>
-  window.APP.DATA = {
-    title : '{{ title }}',
-    description : 'This page is about us. ;)'
-  };
+    window.APP.DATA = {
+        title : '{{ title }}',
+        description : 'This page is about us. ;)'
+    };
 </script>
 
 
 <div class="ground-block block-1">
 
-  <div class="block-background"></div>
-  {% include "ground/html/navigation.html" %}
+    <div class="block-background"></div>
+    {% include "ground/html/navigation.html" %}
 
-  <div class="block-content">
+    <div class="block-content product_details">
 
-    <img data-src="{{ product.image }}" alt="image"><br>
-    {{ product.details_en.name }}<br>
-    {{ product.details_en.description }}<br>
-    price euro: {{ product.price_eur }}<br>
-    price pln:  {{ product.price_pln }}<br>
-    <br><br>
+        <div class="product_details-image"><img data-src="{{ product.image }}" alt="image"></div>
 
-  </div>
+        <div class="product_details-action_panel">
+            <div class="product_details-action_panel-prices">
+                price euro: {{ product.price_eur }}
+                price pln:  {{ product.price_pln }}
+            </div>
+            <div class="product_details-action_panel-buttons">
+                <button class="post_button" type="button"
+                        data-name="Append_{{ product.pk }}"
+                        data-action="append"
+                        data-value="{{ product.pk }}"
+                        data-url="/cart/">Add to cart</button>
+                <button class="" type="button"
+                        data-name="Buy_{{ product.pk }}"
+                        data-action="buy"
+                        data-value="{{ product.pk }}"
+                        data-url="/payment/">Buy</button>
+            </div>
+        </div>
+
+        <div class="product_details-details"></div>
+            {{ product.details_en.name }}<br>
+            {{ product.details_en.description }}<br>
+        <br><br>
+
+    </div>
 
 </div>

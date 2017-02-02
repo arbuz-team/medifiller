@@ -104,3 +104,13 @@ if (!String.prototype.splice)
     return this.slice(0, start) + newSubStr + this.slice(start + Math.abs(delCount));
   };
 }
+
+
+window.APP.add_if_isset = function(from, to, from_what, to_what)
+{
+  if(typeof from[from_what] !== 'undefined')
+    if(from_what && to_what)
+      to[to_what] = from[from_what];
+    else if(from_what)
+      to[from_what] = from[from_what];
+};

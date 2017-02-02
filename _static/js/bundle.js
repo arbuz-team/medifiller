@@ -173,6 +173,10 @@
 	    return this.slice(0, start) + newSubStr + this.slice(start + Math.abs(delCount));
 	  };
 	}
+	
+	window.APP.add_if_isset = function (from, to, from_what, to_what) {
+	  if (typeof from[from_what] !== 'undefined') if (from_what && to_what) to[to_what] = from[from_what];else if (from_what) to[from_what] = from[from_what];
+	};
 
 /***/ },
 /* 7 */
@@ -1205,7 +1209,7 @@
 	          form_object = $(this).serialize_object();
 	
 	      form_models.send(form_name, url, form_object);
-	    } else console.log('adres zewnętrzny');
+	    }
 	  };
 	
 	  /**
@@ -2673,8 +2677,6 @@
 	  var url = $(this).attr('href'),
 	      protocol = url.substring(0, 4);
 	
-	  console.log(protocol);
-	
 	  if (protocol !== 'http') if (event.which === 1) {
 	    event.preventDefault();
 	    window.APP.throw_event(window.EVENTS.plugins.close);
@@ -2783,6 +2785,8 @@
 	    var button_name = $(this).data('name');
 	    config.button = this;
 	    config.button_name = button_name;
+	    config.button_action = $(this).data('action');
+	    config.button_value = $(this).data('value');
 	    config.button_url = $(this).data('url');
 	    config.button_html = $(this).html();
 	
@@ -2878,7 +2882,9 @@
 	    container: undefined,
 	    button: undefined,
 	    button_name: undefined,
-	    url: undefined,
+	    button_action: undefined,
+	    button_value: undefined,
+	    button_url: undefined,
 	    callback: undefined,
 	
 	    text_loading: 'Sending...',
@@ -2889,23 +2895,21 @@
 	
 	  var load_settings = function load_settings() {
 	    if (typeof config !== 'undefined') {
-	      // -- Container
-	      if (typeof config.container !== 'undefined') that.settings.container = config.container;
+	      window.APP.add_if_isset(config, that.settings, 'container');
 	
-	      // -- Callback
-	      if (typeof config.callback !== 'undefined') that.settings.callback = config.callback;
+	      window.APP.add_if_isset(config, that.settings, 'callback');
 	
-	      // -- Button
-	      if (typeof config.button !== 'undefined') that.settings.button = config.button;
+	      window.APP.add_if_isset(config, that.settings, 'button');
 	
-	      // -- Button name
-	      if (typeof config.button_name !== 'undefined') that.settings.button_name = config.button_name;
+	      window.APP.add_if_isset(config, that.settings, 'button_name');
 	
-	      // -- Button url
-	      if (typeof config.button_url !== 'undefined') that.settings.url = config.button_url;
+	      window.APP.add_if_isset(config, that.settings, 'button_action');
 	
-	      // -- Button button_html
-	      if (typeof config.button_html !== 'undefined') that.settings.text_standard = config.button_html;
+	      window.APP.add_if_isset(config, that.settings, 'button_value');
+	
+	      window.APP.add_if_isset(config, that.settings, 'button_url');
+	
+	      window.APP.add_if_isset(config, that.settings, 'button_html', 'text_standard');
 	    }
 	  };
 	
@@ -2923,9 +2927,22 @@
 	
 	  /////////////////////////
 	
+	  var prepare_post_data = function prepare_post_data(action, value) {
+	    var obj = { __button__: action };
+	
+	    if (value) obj.value = value;
+	
+	    return obj;
+	  };
+	
 	  this.send_post = function (callback) {
 	    setTimeout(function () {
-	      window.APP.http_request(that.settings.url, { __button__: true }, callback);
+	      var url = that.settings.button_url,
+	          action = that.settings.button_action,
+	          value = that.settings.button_value,
+	          post_data = prepare_post_data(action, value);
+	
+	      window.APP.http_request(url, post_data, callback);
 	    }, 200);
 	  };
 	};

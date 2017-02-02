@@ -45,8 +45,6 @@ let
       url = $(this).attr('href'),
       protocol = url.substring(0, 4);
 
-    console.log(protocol);
-
     if(protocol !== 'http')
       if(event.which === 1)
       {

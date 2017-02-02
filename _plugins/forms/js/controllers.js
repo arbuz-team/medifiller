@@ -36,8 +36,6 @@ export let Form_Controllers = function(content_loader_controllers)
 
       form_models.send(form_name, url, form_object);
     }
-    else
-      console.log('adres zewnętrzny');
   };
 
 
