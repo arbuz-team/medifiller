@@ -22,11 +22,11 @@ class Payment(Dynamic_Event_Menager):
         paypal_dict = {
             'business': '93.endo-facilitator@gmail.com',
             'amount': self.content['suma'],
-            'item_name': 'name of the item',
+            'item_name': 'sungate',
             #'invoice': 'unique-invoice-id',  # id faktury
             'notify_url': self.Get_Urls('main.start', current_language=True) + reverse('paypal-ipn'),
-            'return': self.Get_Urls('BBB', current_language=True), # 'https://www.example.com/your-return-location/',
-            'cancel_return': self.Get_Urls('BBB', current_language=True), # 'https://www.example.com/your-cancel-location/',
+            'return': self.Get_Urls('payment.apply_payment', current_language=True),
+            'cancel_return': self.Get_Urls('payment.cancel_payment', current_language=True),
             'custom': user.unique,
         }
 
@@ -35,27 +35,37 @@ class Payment(Dynamic_Event_Menager):
         return self.Render_HTML('payment/payment.html', 'paypal')
 
     @staticmethod
-    def AAA(sender, **kwargs):
-        ipn_obj = sender
-        if ipn_obj.payment_status == ST_PP_COMPLETED:
+    def Valid_PayPal(sender, **kwargs):
+        ipn = sender
+
+        if ipn.payment_status == ST_PP_COMPLETED:
             # WARNING !
             # Check that the receiver email is the same we previously
             # set on the business field request. (The user could tamper
             # with those fields on payment form before send it to PayPal)
-            if ipn_obj.receiver_email != "receiver_email@example.com":
-                # Not a valid payment
+            if ipn.receiver_email != '93.endo-facilitator@gmail.com':
                 return
 
             # ALSO: for the same reason, you need to check the amount
             # received etc. are all what you expect.
 
             # Undertake some action depending upon `ipn_obj`.
-            if ipn_obj.custom == "Upgrade all users!":
-                pass#Users.objects.update(paid=True)
+            if ipn.custom:
+                user = User.objects.get(unique=ipn.custom)
+                cart = Cart.objects.filter(user=user)
+
+                for in_cart in cart:
+                    in_cart.approved = True
+                    in_cart.save()
 
     @staticmethod
     @csrf_exempt
-    def BBB(request):
+    def Apply_Payment(request):
+        return JsonResponse({'BBB': 'HURRA!'})
+
+    @staticmethod
+    @csrf_exempt
+    def Cancel_Payment(request):
         return JsonResponse({'BBB': 'HURRA!'})
 
     @staticmethod
@@ -63,4 +73,4 @@ class Payment(Dynamic_Event_Menager):
         return Payment(request, authorization=True).HTML
 
 
-valid_ipn_received.connect(Payment.AAA)
+valid_ipn_received.connect(Payment.Valid_PayPal)
