@@ -65,7 +65,7 @@ class Payment(Dynamic_Event_Menager):
                 user = User.objects.get(unique=ipn.custom)
                 cart = Cart.objects.filter(user=user)
 
-                if ipn.amount == Payment.Get_Total_Price(user):
+                if ipn.amount != Payment.Get_Total_Price(user):
                     return
 
                 for in_cart in cart:
