@@ -8,15 +8,26 @@ from paypal.standard.ipn.signals import valid_ipn_received
 
 class Payment(Dynamic_Event_Menager):
 
+    @staticmethod
+    def Get_Total_Price(user, currency='eur'):
+        cart = Cart.objects.filter(user=user)
+        total = 0
+
+        for in_cart in cart:
+
+            if currency == 'eur':
+                total += in_cart.product.price_eur
+
+            if currency == 'pln':
+                total += in_cart.product.price_pln
+
+        return total
+
     def Manage_Content_Ground(self):
 
         user = User.objects.get(unique=self.request.session['user_unique'])
         self.content['cart'] = Cart.objects.filter(user=user)
-
-        self.content['suma'] = 0
-        for in_cart in self.content['cart']:
-            self.content['suma'] += in_cart.product.price_eur
-
+        self.content['total_price'] = Payment.Get_Total_Price(user)
 
         # What you want the button to do.
         paypal_dict = {
@@ -53,6 +64,9 @@ class Payment(Dynamic_Event_Menager):
             if ipn.custom:
                 user = User.objects.get(unique=ipn.custom)
                 cart = Cart.objects.filter(user=user)
+
+                if ipn.amount == Payment.Get_Total_Price(user):
+                    return
 
                 for in_cart in cart:
                     in_cart.approved = True
