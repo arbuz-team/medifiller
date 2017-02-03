@@ -32,7 +32,7 @@ class Payment(Dynamic_Event_Menager):
         # What you want the button to do.
         paypal_dict = {
             'business': '93.endo-facilitator@gmail.com',
-            'amount': self.content['suma'],
+            'amount': self.content['total_price'],
             'item_name': 'sungate',
             #'invoice': 'unique-invoice-id',  # id faktury
             'notify_url': self.Get_Urls('main.start', current_language=True) + reverse('paypal-ipn'),
