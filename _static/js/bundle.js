@@ -2942,7 +2942,10 @@
 	          value = that.settings.button_value,
 	          post_data = prepare_post_data(action, value);
 	
-	      window.APP.http_request(url, post_data, callback);
+	      console.log(url);
+	      console.log(post_data);
+	
+	      //window.APP.http_request(url, post_data, callback);
 	    }, 200);
 	  };
 	};
