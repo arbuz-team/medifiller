@@ -36,7 +36,7 @@ class Payment(Dynamic_Event_Menager):
             'amount': self.content['total_price'],
             'item_name': 'sungate',
             #'invoice': 'unique-invoice-id',  # id faktury
-            'notify_url': self.Get_Urls('main.start', current_language=True) + reverse('paypal-ipn'),
+            'notify_url': self.Get_Urls('paypal.ipn', current_language=True),
             'return': self.Get_Urls('payment.apply_payment', current_language=True),
             'cancel_return': self.Get_Urls('payment.cancel_payment', current_language=True),
             'custom': user.unique,
