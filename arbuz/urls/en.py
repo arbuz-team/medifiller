@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^cart/', include('cart.urls.en'), name='cart'),
     url(r'^navigation/', include('navigation.urls.en'), name='navigation'),
     url(r'^payment/', include('payment.urls.en'), name='payment'),
-    url(r'^paypal/', include('paypal.standard.ipn.urls'), name='paypal.ipn'),
+    url(r'^paypal/', include('paypal.standard.ipn.urls'), name='paypal-ipn'),
     url(r'', include('main.urls.en'), name='main'),
 ]
 
