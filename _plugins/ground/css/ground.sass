@@ -2,7 +2,7 @@
 //			  DEFINIOWANIE ZMIENNYCH
 // -----------------------------------------
 
-$ground-navigation--background-color: $g-color_2
+$ground-navigation--background-color: $g-color_3
 
 $ground--background-color: $g-color_4
 $ground--color: $g-color_0
@@ -14,13 +14,26 @@ $ground--border-color: transparent
 //-----------------------------------------
 
 
+#GROUND::before
+  box-sizing: border-box
+  position: absolute
+  left: 0
+  top: 0
+  right: 0
+  height: 8px
+  border-bottom: 1px solid #e8e8e8
+  background: #fff
+  content: ''
+  z-index: 200
+
 #GROUND
+  position: relative
   display: block
-  overflow-y: auto
 
   >.ground
     position: relative
     opacity: 0.4
+    overflow-y: auto
 
 
     >.block-1
@@ -44,6 +57,7 @@ $ground--border-color: transparent
         line-height: 32px
         padding: 10px 15px
         background-color: $ground-navigation--background-color
+        border
 
         >*
           display: inline-block
@@ -107,6 +121,7 @@ $ground--border-color: transparent
         margin-left: 15px
 
 
+    .block-content.contact
 
       >.block-content-right
         margin-top: 15px
@@ -127,7 +142,7 @@ $ground--border-color: transparent
 
 @media (min-width: 500px)
 
-  #GROUND > .ground > .ground-block > .block-content
+  #GROUND > .ground > .ground-block > .block-content.contact
 
     >.block-content-right
       height: 300px
@@ -135,7 +150,7 @@ $ground--border-color: transparent
 
 @media (min-width: 650px)
 
-  #GROUND > .ground > .ground-block > .block-content
+  #GROUND > .ground > .ground-block > .block-content.contact
 
     >.block-content-left, >.block-content-right
       display: inline-block
@@ -157,7 +172,7 @@ $ground--border-color: transparent
   #GROUND
     margin-left: 250px
 
-    > .ground > .ground-block > .block-content
+    > .ground > .ground-block > .block-content.contact
 
       >.block-content-left
         width: 400px
@@ -167,26 +182,9 @@ $ground--border-color: transparent
         left: 450px
 
 
-//
-  @media (min-width: 1100px)
-
-    #GROUND > .ground > .ground-block > .block-content
-
-        >.block-content-left
-          width: 400px
-
-
 @media (min-width: 1200px)
 
-  #GROUND > .ground > .ground-block > .block-content
+  #GROUND > .ground > .ground-block > .block-content.contact
 
     >.block-content-right
       height: 500px
-
-//
-  @media (min-width: 1300px)
-
-    #GROUND > .ground > .ground-block > .block-content
-
-      >.block-content-right
-        width: 600px

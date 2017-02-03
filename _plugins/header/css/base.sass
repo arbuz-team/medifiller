@@ -2,8 +2,8 @@
 //			  DEFINIOWANIE ZMIENNYCH
 // -----------------------------------------
 
-$wysokosc_naglowka_m: 70px
-$wysokosc_naglowka_d: 90px
+$wysokosc_naglowka_m: 72px
+$wysokosc_naglowka_d: 82px
 
 $header-navigation-secondary--color: $g-color_4
 $header-navigation-secondary--background-color: $g-color_1
@@ -25,13 +25,13 @@ $header--border-color: $g-color_2
   height: $wysokosc_naglowka_m
 
   background-color: transparent
+  +box-shadow(0 0 2px $g-color_shadow_0)
 
 
   >.header
     position: relative
     height: inherit
     background-color: $header--background-color
-    border-bottom: 1px solid $header--border-color
 
 
 @media screen and (min-width: 1000px)
@@ -61,8 +61,8 @@ $header--border-color: $g-color_2
     position: relative
     z-index: 38
 
-    height: 40px
-    width: 40px
+    height: $wysokosc_naglowka_m - 30px
+    width: $wysokosc_naglowka_m - 30px
     margin:
       top: 15px
       left: 15px
@@ -171,8 +171,9 @@ $header--border-color: $g-color_2
 
 @media (min-width: 1000px)
 
-  #HEADER .header-nav-primary >li
-    margin-top: 40px
+  #HEADER >.header >.navigation-primary >li
+    height: 55px
+    line-height: 55px
 
 
 //--------------------------------------

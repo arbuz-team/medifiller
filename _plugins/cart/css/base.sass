@@ -1,19 +1,22 @@
 
-$cart--width: 250px
-
+$cart--width: 300px
 $cart-title--height: 100px
+
+$cart--background-color: $g-color_4
+$cart--color: $g-color_0
 
 
 #CART
-  top: 0
+  top: 80px
   right: -$cart--width
   bottom: 0
 
   min-width: $cart--width
   width: $cart--width
 
-  background-color: $g-color_1
-  color: $g-color_3
+  background-color: $cart--background-color
+  color: $cart--color
+  border-left: $g-style_border
 
   >.cart
 
@@ -36,10 +39,7 @@ $cart-title--height: 100px
         display: inline-block
 
 
-  >.hide
-    right: 100%
-    top: 0
-    bottom: 0
+@media (min-width: 1000px)
 
-    width: 200px
-    +linear-gradient(left, rgba(51, 51, 51, 0), rgba(51, 51, 51, 0.5))
+  #CART
+    top: 90px

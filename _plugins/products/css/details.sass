@@ -1,21 +1,71 @@
 
 .product_details
+  position: relative
+  padding:
+    top: 15px !important
+    bottom: 50px !important
 
-  >.product_details-image
-    width: 400px
-    height: 400px
+  >.block-content-left, >.block-content-right
+    display: block
+    width: auto
+    height: auto
 
-    background-color: $g-color_4
-    border: solid 1px $g-color_3
-      radius: 3px
-    +box-shadow(1px 1px 3px 0px $g-color_2)
+  .product_details-image
+    +my-box()
 
-    text-align: center
+    position: relative
+    width: 100%
+    padding: 0
+      top: 100%
 
-    >img
+    >div
+      text-align: center
+
+      >img
+        max-width: 100%
+        max-height: 100%
+
+        vertical-align: middle
+
+
+  .product_details-section
+    +my-box()
+
+
+
+@media (min-width: 400px)
+
+  .product_details
+
+    .product_details-image
+      width: 400px
+      height: 400px
+      margin: 0 auto
+      padding: 0
+
+
+@media (min-width: 750px)
+
+  .product_details
+
+    >.block-content-left
+      position: absolute
+      left: 15px
+      top: 30px
+      width: 300px
+
+    >.block-content-right
+      margin-left: 315px
+      border-left: $g-style_border
+
+
+    .product_details-image
       width: auto
       height: auto
-      max-width: 400px
-      max-height: 400px
+      padding-top: 100%
 
-      vertical-align: middle
+    .product_details-section
+      margin: 0
+        bottom: 10px
+      min-height: 80px
+
