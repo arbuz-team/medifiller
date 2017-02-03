@@ -49,6 +49,8 @@ class Payment(Dynamic_Event_Menager):
     @staticmethod
     def Valid_PayPal(sender, **kwargs):
         ipn = sender
+        print(sender)
+        print(kwargs)
 
         if ipn.payment_status == ST_PP_COMPLETED:
             # WARNING !
@@ -61,14 +63,10 @@ class Payment(Dynamic_Event_Menager):
             # ALSO: for the same reason, you need to check the amount
             # received etc. are all what you expect.
 
-            # Undertake some action depending upon `ipn_obj`.
+            # Undertake some action depending upon `ipn`.
             if ipn.custom:
                 user = User.objects.get(unique=ipn.custom)
                 cart = Cart.objects.filter(user=user)
-
-                print(ipn)
-                #if ipn.amount != Payment.Get_Total_Price(user):
-                #    return
 
                 for in_cart in cart:
                     in_cart.approved = True
