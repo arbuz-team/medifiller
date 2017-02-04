@@ -20,7 +20,14 @@
 
     {{ total_price }}
 
-    {{ form.render }}
+    {{ paypal.render }}
+
+
+    <form action="{% url 'getpaid:new-payment' currency=object.currency %}" method="post">
+        {% csrf_token %}
+        {{ getpaid.as_p }}
+        <input type="submit" value="Continue">
+    </form>
 
   </div>
 

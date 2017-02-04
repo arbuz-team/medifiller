@@ -1,5 +1,6 @@
 from arbuz.views import *
 from cart.models import *
+from payment.models import *
 from django.views.decorators.csrf import csrf_exempt
 from paypal.standard.forms import PayPalPaymentsForm
 from paypal.standard.models import ST_PP_COMPLETED
@@ -41,8 +42,8 @@ class PayPal(Dynamic_Base):
             # 'invoice':        'unique-invoice-id',  # id faktury
 
             'notify_url':       self.Get_Urls('paypal-ipn', current_language=True),
-            'return':           self.Get_Urls('payment.apply_payment', current_language=True),
-            'cancel_return':    self.Get_Urls('payment.cancel_payment', current_language=True),
+            'return':           self.Get_Urls('payment.apply', current_language=True),
+            'cancel_return':    self.Get_Urls('payment.cancel', current_language=True),
         }
 
         return PayPalPaymentsForm(initial=paypal_dict)
@@ -52,7 +53,49 @@ invalid_ipn_received.connect(PayPal.Valid_PayPal)
 
 
 
-class Payment(Dynamic_Event_Menager, PayPal):
+# Create your views here.
+from django.views.generic import CreateView
+from django.views.generic.detail import DetailView
+from getpaid.forms import PaymentMethodForm
+from payment.forms import OrderForm
+from payment.models import Order
+
+
+class HomeView(CreateView):
+    model = Order
+    template_name = 'home.html'
+    form_class = OrderForm
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context['orders'] = Order.objects.all()
+        return context
+
+
+class OrderView(DetailView):
+    model = Order
+
+    def get_context_data(self, **kwargs):
+        context = super(OrderView, self).get_context_data(**kwargs)
+        context['payment_form'] = PaymentMethodForm(
+            self.object.currency,
+            initial={'order': self.object}
+        )
+        return context
+
+
+class DotPay(Dynamic_Base):
+
+    @staticmethod
+    def Valid_DotPay(sender, **kwargs):
+        pass
+
+    def Create_DotPay_From(self):
+        pass
+
+
+
+class Payment(Dynamic_Event_Menager, PayPal, DotPay):
 
     @staticmethod
     def Get_Total_Price(user, currency='eur'):
@@ -75,7 +118,8 @@ class Payment(Dynamic_Event_Menager, PayPal):
         self.content['cart'] = Cart.objects.filter(user=self.content['user'])
         self.content['total_price'] = Payment.Get_Total_Price(self.content['user'])
 
-        self.content['form'] = self.Create_PayPal_From()
+        self.content['paypal'] = self.Create_PayPal_From()
+        self.content['getpaid'] = OrderForm()
         return self.Render_HTML('payment/payment.html')
 
     @staticmethod
