@@ -1,5 +1,4 @@
 from django.conf.urls import url, include
-from payment.views import OrderView, HomeView
 
 urlpatterns = [
     url(r'^user/', include('user.urls.en'), name='user'),
@@ -12,11 +11,7 @@ urlpatterns = [
     url(r'^navigation/', include('navigation.urls.en'), name='navigation'),
     url(r'^payment/', include('payment.urls.en'), name='payment'),
     url(r'^paypal/', include('paypal.standard.ipn.urls'), name='paypal-ipn'),
-    #url(r'^getpaid/', include('getpaid.urls'), name='getpaid'),
+    url('^payments/', include('payments.urls')),
     url(r'', include('main.urls.en'), name='main'),
-
-    url(r'^$', HomeView.as_view(), name='home'),
-    url(r'^payment/(?P<pk>\d+)/$', OrderView.as_view(), name='order_detail'),
-    url(r'', include('getpaid.urls', app_name='getpaid', namespace='getpaid')),
 ]
 

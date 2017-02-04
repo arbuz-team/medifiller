@@ -53,36 +53,19 @@ invalid_ipn_received.connect(PayPal.Valid_PayPal)
 
 
 
-# Create your views here.
-from django.views.generic import CreateView
-from django.views.generic.detail import DetailView
-from getpaid.forms import PaymentMethodForm
-from payment.forms import OrderForm
-from payment.models import Order
+from django.shortcuts import get_object_or_404, redirect
+from django.template.response import TemplateResponse
+from payments import get_payment_model, RedirectNeeded
 
-
-class HomeView(CreateView):
-    model = Order
-    template_name = 'home.html'
-    form_class = OrderForm
-
-    def get_context_data(self, **kwargs):
-        context = super(HomeView, self).get_context_data(**kwargs)
-        context['orders'] = Order.objects.all()
-        return context
-
-
-class OrderView(DetailView):
-    model = Order
-
-    def get_context_data(self, **kwargs):
-        context = super(OrderView, self).get_context_data(**kwargs)
-        context['payment_form'] = PaymentMethodForm(
-            self.object.currency,
-            initial={'order': self.object}
-        )
-        return context
-
+@csrf_exempt
+def payment_details(request, payment_id):
+    payment = get_object_or_404(get_payment_model(), id=payment_id)
+    try:
+        form = payment.get_form(data=request.POST or None)
+    except RedirectNeeded as redirect_to:
+        return redirect(str(redirect_to))
+    return TemplateResponse(request, 'EN/payment/payment.html',
+                            {'form': form, 'payment': payment})
 
 class DotPay(Dynamic_Base):
 
@@ -119,7 +102,7 @@ class Payment(Dynamic_Event_Menager, PayPal, DotPay):
         self.content['total_price'] = Payment.Get_Total_Price(self.content['user'])
 
         self.content['paypal'] = self.Create_PayPal_From()
-        self.content['getpaid'] = OrderForm()
+        #self.content['getpaid'] = None
         return self.Render_HTML('payment/payment.html')
 
     @staticmethod
