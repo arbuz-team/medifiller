@@ -116,10 +116,10 @@ export let Plugins_Loader_Views = function(config)
         duration = models.settings.duration.hide;
 
       $(container)
-      .animate({opacity: opacity}, duration, () =>
-      {
-        models.download_content(models.variables.url, show_content);
-      });
+        .animate({opacity: opacity}, duration, () =>
+        {
+          models.download_content(models.variables.url, show_content);
+        });
     };
 
 

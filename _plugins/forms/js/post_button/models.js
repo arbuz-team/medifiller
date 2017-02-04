@@ -13,6 +13,7 @@ export let Post_Button_Models = function(config)
     button_name: undefined,
     button_action: undefined,
     button_value: undefined,
+    button_reload: undefined,
     button_url: undefined,
     callback: undefined,
 
@@ -37,6 +38,8 @@ export let Post_Button_Models = function(config)
       window.APP.add_if_isset(config, that.settings, 'button_action');
 
       window.APP.add_if_isset(config, that.settings, 'button_value');
+
+      window.APP.add_if_isset(config, that.settings, 'button_reload');
 
       window.APP.add_if_isset(config, that.settings, 'button_url');
 

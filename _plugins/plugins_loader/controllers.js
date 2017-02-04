@@ -50,10 +50,10 @@ export let Plugins_Loader_Controllers = function(config)
   {
     let delay = window.APP.DATA.delay;
 
-    if(delay)
-      setTimeout(plugin_loader_views.change_content, delay);
-    else
-      plugin_loader_views.change_content();
+    if(typeof delay !== 'number')
+      delay = 0;
+
+    setTimeout(plugin_loader_views.change_content, delay);
   };
 
 
@@ -68,7 +68,6 @@ export let Plugins_Loader_Controllers = function(config)
       auto_first_loading = plugin_loader_views.models.settings.auto_first_loading;
 
     window.APP.add_own_event('plugin_'+ plugin_name +'_reload', this.reload);
-
 
 
     if(auto_first_loading)

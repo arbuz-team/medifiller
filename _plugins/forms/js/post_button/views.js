@@ -38,6 +38,27 @@ export let Post_Button_Views = function(config)
     },
 
 
+    reload_plugins = function()
+    {
+      let
+        plugins = models.settings.button_reload,
+        plugins_array, array_length;
+
+      if(!plugins && typeof plugins === 'string')
+        return false;
+
+      plugins_array = plugins.split(' ');
+      array_length = plugins_array.length;
+
+      for(let i = 0; i < array_length; ++i)
+        if(plugins_array[i])
+        {
+          window.APP.DATA.delay = 1000;
+          window.APP.throw_event(window.EVENTS.plugins['reload_'+ plugins_array[i]]);
+        }
+    },
+
+
     end_loading = function(JSON_response, status)
     {
       models.state.is_loading = false;
@@ -45,15 +66,9 @@ export let Post_Button_Views = function(config)
       if(is_error(JSON_response, status))
         return false;
 
-
       $(models.settings.button).html(models.settings.text_done);
 
-      setTimeout(function(){
-        if(typeof models.settings.callback === 'function')
-          models.settings.callback();
-        else
-          $(models.settings.button).html(models.settings.text_standard);
-      }, 1000);
+      reload_plugins();
     };
 
 

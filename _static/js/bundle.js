@@ -516,7 +516,9 @@
 	  this.reload = function () {
 	    var delay = window.APP.DATA.delay;
 	
-	    if (delay) setTimeout(plugin_loader_views.change_content, delay);else plugin_loader_views.change_content();
+	    if (typeof delay !== 'number') delay = 0;
+	
+	    setTimeout(plugin_loader_views.change_content, delay);
 	  };
 	
 	  /**
@@ -923,18 +925,22 @@
 	
 	    $body.data('hammer').get('swipe').set({ direction: Hammer.DIRECTION_ALL });
 	
-	    // -- Other events
+	    if (settings.container !== '#CART') {
+	      // -- Other events
 	
-	    $body.click(plugin_motion_views.plugin_close);
-	    $hide.click(plugin_motion_views.plugin_close);
-	    $window.resize(plugin_motion_views.plugin_close);
-	    $window.resize(set_user_select);
-	    window.APP.add_own_event('plugins_close', plugin_motion_views.plugin_close);
+	      $body.click(plugin_motion_views.plugin_close);
+	      $hide.click(plugin_motion_views.plugin_close);
+	      $window.resize(plugin_motion_views.plugin_close);
+	      $window.resize(set_user_select);
 	
-	    $container.click(stop_propagation);
+	      window.APP.add_own_event('plugins_close', plugin_motion_views.plugin_close);
 	
-	    window.APP.throw_event(window.EVENTS.plugins.close);
-	    set_start_position();
+	      $container.click(stop_propagation);
+	
+	      window.APP.throw_event(window.EVENTS.plugins.close);
+	      set_start_position();
+	    }
+	
 	    set_user_select();
 	  };
 	
@@ -978,6 +984,10 @@
 	      $(container).stop().animate(css, duration_open, function () {
 	        models.change_possibility_of_opening(false);
 	      }).children(hide).fadeIn(duration_open);
+	
+	      var width = $(container).outerWidth();
+	
+	      if (container === '#CART') $('#GROUND > .ground').stop().animate({ 'margin-right': width }, duration_open);
 	    }
 	  };
 	
@@ -2119,7 +2129,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.plugin_open = exports.start = exports.define = undefined;
+	exports.reload = exports.plugin_open = exports.start = exports.define = undefined;
 	
 	var _controllers = __webpack_require__(12);
 	
@@ -2170,6 +2180,9 @@
 	  cart_motion_controllers.start();
 	},
 	    plugin_open = exports.plugin_open = function plugin_open() {
+	  cart_motion_controllers.plugin_open();
+	},
+	    reload = exports.reload = function reload() {
 	  cart_motion_controllers.plugin_open();
 	};
 
@@ -2787,6 +2800,7 @@
 	    config.button_name = button_name;
 	    config.button_action = $(this).data('action');
 	    config.button_value = $(this).data('value');
+	    config.button_reload = $(this).data('reload');
 	    config.button_url = $(this).data('url');
 	    config.button_html = $(this).html();
 	
@@ -2838,6 +2852,23 @@
 	
 	    return false;
 	  },
+	      reload_plugins = function reload_plugins() {
+	    var plugins = models.settings.button_reload,
+	        plugins_array = void 0,
+	        array_length = void 0;
+	
+	    if (!plugins && typeof plugins === 'string') return false;
+	
+	    plugins_array = plugins.split(' ');
+	    array_length = plugins_array.length;
+	
+	    for (var i = 0; i < array_length; ++i) {
+	      if (plugins_array[i]) {
+	        window.APP.DATA.delay = 1000;
+	        window.APP.throw_event(window.EVENTS.plugins['reload_' + plugins_array[i]]);
+	      }
+	    }
+	  },
 	      end_loading = function end_loading(JSON_response, status) {
 	    models.state.is_loading = false;
 	
@@ -2845,9 +2876,7 @@
 	
 	    $(models.settings.button).html(models.settings.text_done);
 	
-	    setTimeout(function () {
-	      if (typeof models.settings.callback === 'function') models.settings.callback();else $(models.settings.button).html(models.settings.text_standard);
-	    }, 1000);
+	    reload_plugins();
 	  };
 	
 	  this.start = function () {
@@ -2884,6 +2913,7 @@
 	    button_name: undefined,
 	    button_action: undefined,
 	    button_value: undefined,
+	    button_reload: undefined,
 	    button_url: undefined,
 	    callback: undefined,
 	
@@ -2906,6 +2936,8 @@
 	      window.APP.add_if_isset(config, that.settings, 'button_action');
 	
 	      window.APP.add_if_isset(config, that.settings, 'button_value');
+	
+	      window.APP.add_if_isset(config, that.settings, 'button_reload');
 	
 	      window.APP.add_if_isset(config, that.settings, 'button_url');
 	

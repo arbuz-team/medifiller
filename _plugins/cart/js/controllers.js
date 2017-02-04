@@ -61,4 +61,10 @@ export let
   plugin_open = function()
   {
     cart_motion_controllers.plugin_open();
+  },
+
+
+  reload = function()
+  {
+    cart_motion_controllers.plugin_open();
   };

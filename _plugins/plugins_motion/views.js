@@ -33,6 +33,13 @@ export let Plugins_Motion_Views = function(config)
         })
       .children(hide)
         .fadeIn(duration_open);
+
+      let width = $(container).outerWidth();
+
+      if(container === '#CART')
+        $('#GROUND > .ground')
+          .stop()
+          .animate({'margin-right': width}, duration_open);
     }
   };
 

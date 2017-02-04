@@ -84,8 +84,9 @@ strong {
   overflow: hidden;
   z-index: 3;
   background-color: #ffffff; }
-  #CONTAINTER > .container-part {
-    z-index: 5; }
+
+.container-part {
+  z-index: 5; }
 
 #extensions-right {
   position: fixed;
@@ -192,7 +193,7 @@ img {
   position: relative;
   display: block; }
   #GROUND > .ground {
-    position: relative;
+    top: 8px;
     opacity: 0.4;
     overflow-y: auto; }
     #GROUND > .ground > .block-1 {
@@ -833,10 +834,7 @@ img {
   z-index: 37;
   display: block;
   height: 72px;
-  background-color: transparent;
-  -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3); }
+  background-color: transparent; }
   #HEADER > .header {
     position: relative;
     height: inherit;

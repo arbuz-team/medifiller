@@ -112,18 +112,24 @@ export let Plugins_Motion_Controllers = function(config)
     $body.data('hammer').get('swipe').set({ direction: Hammer.DIRECTION_ALL });
 
 
-    // -- Other events
 
-    $body.click(plugin_motion_views.plugin_close);
-    $hide.click(plugin_motion_views.plugin_close);
-    $window.resize(plugin_motion_views.plugin_close);
-    $window.resize(set_user_select);
-    window.APP.add_own_event('plugins_close', plugin_motion_views.plugin_close);
+    if(settings.container !== '#CART')
+    {
+      // -- Other events
 
-    $container.click(stop_propagation);
+      $body.click(plugin_motion_views.plugin_close);
+      $hide.click(plugin_motion_views.plugin_close);
+      $window.resize(plugin_motion_views.plugin_close);
+      $window.resize(set_user_select);
 
-    window.APP.throw_event(window.EVENTS.plugins.close);
-    set_start_position();
+      window.APP.add_own_event('plugins_close', plugin_motion_views.plugin_close);
+
+      $container.click(stop_propagation);
+
+      window.APP.throw_event(window.EVENTS.plugins.close);
+      set_start_position();
+    }
+
     set_user_select();
   };
 
