@@ -1,79 +1,92 @@
 
-.container-part > div > .products.tiles
+.products.tiles
   padding:
-    left: 0
-    right: 0
+    top: 0
+    bottom: 0
 
+  >ul
+    width: auto
 
-.products.tiles > .product
-  width: auto
-  max-width: 400px
-  height: 300px
-  margin:
-    left: auto
-    right: auto
+    .product
+      width: auto
+      max-width: 400px
+      min-height: 300px
+      margin: 0
+        left: auto
+        right: auto
 
-  >a
-    >.product-img
-      position: relative
-      width: 100%
-      height: 200px
-      overflow: hidden
-      text-align: center
+      border-bottom: $g-style_border
 
-      //>img
+      >a
+        >.product-img
+          position: relative
+          width: 100%
+          height: 200px
+          overflow: hidden
+          text-align: center
 
-    >.product-title
-      margin:
-        top: 10px
-        bottom: 10px
-      font-weight: bold
-      padding-left: 30px
+          //>img
 
-    >.product-content
-      max-width: 300px
-      margin: 0 auto
-      padding: 0
+        >.product-title
+          margin:
+            top: 10px
+            bottom: 10px
+          font-weight: bold
 
+      .product-content
+        max-width: 300px
+        margin: 0 auto
+        padding: 0
+
+        >.product-content-details > a > button
+          margin-bottom: 0
+
+        >.product-content-price
+          position: absolute
+          right: 5px
+          bottom: 8px
+
+          height: 38px
+          line-height: 38px
 
 //-----------------------------------------
 //					  	EKRAN KOMPUTERA
 //-----------------------------------------
 
 @media (min-width: 768px)
-  .products.tiles
-    >.product
+
+  .products.tiles > ul
+    font-size: 0
+    text-align: center
+
+    .product
       display: inline-block
       width: 285px
       max-width: none
+      margin: 0
+      font-size: 16px
 
       >a
         >.product-img
           height: 200px
           overflow: hidden
 
-        >.product-content
-          padding:
-            left: 20px
-            right: 20px
-
-    >.product:nth-child(2n)
-      margin-right: 5px
-
-    >.product:nth-child(2n+1)
-      margin-left: 5px
+      >.product-content
+        padding:
+          left: 20px
+          right: 20px
 
 
 @media (min-width: 870px)
-  .products.tiles > .product
+  .products.tiles .product
     width: 285px
 
 
 @media (min-width: 992px)
-  .products.tiles > .product
-    width: 360px
+  .products.tiles .product
+      width: 360px
 
 
 @media (min-width: 1200px)
-  .products.tiles > .product
-    width: 445px
+  .products.tiles .product
+      width: 445px

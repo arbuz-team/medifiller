@@ -2,6 +2,10 @@
 $navigation--height: 100%
 $navigation-primery_secondery--height: 45px
 
+$navigation--color: $g-color_4
+$navigation--background-color: $g-color_0
+$navigation-focus--background-color: $g-color_1
+
 
 //--------------------------------------
 //       STYLE PRZESUWANEGO MENU
@@ -18,8 +22,8 @@ $navigation-primery_secondery--height: 45px
     position: relative
     height: auto
 
-    color: $g-color_3
-    background-color: $g-color_1
+    color: $navigation--color
+    background-color: $navigation--background-color
 
 
     >.navigation-mini
@@ -34,20 +38,21 @@ $navigation-primery_secondery--height: 45px
       >li
         position: relative
         height: $navigation-primery_secondery--height
+
         border-bottom: solid #666 1px
-        background-color: $g-color_3
+        background-color: $navigation-focus--background-color
 
         >.link
           padding: 0 15px
           line-height: $navigation-primery_secondery--height
 
-          background-color: $g-color_1
+          background-color: $navigation--background-color
           -webkit-transition: left 0.2s, -webkit-transform 0.2s
           transition: left 0.2s, transform 0.2s
 
         >.link:hover, > .link.wybrany
           left: 20px
-          color: $g-color_4
+          color: $navigation--color
 
 
       .guzik_menu
@@ -63,7 +68,7 @@ $navigation-primery_secondery--height: 45px
     right: 0
 
     height: 200px
-    +linear-gradient(bottom, rgba(51, 51, 51, 0), rgba(51, 51, 51, 0.4))
+    +linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(51, 51, 51, 0.4))
 
 
 //--------------------------------------
