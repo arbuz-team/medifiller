@@ -46,7 +46,7 @@ class Manager(Dynamic_Base):
     def Manage_Get(self):
         return JsonResponse({'__get__': 'false'})
 
-    def Manage_Clear_Session(self, key_contain):
+    def Manage_Clear_Session(self, key_contain=''):
 
         keys = list(self.request.session.keys())
         for key in keys:

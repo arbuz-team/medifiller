@@ -72,13 +72,13 @@ class Translator:
 
             geo = GeoIP()
             country = geo.country_code(client_ip)
-            domain = request.get_host()
+            dynamic_base = Dynamic_Base(request)
 
             if country == 'PL':
-                return redirect('http://pl.{0}/'.format(domain))
+                return redirect(dynamic_base.Get_Urls(language='PL'))
 
             if country == 'DE':
-                return redirect('http://de.{0}/'.format(domain))
+                return redirect(dynamic_base.Get_Urls(language='DE'))
 
         return None
 
