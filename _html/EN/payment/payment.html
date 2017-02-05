@@ -22,7 +22,7 @@
 
     {{ paypal.render }}
 
-    <form action="{{ dotpay.action }}" method="{{ dotpay.method }}">
+    <form action="https://ssl.dotpay.pl/test_payment/" method="post">
       {{ dotpay.as_p }}
       <p><input type="submit" value="Proceed" /></p>
     </form>

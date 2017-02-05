@@ -1,11 +1,14 @@
 from arbuz.views import *
 from cart.models import *
-from payment.models import *
+from payment.forms import *
+from arbuz.settings import *
+
 from django.views.decorators.csrf import csrf_exempt
+
 from paypal.standard.forms import PayPalPaymentsForm
 from paypal.standard.models import ST_PP_COMPLETED
-from paypal.standard.ipn.signals import valid_ipn_received, invalid_ipn_received
-from arbuz.settings import PAYPAL_RECEIVER_EMAIL
+from paypal.standard.ipn.signals import valid_ipn_received
+from paypal.standard.ipn.signals import invalid_ipn_received
 
 
 class PayPal(Dynamic_Base):
@@ -53,20 +56,6 @@ invalid_ipn_received.connect(PayPal.Valid_PayPal)
 
 
 
-from django.shortcuts import get_object_or_404, redirect
-from django.template.response import TemplateResponse
-from payments import get_payment_model, RedirectNeeded
-
-@csrf_exempt
-def payment_details(request, payment_id):
-    payment = get_object_or_404(get_payment_model(), id=payment_id)
-    try:
-        form = payment.get_form(data=request.POST or None)
-    except RedirectNeeded as redirect_to:
-        return redirect(str(redirect_to))
-    return TemplateResponse(request, 'EN/payment/payment.html',
-                            {'form': form, 'payment': payment})
-
 class DotPay(Dynamic_Base):
 
     @staticmethod
@@ -74,19 +63,26 @@ class DotPay(Dynamic_Base):
         pass
 
     def Create_DotPay_From(self):
-        payment = Payment.objects.create(
-            variant='default',  # this is the variant from PAYMENT_VARIANTS
-            description='Book purchase',
-            total=Decimal(120),
-            tax=Decimal(20),
-            currency='PLN',
-            delivery=Decimal(10),
-            customer_ip_address='127.0.0.1')
 
-        payment.failure_url=self.Get_Urls('payment.cancel', current_language=True)
-        payment.success_url=self.Get_Urls('payment.apply', current_language=True)
-        payment.save()
-        return payment.get_form()#Payment.objects.first().get_form()
+        dotpay_dict = \
+        {
+            'amount':       120,
+            'currency':     'PLN',
+            'description':  'Opis produktu',
+
+            'control':      1,
+
+            'ch_lock':      0,
+            'channel':      0,
+            'type':         3,
+            'id':           DOTPAY_RECEIVER_ID,
+            'lang':         self.request.session['translator_language'].lower(),
+
+            'URL':          self.Get_Urls('payment.apply', current_language=True),
+            'URLC':         self.Get_Urls('payment.dotpay', current_language=True),
+        }
+
+        return Form_Dotpay(initial=dotpay_dict)
 
 
 
