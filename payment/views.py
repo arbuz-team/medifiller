@@ -24,7 +24,7 @@ class PayPal(Dynamic_Base):
             cart = Cart.objects.filter(user=user)
 
             # check amount paid
-            if int(ipn.payment_gross) != Payment.Get_Total_Price(user):
+            if int(ipn.payment_gross) != Payment_Manager.Get_Total_Price(user):
                 return
 
             for in_cart in cart:
@@ -74,11 +74,23 @@ class DotPay(Dynamic_Base):
         pass
 
     def Create_DotPay_From(self):
-        pass
+        payment = Payment.objects.create(
+            variant='default',  # this is the variant from PAYMENT_VARIANTS
+            description='Book purchase',
+            total=Decimal(120),
+            tax=Decimal(20),
+            currency='PLN',
+            delivery=Decimal(10),
+            customer_ip_address='127.0.0.1')
+
+        payment.failure_url=self.Get_Urls('payment.cancel', current_language=True)
+        payment.success_url=self.Get_Urls('payment.apply', current_language=True)
+        payment.save()
+        return payment.get_form()#Payment.objects.first().get_form()
 
 
 
-class Payment(Dynamic_Event_Menager, PayPal, DotPay):
+class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
 
     @staticmethod
     def Get_Total_Price(user, currency='eur'):
@@ -99,15 +111,15 @@ class Payment(Dynamic_Event_Menager, PayPal, DotPay):
 
         self.content['user'] = User.objects.get(unique=self.request.session['user_unique'])
         self.content['cart'] = Cart.objects.filter(user=self.content['user'])
-        self.content['total_price'] = Payment.Get_Total_Price(self.content['user'])
+        self.content['total_price'] = Payment_Manager.Get_Total_Price(self.content['user'])
 
         self.content['paypal'] = self.Create_PayPal_From()
-        #self.content['getpaid'] = None
+        self.content['dotpay'] = self.Create_DotPay_From()
         return self.Render_HTML('payment/payment.html')
 
     @staticmethod
     def Launch(request):
-        return Payment(request, authorization=True).HTML
+        return Payment_Manager(request, authorization=True).HTML
 
 
 

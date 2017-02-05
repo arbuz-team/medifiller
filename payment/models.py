@@ -5,11 +5,14 @@ from payments.models import BasePayment
 
 class Payment(BasePayment):
 
+    failure_url = ''
+    success_url = ''
+
     def get_failure_url(self):
-        return 'http://example.com/failure/'
+        return self.failure_url
 
     def get_success_url(self):
-        return 'http://example.com/success/'
+        return self.success_url
 
     def get_purchased_items(self):
         # you'll probably want to retrieve these from an associated order

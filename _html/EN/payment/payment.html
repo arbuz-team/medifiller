@@ -12,8 +12,6 @@
 
   <div class="block-content">
 
-      {% comment %}
-
     {% for in_cart in cart %}
 
         {{ in_cart }} <br>
@@ -24,10 +22,8 @@
 
     {{ paypal.render }}
 
-      {% endcomment %}
-
-    <form action="{{ form.action }}" method="{{ form.method }}">
-      {{ form.as_p }}
+    <form action="{{ dotpay.action }}" method="{{ dotpay.method }}">
+      {{ dotpay.as_p }}
       <p><input type="submit" value="Proceed" /></p>
     </form>
 

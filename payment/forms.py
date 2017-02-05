@@ -1,15 +1,9 @@
-from decimal import Decimal
-from django.core.exceptions import ValidationError
-from django.forms.models import ModelForm
-from payment.models import Order
+from django.forms import models
+from payment.models import Payment
 
 
-class OrderForm(ModelForm):
+class Form_Payment(models.ModelForm):
+
     class Meta:
-        model = Order
-        exclude = ('status', )
-
-    def clean_total(self):
-        if self.cleaned_data['total'] <= Decimal('0'):
-            raise ValidationError('Provide some reasonable item price')
-        return self.cleaned_data['total']
+        model = Payment
+        fields = ()
