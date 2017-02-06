@@ -5,32 +5,30 @@ from arbuz.base import *
 
 class Form_Product(forms.ModelForm):
 
-    def clean_price_eur(self):
+    @staticmethod
+    def Clean_Price(price, currency):
 
-        price = self.cleaned_data['price_eur']
+        if not price:
+            return 0
+
         if price < 0:
             raise forms.ValidationError(
-                'Price in EUR have to greater than zero.')
+                'Price in {0} have to greater than zero.'
+                    .format(currency))
 
-        return int(float(price) * 100) # convert to cents
+        return int(float(price) * 100) # convert to cents / grosz / pens
+
+    def clean_price_eur(self):
+        price = self.cleaned_data['price_eur']
+        return self.Clean_Price(price, 'EUR')
 
     def clean_price_pln(self):
-
         price = self.cleaned_data['price_pln']
-        if price < 0:
-            raise forms.ValidationError(
-                'Price in PLN have to greater than zero.')
-
-        return int(float(price) * 100) # convert to grosz
+        return self.Clean_Price(price, 'PLN')
 
     def clean_price_gbp(self):
-
         price = self.cleaned_data['price_gbp']
-        if price < 0:
-            raise forms.ValidationError(
-                'Price in GBP have to greater than zero.')
-
-        return int(float(price) * 100) # convert to pens
+        return self.Clean_Price(price, 'GBP')
 
     def clean(self):
 
