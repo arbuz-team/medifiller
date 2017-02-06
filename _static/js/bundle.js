@@ -949,6 +949,8 @@
 	  };
 	
 	  this.plugin_open = plugin_motion_views.plugin_open;
+	
+	  this.plugin_close = plugin_motion_views.plugin_close;
 	}; /**
 	    * Created by mrskull on 06.01.17.
 	    */
@@ -1006,6 +1008,8 @@
 	      $(container).stop().animate(css, duration_close, function () {
 	        models.change_possibility_of_opening(true);
 	      }).children(hide).fadeOut(duration_close);
+	
+	      if (container === '#CART') $('#GROUND > .ground').stop().animate({ 'margin-right': 0 }, duration_close);
 	    }
 	  };
 	}; /**
@@ -1209,7 +1213,9 @@
 	
 	  var prepare_form_to_send = function prepare_form_to_send(event) {
 	    var form_action = $(this).attr('action'),
-	        protocol = form_action.substring(0, 4);
+	        protocol = void 0;
+	
+	    if (typeof form_action === 'string') protocol = form_action.substring(0, 4);
 	
 	    if (protocol !== 'http') {
 	      event.preventDefault();
@@ -2176,7 +2182,15 @@
 	  duration_close: 200
 	},
 	    cart_motion_controllers = new _controllers2.Plugins_Motion_Controllers(config_motion),
-	    cart_form_controllers = new _controllers3.Form_Controllers(cart_loader_controllers);
+	    cart_form_controllers = new _controllers3.Form_Controllers(cart_loader_controllers),
+	    manage_key = function manage_key(event) {
+	  if (event.keyCode === 27) cart_motion_controllers.plugin_close();
+	
+	  if (event.ctrlKey && event.shiftKey && event.keyCode === 88) {
+	    event.preventDefault();
+	    cart_motion_controllers.plugin_open();
+	  }
+	};
 	
 	/**
 	 *    Defining public functions
@@ -2187,8 +2201,12 @@
 	 */
 	
 	var define = exports.define = function define() {
-	  cart_motion_controllers.define();
 	  cart_form_controllers.define();
+	  cart_motion_controllers.define();
+	
+	  $('.cart-close', $(config_motion.container)).click(cart_motion_controllers.plugin_close);
+	
+	  $('body').keydown(manage_key);
 	},
 	    start = exports.start = function start() {
 	  cart_loader_controllers.define();

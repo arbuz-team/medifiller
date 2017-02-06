@@ -71,6 +71,12 @@ export let Plugins_Motion_Views = function(config)
         })
       .children(hide)
         .fadeOut(duration_close);
+
+
+      if(container === '#CART')
+        $('#GROUND > .ground')
+          .stop()
+          .animate({'margin-right': 0}, duration_close);
     }
   };
 };
