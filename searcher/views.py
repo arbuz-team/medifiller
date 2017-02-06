@@ -195,6 +195,10 @@ class Search_Engine:
 
         self.Sort_Result_Filters()
 
+    def Remove_Empty_Word(self):
+        self.phrase = \
+            [word for word in self.phrase if word]
+
     @staticmethod
     def Get_Polish_Word_Variations(word):
 
@@ -212,6 +216,7 @@ class Search_Engine:
 
         if self.phrase:
             self.phrase = phrase.split(' ')
+            self.Remove_Empty_Word()
 
 
 
