@@ -65,7 +65,7 @@ class DotPay(Dynamic_Base):
         if request.method == 'POST':
             if request.POST['operation_status'] == 'completed':
 
-                unique = int(request.POST['control'])
+                unique = request.POST['control']
                 user = User.objects.get(unique=unique)
                 cart = Cart.objects.filter(user=user)
                 total_price = Payment_Manager.Get_Total_Price(user)
