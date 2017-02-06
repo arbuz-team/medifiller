@@ -62,6 +62,7 @@ class DotPay(Dynamic_Base):
     @csrf_exempt
     def Valid_DotPay(request):
 
+        Check_Session(request)
         if request.method == 'POST':
             if request.POST['operation_status'] == 'completed':
 
@@ -77,7 +78,7 @@ class DotPay(Dynamic_Base):
                 if request.POST['operation_currency'] != currency:
                     return HttpResponse('NOK')
 
-                if int(request.POST['operation_amount']) != total_price:
+                if float(request.POST['operation_amount']) != total_price:
                     return HttpResponse('NOK')
 
                 for in_cart in cart:
