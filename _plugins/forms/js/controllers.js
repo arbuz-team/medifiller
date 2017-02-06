@@ -41,7 +41,7 @@ export let Form_Controllers = function(content_loader_controllers)
     },
 
 
-    show_hide_form_address = function()
+    show_hide_form_address = function(event)
     {
       let $element = $(this).parents('.form_address');
       event.stopPropagation();
@@ -53,7 +53,7 @@ export let Form_Controllers = function(content_loader_controllers)
     },
 
 
-    show_form_address = function()
+    show_form_address = function(event)
     {
       event.stopPropagation();
 
@@ -74,11 +74,6 @@ export let Form_Controllers = function(content_loader_controllers)
     $('.form_address', $container).click(show_form_address);
 
     $('.form_address .title', $container).click(show_hide_form_address);
-
-    console.log('__1');
-    console.log($('.form_address', $container));
-    console.log('__2');
-    console.log($('.form_address > .title', $container));
     
     validator.define($container);
     hide_form.define($container);

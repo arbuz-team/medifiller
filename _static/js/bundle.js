@@ -1221,13 +1221,13 @@
 	      form_models.send(form_name, url, form_object);
 	    }
 	  },
-	      show_hide_form_address = function show_hide_form_address() {
+	      show_hide_form_address = function show_hide_form_address(event) {
 	    var $element = $(this).parents('.form_address');
 	    event.stopPropagation();
 	
 	    if ($element.hasClass('visible')) $element.removeClass('visible');else $element.addClass('visible');
 	  },
-	      show_form_address = function show_form_address() {
+	      show_form_address = function show_form_address(event) {
 	    event.stopPropagation();
 	
 	    $(this).addClass('visible');
@@ -1245,11 +1245,6 @@
 	    $('.form_address', $container).click(show_form_address);
 	
 	    $('.form_address .title', $container).click(show_hide_form_address);
-	
-	    console.log('__1');
-	    console.log($('.form_address', $container));
-	    console.log('__2');
-	    console.log($('.form_address > .title', $container));
 	
 	    validator.define($container);
 	    hide_form.define($container);

@@ -617,7 +617,7 @@ img {
     #GROUND .ground-block.BIG > .block-content .form_address.visible .shell_form {
       height: 0; }
     #GROUND .ground-block.BIG > .block-content .form_address.visible .title {
-      color: #774D34;
+      color: #999;
       cursor: pointer; }
   #GROUND .ground-block.BIG > .block-content .form_address {
     position: relative;
@@ -645,7 +645,7 @@ img {
       transition: height 500ms ease; }
     #GROUND .ground-block.BIG > .block-content .form_address .title {
       font-size: 14px;
-      color: #999;
+      color: #774D34;
       text-align: left;
       padding-bottom: 5px; }
     #GROUND .ground-block.BIG > .block-content .form_address .field_shell input[type=text], #GROUND .ground-block.BIG > .block-content .form_address .field_shell input[type=email], #GROUND .ground-block.BIG > .block-content .form_address .field_shell input[type=password], #GROUND .ground-block.BIG > .block-content .form_address .field_shell input[type=number], #GROUND .ground-block.BIG > .block-content .form_address .field_shell select, #GROUND .ground-block.BIG > .block-content .form_address .field_shell textarea {
@@ -659,7 +659,14 @@ img {
     margin: 30px auto; }
     #GROUND .ground-block.BIG > .block-content .form_address {
       display: inline-block;
-      width: 215px; } }
+      width: 215px;
+      max-height: 700px;
+      cursor: auto; }
+      #GROUND .ground-block.BIG > .block-content .form_address .shell_form {
+        height: 0; }
+      #GROUND .ground-block.BIG > .block-content .form_address .title {
+        color: #999;
+        cursor: auto; } }
 
 .mini_form {
   margin-bottom: 0; }
