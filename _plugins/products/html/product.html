@@ -5,7 +5,9 @@
     <a href="/product/{{ product.pk }}/{{ product.details_en.name }}">
 
         <div class="product-img mini_image">
-            <img data-src="{{ product.image }}" alt="{{ product.details_en.name }}" src="{% static 'img/load.jpeg' %}" />
+            <div class="fill-abs">
+                <img data-src="{{ product.image }}" alt="{{ product.details_en.name }}" src="{% static 'img/load.jpeg' %}" />
+            </div>
         </div>
 
         <h3 class="product-title"> {{ product.details_en.name }} </h3>

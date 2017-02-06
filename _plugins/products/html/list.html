@@ -1,5 +1,9 @@
 <div class="block-content products tiles">
     <ul>
+        {% if request.session.root_login %}
+            {% include "products/html/add_product.html" %}
+        {% endif %}
+
         {% for product in products %}
 
             {% include 'products/html/product.html' %}

@@ -35,7 +35,7 @@
 
       .product-content
         max-width: 300px
-        margin: 0 auto
+        margin: 0
         padding: 0
 
         >.product-content-details > a > button
@@ -43,8 +43,8 @@
 
         >.product-content-price
           position: absolute
-          right: 5px
-          bottom: 8px
+          right: 0
+          bottom: 0
 
           height: 38px
           line-height: 38px
@@ -71,10 +71,13 @@
           height: 200px
           overflow: hidden
 
+        >.product-title
+          text-align: left
+
       >.product-content
-        padding:
-          left: 20px
-          right: 20px
+
+        >.product-content-details
+          text-align: left
 
 
 @media (min-width: 870px)

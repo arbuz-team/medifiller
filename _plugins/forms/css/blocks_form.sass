@@ -46,12 +46,11 @@
 
 
 #GROUND .ground-block.BIG > .block-content
-  width: 660px
+  width: 300px
   margin: 30px auto
 
   .edit_address
-    display: inline-block
-    width: 215px
+    display: block
 
     .title
       font-size: 14px
@@ -68,3 +67,14 @@
 
     input[type=text], input[type=email], input[type=password], input[type=number], select, button, textarea
       width: auto
+
+
+@media (min-width: 700px)
+
+  #GROUND .ground-block.BIG > .block-content
+    width: 660px
+    margin: 30px auto
+
+    .edit_address
+      display: inline-block
+      width: 215px
