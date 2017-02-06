@@ -59,18 +59,42 @@ invalid_ipn_received.connect(PayPal.Valid_PayPal)
 class DotPay(Dynamic_Base):
 
     @staticmethod
-    def Valid_DotPay(sender, **kwargs):
-        pass
+    def Valid_DotPay(request):
+
+        if request.method == 'POST':
+            if request.POST['operation_status'] == 'completed':
+
+                unique = int(request.POST['control'])
+                user = User.objects.get(unique=unique)
+                cart = Cart.objects.filter(user=user)
+                total_price = Payment_Manager.Get_Total_Price(user)
+                currency = request.session['translator_currency']
+
+                if request.POST['id'] != DOTPAY_RECEIVER_ID:
+                    return HttpResponse('NOK')
+
+                if request.POST['operation_currency'] != currency:
+                    return HttpResponse('NOK')
+
+                if int(request.POST['operation_amount']) != total_price:
+                    return HttpResponse('NOK')
+
+                for in_cart in cart:
+                    in_cart.approved = True
+                    in_cart.save()
+
+                return HttpResponse('OK')
+
+        return HttpResponse('It is not for you.')
 
     def Create_DotPay_From(self):
 
         dotpay_dict = \
         {
-            'amount':       120,
-            'currency':     'PLN',
+            'amount':       self.content['total_price'],
+            'currency':     self.request.session['translator_currency'],
             'description':  'Opis produktu',
-
-            'control':      1,
+            'control':      self.content['user'].unique,
 
             'ch_lock':      0,
             'channel':      0,
@@ -101,7 +125,7 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
             if currency == 'pln':
                 total += in_cart.product.price_pln
 
-        return total
+        return total / 100
 
     def Manage_Content_Ground(self):
 
@@ -124,6 +148,9 @@ class Apply_Payment(Dynamic_Event_Menager):
     def Manage_Content_Ground(self):
         return self.Render_HTML('payment/apply.html')
 
+    def Manage_Form(self):
+        return self.Manage_Content_Ground()
+
     @staticmethod
     @csrf_exempt
     def Launch(request):
@@ -135,6 +162,9 @@ class Cancel_Payment(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
         return self.Render_HTML('payment/cancel.html')
+
+    def Manage_Form(self):
+        return self.Manage_Content_Ground()
 
     @staticmethod
     @csrf_exempt

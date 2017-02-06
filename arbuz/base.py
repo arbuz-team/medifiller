@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.core.urlresolvers import reverse, resolve
-from django.http import JsonResponse
-from arbuz.settings import MEDIA_ROOT, MEDIA_URL, BASE_DIR
-import base64, imghdr, os, random
+from django.http import JsonResponse, HttpResponse
+
+from arbuz.settings import *
 from PIL import Image
 from io import BytesIO
 from urllib.request import urlopen
+import base64, imghdr, os, random
 
 
 class Dynamic_Base:

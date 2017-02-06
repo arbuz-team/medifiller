@@ -53,13 +53,26 @@ class Translator:
             Language_DE(value=line).save()
 
     @staticmethod
-    def Check_Subdomain_Language(request):
+    def Set_Subdomain_Language(request):
 
         url = request.get_host()
         subdomain = url.split('.')[0]
 
         if subdomain in ['pl', 'de', 'en']:
             request.session['translator_language'] = subdomain.upper()
+
+    @staticmethod
+    def Set_Currency(request):
+
+        geo = GeoIP()
+        client_ip = request.META.get('REMOTE_ADDR', None)
+        country = geo.country_code(client_ip)
+
+        if country == 'PL':
+            request.session['translator_currency'] = 'PLN'
+
+        if country == 'GB': # united kingdom
+            request.session['translator_currency'] = 'GBP'
 
     @staticmethod
     def Get_Language_Redirect(request):

@@ -83,8 +83,9 @@ def Load_Default_Product():
             where_display=Where_Display.objects.get(pk=where_display.pk),
 
             image='/_static/img/product/{0}.jpeg'.format(numer),
-            price_eur=1*numer,
-            price_pln=4*numer,
+            price_eur=100*numer,
+            price_pln=400*numer,
+            price_gbp=600*numer,
 
             brand=Brand.objects.get(pk=numer),
             purpose=Purpose.objects.get(pk=numer),

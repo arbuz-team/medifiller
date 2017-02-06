@@ -5,6 +5,18 @@ from arbuz.base import *
 
 class Form_Product(forms.ModelForm):
 
+    def clean_price_eur(self):
+        price = self.cleaned_data['price_eur']
+        return int(float(price) * 100) # convert to cents
+
+    def clean_price_pln(self):
+        price = self.cleaned_data['price_pln']
+        return int(float(price) * 100) # convert to grosz
+
+    def clean_price_gbp(self):
+        price = self.cleaned_data['price_gbp']
+        return int(float(price) * 100) # convert to pens
+
     def clean(self):
 
         if not self.request.session['product_details_en']:
@@ -34,6 +46,7 @@ class Form_Product(forms.ModelForm):
         (
             'price_eur',
             'price_pln',
+            'price_gbp',
             'keywords',
         )
 
@@ -45,6 +58,10 @@ class Form_Product(forms.ModelForm):
                     'placeholder': 'Keywords',
                     'class': 'test',
                 }),
+
+            'price_eur': forms.FloatField(),
+            'price_pln': forms.FloatField(),
+            'price_gbp': forms.FloatField(),
         }
 
     def __init__(self, request=None, *args, **kwargs):

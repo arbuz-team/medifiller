@@ -64,13 +64,15 @@ class Product(models.Model):
     details_en = models.ForeignKey(Details_EN)
     details_pl = models.ForeignKey(Details_PL, null=True)
     details_de = models.ForeignKey(Details_DE, null=True)
-    where_display = models.ForeignKey(Where_Display)
+
+    price_eur = models.IntegerField(blank=True)
+    price_pln = models.IntegerField(blank=True)
+    price_gbp = models.IntegerField(blank=True)
 
     image = models.ImageField(blank=True)
-    price_eur = models.IntegerField()
-    price_pln = models.IntegerField()
     keywords = models.TextField(blank=True)
 
+    where_display = models.ForeignKey(Where_Display)
     brand = models.ForeignKey(Brand)
     purpose = models.ForeignKey(Purpose)
 
