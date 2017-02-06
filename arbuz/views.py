@@ -97,10 +97,6 @@ class Checker(Dynamic_Base):
         self.content['error'] = 'unauthorized'
         return self.Render_HTML('arbuz/error.html')
 
-    def Error_Secure_POST(self):
-        self.content['error'] = 'post_is_dangerous'
-        return self.Render_HTML('arbuz/error.html')
-
     def Check_Authorization(self):
 
         if self.authorization:

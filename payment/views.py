@@ -59,6 +59,7 @@ invalid_ipn_received.connect(PayPal.Valid_PayPal)
 class DotPay(Dynamic_Base):
 
     @staticmethod
+    @csrf_exempt
     def Valid_DotPay(request):
 
         if request.method == 'POST':
@@ -148,8 +149,8 @@ class Apply_Payment(Dynamic_Event_Menager):
     def Manage_Content_Ground(self):
         return self.Render_HTML('payment/apply.html')
 
-    def Manage_Form(self):
-        return self.Manage_Content_Ground()
+    def Error_No_Event(self):
+        return self.Manage_Index()
 
     @staticmethod
     @csrf_exempt
@@ -163,8 +164,8 @@ class Cancel_Payment(Dynamic_Event_Menager):
     def Manage_Content_Ground(self):
         return self.Render_HTML('payment/cancel.html')
 
-    def Manage_Form(self):
-        return self.Manage_Content_Ground()
+    def Error_No_Event(self):
+        return self.Manage_Index()
 
     @staticmethod
     @csrf_exempt
