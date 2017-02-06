@@ -611,14 +611,44 @@ img {
 #GROUND .ground-block.BIG > .block-content {
   width: 300px;
   margin: 30px auto; }
-  #GROUND .ground-block.BIG > .block-content .edit_address {
-    display: block; }
-    #GROUND .ground-block.BIG > .block-content .edit_address .title {
+  #GROUND .ground-block.BIG > .block-content .form_address.visible {
+    max-height: 700px;
+    cursor: auto; }
+    #GROUND .ground-block.BIG > .block-content .form_address.visible .shell_form {
+      height: 0; }
+    #GROUND .ground-block.BIG > .block-content .form_address.visible .title {
+      color: #774D34;
+      cursor: pointer; }
+  #GROUND .ground-block.BIG > .block-content .form_address {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    max-height: 100px;
+    -webkit-transition: max-height 500ms ease;
+    -moz-transition: max-height 500ms ease;
+    -ms-transition: max-height 500ms ease;
+    -o-transition: max-height 500ms ease;
+    transition: max-height 500ms ease;
+    cursor: pointer;
+    vertical-align: top; }
+    #GROUND .ground-block.BIG > .block-content .form_address .shell_form {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 50px;
+      background-image: linear-gradient(transparent, white);
+      -webkit-transition: height 500ms ease;
+      -moz-transition: height 500ms ease;
+      -ms-transition: height 500ms ease;
+      -o-transition: height 500ms ease;
+      transition: height 500ms ease; }
+    #GROUND .ground-block.BIG > .block-content .form_address .title {
       font-size: 14px;
       color: #999;
       text-align: left;
       padding-bottom: 5px; }
-    #GROUND .ground-block.BIG > .block-content .edit_address .field_shell input[type=text], #GROUND .ground-block.BIG > .block-content .edit_address .field_shell input[type=email], #GROUND .ground-block.BIG > .block-content .edit_address .field_shell input[type=password], #GROUND .ground-block.BIG > .block-content .edit_address .field_shell input[type=number], #GROUND .ground-block.BIG > .block-content .edit_address .field_shell select, #GROUND .ground-block.BIG > .block-content .edit_address .field_shell textarea {
+    #GROUND .ground-block.BIG > .block-content .form_address .field_shell input[type=text], #GROUND .ground-block.BIG > .block-content .form_address .field_shell input[type=email], #GROUND .ground-block.BIG > .block-content .form_address .field_shell input[type=password], #GROUND .ground-block.BIG > .block-content .form_address .field_shell input[type=number], #GROUND .ground-block.BIG > .block-content .form_address .field_shell select, #GROUND .ground-block.BIG > .block-content .form_address .field_shell textarea {
       width: 90%; }
   #GROUND .ground-block.BIG > .block-content .field_shell input[type=text], #GROUND .ground-block.BIG > .block-content .field_shell input[type=email], #GROUND .ground-block.BIG > .block-content .field_shell input[type=password], #GROUND .ground-block.BIG > .block-content .field_shell input[type=number], #GROUND .ground-block.BIG > .block-content .field_shell select, #GROUND .ground-block.BIG > .block-content .field_shell button, #GROUND .ground-block.BIG > .block-content .field_shell textarea {
     width: auto; }
@@ -627,7 +657,7 @@ img {
   #GROUND .ground-block.BIG > .block-content {
     width: 660px;
     margin: 30px auto; }
-    #GROUND .ground-block.BIG > .block-content .edit_address {
+    #GROUND .ground-block.BIG > .block-content .form_address {
       display: inline-block;
       width: 215px; } }
 

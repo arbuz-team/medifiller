@@ -19,24 +19,46 @@ export let Form_Controllers = function(content_loader_controllers)
    *    Defining private functions
    */
 
-  let prepare_form_to_send = function(event)
-  {
-    let
-      form_action = $(this).attr('action'),
-      protocol = form_action.substring(0, 4);
+  let
 
-    if(protocol !== 'http')
+    prepare_form_to_send = function(event)
     {
-      event.preventDefault();
-
       let
-        form_name = $(this).data('name'),
-        url = $(this).attr('action'),
-        form_object = $(this).serialize_object();
+        form_action = $(this).attr('action'),
+        protocol = form_action.substring(0, 4);
 
-      form_models.send(form_name, url, form_object);
-    }
-  };
+      if(protocol !== 'http')
+      {
+        event.preventDefault();
+
+        let
+          form_name = $(this).data('name'),
+          url = $(this).attr('action'),
+          form_object = $(this).serialize_object();
+
+        form_models.send(form_name, url, form_object);
+      }
+    },
+
+
+    show_hide_form_address = function()
+    {
+      let $element = $(this).parents('.form_address');
+      event.stopPropagation();
+
+      if($element.hasClass('visible'))
+        $element.removeClass('visible');
+      else
+        $element.addClass('visible');
+    },
+
+
+    show_form_address = function()
+    {
+      event.stopPropagation();
+
+      $(this).addClass('visible');
+    };
 
 
   /**
@@ -46,9 +68,18 @@ export let Form_Controllers = function(content_loader_controllers)
   this.define = function()
   {
     let $container = $(content_loader_controllers.container);
-
+    
     $('form', $container).submit(prepare_form_to_send);
 
+    $('.form_address', $container).click(show_form_address);
+
+    $('.form_address .title', $container).click(show_hide_form_address);
+
+    console.log('__1');
+    console.log($('.form_address', $container));
+    console.log('__2');
+    console.log($('.form_address > .title', $container));
+    
     validator.define($container);
     hide_form.define($container);
     auto_form.define($container);

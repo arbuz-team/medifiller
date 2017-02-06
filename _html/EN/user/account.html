@@ -36,46 +36,50 @@
     <div class="title"> Edit addresses </div>
 
     {% for id_address, edit_form_address in edit_forms_address.items %}
-    <div class="edit_address">
-      <form method="post" action="" data-name="{{ form_name_edit }}_{{ id_address }}" data-type="user_address" data-test="yes">
+        <div class="form_address">
+            <form method="post" action="" data-name="{{ form_name_edit }}_{{ id_address }}" data-type="user_address" data-test="yes">
 
-        <div class="title"> Address {{ id_address }} </div>
-        {% for address in edit_form_address %}
+                <div class="shell_form"></div>
 
-          <div>
-            {{ address }}
-            {{ address.errors }}
-          </div>
+                <div class="title"> Address {{ id_address }} </div>
 
-        {% endfor %}
+                {% for address in edit_form_address %}
 
-        <div>
-          <button disabled type="submit"> Update </button>
-          <button class="post_button" data-name="delete_address" data-value="{{ id_address }}" type="button"> Delete </button>
+                    {{ address }}
+                    {{ address.errors }}
+
+                {% endfor %}
+
+                <div>
+                    <button disabled type="submit"> Update </button>
+                    <button class="post_button" type="button"
+                            data-name="delete_address"
+                            data-value="{{ id_address }}"> Delete </button>
+                </div>
+
+            </form>
         </div>
-
-      </form>
-    </div>
     {% endfor %}
 
-    <div class="edit_address">
-      <form method="post" action="" data-name="{{ form_name_new }}" data-type="user_address" data-test="yes">
+    <div class="form_address">
+        <form method="post" action="" data-name="{{ form_name_new }}" data-type="user_address" data-test="yes">
 
-        <div class="title"> Add new address </div>
-        {% for address in new_form_address %}
+            <div class="shell_form"></div>
 
-          <div>
-            {{ address }}
-            {{ address.errors }}
-          </div>
+            <div class="title"> Add new address </div>
 
-        {% endfor %}
+            {% for address in new_form_address %}
 
-        <div>
-          <button disabled type="submit"> Add address </button>
-        </div>
+                {{ address }}
+                {{ address.errors }}
 
-      </form>
+            {% endfor %}
+
+            <div>
+                <button disabled type="submit"> Add address </button>
+            </div>
+
+        </form>
     </div>
   
   </div>
