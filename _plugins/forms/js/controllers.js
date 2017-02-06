@@ -25,6 +25,9 @@ export let Form_Controllers = function(content_loader_controllers)
     {
       let
         form_action = $(this).attr('action'),
+        protocol;
+
+      if(typeof form_action === 'string')
         protocol = form_action.substring(0, 4);
 
       if(protocol !== 'http')
