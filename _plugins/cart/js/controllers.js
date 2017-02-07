@@ -35,7 +35,20 @@ let
   },
   cart_motion_controllers = new Plugins_Motion_Controllers(config_motion),
 
-  cart_form_controllers = new Form_Controllers(cart_loader_controllers);
+  cart_form_controllers = new Form_Controllers(cart_loader_controllers),
+
+
+  manage_key = function(event)
+  {
+    if(event.keyCode === 27)
+      cart_motion_controllers.plugin_close();
+
+    if(event.ctrlKey && event.shiftKey && event.keyCode === 88)
+    {
+      event.preventDefault();
+      cart_motion_controllers.plugin_open();
+    }
+  };
 
 
 /**
@@ -46,8 +59,14 @@ export let
 
   define = function()
   {
-    cart_motion_controllers.define();
     cart_form_controllers.define();
+    cart_motion_controllers.define();
+
+
+
+    $('.cart-close', $(config_motion.container)).click(cart_motion_controllers.plugin_close);
+
+    $('body').keydown(manage_key);
   },
 
 

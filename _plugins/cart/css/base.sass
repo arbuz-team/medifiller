@@ -1,6 +1,6 @@
 
-$cart--width: 300px
-$cart-title--height: 100px
+$cart--width: 400px
+$cart-title--height: 70px
 
 $cart--background-color: $g-color_4
 $cart--color: $g-color_0
@@ -20,14 +20,51 @@ $cart--color: $g-color_0
 
   >.cart
 
+    >.cart-close
+      position: absolute
+      top: 20px
+      right: 20px
+
+      width: 20px
+      height: 20px
+
+      text-align: center
+      cursor: pointer
+
+      >i
+        display: block
+        width: 20px
+        height: 20px
+
+        opacity: 0.7
+        +background-img('/_static/img/close.gif', 100%, center)
+
+      >span
+        position: relative
+        left: -2px
+        top: -3px
+
+        color: #999
+        font-size: 16px
+
+    >.cart-close:hover
+
+      >i
+        opacity: 1
+
+      >span
+        color: $g-color_0
+
+
     >.cart-title
       display: block
       height: $cart-title--height
       line-height: $cart-title--height
 
       text-align: center
-      font-size: 20px
+      font-size: 18px
       font-weight: bold
+      border-bottom: $g-style_border
 
     >.cart-list
       display: block

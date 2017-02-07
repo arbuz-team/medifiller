@@ -141,4 +141,6 @@ export let Plugins_Motion_Controllers = function(config)
 
 
   this.plugin_open = plugin_motion_views.plugin_open;
+
+  this.plugin_close = plugin_motion_views.plugin_close;
 };
