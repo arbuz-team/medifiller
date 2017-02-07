@@ -269,58 +269,39 @@ img {
     height: 300px; } }
 
 @media (min-width: 650px) {
-  #GROUND > .ground > .ground-block > .block-content.contact > .block-content-left, #GROUND > .ground > .ground-block > .block-content.contact > .block-content-right {
+  #GROUND > .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-left, #GROUND > .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-right {
     display: inline-block; }
-  #GROUND > .ground > .ground-block > .block-content.contact > .block-content-left {
-    width: 50%; }
-  #GROUND > .ground > .ground-block > .block-content.contact > .block-content-right {
+  #GROUND > .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-left {
+    width: 47%; }
+  #GROUND > .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-right {
     position: absolute;
     top: 30px;
     right: 30px;
-    width: 50%;
+    width: 47%;
     height: 300px;
     margin-top: 0; } }
 
 @media (min-width: 1000px) {
   #GROUND {
     margin-left: 250px; }
-    #GROUND > .ground > .ground-block > .block-content.contact > .block-content-left {
+    #GROUND > .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-left {
       width: 400px; }
-    #GROUND > .ground > .ground-block > .block-content.contact > .block-content-right {
+    #GROUND > .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-right {
       width: auto;
       left: 450px; } }
 
 @media (min-width: 1200px) {
-  #GROUND > .ground > .ground-block > .block-content.contact > .block-content-right {
+  #GROUND > .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-right {
     height: 500px; } }
 
-@media (min-width: 500px) {
-  #GROUND > .ground.smaller > .ground-block > .block-content.contact > .block-content-right {
-    height: 300px; } }
-
-@media (min-width: 650px) {
-  #GROUND > .ground.smaller > .ground-block > .block-content.contact > .block-content-left, #GROUND > .ground.smaller > .ground-block > .block-content.contact > .block-content-right {
-    display: inline-block; }
-  #GROUND > .ground.smaller > .ground-block > .block-content.contact > .block-content-left {
-    width: 50%; }
+@media (min-width: 1600px) {
   #GROUND > .ground.smaller > .ground-block > .block-content.contact > .block-content-right {
     position: absolute;
+    left: 415px;
     top: 30px;
     right: 30px;
-    width: 50%;
-    height: 300px;
+    height: 500px;
     margin-top: 0; } }
-
-@media (min-width: 1000px) {
-  #GROUND > .ground.smaller > .ground-block > .block-content.contact > .block-content-left {
-    width: 400px; }
-  #GROUND > .ground.smaller > .ground-block > .block-content.contact > .block-content-right {
-    width: auto;
-    left: 450px; } }
-
-@media (min-width: 1200px) {
-  #GROUND > .ground.smaller > .ground-block > .block-content.contact > .block-content-right {
-    height: 500px; } }
 
 .block-link_tiles {
   background-color: #f2f2f2; }
