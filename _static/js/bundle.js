@@ -863,6 +863,8 @@
 	  var plugin_motion_views = new _views.Plugins_Motion_Views(config),
 	      settings = plugin_motion_views.models.settings;
 	
+	  this.views = plugin_motion_views;
+	
 	  ///////////////////////////////
 	
 	  var swipe_open = function swipe_open() {
@@ -875,6 +877,13 @@
 	    var y = event.gesture.center.y - event.gesture.distance;
 	
 	    if (y <= 70) swipe_open();
+	  },
+	      pre_plugin_close = function pre_plugin_close() {
+	    var container = settings.container,
+	        $container = $(container),
+	        $window = $(window);
+	
+	    if (container !== '#CART') plugin_motion_views.plugin_close();else if ($container.outerWidth() === $window.width()) plugin_motion_views.plugin_close();
 	  },
 	      set_start_position = function set_start_position() {
 	    var $container = $(settings.container),
@@ -930,16 +939,17 @@
 	
 	      $body.click(plugin_motion_views.plugin_close);
 	      $hide.click(plugin_motion_views.plugin_close);
-	      $window.resize(plugin_motion_views.plugin_close);
-	      $window.resize(set_user_select);
-	
-	      window.APP.add_own_event('plugins_close', plugin_motion_views.plugin_close);
-	
 	      $container.click(stop_propagation);
 	
-	      window.APP.throw_event(window.EVENTS.plugins.close);
 	      set_start_position();
-	    }
+	    } else if ($container.outerWidth() === $window.width()) set_start_position();
+	
+	    $window.resize(set_start_position);
+	    $window.resize(plugin_motion_views.plugin_close);
+	    $window.resize(set_user_select);
+	
+	    window.APP.add_own_event('plugins_close', pre_plugin_close);
+	    window.APP.throw_event(window.EVENTS.plugins.close);
 	
 	    set_user_select();
 	  };
@@ -949,8 +959,8 @@
 	  };
 	
 	  this.plugin_open = plugin_motion_views.plugin_open;
-	
 	  this.plugin_close = plugin_motion_views.plugin_close;
+	  this.is_open = plugin_motion_views.is_open;
 	}; /**
 	    * Created by mrskull on 06.01.17.
 	    */
@@ -973,6 +983,9 @@
 	      css = {};
 	
 	  this.models = models;
+	  this.is_open = function () {
+	    return models.check_is_open();
+	  };
 	
 	  this.plugin_open = function (event) {
 	    if (models.check_possibility_of_opening()) {
@@ -989,7 +1002,7 @@
 	
 	      var width = $(container).outerWidth();
 	
-	      if (container === '#CART') $('#GROUND > .ground').stop().animate({ 'margin-right': width }, duration_open);
+	      if (container === '#CART') $('#GROUND > .ground').addClass('smaller').stop().animate({ 'margin-right': width }, duration_open);
 	    }
 	  };
 	
@@ -1009,7 +1022,7 @@
 	        models.change_possibility_of_opening(true);
 	      }).children(hide).fadeOut(duration_close);
 	
-	      if (container === '#CART') $('#GROUND > .ground').stop().animate({ 'margin-right': 0 }, duration_close);
+	      if (container === '#CART') $('#GROUND > .ground').removeClass('smaller').stop().animate({ 'margin-right': 0 }, duration_close);
 	    }
 	  };
 	}; /**
@@ -1158,14 +1171,15 @@
 	  };
 	
 	  this.check_possibility_of_opening = function () {
-	    if (check_by_sizes()) if (_structure.data_controller.get('can_do_open_plugin')) return this.check_is_close();
+	    if (check_by_sizes()) if (_structure.data_controller.get('can_do_open_plugin')) return this.check_is_close();else if (this.settings.container === '#CART') return this.check_is_close();
 	
 	    return false;
 	  };
 	
 	  this.change_possibility_of_opening = function (bool) {
 	    this.state.is_open = !bool;
-	    _structure.data_controller.change('can_do_open_plugin', bool);
+	
+	    if (this.settings.container !== '#CART') _structure.data_controller.change('can_do_open_plugin', bool);
 	  };
 	}; /**
 	    * Created by mrskull on 06.01.17.
@@ -2150,7 +2164,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.reload = exports.plugin_open = exports.start = exports.define = undefined;
+	exports.reload = exports.open_or_close = exports.plugin_close = exports.plugin_open = exports.start = exports.define = undefined;
 	
 	var _controllers = __webpack_require__(12);
 	
@@ -2188,7 +2202,7 @@
 	
 	  if (event.ctrlKey && event.shiftKey && event.keyCode === 88) {
 	    event.preventDefault();
-	    cart_motion_controllers.plugin_open();
+	    if (cart_motion_controllers.is_open()) cart_motion_controllers.plugin_close();else cart_motion_controllers.plugin_open();
 	  }
 	};
 	
@@ -2212,8 +2226,10 @@
 	  cart_loader_controllers.define();
 	  cart_motion_controllers.start();
 	},
-	    plugin_open = exports.plugin_open = function plugin_open() {
-	  cart_motion_controllers.plugin_open();
+	    plugin_open = exports.plugin_open = cart_motion_controllers.plugin_open,
+	    plugin_close = exports.plugin_close = cart_motion_controllers.plugin_close,
+	    open_or_close = exports.open_or_close = function open_or_close() {
+	  if (cart_motion_controllers.is_open()) plugin_close();else plugin_open();
 	},
 	    reload = exports.reload = function reload() {
 	  cart_motion_controllers.plugin_open();
@@ -2277,7 +2293,7 @@
 	var define = exports.define = function define() {
 	  navigation_motion_controllers.define();
 	
-	  $('#NAVIGATION .navigation-secondary-cart > *').click(cart_controllers.plugin_open);
+	  $('#NAVIGATION .navigation-secondary-cart > *').click(cart_controllers.open_or_close);
 	},
 	    start = exports.start = function start() {
 	  // -- Loader configuration
@@ -2346,9 +2362,9 @@
 	
 	  $('#HEADER .navigation-mini-navigation > button').click(navigation_controllers.plugin_open);
 	
-	  $('#HEADER .navigation-mini-cart > button').click(cart_controllers.plugin_open);
+	  $('#HEADER .navigation-mini-cart > button').click(cart_controllers.open_or_close);
 	
-	  $('#HEADER .navigation-secondary-cart > *').click(cart_controllers.plugin_open);
+	  $('#HEADER .navigation-secondary-cart > *').click(cart_controllers.open_or_close);
 	},
 	    start = exports.start = function start() {
 	  header_loader_events = new _controllers.Plugins_Loader_Controllers(config_loader);

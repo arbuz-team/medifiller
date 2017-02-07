@@ -185,6 +185,8 @@ export let Plugins_Motion_Models = function(config)
     if(check_by_sizes())
       if(data_controller.get('can_do_open_plugin'))
         return this.check_is_close();
+      else if(this.settings.container === '#CART')
+        return this.check_is_close();
 
     return false;
   };
@@ -193,7 +195,9 @@ export let Plugins_Motion_Models = function(config)
   this.change_possibility_of_opening = function(bool)
   {
     this.state.is_open = !bool;
-    data_controller.change('can_do_open_plugin', bool);
+
+    if(this.settings.container !== '#CART')
+      data_controller.change('can_do_open_plugin', bool);
   };
 };
 

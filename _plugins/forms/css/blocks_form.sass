@@ -99,9 +99,29 @@
       width: auto
 
 
-@media (min-width: 700px)
+@media (min-width: 650px)
 
-  #GROUND .ground-block.BIG > .block-content
+  #GROUND >.ground:not(.smaller) .ground-block.BIG > .block-content
+    width: 660px
+    margin: 30px auto
+
+    .form_address
+      display: inline-block
+      width: 215px
+      max-height: 700px
+      cursor: auto
+
+      .shell_form
+        height: 0
+
+      .title
+        color: #999
+        cursor: auto
+
+
+@media (min-width: 1300px)
+
+  #GROUND >.ground.smaller .ground-block.BIG > .block-content
     width: 660px
     margin: 30px auto
 

@@ -12,6 +12,10 @@ export let Plugins_Motion_Views = function(config)
     css = {};
 
   this.models = models;
+  this.is_open = function()
+  {
+    return models.check_is_open();
+  };
 
 
   this.plugin_open = function(event)
@@ -38,6 +42,7 @@ export let Plugins_Motion_Views = function(config)
 
       if(container === '#CART')
         $('#GROUND > .ground')
+          .addClass('smaller')
           .stop()
           .animate({'margin-right': width}, duration_open);
     }
@@ -75,6 +80,7 @@ export let Plugins_Motion_Views = function(config)
 
       if(container === '#CART')
         $('#GROUND > .ground')
+          .removeClass('smaller')
           .stop()
           .animate({'margin-right': 0}, duration_close);
     }

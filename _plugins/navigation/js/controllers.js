@@ -45,7 +45,7 @@ export let
   {
     navigation_motion_controllers.define();
 
-    $('#NAVIGATION .navigation-secondary-cart > *').click(cart_controllers.plugin_open);
+    $('#NAVIGATION .navigation-secondary-cart > *').click(cart_controllers.open_or_close);
   },
 
 

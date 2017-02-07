@@ -294,6 +294,34 @@ img {
   #GROUND > .ground > .ground-block > .block-content.contact > .block-content-right {
     height: 500px; } }
 
+@media (min-width: 500px) {
+  #GROUND > .ground.smaller > .ground-block > .block-content.contact > .block-content-right {
+    height: 300px; } }
+
+@media (min-width: 650px) {
+  #GROUND > .ground.smaller > .ground-block > .block-content.contact > .block-content-left, #GROUND > .ground.smaller > .ground-block > .block-content.contact > .block-content-right {
+    display: inline-block; }
+  #GROUND > .ground.smaller > .ground-block > .block-content.contact > .block-content-left {
+    width: 50%; }
+  #GROUND > .ground.smaller > .ground-block > .block-content.contact > .block-content-right {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 50%;
+    height: 300px;
+    margin-top: 0; } }
+
+@media (min-width: 1000px) {
+  #GROUND > .ground.smaller > .ground-block > .block-content.contact > .block-content-left {
+    width: 400px; }
+  #GROUND > .ground.smaller > .ground-block > .block-content.contact > .block-content-right {
+    width: auto;
+    left: 450px; } }
+
+@media (min-width: 1200px) {
+  #GROUND > .ground.smaller > .ground-block > .block-content.contact > .block-content-right {
+    height: 500px; } }
+
 .block-link_tiles {
   background-color: #f2f2f2; }
   .block-link_tiles > li {
@@ -395,8 +423,8 @@ img {
     width: auto; }
     .products.tiles > ul .product {
       width: auto;
-      max-width: 400px;
-      min-height: 300px;
+      max-width: 300px;
+      min-height: 220px;
       margin: 0;
         margin-left: auto;
         margin-right: auto;
@@ -424,7 +452,7 @@ img {
           height: 38px;
           line-height: 38px; }
 
-@media (min-width: 768px) {
+@media (min-width: 650px) {
   .products.tiles > ul {
     font-size: 0;
     text-align: center; }
@@ -653,18 +681,33 @@ img {
   #GROUND .ground-block.BIG > .block-content .field_shell input[type=text], #GROUND .ground-block.BIG > .block-content .field_shell input[type=email], #GROUND .ground-block.BIG > .block-content .field_shell input[type=password], #GROUND .ground-block.BIG > .block-content .field_shell input[type=number], #GROUND .ground-block.BIG > .block-content .field_shell select, #GROUND .ground-block.BIG > .block-content .field_shell button, #GROUND .ground-block.BIG > .block-content .field_shell textarea {
     width: auto; }
 
-@media (min-width: 700px) {
-  #GROUND .ground-block.BIG > .block-content {
+@media (min-width: 650px) {
+  #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content {
     width: 660px;
     margin: 30px auto; }
-    #GROUND .ground-block.BIG > .block-content .form_address {
+    #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content .form_address {
       display: inline-block;
       width: 215px;
       max-height: 700px;
       cursor: auto; }
-      #GROUND .ground-block.BIG > .block-content .form_address .shell_form {
+      #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content .form_address .shell_form {
         height: 0; }
-      #GROUND .ground-block.BIG > .block-content .form_address .title {
+      #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content .form_address .title {
+        color: #999;
+        cursor: auto; } }
+
+@media (min-width: 1300px) {
+  #GROUND > .ground.smaller .ground-block.BIG > .block-content {
+    width: 660px;
+    margin: 30px auto; }
+    #GROUND > .ground.smaller .ground-block.BIG > .block-content .form_address {
+      display: inline-block;
+      width: 215px;
+      max-height: 700px;
+      cursor: auto; }
+      #GROUND > .ground.smaller .ground-block.BIG > .block-content .form_address .shell_form {
+        height: 0; }
+      #GROUND > .ground.smaller .ground-block.BIG > .block-content .form_address .title {
         color: #999;
         cursor: auto; } }
 
@@ -748,11 +791,11 @@ img {
   top: 80px;
   right: -400px;
   bottom: 0;
-  min-width: 400px;
-  width: 400px;
+  width: 100%;
   background-color: #ffffff;
   color: #382B1B;
-  border-left: 1px solid #e8e8e8; }
+  border-left: 1px solid #e8e8e8;
+  z-index: 59; }
   #CART > .cart > .cart-close {
     position: absolute;
     top: 20px;
@@ -794,6 +837,10 @@ img {
     padding: 10px 15px; }
     #CART > .cart > .cart-list > li > div {
       display: inline-block; }
+
+@media (min-width: 750px) {
+  #CART {
+    width: 400px; } }
 
 @media (min-width: 1000px) {
   #CART {

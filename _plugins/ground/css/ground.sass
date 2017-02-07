@@ -189,3 +189,54 @@ $ground--border-color: transparent
 
     >.block-content-right
       height: 500px
+
+
+//-----------------------------------------
+//	EKRAN KOMPUTERA z wysuniętym koszykiem
+//-----------------------------------------
+
+@media (min-width: 500px)
+
+  #GROUND > .ground.smaller > .ground-block > .block-content.contact
+
+    >.block-content-right
+      height: 300px
+
+
+@media (min-width: 650px)
+
+  #GROUND > .ground.smaller > .ground-block > .block-content.contact
+
+    >.block-content-left, >.block-content-right
+      display: inline-block
+
+    >.block-content-left
+      width: 50%
+
+    >.block-content-right
+      position: absolute
+      top: 30px
+      right: 30px
+      width: 50%
+      height: 300px
+      margin-top: 0
+
+
+@media (min-width: 1000px)
+
+  #GROUND >.ground.smaller >.ground-block >.block-content.contact
+
+      >.block-content-left
+        width: 400px
+
+      >.block-content-right
+        width: auto
+        left: 450px
+
+
+@media (min-width: 1200px)
+
+  #GROUND > .ground.smaller > .ground-block > .block-content.contact
+
+    >.block-content-right
+      height: 500px

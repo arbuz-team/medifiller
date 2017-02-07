@@ -11,6 +11,8 @@ export let Plugins_Motion_Controllers = function(config)
     plugin_motion_views = new Plugins_Motion_Views(config),
     settings = plugin_motion_views.models.settings;
 
+  this.views = plugin_motion_views;
+
   ///////////////////////////////
 
   let
@@ -35,6 +37,20 @@ export let Plugins_Motion_Controllers = function(config)
 
       if(y <= 70)
         swipe_open();
+    },
+
+
+    pre_plugin_close = function()
+    {
+      let
+        container = settings.container,
+        $container = $(container),
+        $window = $(window);
+
+      if(container !== '#CART')
+        plugin_motion_views.plugin_close();
+      else if($container.outerWidth() === $window.width())
+        plugin_motion_views.plugin_close();
     },
 
 
@@ -119,16 +135,19 @@ export let Plugins_Motion_Controllers = function(config)
 
       $body.click(plugin_motion_views.plugin_close);
       $hide.click(plugin_motion_views.plugin_close);
-      $window.resize(plugin_motion_views.plugin_close);
-      $window.resize(set_user_select);
-
-      window.APP.add_own_event('plugins_close', plugin_motion_views.plugin_close);
-
       $container.click(stop_propagation);
 
-      window.APP.throw_event(window.EVENTS.plugins.close);
       set_start_position();
     }
+    else if($container.outerWidth() === $window.width())
+      set_start_position();
+
+    $window.resize(set_start_position);
+    $window.resize(plugin_motion_views.plugin_close);
+    $window.resize(set_user_select);
+
+    window.APP.add_own_event('plugins_close', pre_plugin_close);
+    window.APP.throw_event(window.EVENTS.plugins.close);
 
     set_user_select();
   };
@@ -141,6 +160,6 @@ export let Plugins_Motion_Controllers = function(config)
 
 
   this.plugin_open = plugin_motion_views.plugin_open;
-
   this.plugin_close = plugin_motion_views.plugin_close;
+  this.is_open = plugin_motion_views.is_open;
 };

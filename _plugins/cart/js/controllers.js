@@ -46,7 +46,10 @@ let
     if(event.ctrlKey && event.shiftKey && event.keyCode === 88)
     {
       event.preventDefault();
-      cart_motion_controllers.plugin_open();
+      if(cart_motion_controllers.is_open())
+        cart_motion_controllers.plugin_close();
+      else
+        cart_motion_controllers.plugin_open();
     }
   };
 
@@ -62,8 +65,6 @@ export let
     cart_form_controllers.define();
     cart_motion_controllers.define();
 
-
-
     $('.cart-close', $(config_motion.container)).click(cart_motion_controllers.plugin_close);
 
     $('body').keydown(manage_key);
@@ -77,9 +78,18 @@ export let
   },
 
 
-  plugin_open = function()
+  plugin_open = cart_motion_controllers.plugin_open,
+
+
+  plugin_close = cart_motion_controllers.plugin_close,
+
+
+  open_or_close = function()
   {
-    cart_motion_controllers.plugin_open();
+    if(cart_motion_controllers.is_open())
+      plugin_close();
+    else
+      plugin_open();
   },
 
 

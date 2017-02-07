@@ -36,9 +36,9 @@ export let
 
     $('#HEADER .navigation-mini-navigation > button').click(navigation_controllers.plugin_open);
 
-    $('#HEADER .navigation-mini-cart > button').click(cart_controllers.plugin_open);
+    $('#HEADER .navigation-mini-cart > button').click(cart_controllers.open_or_close);
 
-    $('#HEADER .navigation-secondary-cart > *').click(cart_controllers.plugin_open);
+    $('#HEADER .navigation-secondary-cart > *').click(cart_controllers.open_or_close);
   },
 
 
