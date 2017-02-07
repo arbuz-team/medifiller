@@ -1,6 +1,7 @@
 from arbuz.views import *
 from cart.models import *
 from payment.forms import *
+from payment.models import *
 from arbuz.settings import *
 
 from django.views.decorators.csrf import csrf_exempt
@@ -23,16 +24,20 @@ class PayPal(Dynamic_Base):
             if ipn.receiver_email != PAYPAL_RECEIVER_EMAIL:
                 return
 
-            user = User.objects.get(unique=ipn.custom)
-            cart = Cart.objects.filter(user=user)
+            payment = Payment.objects.get(pk=ipn.custom)
+            cart = Product_In_Payment.objects.filter(payment=payment)
 
             # check amount paid
-            if int(ipn.payment_gross) != Payment_Manager.Get_Total_Price(user):
+            if ipn.mc_gross != payment.total_price:
                 return
 
-            for in_cart in cart:
-                in_cart.approved = True
-                in_cart.save()
+            # check currency
+            if ipn.currency_code != payment.currency:
+                return
+
+            for in_payment in cart:
+                in_payment.product.approved = True
+                in_payment.product.save()
 
     def Create_PayPal_From(self):
 
@@ -41,8 +46,8 @@ class PayPal(Dynamic_Base):
             'business':         PAYPAL_RECEIVER_EMAIL,
             'item_name':        'sungate',
             'amount':           self.content['total_price'],
-            'custom':           self.content['user'].unique,
-            # 'invoice':        'unique-invoice-id',  # id faktury
+            'custom':           self.content['payment'],
+            'currency_code':    self.request.session['translator_currency'],
 
             'notify_url':       self.Get_Urls('paypal-ipn', current_language=True),
             'return':           self.Get_Urls('payment.apply', current_language=True),
@@ -66,24 +71,21 @@ class DotPay(Dynamic_Base):
         if request.method == 'POST':
             if request.POST['operation_status'] == 'completed':
 
-                unique = request.POST['control']
-                user = User.objects.get(unique=unique)
-                cart = Cart.objects.filter(user=user)
-                total_price = Payment_Manager.Get_Total_Price(user)
-                currency = request.session['translator_currency']
+                payment = Payment.objects.get(pk=request.POST['control'])
+                cart = Product_In_Payment.objects.filter(payment=payment)
 
                 if request.POST['id'] != DOTPAY_RECEIVER_ID:
                     return HttpResponse('NOK')
 
-                if request.POST['operation_currency'] != currency:
+                if request.POST['operation_currency'] != payment.currency:
                     return HttpResponse('NOK')
 
-                if float(request.POST['operation_amount']) != total_price:
+                if float(request.POST['operation_amount']) != payment.total_price:
                     return HttpResponse('NOK')
 
-                for in_cart in cart:
-                    in_cart.approved = True
-                    in_cart.save()
+                for in_payment in cart:
+                    in_payment.product.approved = True
+                    in_payment.product.save()
 
                 return HttpResponse('OK')
 
@@ -96,7 +98,7 @@ class DotPay(Dynamic_Base):
             'amount':       self.content['total_price'],
             'currency':     self.request.session['translator_currency'],
             'description':  'Opis produktu',
-            'control':      self.content['user'].unique,
+            'control':      self.content['payment'],
 
             'ch_lock':      0,
             'channel':      0,
@@ -129,11 +131,31 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
 
         return total / 100
 
+    def Save_Payment(self):
+
+        payment = Payment\
+        (
+            user=self.content['user'],
+            total_price=self.content['total_price'],
+            currency=self.request.session['translator_currency']
+        )
+
+        payment.save()
+        self.content['payment'] = payment.pk
+        for product in self.content['cart']:
+
+            Product_In_Payment\
+            (
+                payment=payment,
+                product=product
+            )
+
     def Manage_Content_Ground(self):
 
         self.content['user'] = User.objects.get(unique=self.request.session['user_unique'])
         self.content['cart'] = Cart.objects.filter(user=self.content['user'])
         self.content['total_price'] = Payment_Manager.Get_Total_Price(self.content['user'])
+        self.Save_Payment()
 
         self.content['paypal'] = self.Create_PayPal_From()
         self.content['dotpay'] = self.Create_DotPay_From()
