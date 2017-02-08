@@ -173,6 +173,7 @@ strong {
 
 img {
   display: inline-block;
+  max-width: 100%;
   position: relative;
   opacity: 0.4;
   z-index: 1; }
@@ -581,6 +582,51 @@ img {
 
 .field_shell .form_error {
   border: 1px solid #dd4b39 !important; }
+
+.field_shell .squaredThree {
+  width: 100%;
+  position: relative; }
+  .field_shell .squaredThree label.checkbox-field {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(top, #222 0%, #45484d 100%);
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.4); }
+    .field_shell .squaredThree label.checkbox-field:after {
+      content: '';
+      width: 9px;
+      height: 5px;
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      border: 3px solid #fcfff4;
+      border-top: none;
+      border-right: none;
+      background: transparent;
+      opacity: 0;
+      transform: rotate(-45deg); }
+    .field_shell .squaredThree label.checkbox-field:hover::after {
+      opacity: 0.3; }
+  .field_shell .squaredThree input[type=checkbox] {
+    visibility: hidden; }
+    .field_shell .squaredThree input[type=checkbox]:checked + label.checkbox-field:after {
+      opacity: 1; }
+
+.field_shell select {
+  background: url(http://www.stackoverflow.com/favicon.ico) 96% 15% no-repeat #eee;
+  min-width: 150px;
+  padding: 5px 35px 5px 5px;
+  font-size: 16px;
+  border: 1px solid #999;
+    border-bottom: #aaa;
+  height: 34px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; }
 
 #GROUND .ground-block > .block-content > .title, #GROUND .ground-block > .block-content form > .title {
   padding: 10px 0;
