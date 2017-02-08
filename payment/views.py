@@ -25,7 +25,8 @@ class PayPal(Dynamic_Base):
                 return
 
             payment = Payment.objects.get(pk=ipn.custom)
-            cart = Product_In_Payment.objects.filter(payment=payment)
+            product_in_payment = Product_In_Payment\
+                .objects.filter(payment=payment)
 
             # check amount paid
             if ipn.mc_gross != payment.total_price:
@@ -35,9 +36,9 @@ class PayPal(Dynamic_Base):
             if ipn.currency_code != payment.currency:
                 return
 
-            for in_payment in cart:
-                in_payment.product.approved = True
-                in_payment.product.save()
+            for in_payment in product_in_payment:
+                in_payment.approved = True
+                in_payment.save()
 
     def Create_PayPal_From(self):
 
@@ -72,7 +73,8 @@ class DotPay(Dynamic_Base):
             if request.POST['operation_status'] == 'completed':
 
                 payment = Payment.objects.get(pk=request.POST['control'])
-                cart = Product_In_Payment.objects.filter(payment=payment)
+                product_in_payment = Product_In_Payment\
+                    .objects.filter(payment=payment)
 
                 if request.POST['id'] != DOTPAY_RECEIVER_ID:
                     return HttpResponse('NOK')
@@ -83,9 +85,9 @@ class DotPay(Dynamic_Base):
                 if float(request.POST['operation_amount']) != payment.total_price:
                     return HttpResponse('NOK')
 
-                for in_payment in cart:
-                    in_payment.product.approved = True
-                    in_payment.product.save()
+                for in_payment in product_in_payment:
+                    in_payment.approved = True
+                    in_payment.save()
 
                 return HttpResponse('OK')
 
@@ -142,12 +144,12 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
 
         payment.save()
         self.content['payment'] = payment.pk
-        for product in self.content['cart']:
+        for in_cart in self.content['cart']:
 
             Product_In_Payment\
             (
                 payment=payment,
-                product=product
+                product=in_cart.product
             )
 
     def Manage_Content_Ground(self):

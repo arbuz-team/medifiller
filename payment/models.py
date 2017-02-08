@@ -1,6 +1,6 @@
 from django.db import models
 from user.models import User
-from cart.models import Cart
+from product.models import Product
 
 
 class Payment(models.Model):
@@ -15,7 +15,8 @@ class Payment(models.Model):
 class Product_In_Payment(models.Model):
 
     payment = models.ForeignKey(Payment)
-    product = models.ForeignKey(Cart)
+    product = models.ForeignKey(Product)
+    approved = models.BooleanField(default=False)
 
     def __str__(self):
         return self.product
