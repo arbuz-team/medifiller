@@ -29,11 +29,11 @@ class PayPal(Dynamic_Base):
                 .objects.filter(payment=payment)
 
             # check amount paid
-            if ipn.mc_gross != payment.total_price:
+            if str(ipn.mc_gross) != payment.total_price:
                 return
 
             # check currency
-            if ipn.currency_code != payment.currency:
+            if ipn.mc_currency != payment.currency:
                 return
 
             for in_payment in product_in_payment:
@@ -82,7 +82,7 @@ class DotPay(Dynamic_Base):
                 if request.POST['operation_currency'] != payment.currency:
                     return HttpResponse('NOK')
 
-                if float(request.POST['operation_amount']) != payment.total_price:
+                if request.POST['operation_amount'] != payment.total_price:
                     return HttpResponse('NOK')
 
                 for in_payment in product_in_payment:
@@ -131,7 +131,7 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
             if currency == 'pln':
                 total += in_cart.product.price_pln
 
-        return total / 100
+        return format(total / 100, '.2f')
 
     def Save_Payment(self):
 
@@ -150,7 +150,7 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
             (
                 payment=payment,
                 product=in_cart.product
-            )
+            ).save()
 
     def Manage_Content_Ground(self):
 

@@ -10,7 +10,7 @@ class Payment(models.Model):
     currency = models.CharField(max_length=3)
 
     def __str__(self):
-        return self.user
+        return self.user.username
 
 class Product_In_Payment(models.Model):
 
@@ -19,4 +19,4 @@ class Product_In_Payment(models.Model):
     approved = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.product
+        return self.product.details_en.name
