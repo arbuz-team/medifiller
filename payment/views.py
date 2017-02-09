@@ -1,5 +1,4 @@
 from arbuz.views import *
-from cart.models import *
 from payment.forms import *
 from payment.models import *
 from arbuz.settings import *
@@ -118,18 +117,12 @@ class DotPay(Dynamic_Base):
 
 class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
 
-    @staticmethod
-    def Get_Total_Price(user, currency='eur'):
-        cart = Cart.objects.filter(user=user)
+    def Get_Total_Price(self):
+        cart = self.request.session['cart_product']
         total = 0
 
-        for in_cart in cart:
-
-            if currency == 'eur':
-                total += in_cart.product.price_eur
-
-            if currency == 'pln':
-                total += in_cart.product.price_pln
+        for product in cart:
+            total += self.Get_Price(product, current_currency=True)
 
         return format(total / 100, '.2f')
 
@@ -144,7 +137,7 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
 
         payment.save()
         self.content['payment'] = payment.pk
-        for in_cart in self.content['cart']:
+        for in_cart in self.request.session['cart_product']:
 
             Product_In_Payment\
             (
@@ -155,8 +148,7 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
     def Manage_Content_Ground(self):
 
         self.content['user'] = User.objects.get(unique=self.request.session['user_unique'])
-        self.content['cart'] = Cart.objects.filter(user=self.content['user'])
-        self.content['total_price'] = Payment_Manager.Get_Total_Price(self.content['user'])
+        self.content['total_price'] = self.Get_Total_Price()
         self.Save_Payment()
 
         self.content['paypal'] = self.Create_PayPal_From()

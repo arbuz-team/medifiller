@@ -53,6 +53,23 @@ class Dynamic_Base:
 
         return urls
 
+    def Get_Price(self, product, currency=None, current_currency=False):
+
+        prices = \
+        {
+            'EUR': product.price_eur,
+            'PLN': product.price_pln,
+            'GBP': product.price_gbp
+        }
+
+        if currency:
+            return prices[currency]
+
+        if current_currency:
+            return prices[self.request.session['translator_currency']]
+
+        return prices
+
     @staticmethod
     def Generate_Image_Details(image_format):
 

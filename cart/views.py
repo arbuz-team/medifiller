@@ -1,5 +1,4 @@
 from arbuz.views import *
-from cart.models import *
 
 
 class Cart_Manager(Dynamic_Event_Menager):
@@ -8,8 +7,7 @@ class Cart_Manager(Dynamic_Event_Menager):
         pass
 
     def Manage_Content_Cart(self):
-        user = User.objects.get(unique=self.request.session['user_unique'])
-        self.content['cart'] = Cart.objects.filter(user=user)
+        self.content['cart'] = self.request.session['cart_product']
         return self.Render_HTML('cart/cart.html')
 
     def Manage_Content(self):
@@ -20,26 +18,24 @@ class Cart_Manager(Dynamic_Event_Menager):
         return super(Cart_Manager, self).Manage_Content()
 
     def Manage_Button_Append(self):
-        user = User.objects.get(unique=self.request.session['user_unique'])
         product = Product.objects.get(pk=self.request.POST['value'])
+        cart = self.request.session['cart_product'][:]
+        cart.append(product)
 
-        Cart(user=user, product=product, approved=False).save()
-
+        self.request.session['cart_product'] = cart
         return JsonResponse({'__button__': 'true'})
 
     def Manage_Button_Delete(self):
-        user = User.objects.get(unique=self.request.session['user_unique'])
         product = Product.objects.get(pk=self.request.POST['value'])
+        cart = self.request.session['cart_product'][:]
+        cart.remove(product)
 
-        cart = Cart.objects.get(user=user, product=product)
-        cart.delete()
-
+        self.request.session['cart_product'] = cart
         return JsonResponse({'__button__': 'true'})
 
     def Manage_Button_Clear(self):
-        user = User.objects.get(unique=self.request.session['user_unique'])
 
-        cart = Cart.objects.filter(user=user)
+        cart = self.request.session['cart_product'][:]
         for product in cart:
             product.delete()
 

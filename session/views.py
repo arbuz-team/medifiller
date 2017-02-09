@@ -85,6 +85,11 @@ class Session_Controller:
         if 'searcher_order_direction' not in self.request.session:
             self.request.session['searcher_order_direction'] = 'descending'
 
+    def Check_Session_Cart(self):
+
+        if 'cart_product' not in self.request.session:
+            self.request.session['cart_product'] = []
+
     def Check_Session(self):
 
         methods = getmembers(self, predicate=ismethod)
