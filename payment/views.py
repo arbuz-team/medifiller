@@ -118,10 +118,9 @@ class DotPay(Dynamic_Base):
 class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
 
     def Get_Total_Price(self):
-        cart = self.request.session['cart_product']
-        total = 0
 
-        for product in cart:
+        total = 0
+        for product in self.content['cart']:
             total += self.Get_Price(product, current_currency=True)
 
         return format(total / 100, '.2f')
@@ -137,17 +136,18 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
 
         payment.save()
         self.content['payment'] = payment.pk
-        for in_cart in self.request.session['cart_product']:
+        for product in self.request.session['cart_product']:
 
             Product_In_Payment\
             (
                 payment=payment,
-                product=in_cart.product
+                product=product
             ).save()
 
     def Manage_Content_Ground(self):
 
         self.content['user'] = User.objects.get(unique=self.request.session['user_unique'])
+        self.content['cart'] = self.request.session['cart_product']
         self.content['total_price'] = self.Get_Total_Price()
         self.Save_Payment()
 
