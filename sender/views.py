@@ -38,8 +38,18 @@ class Sender:
 
         self.Send_Email(title, recipient)
 
+    def Send_Payment_Approved(self, title, content, recipient):
+
+        html_name = self.language + '/sender/payment_approved.html'
+        html = render_to_string(html_name, content)
+
+        body = MIMEText(html, _subtype='html')
+        self.email_html.attach(body)
+
+        self.Send_Email(title, recipient)
+
     def Send_Email(self, title, recipient):
-        self.Attach_Image('_static/pluginy/arbuz/img/logo.png', 'logo')
+        self.Attach_Image('_static/img/logo.png', 'logo')
 
         email = EmailMessage \
                 (

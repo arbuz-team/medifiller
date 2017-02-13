@@ -30,6 +30,10 @@ class Form_Product(forms.ModelForm):
         price = self.cleaned_data['price_gbp']
         return self.Clean_Price(price, 'GBP')
 
+    def clean_price_usd(self):
+        price = self.cleaned_data['price_usd']
+        return self.Clean_Price(price, 'USD')
+
     def clean(self):
 
         if not self.request.session['product_details_en']:
@@ -60,6 +64,7 @@ class Form_Product(forms.ModelForm):
             'price_eur',
             'price_pln',
             'price_gbp',
+            'price_usd',
             'keywords',
         )
 
@@ -85,6 +90,12 @@ class Form_Product(forms.ModelForm):
                 }),
 
             'price_gbp': forms.NumberInput(
+                attrs=
+                {
+                    'step': '0.01'
+                }),
+
+            'price_usd': forms.NumberInput(
                 attrs=
                 {
                     'step': '0.01'

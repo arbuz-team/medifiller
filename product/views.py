@@ -247,6 +247,8 @@ class Edit_Product(Product_Elements):
             product.purpose = self.request.session['product_purpose']
             product.price_eur = self.content['form'].cleaned_data['price_eur']
             product.price_pln = self.content['form'].cleaned_data['price_pln']
+            product.price_gbp = self.content['form'].cleaned_data['price_gbp']
+            product.price_usd = self.content['form'].cleaned_data['price_usd']
             product.keywords = self.content['form'].cleaned_data['keywords']
             product.save()
 
@@ -278,17 +280,12 @@ class Delete_Product(Dynamic_Event_Menager):
         pass
 
     def Manage_Button(self):
-        product = Product.objects.get(pk=self.other_value['pk'])
-        product.delete()
+        Product.objects.get(pk=self.request.POST['value']).delete()
         return JsonResponse({'__button__': 'true'})
 
     @staticmethod
-    def Delete(request, pk):
-        return Delete_Product(request, only_root=True, other_value={'pk': pk}).HTML
-
-    @staticmethod
     def Launch(request):
-        pass
+        return Delete_Product(request, only_root=True).HTML
 
 
 
@@ -298,17 +295,12 @@ class Delete_Brand(Dynamic_Event_Menager):
         pass
 
     def Manage_Button(self):
-        brand = Brand.objects.get(pk=self.other_value['pk'])
-        brand.delete()
+        Brand.objects.get(pk=self.request.POST['value']).delete()
         return JsonResponse({'__button__': 'true'})
 
     @staticmethod
-    def Delete(request, pk):
-        return Delete_Brand(request, only_root=True, other_value={'pk': pk}).HTML
-
-    @staticmethod
     def Launch(request):
-        pass
+        return Delete_Brand(request, only_root=True).HTML
 
 
 
@@ -318,14 +310,9 @@ class Delete_Purpose(Dynamic_Event_Menager):
         pass
 
     def Manage_Button(self):
-        purpose = Purpose.objects.get(pk=self.other_value['pk'])
-        purpose.delete()
+        Purpose.objects.get(pk=self.request.POST['value']).delete()
         return JsonResponse({'__button__': 'true'})
 
     @staticmethod
-    def Delete(request, pk):
-        return Delete_Purpose(request, only_root=True, other_value={'pk': pk}).HTML
-
-    @staticmethod
     def Launch(request):
-        pass
+        return Delete_Purpose(request, only_root=True).HTML

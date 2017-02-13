@@ -147,9 +147,10 @@ class Sign_Up(Dynamic_Event_Menager):
     def Send_Activate_Link(self):
 
         activate_key = self.content['key'].decode("utf-8")
-        activate_url = self.request.build_absolute_uri().replace('register/', '')
-        activate_url = '{0}approved/{1}'.format(activate_url, activate_key)
         user_unique = self.request.session['user_unique']
+        activate_url = self.Get_Urls('user.approved',
+                 {'key': activate_key}, current_language=True)
+
         content = {}
 
         title = 'Confirm your new account.'

@@ -59,7 +59,8 @@ class Dynamic_Base:
         {
             'EUR': product.price_eur,
             'PLN': product.price_pln,
-            'GBP': product.price_gbp
+            'GBP': product.price_gbp,
+            'USD': product.price_usd
         }
 
         if currency:

@@ -1,7 +1,9 @@
-from abc import ABCMeta, abstractmethod
 from session.views import *
+from payment.base import *
 from translator.views import *
 from dialog.views import *
+
+from abc import ABCMeta, abstractmethod
 import re
 
 
@@ -111,12 +113,8 @@ class Checker(Dynamic_Base):
 
         return True
 
-    def Check_Secure_POST(self):
-
-        for key in self.request.POST:
-            if re.findall('<.*>', self.request.POST[key]):
-                return False
-
+    def Check_Payment(self):
+        Payment_Models_Menager.Check_Payment(self.request)
         return True
 
     def __init__(self, request):
@@ -178,7 +176,7 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
 
     def Update(self):
 
-        methods = getmembers(self, predicate=ismethod)
+        methods = getmembers(Updater(self.request), predicate=ismethod)
         methods = [method[0] for method in methods]
 
         for method in methods:

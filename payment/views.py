@@ -1,7 +1,7 @@
 from arbuz.views import *
-from payment.forms import *
-from payment.models import *
 from arbuz.settings import *
+from payment.forms import *
+from payment.base import *
 
 from django.views.decorators.csrf import csrf_exempt
 
@@ -18,14 +18,11 @@ class PayPal(Dynamic_Base):
         ipn = sender
 
         if ipn.payment_status == ST_PP_COMPLETED:
+            payment = Payment.objects.get(pk=ipn.custom)
 
             # check receiver
             if ipn.receiver_email != PAYPAL_RECEIVER_EMAIL:
                 return
-
-            payment = Payment.objects.get(pk=ipn.custom)
-            product_in_payment = Product_In_Payment\
-                .objects.filter(payment=payment)
 
             # check amount paid
             if str(ipn.mc_gross) != payment.total_price:
@@ -35,9 +32,8 @@ class PayPal(Dynamic_Base):
             if ipn.mc_currency != payment.currency:
                 return
 
-            for in_payment in product_in_payment:
-                in_payment.approved = True
-                in_payment.save()
+            payment.approved = True
+            payment.save()
 
     def Create_PayPal_From(self):
 
@@ -70,10 +66,7 @@ class DotPay(Dynamic_Base):
         Check_Session(request)
         if request.method == 'POST':
             if request.POST['operation_status'] == 'completed':
-
                 payment = Payment.objects.get(pk=request.POST['control'])
-                product_in_payment = Product_In_Payment\
-                    .objects.filter(payment=payment)
 
                 if request.POST['id'] != DOTPAY_RECEIVER_ID:
                     return HttpResponse('NOK')
@@ -84,9 +77,8 @@ class DotPay(Dynamic_Base):
                 if request.POST['operation_amount'] != payment.total_price:
                     return HttpResponse('NOK')
 
-                for in_payment in product_in_payment:
-                    in_payment.approved = True
-                    in_payment.save()
+                payment.approved = True
+                payment.save()
 
                 return HttpResponse('OK')
 
@@ -117,39 +109,32 @@ class DotPay(Dynamic_Base):
 
 class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
 
-    def Get_Total_Price(self):
+    def Count_Total_Price(self):
 
         total = 0
-        for product in self.content['cart']:
-            total += self.Get_Price(product, current_currency=True)
+        for selected in self.content['cart']:
+            total += self.Get_Price(selected.product,
+                                    current_currency=True)
 
         return format(total / 100, '.2f')
 
-    def Save_Payment(self):
+    def Update_Payment(self):
 
-        payment = Payment\
-        (
-            user=self.content['user'],
-            total_price=self.content['total_price'],
-            currency=self.request.session['translator_currency']
-        )
+        payment = Payment.objects.get(
+            user=self.content['user'], approved=False)
 
-        payment.save()
         self.content['payment'] = payment.pk
-        for product in self.request.session['cart_product']:
-
-            Product_In_Payment\
-            (
-                payment=payment,
-                product=product
-            ).save()
+        payment.total_price = self.content['total_price']
+        payment.currency = self.request.session['translator_currency']
+        payment.save()
 
     def Manage_Content_Ground(self):
 
-        self.content['user'] = User.objects.get(unique=self.request.session['user_unique'])
-        self.content['cart'] = self.request.session['cart_product']
-        self.content['total_price'] = self.Get_Total_Price()
-        self.Save_Payment()
+        unique = self.request.session['user_unique']
+        self.content['user'] = User.objects.get(unique=unique)
+        self.content['cart'] = Payment_Models_Menager.Get_Selected_Products(self.request)
+        self.content['total_price'] = self.Count_Total_Price()
+        self.Update_Payment()
 
         self.content['paypal'] = self.Create_PayPal_From()
         self.content['dotpay'] = self.Create_DotPay_From()

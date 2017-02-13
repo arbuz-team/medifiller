@@ -86,6 +86,7 @@ def Load_Default_Product():
             price_eur=100*numer,
             price_pln=400*numer,
             price_gbp=600*numer,
+            price_usd=300*numer,
 
             brand=Brand.objects.get(pk=numer),
             purpose=Purpose.objects.get(pk=numer),

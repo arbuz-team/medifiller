@@ -71,6 +71,9 @@ class Translator:
         if country == 'PL':
             request.session['translator_currency'] = 'PLN'
 
+        if country == 'DE':
+            request.session['translator_currency'] = 'EUR'
+
         if country == 'GB': # united kingdom
             request.session['translator_currency'] = 'GBP'
 

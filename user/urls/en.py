@@ -8,7 +8,7 @@ urlpatterns = [
     url(r'^sign_out/$', views.Sign_Out.Launch, name='user.logout'),
     url(r'^account/$', views.Account.Launch, name='user.account'),
     url(r'^approved/(?P<key>[a-z0-9]{40})/$',
-        views.Approved_Register.Update_User_Status, name='user.account'),
+        views.Approved_Register.Update_User_Status, name='user.approved'),
 
     url(r'^forgot/$', views.Forgot_Password.Launch, name='user.forgot'),
     url(r'^change_password/(?P<key>[a-z0-9]{40})/$',

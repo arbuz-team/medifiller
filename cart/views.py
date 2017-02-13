@@ -1,4 +1,5 @@
 from arbuz.views import *
+from payment.base import *
 
 
 class Cart_Manager(Dynamic_Event_Menager):
@@ -7,7 +8,9 @@ class Cart_Manager(Dynamic_Event_Menager):
         pass
 
     def Manage_Content_Cart(self):
-        self.content['cart'] = self.request.session['cart_product']
+        self.content['cart'] = Payment_Models_Menager.\
+            Get_Selected_Products(self.request)
+
         return self.Render_HTML('cart/cart.html')
 
     def Manage_Content(self):
@@ -19,26 +22,15 @@ class Cart_Manager(Dynamic_Event_Menager):
 
     def Manage_Button_Append(self):
         product = Product.objects.get(pk=self.request.POST['value'])
-        cart = self.request.session['cart_product'][:]
-        cart.append(product)
-
-        self.request.session['cart_product'] = cart
+        Payment_Models_Menager.Append_Selected_Product(self.request, product)
         return JsonResponse({'__button__': 'true'})
 
     def Manage_Button_Delete(self):
         product = Product.objects.get(pk=self.request.POST['value'])
-        cart = self.request.session['cart_product'][:]
-        cart.remove(product)
-
-        self.request.session['cart_product'] = cart
+        Payment_Models_Menager.Delete_Selected_Product(self.request, product)
         return JsonResponse({'__button__': 'true'})
 
     def Manage_Button_Clear(self):
-
-        cart = self.request.session['cart_product'][:]
-        for product in cart:
-            product.delete()
-
         return JsonResponse({'__button__': 'true'})
 
     def Manage_Button(self):
