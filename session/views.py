@@ -27,7 +27,7 @@ class Session_Controller:
     def Check_Session_Root(self):
 
         if 'root_login' not in self.request.session:
-            self.request.session['root_login'] = True
+            self.request.session['root_login'] = False
 
     def Check_Session_Translator(self):
 

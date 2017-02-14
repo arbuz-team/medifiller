@@ -1,4 +1,5 @@
 from user.forms import *
+from root.models import *
 
 def Load_Default_Data():
 
@@ -36,4 +37,8 @@ def Load_Default_Data():
         postcode='81-218',
         country='Polska',
         user=User.objects.get(email='dominik.betka@gmail.com')
+    ).save()
+
+    Root(
+       password=User.Encrypt('kaktus8')
     ).save()
