@@ -1,6 +1,6 @@
 from django import forms
-from .models import *
-from user.models import User
+from arbuz.base import *
+from root.models import *
 
 class Form_Root_Login(forms.Form):
 
@@ -22,8 +22,8 @@ class Form_Root_Login(forms.Form):
         if not Root.objects.all():
             raise forms.ValidationError('Root does not exist.')
 
-        user = Root.objects.get(password=User.Encrypt(password))
-        if user.password != User.Encrypt(password):
+        root = Root.objects.get(password=Dynamic_Base.Encrypt(password))
+        if root.password != Dynamic_Base.Encrypt(password):
             raise forms.ValidationError('Wrong password. '
                                         'Try again.')
-        return User.Encrypt(password)
+        return Dynamic_Base.Encrypt(password)

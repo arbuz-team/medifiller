@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.hashers import make_password
 import string, random
 
 
@@ -10,10 +9,6 @@ class User(models.Model):
     username = models.CharField(max_length=20)
     password = models.CharField(max_length=75)
     approved = models.BooleanField(default=False)
-
-    @staticmethod
-    def Encrypt(password):
-        return make_password(password=password, salt='arbuz-team')
 
     @staticmethod
     def Generate_User_Unique():

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.core.urlresolvers import reverse, resolve
 from django.http import JsonResponse, HttpResponse
+from django.contrib.auth.hashers import make_password
 
 from arbuz.settings import *
 from PIL import Image
@@ -70,6 +71,10 @@ class Dynamic_Base:
             return prices[self.request.session['translator_currency']]
 
         return prices
+
+    @staticmethod
+    def Encrypt(password):
+        return make_password(password=password, salt='arbuz-team')
 
     @staticmethod
     def Generate_Image_Details(image_format):

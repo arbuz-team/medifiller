@@ -54,7 +54,7 @@ class Sign_In(Dynamic_Event_Menager):
         if self.request.POST['__form__'] == 'login':
             return self.Manage_Form_Login()
 
-        return super(Login, self).Manage_Form()
+        return super(Sign_In, self).Manage_Form()
 
     @staticmethod
     def Launch(request):

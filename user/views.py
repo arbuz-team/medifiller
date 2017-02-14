@@ -146,19 +146,18 @@ class Sign_Up(Dynamic_Event_Menager):
 
     def Send_Activate_Link(self):
 
+        email = self.content['form'].cleaned_data['email']
         activate_key = self.content['key'].decode("utf-8")
         user_unique = self.request.session['user_unique']
         activate_url = self.Get_Urls('user.approved',
                  {'key': activate_key}, current_language=True)
 
-        content = {}
+        content = {
+            'activate_url': activate_url,
+            'user':         User.objects.get(unique=user_unique)
+        }
 
-        title = 'Confirm your new account.'
-        content['activate_url'] = activate_url
-        content['user'] = User.objects.get(unique=user_unique)
-        email = self.content['form'].cleaned_data['email']
-
-        Sender(self.request).Send_Register_Approved_Link(title, content, email)
+        Sender(self.request).Send_Register_Approved_Link(content, email)
 
     @staticmethod
     def Launch(request):
@@ -360,14 +359,14 @@ class Forgot_Password(Dynamic_Event_Menager):
         activate_key = self.content['key'].decode("utf-8")
         activate_url = self.request.build_absolute_uri().replace('forgot/', '')
         activate_url = '{0}change_password/{1}'.format(activate_url, activate_key)
-        content = {}
-
-        title = 'Change your password.'
-        content['activate_url'] = activate_url
-        content['user'] = User.objects.get(email=self.content['email'])
         email = self.content['email']
 
-        Sender(self.request).Send_Forgot_Password_Link(title, content, email)
+        content = {
+            'activate_url': activate_url,
+            'user':         User.objects.get(email=email)
+        }
+
+        Sender(self.request).Send_Forgot_Password_Link(content, email)
 
     @staticmethod
     def Launch(request):

@@ -40,5 +40,5 @@ def Load_Default_Data():
     ).save()
 
     Root(
-       password=User.Encrypt('kaktus8')
+       password=User.Encrypt('kaktus88')
     ).save()

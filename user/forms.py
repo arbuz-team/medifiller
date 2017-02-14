@@ -1,5 +1,6 @@
 from django import forms
-from .models import *
+from arbuz.base import *
+from user.models import *
 from nocaptcha_recaptcha.fields import NoReCaptchaField
 
 
@@ -49,11 +50,11 @@ class Form_Login(forms.Form):
             return ''
 
         user = User.objects.get(email=email)
-        if user.password != User.Encrypt(password):
+        if user.password != Dynamic_Base.Encrypt(password):
             raise forms.ValidationError('Wrong password. '
                                         'Try again.')
 
-        return User.Encrypt(password)
+        return Dynamic_Base.Encrypt(password)
 
 
 
@@ -98,7 +99,7 @@ class Form_Register(forms.ModelForm):
 
     def clean_password(self):
         password = self.cleaned_data['password']
-        return User.Encrypt(password)
+        return Dynamic_Base.Encrypt(password)
 
 
 
@@ -220,4 +221,4 @@ class Form_Change_Password(forms.Form):
     )
 
     def clean_password(self):
-        return User.Encrypt(self.cleaned_data['password'])
+        return Dynamic_Base.Encrypt(self.cleaned_data['password'])
