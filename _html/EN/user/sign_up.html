@@ -16,7 +16,10 @@
 
     {% if not form %}
 
-      Hello {{ self.request.session.user_username }}! You are registered. Visit your mailbox and active account ;)
+      <div class="block-content-message">
+          Hello {{ self.request.session.user_username }}, so nice to meet you! Visit your mailbox and active account ;)
+      </div>
+
       <script>
         window.APP.DATA.redirect = '/';
         window.APP.DATA.delay = 2000;

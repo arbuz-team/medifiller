@@ -59,11 +59,11 @@ body, html {
 body {
   position: absolute;
   overflow: hidden;
-  -webkit-user-select: text !important; }
+  -webkit-user-select: none !important; }
 
 @media (min-width: 1000px) {
   body {
-    -webkit-user-select: none !important; } }
+    -webkit-user-select: text !important; } }
 
 a, a:hover, a:active, a:visited {
   color: inherit;
@@ -242,6 +242,10 @@ img {
         z-index: 12;
         color: #382B1B;
         font-size: 16px; }
+        #GROUND > .ground > .ground-block > .block-content > .block-content-message {
+          color: #774D34;
+          font-weight: bold;
+          font-size: 18px; }
       #GROUND > .ground > .ground-block > .block-background {
         z-index: 10;
         background-color: #ffffff; }
@@ -1135,7 +1139,7 @@ button {
     display: block;
     height: 30px;
     padding-right: 15px;
-    background-color: #774D34;
+    background-color: #382B1B;
     color: #ffffff;
     text-align: right; }
     #HEADER > .header > .navigation-secondary > li {

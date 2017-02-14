@@ -79,27 +79,6 @@ export let Plugins_Motion_Controllers = function(config)
     },
 
 
-    set_user_select = function()
-    {
-      let
-        $body = $('body'),
-        $container = $(settings.container),
-        width = parseInt($container.outerWidth());
-
-      if(width >= 1000)
-      {
-        $body.removeClass('user_select_none');
-        $body.addClass('user_select_text');
-      }
-
-      else
-      {
-        $body.removeClass('user_select_text');
-        $body.addClass('user_select_none');
-      }
-    },
-
-
     stop_propagation = function(event)
     {
       event.stopPropagation();
@@ -144,12 +123,10 @@ export let Plugins_Motion_Controllers = function(config)
 
     $window.resize(set_start_position);
     $window.resize(plugin_motion_views.plugin_close);
-    $window.resize(set_user_select);
 
     window.APP.add_own_event('plugins_close', pre_plugin_close);
     window.APP.throw_event(window.EVENTS.plugins.close);
 
-    set_user_select();
   };
 
 

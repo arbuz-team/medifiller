@@ -28,7 +28,9 @@
         </div>
 
         <div class="product-content-price">
-            {{ product|get_price:request }}
+            {% if request.session.user_login %}
+                {{ product|get_price:request }}
+            {% endif %}
         </div>
     </div>
 </li>
