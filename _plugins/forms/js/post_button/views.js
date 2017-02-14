@@ -53,7 +53,7 @@ export let Post_Button_Views = function(config)
       for(let i = 0; i < array_length; ++i)
         if(plugins_array[i])
         {
-          window.APP.DATA.delay = 1000;
+          window.APP.DATA.delay = 200;
           window.APP.throw_event(window.EVENTS.plugins['reload_'+ plugins_array[i]]);
         }
     },

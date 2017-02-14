@@ -86,6 +86,7 @@ export let Post_Button_Models = function(config)
         value = that.settings.button_value,
         post_data = prepare_post_data(action, value);
 
+      console.log(post_data);
       window.APP.http_request(url, post_data, callback);
     }, 200);
   };

@@ -10,13 +10,53 @@
 
     <ul class="cart-list">
 
-        {% for in_cart in cart %}
+        {% if cart %}
 
-            {{ in_cart }} <br/>
+            {% for selected in cart %}
 
-        {% endfor %}
+            <li>
+                <div class="cart-list-name">
+                    <a href="/product/{{ selected.product.pk }}/{{ selected.product.details_en.name }}/">
+                        {{ selected.product.details_en.name }}
+                    </a>
+                </div>
+                <div class="cart-list-actions field_shell"> {{ selected.number }} x {{ selected.product.price_usd }} USD
+                    <!--<button class="post_button" type="button"-->
+                           <!--data-name="Delete_{{ product.pk }}"-->
+                           <!--data-action=""-->
+                           <!--data-value="{{ product.pk }}"-->
+                           <!--data-reload="cart"-->
+                           <!--data-url="/cart/">X</button>-->
+                </div>
+            </li>
 
-        {{ suma }}
+            {% endfor %}
+
+            <li class="field_shell">
+                <div class="cart-list-button">
+                    <button disabled class="post_button" type="button"
+                            data-name="Remove_{{ product.pk }}"
+                            data-action=""
+                            data-value="{{ product.pk }}"
+                            data-reload="cart"
+                            data-url="/cart/">Clear cart</button>
+                </div>
+                <div class="cart-list-button">
+                    <a class="button" style="font-weight: normal" href="/payment/">Go to paymants</a>
+                </div>
+            </li>
+
+            <!--{{ suma }}-->
+
+        {% else %}
+
+            <li>
+                <div class="cart-list-empty">
+                    Cart is empty
+                </div>
+            </li>
+
+        {% endif %}
 
     </ul>
 

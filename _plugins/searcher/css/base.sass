@@ -3,10 +3,10 @@
 // -----------------------------------------
 
 $searcher--width: 250px
-$searcher-field--height: 50px
+$searcher-field--height: 40px
 $searcher-logo_text--height: 100px
-$searcher--background-color: $g-color_0
-$searcher--color: $g-color_4
+$searcher--background-color: $g-color_4
+$searcher--color: $g-color_0
 
 
 //-----------------------------------------
@@ -14,7 +14,7 @@ $searcher--color: $g-color_4
 //-----------------------------------------
 
 #SEARCHER
-  top: 0
+  top: 30px
   left: -$searcher--width
   bottom: 0
 
@@ -23,6 +23,7 @@ $searcher--color: $g-color_4
 
   background-color: $searcher--background-color
   color: $searcher--color
+  border-right: $g-style_border
 
 
   >.searcher
@@ -37,12 +38,12 @@ $searcher--color: $g-color_4
       font-weight: bold
 
 
-    >div >.field_shell
+    .field_shell
 
-      >input
+      input
         padding-left: 5px
 
-      select, input
+      select, input[type=text]
         display: block
         width: ($searcher--width - 30px)
         height: $searcher-field--height
@@ -54,7 +55,14 @@ $searcher--color: $g-color_4
         border: none
 
         >option
-          background-color: $searcher--background-color
+          background-color: $searcher--color
+          color: $searcher--background-color
+
+
+    >.searcher-searcher >form >input[type=text]
+      border-bottom: $g-style_border
+      margin-left: 10px
+      padding-left: 5px
 
 
     >.searcher-filters

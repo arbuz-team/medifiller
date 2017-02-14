@@ -2913,7 +2913,7 @@
 	
 	    for (var i = 0; i < array_length; ++i) {
 	      if (plugins_array[i]) {
-	        window.APP.DATA.delay = 1000;
+	        window.APP.DATA.delay = 200;
 	        window.APP.throw_event(window.EVENTS.plugins['reload_' + plugins_array[i]]);
 	      }
 	    }
@@ -3023,6 +3023,7 @@
 	          value = that.settings.button_value,
 	          post_data = prepare_post_data(action, value);
 	
+	      console.log(post_data);
 	      window.APP.http_request(url, post_data, callback);
 	    }, 200);
 	  };
