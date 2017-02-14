@@ -2,6 +2,7 @@ from arbuz.views import *
 from arbuz.settings import *
 from payment.forms import *
 from payment.base import *
+from sender.views import *
 
 from django.views.decorators.csrf import csrf_exempt
 
@@ -11,7 +12,23 @@ from paypal.standard.ipn.signals import valid_ipn_received
 from paypal.standard.ipn.signals import invalid_ipn_received
 
 
-class PayPal(Dynamic_Base):
+class Payment_System(Dynamic_Base):
+
+    @staticmethod
+    def Send_Confirm(request, payment):
+
+        content = {
+            'payment':              payment,
+            'selected_products':    Selected_Product.
+                objects.filter(payment=payment)
+        }
+
+        email = payment.user.email
+        Sender(request).Send_Payment_Approved(content, email)
+
+
+
+class PayPal(Payment_System):
 
     @staticmethod
     def Valid_PayPal(sender, **kwargs):
@@ -58,7 +75,7 @@ invalid_ipn_received.connect(PayPal.Valid_PayPal)
 
 
 
-class DotPay(Dynamic_Base):
+class DotPay(Payment_System):
 
     @staticmethod
     @csrf_exempt
@@ -82,6 +99,7 @@ class DotPay(Dynamic_Base):
                 payment.service = 'DotPay'
                 payment.save()
 
+                DotPay.Send_Confirm(request, payment)
                 return HttpResponse('OK')
 
         return HttpResponse('It is not for you.')

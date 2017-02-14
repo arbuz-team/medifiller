@@ -34,6 +34,17 @@ class Form_Product(forms.ModelForm):
         price = self.cleaned_data['price_usd']
         return self.Clean_Price(price, 'USD')
 
+    def clean_stock(self):
+        stock = self.cleaned_data['stock']
+        if not stock:
+            return 0
+
+        if stock < 0:
+            raise forms.ValidationError(
+                'stock have to greater than zero.')
+
+        return stock
+
     def clean(self):
 
         if not self.request.session['product_details_en']:
@@ -66,6 +77,7 @@ class Form_Product(forms.ModelForm):
             'price_gbp',
             'price_usd',
             'keywords',
+            'stock',
         )
 
         widgets = \

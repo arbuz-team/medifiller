@@ -72,6 +72,7 @@ class Product(models.Model):
 
     image = models.ImageField(blank=True)
     keywords = models.TextField(blank=True)
+    stock = models.IntegerField(blank=True)
 
     where_display = models.ForeignKey(Where_Display)
     brand = models.ForeignKey(Brand)

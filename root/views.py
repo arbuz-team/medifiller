@@ -109,3 +109,14 @@ class Create(Dynamic_Event_Menager):
     @staticmethod
     def Launch(request):
         return Create(request).HTML
+
+
+
+class Map_References(Dynamic_Event_Menager):
+
+    def Manage_Content_Ground(self):
+        return self.Render_HTML('root/map_references.html')
+
+    @staticmethod
+    def Launch(request):
+        return Create(request).HTML
