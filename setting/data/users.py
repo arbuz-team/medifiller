@@ -7,7 +7,7 @@ def Load_Default_Data():
         unique=User.Generate_User_Unique(),
         email='93.endo@gmail.com',
         username='arbuz93',
-        password=User.Encrypt('asdfasdf'),
+        password=Dynamic_Base.Encrypt('asdfasdf'),
         approved=True
     ).save()
 
@@ -15,7 +15,7 @@ def Load_Default_Data():
         unique=User.Generate_User_Unique(),
         email='dominik.betka@gmail.com',
         username='Drego31',
-        password=User.Encrypt('kaktus88'),
+        password=Dynamic_Base.Encrypt('kaktus88'),
         approved=True
     ).save()
 
@@ -40,5 +40,5 @@ def Load_Default_Data():
     ).save()
 
     Root(
-       password=User.Encrypt('kaktus88')
+       password=Dynamic_Base.Encrypt('kaktus88')
     ).save()
