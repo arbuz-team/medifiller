@@ -1,3 +1,5 @@
+{% load tags %}
+
 <script>
   window.APP.DATA = {
     title : ''
@@ -9,7 +11,14 @@
 
   <div class="block-background fill-abs"></div>
 
-  <div class="block-content">Polecane</div>
+  <div class="block-content">
+      Polecane <br>
+
+      {{ request|get_url:"cart.start" }} <br>
+      {{ request|get_url:"navigation.start" }} <br>
+      {{ request|get_url:"searcher.start" }} <br>
+
+  </div>
 
 </div>
 

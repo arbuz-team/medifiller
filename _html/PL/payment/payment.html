@@ -17,7 +17,7 @@
     {% for selected in cart %}
 
       {{ selected.product }} {{ selected.number }} x
-      {{ selected.product|get_price:request.session.translator_currency }}<br>
+      {{ selected.product|get_price:request }}<br>
 
     {% endfor %}
 

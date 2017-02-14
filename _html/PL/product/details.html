@@ -35,7 +35,7 @@
 
             <div class="product_details-section action_panel">
                 <div class="product_details-action_panel-prices">
-                  {{ product|get_price:request.session.translator_currency }}
+                  {{ product|get_price:request }}
                 </div>
                 <div class="product_details-action_panel-buttons field_shell">
                     <button class="post_button" type="button"

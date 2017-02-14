@@ -28,7 +28,7 @@
         </div>
 
         <div class="product-content-price">
-            {{ product|get_price:request.session.translator_currency }}
+            {{ product|get_price:request }}
         </div>
     </div>
 </li>
