@@ -18,7 +18,8 @@ class Payment_Models_Menager:
             Payment(
                 user=user,
                 total_price=0,
-                currency=request.session['translator_currency']
+                currency=request.session['translator_currency'],
+                service='None'
             ).save()
 
     @staticmethod

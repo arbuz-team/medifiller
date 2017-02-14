@@ -1,3 +1,5 @@
+{% load tags %}
+
 <script>
   window.APP.DATA = {
     title : 'About us'
@@ -12,13 +14,14 @@
 
   <div class="block-content">
 
-    {% for in_cart in cart %}
+    {% for selected in cart %}
 
-        {{ in_cart }} <br>
+      {{ selected.product }} {{ selected.number }} x
+      {{ selected.product|get_price:request.session.translator_currency }}<br>
 
     {% endfor %}
 
-    {{ total_price }}
+    {{ total_price }} {{ request.session.translator_currency }}
 
     {{ paypal.render }}
 

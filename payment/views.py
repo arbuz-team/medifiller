@@ -33,6 +33,7 @@ class PayPal(Dynamic_Base):
                 return
 
             payment.approved = True
+            payment.service = 'PayPal'
             payment.save()
 
     def Create_PayPal_From(self):
@@ -78,6 +79,7 @@ class DotPay(Dynamic_Base):
                     return HttpResponse('NOK')
 
                 payment.approved = True
+                payment.service = 'DotPay'
                 payment.save()
 
                 return HttpResponse('OK')
@@ -113,8 +115,10 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
 
         total = 0
         for selected in self.content['cart']:
-            total += self.Get_Price(selected.product,
-                                    current_currency=True)
+            product_price = self.Get_Price(
+                selected.product, current_currency=True)
+
+            total += product_price * selected.number
 
         return format(total / 100, '.2f')
 

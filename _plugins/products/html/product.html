@@ -28,13 +28,7 @@
         </div>
 
         <div class="product-content-price">
-            {% if request.session.translator_currency == 'PLN' %}
-                {{ product.price_pln|to_money }} PLN
-            {% elif request.session.translator_currency == 'GBP' %}
-                {{ product.price_gbp|to_money }} GBP
-            {% else %}
-                {{ product.price_eur|to_money }} EUR
-            {% endif %}
+            {{ product|get_price:request.session.translator_currency }}
         </div>
     </div>
 </li>

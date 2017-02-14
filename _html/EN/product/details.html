@@ -35,13 +35,7 @@
 
             <div class="product_details-section action_panel">
                 <div class="product_details-action_panel-prices">
-                    {% if request.session.translator_currency == 'PLN' %}
-                        {{ product.price_pln|to_money }} PLN
-                    {% elif request.session.translator_currency == 'GBP' %}
-                        {{ product.price_gbp|to_money }} GBP
-                    {% else %}
-                        {{ product.price_eur|to_money }} EUR
-                    {% endif %}
+                  {{ product|get_price:request.session.translator_currency }}
                 </div>
                 <div class="product_details-action_panel-buttons field_shell">
                     <button class="post_button" type="button"
