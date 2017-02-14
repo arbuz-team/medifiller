@@ -1,0 +1,35 @@
+{% load tags %}
+
+<script>
+  window.APP.DATA = {
+    title : 'About us'
+    , description : 'This page is about us. ;)'
+  };
+</script>
+
+<div class="ground-block block-1">
+
+  <div class="block-background fill-abs"></div>
+  {% include "ground/html/navigation.html" %}
+
+  <div class="block-content">
+
+    {% for selected in cart %}
+
+      {{ selected.product }} {{ selected.number }} x
+      {{ selected.product|get_price:request.session.translator_currency }}<br>
+
+    {% endfor %}
+
+    {{ total_price }} {{ request.session.translator_currency }}
+
+    {{ paypal.render }}
+
+    <form action="https://ssl.dotpay.pl/test_payment/" method="post">
+      {{ dotpay.as_p }}
+      <p><input type="submit" value="Proceed" /></p>
+    </form>
+
+  </div>
+
+</div>

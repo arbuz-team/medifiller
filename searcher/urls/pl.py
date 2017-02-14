@@ -1,3 +1,6 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
+from searcher import views
 
-urlpatterns = []
+urlpatterns = [
+    url(r'^$', views.Searcher.Launch, name='searcher.start'),
+]

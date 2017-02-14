@@ -1,0 +1,27 @@
+
+{% if request.session.user_login %}
+
+    <div class="cart-close">
+        <i>&nbsp;</i>
+        <span>esc</span>
+    </div>
+
+    <div class="cart-title"> Shopping cart </div>
+
+    <ul class="cart-list">
+
+        {% for in_cart in cart %}
+
+            {{ in_cart }} <br/>
+
+        {% endfor %}
+
+        {{ suma }}
+
+    </ul>
+
+{% else %}
+
+    Loading...
+
+{% endif %}

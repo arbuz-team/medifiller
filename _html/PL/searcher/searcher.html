@@ -1,0 +1,78 @@
+<!--<div class="logo">-->
+  <!--<a href="/"><div></div></a>-->
+<!--</div>-->
+
+<h1 class="logo_text">
+    <a href="/">Shop - fillers</a>
+</h1>
+
+
+<div class="searcher-searcher auto_form">
+    <form class="field_shell" action="/searcher/" data-origin="filter" data-target="ground">
+        <input name="search" placeholder="search" type="text" class="auto_field" data-name="phrase" />
+    </form>
+</div>
+
+<form class="searcher-filters auto_form" action="/searcher/" data-origin="filter" data-target="ground">
+
+    <div class="searcher-sort">
+        <div class="field_shell">
+            <select name="sort_by" class="auto_field" data-name="order_name">
+                <option value="search_accuracy" selected> search accuracy </option>
+                <option value="price"> price </option>
+                <option value="name_of_product"> name of product </option>
+            </select>
+        </div>
+    </div>
+
+
+    <div class="searcher-order">
+        <div class="field_shell">
+            <select name="order_by" class="auto_field" data-name="order_direction">
+                <option value="descending" selected> descending </option>
+                <option value="ascending"> ascending </option>
+            </select>
+        </div>
+    </div>
+
+
+    <div class="searcher-filters-title">Brand</div>
+
+    <div class="searcher-filters-content">
+        <ul class="field_shell">
+            {% for brand in brands %}
+
+                <li class="squaredThree">
+                    <input type="checkbox" class="auto_field"
+                           data-name="brand"
+                           id="id_{{ brand.name }}"
+                           name="{{ brand.name }}" />
+                    <label for="id_{{ brand.name }}" class="checkbox-field"></label>
+                    <label for="id_{{ brand.name }}" class="checkbox-text">{{ brand.name }}</label>
+                </li>
+
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    <div class="searcher-filters-title">Purpose</div>
+
+    <div class="searcher-filters-content">
+        <ul class="field_shell">
+            {% for purpose in purposes %}
+
+                <li class="squaredThree">
+                    <input type="checkbox" class="auto_field"
+                           data-name="brand"
+                           id="id_{{ purpose.name }}"
+                           name="{{ purpose.name }}" />
+                    <label for="id_{{ purpose.name }}" class="checkbox-field"></label>
+                    <label for="id_{{ purpose.name }}" class="checkbox-text">{{ purpose.name }}</label>
+                </li>
+            <!--<li> <input name="{{ purpose.name }}" type="checkbox" class="auto_field" data-name="purpose" /> <label for>{{ purpose.name }}</label> </li>-->
+
+            {% endfor %}
+        </ul>
+    </div>
+</form>

@@ -25,7 +25,7 @@
 
     {% else %}
 
-      <form method="post" action="" data-name="{{ form_name }}" data-type="{{ form_name }}" data-test="yes">
+      <form method="post" action="" data-name="{{ form_name }}" data-type="{{ form_name }}" data-test="yes" class="field_shell">
 
         <div class="title"> Register </div>
 
@@ -33,7 +33,7 @@
 
           {% if i.name == 'password' %}
 
-            <div class="otoczka_pola">
+            <div>
               {{ i }}
               <input type="checkbox" class="show_password" />
               {{ i.errors }}
@@ -42,7 +42,7 @@
 
           {% else %}
 
-            <div class="otoczka_pola">
+            <div>
               {{ i }}
               {{ i.errors }}
               <div class="status"></div>
@@ -52,7 +52,7 @@
 
         {% endfor %}
 
-        <div class="otoczka_pola"><button disabled type="submit"> Done </button></div>
+        <div><button disabled type="submit"> Done </button></div>
 
       {% endif %}
 

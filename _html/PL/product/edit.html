@@ -15,9 +15,9 @@
 
     {% if not form %}
 
-      Product has been insert to databases.
+      Product has been edit.
       <script>
-        window.APP.DATA.redirect = '/product/new/';
+        window.APP.DATA.redirect = '/products/';
         window.APP.DATA.delay = 2000;
         window.dispatchEvent(window.EVENTS.redirect);
       </script>

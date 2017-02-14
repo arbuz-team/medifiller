@@ -17,20 +17,22 @@
 
       Hello {{ self.request.session.user_username }} You are logged on. ;)
       <script>
+        window.APP.throw_event(window.EVENTS.plugins.reload_sign_in);
+
         window.APP.DATA.redirect = '/';
         window.APP.DATA.delay = 2000;
-        window.dispatchEvent(window.EVENTS.redirect);
+        window.APP.throw_event(window.EVENTS.redirect);
       </script>
 
     {% else %}
 
-      <form method="post" action="" data-name="{{ form_name }}" data-type="{{ form_name }}" data-test="yes">
+      <form method="post" action="" id="form_{{ form_name }}" data-name="{{ form_name }}" data-type="{{ form_name }}" data-test="yes" class="field_shell">
 
-        <div class="title"> Login </div>
+        <div class="title"> Sign in </div>
 
         {% for i in form %}
 
-          <div class="otoczka_pola">
+          <div>
             {{ i }}
             {{ i.errors }}
 
@@ -41,13 +43,13 @@
 
         {% endfor %}
 
-        <div class="otoczka_pola">
+        <div>
           <button disabled type="submit"> Done </button>
         </div>
-        <a href="/user/register/" class="otoczka_pola">
+        <a href="/user/sign_up/">
           <button type="button"> Register </button>
         </a>
-        <a href="/user/forgot/" class="otoczka_pola">
+        <a href="/user/forgot/">
           <button type="button"> Forgot your password? </button>
         </a>
 
