@@ -4,13 +4,14 @@ from django.template.loader import render_to_string
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from arbuz.base import *
 
 
 class Sender:
 
     def Attach_Image(self, image_path, image_name):
 
-        img_data = open(image_path, 'rb').read()
+        img_data = open(BASE_DIR + image_path, 'rb').read()
 
         img = MIMEImage(img_data, 'png')
         img.add_header('Content-Id', '<{0}>'.format(image_name))
