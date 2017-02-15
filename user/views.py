@@ -38,8 +38,11 @@ class Start_App(Dynamic_Event_Menager):
 class Sign_In(Dynamic_Event_Menager):
 
     def Get_Redirect_URL(self):
-        url = base64.b64decode(bytes(self.other_value, 'utf-8'))
-        return url if self.other_value else '/'
+
+        if self.other_value:
+            return base64.b64decode(bytes(self.other_value, 'utf-8'))
+
+        return '/'
 
     def Manage_Content_Ground(self):
         self.content['form'] = Form_Login()
