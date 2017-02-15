@@ -17,7 +17,7 @@
     {% for selected in cart %}
 
       {{ selected.product }} {{ selected.number }} x
-      {{ selected.product|get_price:request }}<br>
+      {% price selected.product %}<br>
 
     {% endfor %}
 

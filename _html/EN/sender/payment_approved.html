@@ -12,7 +12,7 @@
 
                 {{ selected.product }}
                 {{ selected.number }} x
-                {{ selected.product|get_price_currency:payment.currency }} <br>
+                {% price_currency selected.product payment.currency %} <br>
 
             {% endfor %}
 

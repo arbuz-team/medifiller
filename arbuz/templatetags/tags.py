@@ -1,5 +1,7 @@
 from django.core.urlresolvers import reverse
 from django import template
+from base64 import b64encode
+
 register = template.Library()
 
 @register.filter('fieldtype')
@@ -10,8 +12,8 @@ def fieldtype(field):
 def to_money(value):
     return format(value / 100, '.2f')
 
-@register.filter('get_price')
-def get_price(product, request):
+@register.simple_tag(takes_context=True)
+def price(context, product):
 
     prices = {
         'EUR': product.price_eur,
@@ -20,12 +22,13 @@ def get_price(product, request):
         'USD': product.price_usd
     }
 
+    request = context['request']
     currency = request.session['translator_currency']
-    price = str(to_money(prices[currency]))
-    return '{0} {1}'.format(price, currency)
+    selected_price = str(to_money(prices[currency]))
+    return '{0} {1}'.format(selected_price, currency)
 
-@register.filter('get_price_currency')
-def get_price_currency(product, currency):
+@register.simple_tag
+def price_currency(product, currency):
 
     prices = {
         'EUR': product.price_eur,
@@ -34,17 +37,33 @@ def get_price_currency(product, currency):
         'USD': product.price_usd
     }
 
-    price = str(to_money(prices[currency]))
-    return '{0} {1}'.format(price, currency)
+    selected_price = str(to_money(prices[currency]))
+    return '{0} {1}'.format(selected_price, currency)
 
-@register.filter('get_url')
-def get_url(request, name):
+@register.simple_tag(takes_context=True)
+def url(context, name):
 
     urls = {
         'EN': reverse(name, urlconf='arbuz.urls.en'),
-        'PL': reverse(name, urlconf='arbuz.urls.pl'),
+        # 'PL': reverse(name, urlconf='arbuz.urls.pl'),
         # 'DE': reverse(name, urlconf='arbuz.urls.de'),
     }
 
+    request = context['request']
     language = request.session['translator_language']
     return urls[language]
+
+@register.simple_tag(takes_context=True)
+def sign_in_redirect(context, name, *args, **kwargs):
+
+    urls = {
+        'EN': reverse(name, urlconf='arbuz.urls.en', kwargs=kwargs),
+        # 'PL': reverse(name, urlconf='arbuz.urls.pl', kwargs=kwargs),
+        # 'DE': reverse(name, urlconf='arbuz.urls.de'),
+    }
+
+    request = context['request']
+    language = request.session['translator_language']
+    selected_url = b64encode(bytes(urls[language], 'utf-8'))
+    selected_url = selected_url.decode('utf-8')
+    return '/user/sign_in/redirect/{0}/'.format(selected_url)

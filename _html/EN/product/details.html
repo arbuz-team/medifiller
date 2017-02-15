@@ -38,7 +38,7 @@
 
                 <div class="product_details-section action_panel">
                     <div class="product_details-action_panel-prices">
-                        {{ product|get_price:request }}
+                        {% price product %}
                     </div>
                     <div class="product_details-action_panel-buttons field_shell">
 
@@ -73,7 +73,8 @@
             {% else %}
 
                 <div class="product_details-section">
-                    If you want buy a product you must login. <a href="/user/sign_in/redirect/product.details/{{ product.pk }}/">Sign in!</a>
+                    If you want buy a product you must login.
+                    <a href="{% sign_in_redirect 'product.details' pk=product.pk %}">Sign in!</a>
                 </div>
 
             {% endif %}

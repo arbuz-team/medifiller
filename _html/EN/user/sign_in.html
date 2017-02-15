@@ -23,8 +23,9 @@
         window.APP.throw_event(window.EVENTS.plugins.reload_sign_in);
 
         window.APP.DATA.redirect = '/';
+
         {% if go_back %}
-            window.APP.DATA.redirect = '{{go_back}}';
+            window.APP.DATA.redirect = '{{ go_back }}';
         {% endif %}
 
         window.APP.DATA.delay = 2000;

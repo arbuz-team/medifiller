@@ -13,4 +13,8 @@ urlpatterns = [
     url(r'^zapomnialem/$', views.Forgot_Password.Launch, name='user.forgot'),
     url(r'^zmien_haslo/(?P<key>[a-z0-9]{40})/$',
         views.Change_Password.Secure, name='user.change_password'),
+
+    url(r'^zaloguj/przekierowanie/product.details/(?P<pk>\d+)/$',
+        views.Sign_In.Product_Details_Redirect,
+        name='user.sign_in.product_details_redirect'),
 ]

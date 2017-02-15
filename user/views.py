@@ -37,6 +37,10 @@ class Start_App(Dynamic_Event_Menager):
 
 class Sign_In(Dynamic_Event_Menager):
 
+    def Get_Redirect_URL(self):
+        url = base64.b64decode(bytes(self.other_value, 'utf-8'))
+        return url if self.other_value else '/'
+
     def Manage_Content_Ground(self):
         self.content['form'] = Form_Login()
         return self.Render_HTML('user/sign_in.html', 'login')
@@ -56,6 +60,7 @@ class Sign_In(Dynamic_Event_Menager):
                 User.objects.get(unique=unique).username
 
             self.content['form'] = None  # message of correct
+            self.content['go_back'] = self.Get_Redirect_URL()
 
             return self.Render_HTML('user/sign_in.html')
 
@@ -67,6 +72,10 @@ class Sign_In(Dynamic_Event_Menager):
             return self.Manage_Form_Login()
 
         return super(Sign_In, self).Manage_Form()
+
+    @staticmethod
+    def Redirect(request, url):
+        return Sign_In(request, other_value=url).HTML
 
     @staticmethod
     def Launch(request):

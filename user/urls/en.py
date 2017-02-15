@@ -13,4 +13,7 @@ urlpatterns = [
     url(r'^forgot/$', views.Forgot_Password.Launch, name='user.forgot'),
     url(r'^change_password/(?P<key>[a-z0-9]{40})/$',
         views.Change_Password.Secure, name='user.change_password'),
+
+    url(r'^sign_in/redirect/(?P<url>.+)/$',
+        views.Sign_In.Redirect, name='user.sign_in.Redirect'),
 ]

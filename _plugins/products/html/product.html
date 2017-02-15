@@ -29,7 +29,7 @@
 
         <div class="product-content-price">
             {% if request.session.user_login %}
-                {{ product|get_price:request }}
+                {% price product %}
             {% endif %}
         </div>
     </div>
