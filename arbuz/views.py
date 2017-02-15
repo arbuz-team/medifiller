@@ -130,21 +130,26 @@ class Updater(Dynamic_Base):
 
     def Update_Navigation(self):
 
-        self.request.session['arbuz_navigation'] = []
+        navigation = []
         url = self.request.get_full_path()
-        navigation = url.split('/')[1:-1]
+        parts_of_url = url.split('/')[1:-1]
         page = '/'
 
-        for element in navigation:
-            page += element + '/'
-            self.request.session['arbuz_navigation']\
-                .append((element, page))
+        for part in parts_of_url:
+            page += part + '/'
+            navigation.append((part, page))
+
+        if self.length_navigation:
+            navigation = navigation[0:self.length_navigation]
+
+        self.request.session['arbuz_navigation'] = navigation
 
     def Update_Current_Url(self):
         self.request.session['arbuz_url'] = self.Get_Urls()
 
     def __init__(self, request):
         Dynamic_Base.__init__(self, request)
+        self.length_navigation = None
 
 
 
@@ -238,7 +243,8 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
                  other_value=None,
                  only_root=False,
                  clear_session=False,
-                 index_clear_session=False):
+                 index_clear_session=False,
+                 length_navigation=None):
 
         Manager.__init__(self, request)
         Checker.__init__(self, request)
@@ -250,6 +256,7 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
         self.only_root = only_root
         self.clear_session = clear_session
         self.index_clear_session = index_clear_session
+        self.length_navigation = length_navigation
 
         if autostart:
             self.HTML = self.Initialize()

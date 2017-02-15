@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse
+from arbuz.base import *
 from django import template
 from base64 import b64encode
 
@@ -11,6 +11,13 @@ def fieldtype(field):
 @register.filter('to_money')
 def to_money(value):
     return format(value / 100, '.2f')
+
+@register.filter('to_url')
+def to_url(text):
+    text = text.replace(' ', '_')
+    text = text.lower()
+    text = Dynamic_Base.Convert_Polish_To_Ascii(text)
+    return text
 
 @register.simple_tag(takes_context=True)
 def price(context, product):
@@ -59,7 +66,7 @@ def sign_in_redirect(context, name, *args, **kwargs):
     urls = {
         'EN': reverse(name, urlconf='arbuz.urls.en', kwargs=kwargs),
         # 'PL': reverse(name, urlconf='arbuz.urls.pl', kwargs=kwargs),
-        # 'DE': reverse(name, urlconf='arbuz.urls.de'),
+        # 'DE': reverse(name, urlconf='arbuz.urls.de', kwargs=kwargs),
     }
 
     request = context['request']

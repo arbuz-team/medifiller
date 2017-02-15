@@ -78,7 +78,7 @@ class Sign_In(Dynamic_Event_Menager):
 
     @staticmethod
     def Redirect(request, url):
-        return Sign_In(request, other_value=url).HTML
+        return Sign_In(request, other_value=url, length_navigation=2).HTML
 
     @staticmethod
     def Launch(request):
@@ -316,7 +316,7 @@ class Approved_Register(Dynamic_Event_Menager):
             record.user.save()
             record.delete()
 
-        return Approved_Register.Launch(request)
+        return Approved_Register(request, length_navigation=2).HTML
 
     @staticmethod
     def Launch(request):

@@ -2,7 +2,7 @@
 {% load tags %}
 
 <li class="product" data-id="{{ product.pk }}">
-    <a href="/product/{{ product.pk }}/{{ product.details_en.name }}">
+    <a href="/product/{{ product.pk }}/{{ product.details_en.name|to_url }}/">
 
         <div class="product-img mini_image">
             <div class="fill-abs">
@@ -24,7 +24,7 @@
         <!--data-url="/product/delete/">Delete</button> <br>-->
 
         <div class="product-content-details">
-            <a href="/product/{{ product.pk }}/{{ product.details_en.name }}"><button type="button">Details...</button></a>
+            <a href="/product/{{ product.pk }}/{{ product.details_en.name|to_url }}/"><button type="button">Details...</button></a>
         </div>
 
         <div class="product-content-price">
