@@ -24,6 +24,19 @@ def get_price(product, request):
     price = str(to_money(prices[currency]))
     return '{0} {1}'.format(price, currency)
 
+@register.filter('get_price_currency')
+def get_price_currency(product, currency):
+
+    prices = {
+        'EUR': product.price_eur,
+        'PLN': product.price_pln,
+        'GBP': product.price_gbp,
+        'USD': product.price_usd
+    }
+
+    price = str(to_money(prices[currency]))
+    return '{0} {1}'.format(price, currency)
+
 @register.filter('get_url')
 def get_url(request, name):
 

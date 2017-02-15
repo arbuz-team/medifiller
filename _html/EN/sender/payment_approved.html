@@ -11,7 +11,7 @@
 
                 {{ selected.product }}
                 {{ selected.number }} x
-                {{ selected.product|get_price:request }} <br>
+                {{ selected.product|get_price_currency:payment.currency }} <br>
 
             {% endfor %}
 
