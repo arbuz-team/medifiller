@@ -186,7 +186,7 @@ img {
   top: 0;
   right: 0;
   height: 8px;
-  border-bottom: 1px solid #e8e8e8;
+  border-bottom: 2px solid #e8e8e8;
   background: #fff;
   content: '';
   z-index: 200; }
@@ -910,7 +910,19 @@ button {
   width: 250px;
   background-color: #ffffff;
   color: #382B1B;
-  border-right: 1px solid #e8e8e8; }
+  border-right: 2px solid #e8e8e8;
+  overflow: visible; }
+  #SEARCHER > .searcher > .logo {
+    display: block;
+    height: 145px;
+    text-align: center; }
+    #SEARCHER > .searcher > .logo a {
+      position: relative;
+      top: -30px;
+      display: inline-block; }
+    #SEARCHER > .searcher > .logo img {
+      width: 140px;
+      height: auto; }
   #SEARCHER > .searcher > .logo_text {
     display: block;
     height: 100px;
@@ -932,20 +944,32 @@ button {
     #SEARCHER > .searcher .field_shell select > option, #SEARCHER > .searcher .field_shell input[type=text] > option {
       background-color: #382B1B;
       color: #ffffff; }
-  #SEARCHER > .searcher > .searcher-searcher > form > input[type=text] {
-    border-bottom: 1px solid #e8e8e8;
-    margin-left: 10px;
-    padding-left: 5px; }
+  #SEARCHER > .searcher > .searcher-searcher {
+    border-top: 1px solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8; }
+    #SEARCHER > .searcher > .searcher-searcher > form > input[type=text] {
+      height: 30px;
+      margin-left: 10px;
+      padding: 3px 0;
+        padding-left: 5px;
+      vertical-align: top;
+      box-shadow: none !important;
+      background-color: #ffffff;
+      color: #382B1B;
+      font-size: 16px;
+      font-weight: bold; }
   #SEARCHER > .searcher > .searcher-filters {
     display: block;
     width: 100%; }
     #SEARCHER > .searcher > .searcher-filters > .searcher-filters-title {
       display: block;
       height: 40px;
+      margin-top: 10px;
       line-height: 40px;
       font-weight: bold;
       text-align: center;
-      background-color: transparent; }
+      background-color: transparent;
+      border-top: 1px solid #e8e8e8; }
     #SEARCHER > .searcher > .searcher-filters > .searcher-filters-content {
       display: block;
       min-height: 40px;
@@ -1097,14 +1121,14 @@ button {
       margin-top: 30px;
       height: 40px;
       min-width: 150px;
-      border-top: 4px transparent solid; }
+      border-radius: 2px; }
       #HEADER > .header > .navigation-primary > li > a {
         font-size: 20px;
         text-align: center;
         color: #382B1B; }
     #HEADER > .header > .navigation-primary > li.wybrany,
     #HEADER > .header > .navigation-primary > li:hover {
-      border-top-color: #382B1B; }
+      background-color: #fafafa; }
       #HEADER > .header > .navigation-primary > li.wybrany > a,
       #HEADER > .header > .navigation-primary > li:hover > a {
         color: #382B1B; }

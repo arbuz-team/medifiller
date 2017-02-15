@@ -1,15 +1,17 @@
-<!--<div class="logo">-->
-  <!--<a href="/"><div></div></a>-->
-<!--</div>-->
+{% load staticfiles %}
 
-<h1 class="logo_text">
-    <a href="/">Shop - fillers</a>
-</h1>
+<div class="logo">
+  <a href="/"><img data-src="{% static 'img/logo.png' %}" src="{% static 'img/load.jpeg' %}" alt="SPA Sungate" title="Home page"></a>
+</div>
+
+<!--<h1 class="logo_text">-->
+    <!--<a href="/">Shop - fillers</a>-->
+<!--</h1>-->
 
 
 <div class="searcher-searcher auto_form">
     <form class="field_shell" action="/searcher/" data-origin="filter" data-target="ground">
-        <input name="search" placeholder="search" type="text" class="auto_field" data-name="phrase" />
+        <input name="search" placeholder="Search" type="text" class="auto_field" data-name="phrase" />
     </form>
 </div>
 
@@ -64,7 +66,7 @@
 
                 <li class="squaredThree">
                     <input type="checkbox" class="auto_field"
-                           data-name="brand"
+                           data-name="purpose"
                            id="id_{{ purpose.name }}"
                            name="{{ purpose.name }}" />
                     <label for="id_{{ purpose.name }}" class="checkbox-field"></label>

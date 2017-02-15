@@ -61,11 +61,19 @@
 
 <ul class="navigation-secondary">
 
-    <li>
-        <a class="link fill-abs" href="/user/sign_up/">
-            Sign up
-        </a>
-    </li>
+    {% if request.session.user_login %}
+        <li>
+            <a class="link fill-abs" href="/user/sign_out/">
+                Sign out
+            </a>
+        </li>
+    {% else %}
+        <li>
+            <a class="link fill-abs" href="/user/sign_up/">
+                Sign up
+            </a>
+        </li>
+    {% endif %}
 
     <li class="navigation-secondary-space"> | </li>
 
@@ -78,17 +86,17 @@
     <li class="navigation-secondary-space"> | </li>
 
     {% if request.session.user_login %}
-    <li class="navigation-secondary-cart" title="CTRL+SHIFT+X">
-        <div class="link fill-abs">
-            Cart
-        </div>
-    </li>
+        <li class="navigation-secondary-cart" title="CTRL+SHIFT+X">
+            <div class="link fill-abs">
+                Cart
+            </div>
+        </li>
     {% else %}
-    <li>
-        <a class="link fill-abs" href="/user/sign_in/">
-            Cart
-        </a>
-    </li>
+        <li>
+            <a class="link fill-abs" href="/user/sign_in/">
+                Cart
+            </a>
+        </li>
     {% endif %}
 
 </ul>
