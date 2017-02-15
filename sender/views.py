@@ -42,7 +42,7 @@ class Sender:
         body = MIMEText(html, _subtype='html')
         self.email_html.attach(body)
 
-        self.Attach_Image('_static/img/logo.png', 'logo')
+        self.Attach_Image('/_static/img/logo.png', 'logo')
 
         email = EmailMessage(
             subject=title,
