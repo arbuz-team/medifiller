@@ -157,7 +157,8 @@ class Sign_Up(Dynamic_Event_Menager):
             'user':         User.objects.get(unique=user_unique)
         }
 
-        Sender(self.request).Send_Register_Approved_Link(content, email)
+        language = self.request.session['translator_language']
+        Sender(language).Send_Register_Approved_Link(content, email)
 
     @staticmethod
     def Launch(request):
@@ -366,7 +367,8 @@ class Forgot_Password(Dynamic_Event_Menager):
             'user':         User.objects.get(email=email)
         }
 
-        Sender(self.request).Send_Forgot_Password_Link(content, email)
+        language = self.request.session['translator_language']
+        Sender(language).Send_Forgot_Password_Link(content, email)
 
     @staticmethod
     def Launch(request):

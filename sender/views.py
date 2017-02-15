@@ -54,7 +54,6 @@ class Sender:
         email.attach(self.email_html)
         email.send()
 
-    def __init__(self, request):
-        self.request = request
+    def __init__(self, language):
         self.email_html = MIMEMultipart(_subtype='related')
-        self.language = self.request.session['translator_language']
+        self.language = language

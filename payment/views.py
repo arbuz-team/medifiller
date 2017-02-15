@@ -15,7 +15,7 @@ from paypal.standard.ipn.signals import invalid_ipn_received
 class Payment_System(Dynamic_Base):
 
     @staticmethod
-    def Send_Confirm(request, payment):
+    def Send_Confirm(payment):
 
         content = {
             'payment':              payment,
@@ -24,7 +24,7 @@ class Payment_System(Dynamic_Base):
         }
 
         email = payment.user.email
-        Sender(request).Send_Payment_Approved(content, email)
+        Sender(payment.language).Send_Payment_Approved(content, email)
 
 
 
@@ -52,6 +52,8 @@ class PayPal(Payment_System):
             payment.approved = True
             payment.service = 'PayPal'
             payment.save()
+
+            DotPay.Send_Confirm(payment)
 
     def Create_PayPal_From(self):
 
@@ -99,7 +101,7 @@ class DotPay(Payment_System):
                 payment.service = 'DotPay'
                 payment.save()
 
-                DotPay.Send_Confirm(request, payment)
+                DotPay.Send_Confirm(payment)
                 return HttpResponse('OK')
 
         return HttpResponse('It is not for you.')
