@@ -41,7 +41,9 @@ class Editable_Tab(Dynamic_Event_Menager, metaclass=ABCMeta):
 class Contains_Start(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
-        self.content['recommended'] = Recommended_Product.objects.all()
+        self.content['recommended'] = Product.objects.\
+            filter(pk=Recommended_Product.objects.all())
+
         return self.Render_HTML('main/start.html')
 
     @staticmethod
