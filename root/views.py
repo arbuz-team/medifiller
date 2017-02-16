@@ -1,5 +1,6 @@
 from arbuz.views import *
-from .forms import *
+from root.forms import *
+from payment.models import *
 import string, random
 
 
@@ -79,7 +80,7 @@ class Sign_Out(Dynamic_Event_Menager):
 
     @staticmethod
     def Launch(request):
-        return Sign_Out(request, authorization=True).HTML
+        return Sign_Out(request, only_root=True).HTML
 
 
 
@@ -119,4 +120,17 @@ class Map_References(Dynamic_Event_Menager):
 
     @staticmethod
     def Launch(request):
-        return Create(request).HTML
+        return Map_References(request, only_root=True).HTML
+
+
+
+class Users_Payments(Dynamic_Event_Menager):
+
+    def Manage_Content_Ground(self):
+        self.content['payments_approved'] = Payment.objects.filter(approved=True)
+        self.content['payments_not_approved'] = Payment.objects.filter(approved=False)
+        return self.Render_HTML('root/users_payments.html')
+
+    @staticmethod
+    def Launch(request):
+        return Users_Payments(request, only_root=True).HTML

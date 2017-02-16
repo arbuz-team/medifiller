@@ -34,17 +34,19 @@ class Cart_Manager(Dynamic_Event_Menager):
         return JsonResponse({'__button__': 'true'})
 
     def Manage_Button(self):
+        return_value = None
 
         if self.request.POST['__button__'] == 'append':
-            return self.Manage_Button_Append()
+            return_value = self.Manage_Button_Append()
 
         if self.request.POST['__button__'] == 'delete':
-            return self.Manage_Button_Delete()
+            return_value = self.Manage_Button_Delete()
 
         if self.request.POST['__button__'] == 'clear':
-            return self.Manage_Button_Clear()
+            return_value = self.Manage_Button_Clear()
 
-        return super(Cart_Manager, self).Manage_Button()
+        Payment_Models_Menager.Update_Total_Price(self.request)
+        return return_value
 
     @staticmethod
     def Launch(request):

@@ -22,8 +22,12 @@ class Form_Root_Login(forms.Form):
         if not Root.objects.all():
             raise forms.ValidationError('Root does not exist.')
 
+        if not Root.objects.filter(password=Dynamic_Base.Encrypt(password)):
+            raise forms.ValidationError('Wrong password.')
+
         root = Root.objects.get(password=Dynamic_Base.Encrypt(password))
         if root.password != Dynamic_Base.Encrypt(password):
             raise forms.ValidationError('Wrong password. '
                                         'Try again.')
+
         return Dynamic_Base.Encrypt(password)

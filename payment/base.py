@@ -1,8 +1,32 @@
 from payment.models import *
 from user.models import *
+from arbuz.base import *
 
 
 class Payment_Models_Menager:
+
+    @staticmethod
+    def Count_Total_Price(request):
+        selected_products = Payment_Models_Menager.\
+            Get_Selected_Products(request)
+
+        total = 0
+        for selected in selected_products:
+            product_price = Dynamic_Base.Get_Price(
+                request, selected.product, current_currency=True)
+
+            total += product_price * selected.number
+
+        return format(total / 100, '.2f')
+
+    @staticmethod
+    def Update_Total_Price(request):
+        unique = request.session['user_unique']
+        user = User.objects.get(unique=unique)
+
+        payment = Payment.objects.get(user=user, approved=False)
+        payment.total_price = Payment_Models_Menager.Count_Total_Price(request)
+        payment.save()
 
     @staticmethod
     def Check_Payment(request):

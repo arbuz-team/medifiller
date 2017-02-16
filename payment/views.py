@@ -131,17 +131,6 @@ class DotPay(Payment_System):
 
 class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
 
-    def Count_Total_Price(self):
-
-        total = 0
-        for selected in self.content['cart']:
-            product_price = self.Get_Price(
-                selected.product, current_currency=True)
-
-            total += product_price * selected.number
-
-        return format(total / 100, '.2f')
-
     def Update_Payment(self):
 
         payment = Payment.objects.get(
@@ -157,7 +146,7 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
         unique = self.request.session['user_unique']
         self.content['user'] = User.objects.get(unique=unique)
         self.content['cart'] = Payment_Models_Menager.Get_Selected_Products(self.request)
-        self.content['total_price'] = self.Count_Total_Price()
+        self.content['total_price'] = Payment_Models_Menager.Count_Total_Price(self.request)
         self.Update_Payment()
 
         self.content['paypal'] = self.Create_PayPal_From()

@@ -54,7 +54,9 @@ class Dynamic_Base:
 
         return urls
 
-    def Get_Price(self, product, currency=None, current_currency=False):
+    @staticmethod
+    def Get_Price(request, product, currency=None,
+                  current_currency=False):
 
         prices = \
         {
@@ -68,7 +70,7 @@ class Dynamic_Base:
             return prices[currency]
 
         if current_currency:
-            return prices[self.request.session['translator_currency']]
+            return prices[request.session['translator_currency']]
 
         return prices
 
