@@ -46,7 +46,7 @@ export let
       variables.post_data = {};
 
       variables.post_data.type = variables.button_type;
-      variables.post_data.form_name = variables.button_name;
+      variables.post_data.dialog_name = variables.button_name;
     }
     else
       variables.post_data = post_data;
@@ -56,6 +56,8 @@ export let
   load = function(url, post_data, callback)
   {
     prepare_post_data(post_data);
+
+    console.log(variables.post_data);
 
     dialog_loader_controllers.load(url, variables.post_data, callback);
   };

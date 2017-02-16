@@ -89,89 +89,6 @@ strong {
 .container-part {
   z-index: 5; }
 
-#extensions-right {
-  position: fixed;
-  top: 20px;
-  right: 70px;
-  display: block;
-  width: 150px;
-  z-index: 40; }
-  #extensions-right > div {
-    display: none; }
-    #extensions-right > div > .extension-mark {
-      float: left;
-      display: inline-block;
-      width: 32px;
-      height: 32px;
-      position: relative;
-      z-index: 22; }
-      #extensions-right > div > .extension-mark > img {
-        min-width: 28px;
-        width: 28px;
-        height: 28px; }
-    #extensions-right > div > .extension-text {
-      display: block;
-      position: relative;
-      z-index: 21;
-      line-height: 28px;
-      background: #fff; }
-  #extensions-right > .change_language {
-    background: none;
-    border: none;
-    box-shadow: none;
-    box-sizing: border-box;
-    outline: none;
-    background: transparent;
-    position: relative;
-    display: block;
-    padding-left: 10px;
-    padding-right: 10px;
-    cursor: pointer;
-    text-align: left; }
-    #extensions-right > .change_language > .extension-text > * {
-      background: none;
-      border: none;
-      box-shadow: none;
-      box-sizing: border-box;
-      outline: none;
-      background: transparent;
-      width: 105px;
-      padding: 4px 0px;
-        padding-left: 10px;
-      margin-left: -10px;
-      font-size: 14px;
-      font-weight: bold; }
-
-@media (min-width: 750px) {
-  #extensions-left, #extensions-right {
-    top: 100px;
-    z-index: 20; }
-    #extensions-left > .extension, #extensions-right > .extension {
-      padding: 10px 15px;
-      margin: 0;
-        margin-bottom: 10px;
-      color: #382B1B;
-      font-size: 16px;
-      background: #ffffff;
-      padding-left: 10px;
-      padding-right: 10px; }
-  #extensions-left {
-    left: 20px; }
-    #extensions-left > .extension {
-      text-align: right; }
-      #extensions-left > .extension > .extension-mark {
-        float: right; }
-  #extensions-right {
-    right: 20px; }
-    #extensions-right > .extension {
-      text-align: left; }
-      #extensions-right > .extension > .extension-mark {
-        float: left; } }
-
-@media (min-width: 1000px) {
-  #extensions-left, #extensions-right {
-    top: 120px; } }
-
 img {
   display: inline-block;
   max-width: 100%;
@@ -1140,16 +1057,16 @@ button {
       #HEADER > .header > .navigation-primary > li.wybrany > a,
       #HEADER > .header > .navigation-primary > li:hover > a {
         color: #382B1B; }
-    #HEADER > .header > .navigation-primary > li.guzik_menu {
+    #HEADER > .header > .navigation-primary > li.navigation-primary-language {
       float: right;
-      display: none;
+      display: block;
       position: relative;
       min-width: 40px !important;
       width: 40px !important;
       height: 34px;
       margin: 0 30px;
         margin-top: 30px;
-      background-image: none;
+      background-image: url("");
       background-size: 100% 100%;
       background-position: center bottom;
       background-repeat: no-repeat; } }
