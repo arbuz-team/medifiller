@@ -160,12 +160,27 @@ $header--border-color: transparent
 
       min-width: 40px !important
       width: 40px !important
-      height: 34px
+      height: 40px !important
 
-      margin: 0 30px
-        top: 30px
+      margin: 0 15px
+        top: 40px
 
-      +background-img('', 100% 100%, center bottom)
+      >button
+        width: 100%
+        height: 100%
+
+        margin: 0
+
+        border: none
+        background-color: transparent
+
+      >button.EN
+        +background-img('/_static/img/flags/uk_UK.png', 100% 100%, center bottom)
+      >button.PL
+        +background-img('/_static/img/flags/pl_PL.png', 100% 100%, center bottom)
+      >button.DE
+        +background-img('/_static/img/flags/de_DE.png', 100% 100%, center bottom)
+
 
 
 @media (min-width: 1000px)

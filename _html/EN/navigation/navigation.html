@@ -58,7 +58,10 @@
     {% endif %}
 
     <li class="navigation-primary-language field_shell">
-        <button type="button" class="dialog_button" data-type="prompt" data-name="language">Language</button>
+        <button type="button"
+                class="dialog_button {{ request.session.translator_language }}"
+                data-type="prompt"
+                data-name="language"></button>
     </li>
 
 </ul>
