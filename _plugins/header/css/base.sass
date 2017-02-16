@@ -138,6 +138,10 @@ $header--border-color: transparent
       border-radius: 2px
 
       >a
+        display: block
+        height: 100%
+        padding: 0 15px
+
         font-size: 20px
         text-align: center
         color: $header--color
@@ -193,22 +197,33 @@ $header--border-color: transparent
 
     display: block
     height: 30px
-    padding-right: 15px
+    padding:
+      left: 265px
+      right: 15px
 
     background-color: $header--color
     color: $header--background-color
-    text-align: right
 
+    >.navigation-secondary-root
+      float: left
+      text-align: left
 
-    >li
+    >.navigation-secondary-user
+      float: right
+      text-align: right
+
+    >ul
       display: inline-block
-      width: auto
-      font:
-        size: 14px
-        weight: normal
 
-      >.link
-        position: relative
+      >li
+        display: inline-block
+        width: auto
+        font:
+          size: 14px
+          weight: normal
+
+        >.link
+          position: relative
 
 
 @media (min-width: 650px)

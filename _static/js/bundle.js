@@ -502,7 +502,10 @@
 	    if (typeof APP !== 'undefined' && typeof APP.DATA !== 'undefined') {
 	      if (typeof APP.DATA.redirect !== 'undefined') url = APP.DATA.redirect;
 	
-	      if (typeof APP.DATA.delay !== 'undefined') delay = APP.DATA.delay;
+	      if (typeof APP.DATA.delay !== 'undefined') {
+	        delay = APP.DATA.delay;
+	        APP.DATA.delay = undefined;
+	      }
 	    }
 	
 	    variables.can_do_redirect = true;
@@ -515,6 +518,7 @@
 	
 	  this.reload = function () {
 	    var delay = window.APP.DATA.delay;
+	    APP.DATA.delay = undefined;
 	
 	    if (typeof delay !== 'number') delay = 0;
 	

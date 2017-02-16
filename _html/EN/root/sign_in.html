@@ -12,7 +12,7 @@
   {% include "ground/html/navigation.html" %}
 
   <div class="block-content">
-    {% if not form %}
+      {% if not form or request.session.root_login %}
 
       <div class="block-content-message">
           Hello root! Have fun at work. ;)

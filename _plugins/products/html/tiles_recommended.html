@@ -1,12 +1,12 @@
 <div class="block-content products tiles">
     <ul>
         {% if request.session.root_login %}
-            {% include "products/html/add_product.html" %}
+            {% include "products/html/add.html" %}
         {% endif %}
 
-        {% for product in products %}
+        {% for product in recommended %}
 
-            {% include 'products/html/product.html' %}
+            {% include 'products/html/single.html' %}
 
         {% endfor %}
     </ul>

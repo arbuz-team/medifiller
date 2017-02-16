@@ -32,7 +32,10 @@ export let Plugins_Loader_Controllers = function(config)
         url = APP.DATA.redirect;
 
       if(typeof APP.DATA.delay !== 'undefined')
+      {
         delay = APP.DATA.delay;
+        APP.DATA.delay = undefined;
+      }
     }
 
     variables.can_do_redirect = true;
@@ -49,6 +52,7 @@ export let Plugins_Loader_Controllers = function(config)
   this.reload = function()
   {
     let delay = window.APP.DATA.delay;
+    APP.DATA.delay = undefined;
 
     if(typeof delay !== 'number')
       delay = 0;

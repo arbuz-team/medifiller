@@ -309,6 +309,11 @@ img {
     height: 500px;
     margin-top: 0; } }
 
+#GROUND > .ground > .ground-block[data-name=start] > .block-content > .block-content-banner > img {
+  max-width: 1000px;
+  width: 100%;
+  height: 470px; }
+
 .block-link_tiles {
   background-color: #f2f2f2; }
   .block-link_tiles > li {
@@ -1123,6 +1128,9 @@ button {
       min-width: 150px;
       border-radius: 2px; }
       #HEADER > .header > .navigation-primary > li > a {
+        display: block;
+        height: 100%;
+        padding: 0 15px;
         font-size: 20px;
         text-align: center;
         color: #382B1B; }
@@ -1162,17 +1170,25 @@ button {
     right: 0;
     display: block;
     height: 30px;
+    padding-left: 265px;
     padding-right: 15px;
     background-color: #382B1B;
-    color: #ffffff;
-    text-align: right; }
-    #HEADER > .header > .navigation-secondary > li {
-      display: inline-block;
-      width: auto;
-      font-size: 14px;
-      font-weight: normal; }
-      #HEADER > .header > .navigation-secondary > li > .link {
-        position: relative; } }
+    color: #ffffff; }
+    #HEADER > .header > .navigation-secondary > .navigation-secondary-root {
+      float: left;
+      text-align: left; }
+    #HEADER > .header > .navigation-secondary > .navigation-secondary-user {
+      float: right;
+      text-align: right; }
+    #HEADER > .header > .navigation-secondary > ul {
+      display: inline-block; }
+      #HEADER > .header > .navigation-secondary > ul > li {
+        display: inline-block;
+        width: auto;
+        font-size: 14px;
+        font-weight: normal; }
+        #HEADER > .header > .navigation-secondary > ul > li > .link {
+          position: relative; } }
 
 @media (min-width: 650px) {
   #HEADER > .header > .navigation-secondary {
