@@ -37,9 +37,16 @@
             {% if request.session.user_login or request.session.root_login %}
 
                 <div class="product_details-section action_panel">
-                    <div class="product_details-action_panel-prices">
-                        {% price product %}
-                    </div>
+
+                        <div class="product_details-action_panel-prices">
+                            {% if request.session.user_login %}
+                                {% price product %}
+                            {% else %}
+                                If you want buy a product you must login.
+                                <a href="{% sign_in_redirect 'product.details' pk=product.pk %}">Sign in!</a>
+                            {% endif %}
+                        </div>
+
                     <div class="product_details-action_panel-buttons field_shell">
 
                         {% if request.session.user_login %}

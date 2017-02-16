@@ -16,7 +16,7 @@
     {% if not form or request.session.user_login %}
 
       <div class="block-content-message">
-          Hello {{ request.session.user_username }}. We enjoy your shopping! ;)
+          Hello {{ request.session.user_username }}. Have a nice shopping! ;)
       </div>
 
       <script>
@@ -24,9 +24,9 @@
 
         window.APP.DATA.redirect = '/';
 
-        {% if go_back %}
+        // {% if go_back %}
             window.APP.DATA.redirect = '{{ go_back }}';
-        {% endif %}
+        // {% endif %}
 
         window.APP.DATA.delay = 2000;
         window.APP.throw_event(window.EVENTS.redirect);

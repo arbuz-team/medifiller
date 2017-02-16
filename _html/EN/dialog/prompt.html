@@ -28,11 +28,11 @@
                 <!--fields of form-->
                 {% for field in form %}
 
-                    <div>
+                    <div class="file_shell">
                         {% if field|fieldtype == 'ClearableFileInput'%}
 
                             {{ field }}
-                            <button type="button" class="file_shell">Select file</button>
+                            <button type="button">Select file</button>
                             {{ field.errors }}
 
                         {% else %}

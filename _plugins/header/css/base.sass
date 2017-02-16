@@ -44,7 +44,7 @@ $header--border-color: transparent
 
 
 //--------------------------------------
-//         Navigation secondary
+//         Navigation mini
 //--------------------------------------
 
 #HEADER >.header >.navigation-mini
@@ -111,7 +111,7 @@ $header--border-color: transparent
 
 
 //--------------------------------------
-//         Navigation secondary
+//         Navigation primary
 //--------------------------------------
 
 #HEADER >.header >.navigation-primary
@@ -153,9 +153,9 @@ $header--border-color: transparent
       >a
         color: $header--color
 
-    >li.guzik_menu
+    >li.navigation-primary-language
       float: right
-      display: none
+      display: block
       position: relative
 
       min-width: 40px !important
@@ -165,11 +165,7 @@ $header--border-color: transparent
       margin: 0 30px
         top: 30px
 
-      background:
-        image: none //url( '../img/menu_b64.png' )
-        size: 100% 100%
-        position: center bottom
-        repeat: no-repeat
+      +background-img('', 100% 100%, center bottom)
 
 
 @media (min-width: 1000px)
