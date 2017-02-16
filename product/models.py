@@ -94,3 +94,12 @@ class Product(models.Model):
 
     def __str__(self):
         return self.details_en.name
+
+
+
+class Recommended_Product(models.Model):
+
+    product = models.ForeignKey(Product)
+
+    def __str__(self):
+        return self.product.details_en.name

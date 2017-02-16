@@ -111,6 +111,11 @@ def Load_Default_Contact():
 
     Text_Content(
         tab_name='contact',
+        text='Godziny otwarcia SPA',
+    ).save()
+
+    Text_Content(
+        tab_name='contact',
         text='''Monday<br>
                 10:00 - 24:00*<br>
                 Tuesday<br>

@@ -93,7 +93,15 @@ def Load_Default_Product():
             purpose=Purpose.objects.get(pk=numer),
         ).save()
 
+def Load_Default_Recommended_Product():
+
+    Recommended_Product(
+        product=Product.objects.get(pk=1)
+    ).save()
+
 def Load_Default_Data():
     Load_Default_Filters()
     Load_Where_Display()
     Load_Default_Product()
+    Load_Default_Recommended_Product()
+

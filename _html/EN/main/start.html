@@ -18,6 +18,12 @@
       <!--{% url 'navigation.start' %} <br>-->
       <!--{% url 'searcher.start' %}<br>-->
 
+      {% for product in recommended %}
+
+        {{ product.product }}
+
+      {% endfor %}
+
   </div>
 
 </div>

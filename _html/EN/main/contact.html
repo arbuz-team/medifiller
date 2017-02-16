@@ -21,13 +21,11 @@
           <!--<div class="title">Godziny otwarcia SPA</div>-->
           <!--<div class="paragraph">Monday<br />10:00 - 24:00*<br />Tuesday<br />10:00 - 24:00*<br />Wednesday<br />10:00 - 24:00*<br />Thursday<br />10:00 - 24:00*<br />Friday<br />10:00 - 24:00*<br />Saturday<br />10:00 - 24:00*<br />Sunday<br />10:00 - 24:00*<br /></div>-->
 
-          {% for text in texts %}
-            {{ text.text | safe }}
-          {% endfor %}
+          <div class="title">{{ texts.0.text }}</div>
+          <div class="paragraph">{{ texts.1.text|safe }}</div>
 
-          {% for image in images %}
-            <img data-src="{{ image.image }}"/>
-          {% endfor %}
+          <div class="title">{{ texts.2.text }}</div>
+          <div class="paragraph">{{ texts.3.text|safe }}</div>
 
       </div>
 
