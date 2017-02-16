@@ -3,16 +3,42 @@ from translator.views import *
 from inspect import getmembers, ismethod
 
 
-class Dialog_Alert(Dynamic_Base):
+class Dialog(Dynamic_Base):
+
+    def Get_Dialog_Name(self):
+        return self.request.POST['dialog_name']
+
+    def Apply_Message(self):
+        self.content['title'] = Text(self.request, 8)
+        return self.Render_HTML('dialog/apply.html')
+
+    def Manage(self):
+
+        if self.apply:
+            return self.Apply_Message()
+
+        methods = getmembers(self, predicate=ismethod)
+        methods = [method[0] for method in methods]
+        dialog_name = self.Get_Dialog_Name()
+
+        for method in methods:
+            if dialog_name in method.lower():
+                return getattr(self.__class__, method)(self)
+
+    def __init__(self, request, apply=False):
+        super(Dialog, self).__init__(request)
+        self.apply = apply
+
+
+
+class Dialog_Alert(Dialog):
 
     def Manage_Access_Denied(self):
         self.content['title'] = 'access_denied'
         return self.Render_HTML('dialog/alert.html')
 
-    def Manage(self):
-
-        if self.request.POST['name'] == 'access_denied':
-            return self.Manage_Access_Denied()
+    def Manage_Language(self):
+        return self.Render_HTML('dialog/language.html')
 
     def __init__(self, request):
         super(Dialog_Alert, self).__init__(request)
@@ -20,13 +46,7 @@ class Dialog_Alert(Dynamic_Base):
 
 
 
-class Dialog_Confirm(Dynamic_Base):
-
-    def Manage(self):
-        pass
-
-        # if self.request.POST['name'] == 'brand':
-        #     return self.Manage_New_Brand()
+class Dialog_Confirm(Dialog):
 
     def __init__(self, request):
         super(Dialog_Confirm, self).__init__(request)
@@ -34,7 +54,7 @@ class Dialog_Confirm(Dynamic_Base):
 
 
 
-class Dialog_Prompt(Dynamic_Base):
+class Dialog_Prompt(Dialog):
 
     def Manage_Brand(self):
         initial = self.Get_Session_Variable()
@@ -95,10 +115,6 @@ class Dialog_Prompt(Dynamic_Base):
 
         return self.Render_HTML('dialog/prompt.html', 'image')
 
-    def Response(self):
-        self.content['title'] = Text(self.request, 8)
-        self.content['form'] = None  # message of correct
-        return self.Render_HTML('dialog/prompt.html')
 
     def Get_POST(self):
 
@@ -109,35 +125,21 @@ class Dialog_Prompt(Dynamic_Base):
 
     def Get_Session_Variable(self):
 
-        session_variable = 'product_' + self.Get_Form_Name()
+        session_variable = 'product_' + self.Get_Dialog_Name()
         if session_variable in self.request.session:
             if self.request.session[session_variable]:
                 return self.request.session[session_variable]
 
         return None
 
-    def Get_Form_Name(self):
+    def Get_Dialog_Name(self):
 
-        if 'form_name' in self.request.POST:
-            return self.request.POST['form_name']
+        if 'dialog_name' in self.request.POST:
+            return self.request.POST['dialog_name']
 
         return self.request.POST['__form__']
 
-    def Manage(self):
-
-        if self.response:
-            return self.Response()
-
-        methods = getmembers(self, predicate=ismethod)
-        methods = [method[0] for method in methods]
-        form_name = self.Get_Form_Name()
-
-        for method in methods:
-            if form_name in method.lower():
-                return getattr(Dialog_Prompt, method)(self)
-
-    def __init__(self, request, response=False, not_valid=False):
-        super(Dialog_Prompt, self).__init__(request)
-        self.response = response
+    def __init__(self, request, apply=False, not_valid=False):
+        super(Dialog_Prompt, self).__init__(request, apply)
         self.not_valid = not_valid
         self.HTML = self.Manage()
