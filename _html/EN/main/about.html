@@ -12,7 +12,13 @@
 
   <div class="block-content">
 
-      {{ texts.0.text | safe }}
+      {% for text in texts %}
+        {{ text.text | safe }}
+      {% endfor %}
+
+      {% for image in images %}
+        <img data-src="{{ image.image }}"/>
+      {% endfor %}
 
   </div>
 

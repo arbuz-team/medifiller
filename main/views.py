@@ -66,9 +66,9 @@ class Contains_Products(Dynamic_Event_Menager):
 class Contains_About(Editable_Tab):
 
     def Manage_Content_Ground(self):
-        self.content['texts'] = Text_Content.objects.filter(tab_name='about_us')
-        self.content['images'] = Image_Content.objects.filter(tab_name='about_us')
-        return self.Render_HTML('main/about_us.html')
+        self.content['texts'] = Text_Content.objects.filter(tab_name='about')
+        self.content['images'] = Image_Content.objects.filter(tab_name='about')
+        return self.Render_HTML('main/about.html')
 
     @staticmethod
     def Launch(request):
@@ -78,9 +78,9 @@ class Contains_About(Editable_Tab):
 class Contains_Contact(Editable_Tab):
 
     def Manage_Content_Ground(self):
-        self.content['texts'] = Text_Content.objects.filter(tab_name='contact_us')
-        self.content['images'] = Image_Content.objects.filter(tab_name='contact_us')
-        return self.Render_HTML('main/contact_us.html')
+        self.content['texts'] = Text_Content.objects.filter(tab_name='contact')
+        self.content['images'] = Image_Content.objects.filter(tab_name='contact')
+        return self.Render_HTML('main/contact.html')
 
     @staticmethod
     def Launch(request):
