@@ -22,13 +22,8 @@ let
       else if($field.is(':text'))
         $field
           .change(auto_form_views.send_default)
-          .keyup(auto_form_views.send_on_key_up)
-          .keydown(function(event){
-            if(event.keyCode == 13) {
-              event.preventDefault();
-              return false;
-            }
-          });
+          //.keyup(auto_form_views.send_on_key_up)
+          .keydown(auto_form_views.send_on_enter);
 
       else if($field.is('select'))
         $field.change(auto_form_views.send_default);

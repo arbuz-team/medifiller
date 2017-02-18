@@ -343,19 +343,19 @@
 	
 	var cart_controllers = _interopRequireWildcard(_controllers2);
 	
-	var _controllers3 = __webpack_require__(34);
+	var _controllers3 = __webpack_require__(37);
 	
 	var navigation_controllers = _interopRequireWildcard(_controllers3);
 	
-	var _controllers4 = __webpack_require__(35);
+	var _controllers4 = __webpack_require__(38);
 	
 	var header_controllers = _interopRequireWildcard(_controllers4);
 	
-	var _controllers5 = __webpack_require__(36);
+	var _controllers5 = __webpack_require__(39);
 	
 	var dialog_controllers = _interopRequireWildcard(_controllers5);
 	
-	var _controllers6 = __webpack_require__(42);
+	var _controllers6 = __webpack_require__(45);
 	
 	var ground_controllers = _interopRequireWildcard(_controllers6);
 	
@@ -1853,12 +1853,9 @@
 	  settings.fields.each(function () {
 	    $field = $(this);
 	
-	    if ($field.is(':checkbox')) $field.change(auto_form_views.send_checkbox);else if ($field.is(':text')) $field.change(auto_form_views.send_default).keyup(auto_form_views.send_on_key_up).keydown(function (event) {
-	      if (event.keyCode == 13) {
-	        event.preventDefault();
-	        return false;
-	      }
-	    });else if ($field.is('select')) $field.change(auto_form_views.send_default);
+	    if ($field.is(':checkbox')) $field.change(auto_form_views.send_checkbox);else if ($field.is(':text')) $field.change(auto_form_views.send_default)
+	    //.keyup(auto_form_views.send_on_key_up)
+	    .keydown(auto_form_views.send_on_enter);else if ($field.is('select')) $field.change(auto_form_views.send_default);
 	  });
 	},
 	    do_nothing = function do_nothing(event) {
@@ -1928,27 +1925,53 @@
 	    send(post_data);
 	  };
 	
-	  var check_is_key_code_printable_or_functional = function check_is_key_code_printable_or_functional(event) {
-	    var keycode = event.keyCode;
+	  // let check_is_key_code_printable_or_functional = function(event)
+	  // {
+	  //   let keycode = event.keyCode;
+	  //
+	  //   let valid =
+	  //     (keycode > 47 && keycode < 58)   ||   // number keys
+	  //     keycode === 8 || keycode === 46 ||    // backspace & delete
+	  //     keycode === 32 || keycode === 13   || // spacebar & return key(s) (if you want to allow carriage returns)
+	  //     (keycode > 64 && keycode < 91)   ||   // letter keys
+	  //     (keycode > 95 && keycode < 112)  ||   // numpad keys
+	  //     (keycode > 185 && keycode < 193) ||   // ;=,-./` (in order)
+	  //     (keycode > 218 && keycode < 223);     // [\]' (in order)
+	  //
+	  //   return valid;
+	  // };
 	
-	    var valid = keycode > 47 && keycode < 58 || // number keys
-	    keycode === 8 || keycode === 46 || // backspace & delete
-	    keycode === 32 || keycode === 13 || // spacebar & return key(s) (if you want to allow carriage returns)
-	    keycode > 64 && keycode < 91 || // letter keys
-	    keycode > 95 && keycode < 112 || // numpad keys
-	    keycode > 185 && keycode < 193 || // ;=,-./` (in order)
-	    keycode > 218 && keycode < 223; // [\]' (in order)
 	
-	    return valid;
+	  // this.send_on_key_up = function(event)
+	  // {
+	  //   if(check_is_key_code_printable_or_functional(event))
+	  //   {
+	  //     let
+	  //       $field = $(this),
+	  //       post_data = {};
+	  //
+	  //     post_data['__'+ models.settings.origin +'__'] = $field.data('name');
+	  //     post_data['value'] = $field.val();
+	  //
+	  //     send(post_data);
+	  //   }
+	  // };
+	
+	
+	  var check_is_key_code_enter = function check_is_key_code_enter(event) {
+	    return event.keyCode === 13;
 	  };
 	
-	  this.send_on_key_up = function (event) {
-	    if (check_is_key_code_printable_or_functional(event)) {
+	  this.send_on_enter = function (event) {
+	    if (check_is_key_code_enter(event)) {
+	      event.preventDefault();
 	      var $field = $(this),
 	          post_data = {};
 	
 	      post_data['__' + models.settings.origin + '__'] = $field.data('name');
 	      post_data['value'] = $field.val();
+	
+	      models.settings.delay = 0;
 	
 	      send(post_data);
 	    }
@@ -1961,9 +1984,11 @@
 	  var send = function send(post_data) {
 	    window.APP.http_request(models.settings.action, post_data, function () {
 	      APP.DATA = {
-	        redirect: '/products/',
-	        delay: 1000
+	        redirect: '/products/'
 	      };
+	
+	      if (typeof models.settings.delay !== 'undefined') APP.DATA.delay = models.settings.delay;else APP.DATA.delay = 1000;
+	
 	      APP.throw_event(window.EVENTS.redirect);
 	    });
 	  };
@@ -1997,7 +2022,9 @@
 	
 	    action: undefined,
 	    origin: undefined,
-	    target: undefined
+	    target: undefined,
+	
+	    delay: undefined
 	  };
 	
 	  var load_settings = function load_settings() {
@@ -2160,11 +2187,17 @@
 	
 	var _controllers3 = __webpack_require__(19);
 	
+	var _controllers4 = __webpack_require__(34);
+	
 	/**
 	 *    Defining private variables
 	 */
 	
-	var config_loader = {
+	/**
+	 * Created by mrskull on 07.01.17.
+	 */
+	
+	var cart_loader_controllers = new _controllers.Plugins_Loader_Controllers({
 	  name: 'cart',
 	  url: '/cart/',
 	
@@ -2172,9 +2205,8 @@
 	
 	  auto_first_loading: true,
 	  load_with_page: false
-	},
-	    cart_loader_controllers = new _controllers.Plugins_Loader_Controllers(config_loader),
-	    config_motion = {
+	}),
+	    cart_motion_controllers = new _controllers2.Plugins_Motion_Controllers({
 	  container: '#CART',
 	  content: '.cart',
 	  open: 'left',
@@ -2182,8 +2214,10 @@
 	  can_open_from: 0,
 	  duration_open: 200,
 	  duration_close: 200
-	},
-	    cart_motion_controllers = new _controllers2.Plugins_Motion_Controllers(config_motion),
+	}),
+	    post_button_controllers = new _controllers4.Post_Button_Controllers({
+	  container: '#CART > .cart',
+	  callback: cart_loader_controllers.reload }),
 	    cart_form_controllers = new _controllers3.Form_Controllers(cart_loader_controllers),
 	    manage_key = function manage_key(event) {
 	  if (event.keyCode === 27) cart_motion_controllers.plugin_close();
@@ -2198,15 +2232,12 @@
 	 *    Defining public functions
 	 */
 	
-	/**
-	 * Created by mrskull on 07.01.17.
-	 */
-	
 	var define = exports.define = function define() {
 	  cart_form_controllers.define();
 	  cart_motion_controllers.define();
+	  post_button_controllers.define();
 	
-	  $('.cart-close', $(config_motion.container)).click(cart_motion_controllers.plugin_close);
+	  $('.cart-close', $('#CART')).click(cart_motion_controllers.plugin_close);
 	
 	  $('body').keydown(manage_key);
 	},
@@ -2225,6 +2256,219 @@
 
 /***/ },
 /* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Post_Button_Controllers = undefined;
+	
+	var _views = __webpack_require__(35);
+	
+	var Post_Button_Controllers = exports.Post_Button_Controllers = function Post_Button_Controllers(config) {
+	  if (typeof config === 'undefined' && typeof config.container === 'undefined') {
+	    console.error('Exeption error: invalid container.');
+	    return {};
+	  }
+	
+	  var buttons_views = {},
+	      manage_buttons = function manage_buttons(event) {
+	    event.preventDefault();
+	    event.stopPropagation();
+	
+	    var button_name = $(this).data('name');
+	
+	    if (buttons_views[button_name]) buttons_views[button_name].start();else console.error('Button "' + button_name + '" doesn\'t exsist');
+	  },
+	      create_button_views = function create_button_views() {
+	    var button_name = $(this).data('name');
+	    config.button = this;
+	    config.button_name = button_name;
+	    config.button_action = $(this).data('action');
+	    config.button_value = $(this).data('value');
+	    config.button_reload = $(this).data('reload');
+	    config.button_url = $(this).data('url');
+	    config.button_html = $(this).html();
+	
+	    buttons_views[button_name] = new _views.Post_Button_Views(config);
+	  };
+	
+	  this.define = function () {
+	    var $post_buttons = $('.post_button', config.container);
+	
+	    $post_buttons.each(create_button_views);
+	
+	    $post_buttons.click(manage_buttons);
+	  };
+	}; /**
+	    * Created by mrskull on 17.12.16.
+	    */
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Post_Button_Views = undefined;
+	
+	var _models = __webpack_require__(36);
+	
+	var Post_Button_Views = exports.Post_Button_Views = function Post_Button_Views(config) {
+	  var models = new _models.Post_Button_Models(config),
+	      start_loading = function start_loading() {
+	    models.state.is_loading = true;
+	    $(models.settings.button).html(models.settings.text_loading);
+	  },
+	      is_error = function is_error(JSON_response, status) {
+	    if (status !== 'success') {
+	      $(models.settings.button).html(models.settings.text_error);
+	      return true;
+	    }
+	
+	    var response = JSON.parse(JSON_response);
+	
+	    if (response.__button__ !== 'true') {
+	      $(models.settings.button).html(models.settings.text_error);
+	      return true;
+	    }
+	
+	    return false;
+	  },
+	      reload_plugins = function reload_plugins() {
+	    var plugins = models.settings.button_reload,
+	        plugins_array = void 0,
+	        array_length = void 0;
+	
+	    if (!plugins && typeof plugins === 'string') return false;
+	
+	    plugins_array = plugins.split(' ');
+	    array_length = plugins_array.length;
+	
+	    for (var i = 0; i < array_length; ++i) {
+	      if (plugins_array[i]) {
+	        window.APP.DATA.delay = 200;
+	        window.APP.throw_event(window.EVENTS.plugins['reload_' + plugins_array[i]]);
+	      }
+	    }
+	  },
+	      end_loading = function end_loading(JSON_response, status) {
+	    models.state.is_loading = false;
+	
+	    if (is_error(JSON_response, status)) return false;
+	
+	    $(models.settings.button).html(models.settings.text_done);
+	
+	    reload_plugins();
+	  };
+	
+	  this.start = function () {
+	    if (models.is_loading()) return false;
+	
+	    start_loading();
+	    models.send_post(end_loading);
+	  };
+	
+	  this.models = models;
+	}; /**
+	    * Created by mrskull on 18.12.16.
+	    */
+
+/***/ },
+/* 36 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	 * Created by mrskull on 31.01.17.
+	 */
+	
+	var Post_Button_Models = exports.Post_Button_Models = function Post_Button_Models(config) {
+	  var that = this;
+	
+	  this.settings = {
+	    container: undefined,
+	    button: undefined,
+	    button_name: undefined,
+	    button_action: undefined,
+	    button_value: undefined,
+	    button_reload: undefined,
+	    button_url: undefined,
+	    callback: undefined,
+	
+	    text_loading: 'Sending...',
+	    text_done: "It's done!",
+	    text_error: 'Error / Resend',
+	    text_standard: undefined
+	  };
+	
+	  var load_settings = function load_settings() {
+	    if (typeof config !== 'undefined') {
+	      window.APP.add_if_isset(config, that.settings, 'container');
+	
+	      window.APP.add_if_isset(config, that.settings, 'callback');
+	
+	      window.APP.add_if_isset(config, that.settings, 'button');
+	
+	      window.APP.add_if_isset(config, that.settings, 'button_name');
+	
+	      window.APP.add_if_isset(config, that.settings, 'button_action');
+	
+	      window.APP.add_if_isset(config, that.settings, 'button_value');
+	
+	      window.APP.add_if_isset(config, that.settings, 'button_reload');
+	
+	      window.APP.add_if_isset(config, that.settings, 'button_url');
+	
+	      window.APP.add_if_isset(config, that.settings, 'button_html', 'text_standard');
+	    }
+	  };
+	
+	  load_settings();
+	
+	  /////////////////////////
+	
+	  this.state = {
+	    is_loading: false
+	  };
+	
+	  this.is_loading = function () {
+	    return that.state.is_loading;
+	  };
+	
+	  /////////////////////////
+	
+	  var prepare_post_data = function prepare_post_data(action, value) {
+	    var obj = { __button__: action };
+	
+	    if (value) obj.value = value;
+	
+	    return obj;
+	  };
+	
+	  this.send_post = function (callback) {
+	    setTimeout(function () {
+	      var url = that.settings.button_url,
+	          action = that.settings.button_action,
+	          value = that.settings.button_value,
+	          post_data = prepare_post_data(action, value);
+	
+	      window.APP.http_request(url, post_data, callback);
+	    }, 200);
+	  };
+	};
+
+/***/ },
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2297,7 +2541,7 @@
 	};
 
 /***/ },
-/* 35 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2313,7 +2557,7 @@
 	
 	var searcher_controllers = _interopRequireWildcard(_controllers2);
 	
-	var _controllers3 = __webpack_require__(34);
+	var _controllers3 = __webpack_require__(37);
 	
 	var navigation_controllers = _interopRequireWildcard(_controllers3);
 	
@@ -2360,7 +2604,7 @@
 	};
 
 /***/ },
-/* 36 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2370,11 +2614,11 @@
 	});
 	exports.close = exports.open = exports.define = undefined;
 	
-	var _views = __webpack_require__(37);
+	var _views = __webpack_require__(40);
 	
 	var dialog_views = _interopRequireWildcard(_views);
 	
-	var _controllers = __webpack_require__(39);
+	var _controllers = __webpack_require__(42);
 	
 	var interior_dialog_controllers = _interopRequireWildcard(_controllers);
 	
@@ -2434,7 +2678,7 @@
 	    close = exports.close = dialog_views.close;
 
 /***/ },
-/* 37 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2444,15 +2688,15 @@
 	});
 	exports.close = exports.open = exports.selectors = undefined;
 	
-	var _models = __webpack_require__(38);
+	var _models = __webpack_require__(41);
 	
 	var dialog_models = _interopRequireWildcard(_models);
 	
-	var _controllers = __webpack_require__(39);
+	var _controllers = __webpack_require__(42);
 	
 	var interior_dialog_controllers = _interopRequireWildcard(_controllers);
 	
-	var _models2 = __webpack_require__(41);
+	var _models2 = __webpack_require__(44);
 	
 	var interior_dialog_models = _interopRequireWildcard(_models2);
 	
@@ -2511,7 +2755,7 @@
 	};
 
 /***/ },
-/* 38 */
+/* 41 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2541,7 +2785,7 @@
 	selectors.external_buttons = 'button.dialog_button';
 
 /***/ },
-/* 39 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2551,11 +2795,11 @@
 	});
 	exports.define = exports.recognize_button = exports.load = undefined;
 	
-	var _views = __webpack_require__(40);
+	var _views = __webpack_require__(43);
 	
 	var interior_dialog_views = _interopRequireWildcard(_views);
 	
-	var _controllers = __webpack_require__(36);
+	var _controllers = __webpack_require__(39);
 	
 	var _controllers2 = __webpack_require__(19);
 	
@@ -2593,7 +2837,7 @@
 	};
 
 /***/ },
-/* 40 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2603,7 +2847,7 @@
 	});
 	exports.load = exports.container = exports.variables = exports.selectors = undefined;
 	
-	var _models = __webpack_require__(41);
+	var _models = __webpack_require__(44);
 	
 	var interior_dialog_models = _interopRequireWildcard(_models);
 	
@@ -2617,7 +2861,7 @@
 	                                                        */
 
 /***/ },
-/* 41 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2629,7 +2873,7 @@
 	
 	var _controllers = __webpack_require__(12);
 	
-	var _models = __webpack_require__(38);
+	var _models = __webpack_require__(41);
 	
 	/**
 	 * Created by mrskull on 21.01.17.
@@ -2675,7 +2919,7 @@
 	};
 
 /***/ },
-/* 42 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2685,7 +2929,7 @@
 	});
 	exports.change_content = exports.start = exports.define = undefined;
 	
-	var _views = __webpack_require__(43);
+	var _views = __webpack_require__(46);
 	
 	var ground_views = _interopRequireWildcard(_views);
 	
@@ -2693,7 +2937,7 @@
 	
 	var _controllers2 = __webpack_require__(19);
 	
-	var _controllers3 = __webpack_require__(44);
+	var _controllers3 = __webpack_require__(34);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -2778,7 +3022,7 @@
 	};
 
 /***/ },
-/* 43 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2804,220 +3048,6 @@
 	}; /**
 	    * Created by mrskull on 09.01.17.
 	    */
-
-/***/ },
-/* 44 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.Post_Button_Controllers = undefined;
-	
-	var _views = __webpack_require__(45);
-	
-	var Post_Button_Controllers = exports.Post_Button_Controllers = function Post_Button_Controllers(config) {
-	  if (typeof config === 'undefined' && typeof config.container === 'undefined') {
-	    console.error('Exeption error: invalid container.');
-	    return {};
-	  }
-	
-	  var buttons_views = {},
-	      manage_buttons = function manage_buttons(event) {
-	    event.preventDefault();
-	    event.stopPropagation();
-	
-	    var button_name = $(this).data('name');
-	
-	    buttons_views[button_name].start();
-	  },
-	      create_button_views = function create_button_views() {
-	    var button_name = $(this).data('name');
-	    config.button = this;
-	    config.button_name = button_name;
-	    config.button_action = $(this).data('action');
-	    config.button_value = $(this).data('value');
-	    config.button_reload = $(this).data('reload');
-	    config.button_url = $(this).data('url');
-	    config.button_html = $(this).html();
-	
-	    buttons_views[button_name] = new _views.Post_Button_Views(config);
-	  };
-	
-	  this.define = function () {
-	    var $post_buttons = $('.post_button', config.container);
-	
-	    $post_buttons.each(create_button_views);
-	
-	    $post_buttons.click(manage_buttons);
-	  };
-	}; /**
-	    * Created by mrskull on 17.12.16.
-	    */
-
-/***/ },
-/* 45 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.Post_Button_Views = undefined;
-	
-	var _models = __webpack_require__(46);
-	
-	var Post_Button_Views = exports.Post_Button_Views = function Post_Button_Views(config) {
-	  var models = new _models.Post_Button_Models(config),
-	      start_loading = function start_loading() {
-	    models.state.is_loading = true;
-	    $(models.settings.button).html(models.settings.text_loading);
-	  },
-	      is_error = function is_error(JSON_response, status) {
-	    if (status !== 'success') {
-	      $(models.settings.button).html(models.settings.text_error);
-	      return true;
-	    }
-	
-	    var response = JSON.parse(JSON_response);
-	
-	    if (response.__button__ !== 'true') {
-	      $(models.settings.button).html(models.settings.text_error);
-	      return true;
-	    }
-	
-	    return false;
-	  },
-	      reload_plugins = function reload_plugins() {
-	    var plugins = models.settings.button_reload,
-	        plugins_array = void 0,
-	        array_length = void 0;
-	
-	    if (!plugins && typeof plugins === 'string') return false;
-	
-	    plugins_array = plugins.split(' ');
-	    array_length = plugins_array.length;
-	
-	    for (var i = 0; i < array_length; ++i) {
-	      if (plugins_array[i]) {
-	        window.APP.DATA.delay = 200;
-	        window.APP.throw_event(window.EVENTS.plugins['reload_' + plugins_array[i]]);
-	      }
-	    }
-	  },
-	      end_loading = function end_loading(JSON_response, status) {
-	    models.state.is_loading = false;
-	
-	    if (is_error(JSON_response, status)) return false;
-	
-	    $(models.settings.button).html(models.settings.text_done);
-	
-	    reload_plugins();
-	  };
-	
-	  this.start = function () {
-	    if (models.is_loading()) return false;
-	
-	    start_loading();
-	    models.send_post(end_loading);
-	  };
-	
-	  this.models = models;
-	}; /**
-	    * Created by mrskull on 18.12.16.
-	    */
-
-/***/ },
-/* 46 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	/**
-	 * Created by mrskull on 31.01.17.
-	 */
-	
-	var Post_Button_Models = exports.Post_Button_Models = function Post_Button_Models(config) {
-	  var that = this;
-	
-	  this.settings = {
-	    container: undefined,
-	    button: undefined,
-	    button_name: undefined,
-	    button_action: undefined,
-	    button_value: undefined,
-	    button_reload: undefined,
-	    button_url: undefined,
-	    callback: undefined,
-	
-	    text_loading: 'Sending...',
-	    text_done: "It's done!",
-	    text_error: 'Error / Resend',
-	    text_standard: undefined
-	  };
-	
-	  var load_settings = function load_settings() {
-	    if (typeof config !== 'undefined') {
-	      window.APP.add_if_isset(config, that.settings, 'container');
-	
-	      window.APP.add_if_isset(config, that.settings, 'callback');
-	
-	      window.APP.add_if_isset(config, that.settings, 'button');
-	
-	      window.APP.add_if_isset(config, that.settings, 'button_name');
-	
-	      window.APP.add_if_isset(config, that.settings, 'button_action');
-	
-	      window.APP.add_if_isset(config, that.settings, 'button_value');
-	
-	      window.APP.add_if_isset(config, that.settings, 'button_reload');
-	
-	      window.APP.add_if_isset(config, that.settings, 'button_url');
-	
-	      window.APP.add_if_isset(config, that.settings, 'button_html', 'text_standard');
-	    }
-	  };
-	
-	  load_settings();
-	
-	  /////////////////////////
-	
-	  this.state = {
-	    is_loading: false
-	  };
-	
-	  this.is_loading = function () {
-	    return that.state.is_loading;
-	  };
-	
-	  /////////////////////////
-	
-	  var prepare_post_data = function prepare_post_data(action, value) {
-	    var obj = { __button__: action };
-	
-	    if (value) obj.value = value;
-	
-	    return obj;
-	  };
-	
-	  this.send_post = function (callback) {
-	    setTimeout(function () {
-	      var url = that.settings.button_url,
-	          action = that.settings.button_action,
-	          value = that.settings.button_value,
-	          post_data = prepare_post_data(action, value);
-	
-	      console.log(post_data);
-	      window.APP.http_request(url, post_data, callback);
-	    }, 200);
-	  };
-	};
 
 /***/ }
 /******/ ]);

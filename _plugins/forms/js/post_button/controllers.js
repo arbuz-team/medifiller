@@ -26,7 +26,10 @@ export let Post_Button_Controllers = function(config)
       let
         button_name = $(this).data('name');
 
-      buttons_views[button_name].start();
+      if(buttons_views[button_name])
+        buttons_views[button_name].start();
+      else
+        console.error('Button "'+ button_name +'" doesn\'t exsist');
     },
 
 

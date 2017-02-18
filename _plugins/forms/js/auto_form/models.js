@@ -14,6 +14,8 @@ export let Auto_Form_Models = function(config)
     action: undefined,
     origin: undefined,
     target: undefined,
+
+    delay: undefined,
   };
 
   let load_settings = function()

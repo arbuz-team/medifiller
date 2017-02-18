@@ -2,9 +2,10 @@
  * Created by mrskull on 07.01.17.
  */
 
-import {Plugins_Loader_Controllers} from '../../plugins_loader/controllers'
-import {Plugins_Motion_Controllers} from '../../plugins_motion/controllers'
-import {Form_Controllers}  from '../../forms/js/controllers'
+import {Plugins_Loader_Controllers}     from '../../plugins_loader/controllers'
+import {Plugins_Motion_Controllers}     from '../../plugins_motion/controllers'
+import {Form_Controllers}               from '../../forms/js/controllers'
+import {Post_Button_Controllers}        from '../../forms/js/post_button/controllers'
 
 
 /**
@@ -13,7 +14,7 @@ import {Form_Controllers}  from '../../forms/js/controllers'
 
 let
 
-  config_loader = {
+  cart_loader_controllers = new Plugins_Loader_Controllers({
     name: 'cart',
     url: '/cart/',
 
@@ -21,10 +22,9 @@ let
 
     auto_first_loading: true,
     load_with_page: false,
-  },
-  cart_loader_controllers = new Plugins_Loader_Controllers(config_loader),
+  }),
 
-  config_motion = {
+  cart_motion_controllers = new Plugins_Motion_Controllers({
     container: '#CART',
     content: '.cart',
     open: 'left',
@@ -32,8 +32,12 @@ let
     can_open_from: 0,
     duration_open: 200,
     duration_close: 200,
-  },
-  cart_motion_controllers = new Plugins_Motion_Controllers(config_motion),
+  }),
+
+  post_button_controllers = new Post_Button_Controllers({
+    container: '#CART > .cart',
+    callback: cart_loader_controllers.reload, ///////////////////////////////////////////////// popraw
+  }),
 
   cart_form_controllers = new Form_Controllers(cart_loader_controllers),
 
@@ -64,8 +68,9 @@ export let
   {
     cart_form_controllers.define();
     cart_motion_controllers.define();
+    post_button_controllers.define();
 
-    $('.cart-close', $(config_motion.container)).click(cart_motion_controllers.plugin_close);
+    $('.cart-close', $('#CART')).click(cart_motion_controllers.plugin_close);
 
     $('body').keydown(manage_key);
   },
