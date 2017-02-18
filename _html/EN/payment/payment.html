@@ -2,33 +2,70 @@
 
 <script>
   window.APP.DATA = {
-    title : 'About us'
+    title : 'Payment'
     , description : 'This page is about us. ;)'
   };
 </script>
 
-<div class="ground-block block-1">
+<div class="ground-block block-1" id="PAYMENT">
 
   <div class="block-background fill-abs"></div>
   {% include "ground/html/navigation.html" %}
 
-  <div class="block-content">
+  <div class="block-content payment">
 
-    {% for selected in cart %}
+      <ul class="cart-list">
 
-      {{ selected.product }} {{ selected.number }} x
-      {% price selected.product %}<br>
+          {% if cart %}
 
-    {% endfor %}
+          {% for selected in cart %}
 
-    {{ total_price }} {{ request.session.translator_currency }}
+          <li>
+              <div class="cart-list-name">
+                  <a href="/product/{{ selected.product.pk }}/{{ selected.product.details_en.name }}/">
+                      {{ selected.product.details_en.name }}
+                  </a>
+              </div>
+              <div class="cart-list-actions field_shell"> {{ selected.number }} x {{ selected.product.price_usd }} USD
+                  <button class="post_button" type="button"
+                          data-name="Delete_{{ selected.product.pk }}"
+                          data-action="delete"
+                          data-value="{{ selected.product.pk }}"
+                          data-reload="cart ground"
+                          data-url="/cart/">X</button>
+              </div>
+          </li>
 
-    {{ paypal.render }}
+          {% endfor %}
 
-    <form action="https://ssl.dotpay.pl/test_payment/" method="post">
-      {{ dotpay.as_p }}
-      <p><input type="submit" value="Proceed for dotpay" /></p>
-    </form>
+          <li class="field_shell">
+              <br />
+              Total price: {{ total_price }} {{ request.session.translator_currency }}<br />
+
+              <div class="cart-list-button">
+                  {{ paypal.render }}
+              </div>
+              <div class="cart-list-button">
+                  <form action="https://ssl.dotpay.pl/test_payment/" method="post">
+                      {{ dotpay.as_p }}
+                      <input class="button" type="submit" value="Proceed by dotpay" />
+                  </form>
+              </div>
+          </li>
+
+          <!--{{ suma }}-->
+
+          {% else %}
+
+          <li>
+              <div class="cart-list-empty">
+                  Payment is empty
+              </div>
+          </li>
+
+          {% endif %}
+
+      </ul>
 
   </div>
 

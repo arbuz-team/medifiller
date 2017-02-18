@@ -1,3 +1,4 @@
+{% load tags %}
 
 {% if request.session.user_login %}
 
@@ -20,7 +21,7 @@
                         {{ selected.product.details_en.name }}
                     </a>
                 </div>
-                <div class="cart-list-actions field_shell"> {{ selected.number }} x {{ selected.product.price_usd }} USD
+                <div class="cart-list-actions field_shell"> {{ selected.number }} x {% price selected.product %}
                     <!--<button class="post_button" type="button"-->
                            <!--data-name="Delete_{{ product.pk }}"-->
                            <!--data-action=""-->
@@ -41,7 +42,7 @@
                             data-url="/cart/">Clear cart</button>
                 </div>
                 <div class="cart-list-button">
-                    <a class="button" style="font-weight: normal" href="/payment/">Go to paymants</a>
+                    <a class="button submit" style="font-weight: normal" href="/payment/">Go to paymants</a>
                 </div>
             </li>
 

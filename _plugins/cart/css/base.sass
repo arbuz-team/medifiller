@@ -19,7 +19,9 @@ $cart--color: $g-color_0
 
   z-index: 59
 
-  >.cart
+#CART, #PAYMENT
+
+  >.cart, >.payment
 
     >.cart-close
       position: absolute
@@ -93,7 +95,8 @@ $cart--color: $g-color_0
         margin-top: 50px
         width: 49%
 
-        >button, >a
+        >*
+          display: block
           width: 95%
 
 
