@@ -31,6 +31,7 @@ class Cart_Manager(Dynamic_Event_Menager):
         return JsonResponse({'__button__': 'true'})
 
     def Manage_Button_Clear(self):
+        Payment_Models_Menager.Clear_Selected_Product(self.request)
         return JsonResponse({'__button__': 'true'})
 
     def Manage_Button(self):

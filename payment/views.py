@@ -186,3 +186,20 @@ class Cancel_Payment(Dynamic_Event_Menager):
     @csrf_exempt
     def Launch(request):
         return Cancel_Payment(request).HTML
+
+
+
+class Buy(Dynamic_Event_Menager):
+
+    def Manage_Content_Ground(self):
+        product = Product.objects.get(pk=self.other_value)
+        Payment_Models_Menager.Append_Selected_Product(self.request, product)
+        return self.Render_HTML('payment/buy.html')
+
+    @staticmethod
+    def Buy_Product(request, pk):
+        return Buy(request, other_value=pk).HTML
+
+    @staticmethod
+    def Launch(request):
+        return Buy(request).HTML

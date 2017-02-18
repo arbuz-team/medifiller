@@ -85,3 +85,13 @@ class Payment_Models_Menager:
             payment=payment, product=product)
 
         selected_product.delete()
+
+    @staticmethod
+    def Clear_Selected_Product(request):
+        unique = request.session['user_unique']
+        user = User.objects.get(unique=unique)
+        payment = Payment.objects.get(user=user, approved=False)
+        selected_product = Selected_Product.objects.filter(payment=payment)
+
+        for selected in selected_product:
+            selected.delete()
