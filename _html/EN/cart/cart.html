@@ -17,7 +17,7 @@
 
             <li>
                 <div class="cart-list-name">
-                    <a href="/product/{{ selected.product.pk }}/{{ selected.product.details_en.name }}/">
+                    <a href="/product/{{ selected.product.pk }}/{{ selected.product.details_en.name | to_url }}/">
                         {{ selected.product.details_en.name }}
                     </a>
                 </div>
