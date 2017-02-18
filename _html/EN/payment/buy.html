@@ -1,28 +1,8 @@
-payment.html<script>
-  window.APP.DATA = {
-    title : 'About us'
-    , description : 'This page is about us. ;)'
-  };
+
+<script>
+    window.APP.DATA.redirect = '/payment/';
+
+    window.APP.DATA.delay = 0;
+    window.APP.throw_event(window.EVENTS.plugins.reload_cart);
+    window.APP.throw_event(window.EVENTS.redirect);
 </script>
-
-<div class="ground-block block-1">
-
-  <div class="block-background fill-abs"></div>
-  {% include "ground/html/navigation.html" %}
-
-  <div class="block-content">
-
-      <div class="block-content-message">
-          Redirect to payment...
-      </div>
-
-      <script>
-          window.APP.DATA.redirect = '/payment/';
-
-          window.APP.DATA.delay = 100;
-          window.APP.throw_event(window.EVENTS.redirect);
-      </script>
-
-  </div>
-
-</div>
