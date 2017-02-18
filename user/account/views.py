@@ -1,5 +1,6 @@
 from arbuz.views import *
-from sender.views import *
+from user.forms import *
+from payment.models import *
 
 
 class Start_App(Dynamic_Event_Menager):
@@ -29,15 +30,42 @@ class Start_App(Dynamic_Event_Menager):
 
     @staticmethod
     def Launch(request):
-        return Start_App(request).HTML
+        return Start_App(request, authorization=True).HTML
 
 
 
-class Account(Dynamic_Event_Menager):
+class Account_Details(Dynamic_Event_Menager):
+
+    def Manage_Content_Ground(self):
+        unique = self.request.session['user_unique']
+        self.content['user'] = User.objects.get(unique=unique)
+        return self.Render_HTML('user/account/details.html')
+
+    def Manage_Edit(self):
+        user = User.objects.get(unique=self.request.session['user_unique'])
+
+        if self.request.POST['__edit__'] == 'email':
+            user.email = self.request.POST['value']
+            user.save()
+            return JsonResponse({'__edit__': 'true'})
+
+        if self.request.POST['__edit__'] == 'username':
+            user.username = self.request.POST['value']
+            user.save()
+            return JsonResponse({'__edit__': 'true'})
+
+        return JsonResponse({'__edit__': 'false'})
+
+    @staticmethod
+    def Launch(request):
+        return Account_Details(request, authorization=True).HTML
+
+
+
+class User_Addresses(Dynamic_Event_Menager):
 
     def Get_User_Details(self):
         unique = self.request.session['user_unique']
-        self.content['user'] = User.objects.get(unique=unique)
         self.content['form_name_new'] = 'new_user_address'
         self.content['form_name_edit'] = 'edit_user_address'
         self.content['edit_forms_address'] = {}
@@ -69,7 +97,7 @@ class Account(Dynamic_Event_Menager):
     def Manage_Content_Ground(self):
         self.Get_User_Details()
         self.content['new_form_address'] = Form_User_Address()
-        return self.Render_HTML('user/account.html')
+        return self.Render_HTML('user/account/addresses.html')
 
     def Manage_Form_New_User_Address(self):
 
@@ -84,7 +112,7 @@ class Account(Dynamic_Event_Menager):
             self.content['new_form_address'] = Form_User_Address()
 
         self.Get_User_Details()
-        return self.Render_HTML('user/account.html')
+        return self.Render_HTML('user/account/addresses.html')
 
     def Manage_Form_Edit_User_Address(self):
 
@@ -97,7 +125,7 @@ class Account(Dynamic_Event_Menager):
 
         self.Get_User_Details()
         self.content['new_form_address'] = Form_User_Address()
-        return self.Render_HTML('user/account.html')
+        return self.Render_HTML('user/account/addresses.html')
 
     def Manage_Form(self):
 
@@ -108,27 +136,14 @@ class Account(Dynamic_Event_Menager):
         if 'edit_user_address' in self.request.POST['__form__']:
             return self.Manage_Form_Edit_User_Address()
 
-        return super(Account, self).Manage_Form()
-
-    def Manage_Edit(self):
-        user = User.objects.get(unique=self.request.session['user_unique'])
-
-        if self.request.POST['__edit__'] == 'email':
-            user.email = self.request.POST['value']
-            user.save()
-            return JsonResponse({'__edit__': 'true'})
-
-        if self.request.POST['__edit__'] == 'username':
-            user.username = self.request.POST['value']
-            user.save()
-            return JsonResponse({'__edit__': 'true'})
-
-        return JsonResponse({'__edit__': 'false'})
+        return super(User_Addresses, self).Manage_Form()
 
     def Manage_Button(self):
 
+        # removed address
         if '__button__' in self.request.POST:
             id_address = int(self.request.POST['value'])
+            print(id_address)
 
             if self.Check_ID_Address(id_address):
                 User_Address.objects.get(id=id_address).delete()
@@ -138,4 +153,16 @@ class Account(Dynamic_Event_Menager):
 
     @staticmethod
     def Launch(request):
-        return Account(request, authorization=True).HTML
+        return User_Addresses(request, authorization=True).HTML
+
+
+
+class My_Shopping(Dynamic_Event_Menager):
+
+    def Manage_Content_Ground(self):
+        self.content['payments'] = Payment.objects.filter(approved=True)
+        return self.Render_HTML('user/account/my_shopping.html')
+
+    @staticmethod
+    def Launch(request):
+        return My_Shopping(request, authorization=True).HTML

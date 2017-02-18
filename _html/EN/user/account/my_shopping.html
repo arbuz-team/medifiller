@@ -14,7 +14,15 @@
 
   <div class="block-content">
 
+      {% for payment in payments %}
 
+        {{ payment.user }}
+        {{ payment.total_price }}
+        {{ payment.currency }}
+        {{ payment.service }}
+        <br>
+
+      {% endfor %}
 
   </div>
 
