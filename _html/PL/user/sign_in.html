@@ -15,11 +15,19 @@
   
     {% if not form or request.session.user_login %}
 
-      Hello {{ self.request.session.user_username }} You are logged on. ;)
+      <div class="block-content-message">
+          Hello {{ request.session.user_username }}. Have a nice shopping! ;)
+      </div>
+
       <script>
         window.APP.throw_event(window.EVENTS.plugins.reload_sign_in);
 
         window.APP.DATA.redirect = '/';
+
+        // {% if go_back %}
+            window.APP.DATA.redirect = '{{ go_back }}';
+        // {% endif %}
+
         window.APP.DATA.delay = 2000;
         window.APP.throw_event(window.EVENTS.redirect);
       </script>

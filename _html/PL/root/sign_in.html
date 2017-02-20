@@ -12,20 +12,26 @@
   {% include "ground/html/navigation.html" %}
 
   <div class="block-content">
-    {% if not form %}
+      {% if not form or request.session.root_login %}
 
-      Hello root! You are logged on. ;)
+      <div class="block-content-message">
+          Hello root! Have fun at work. ;)
+      </div>
+
       <script>
         window.APP.throw_event(window.EVENTS.plugins.reload_sign_in);
 
         window.APP.DATA.redirect = '/';
         window.APP.DATA.delay = 2000;
-        window.dispatchEvent(window.EVENTS.redirect);
+        window.APP.throw_event(window.EVENTS.redirect);
       </script>
 
     {% else %}
 
-      <form method="post" action="" data-name="{{ form_name }}" data-type="{{ form_name }}" data-test="yes" class=" class="field_shell"">
+      <form method="post" class="field_shell"
+            data-name="{{ form_name }}"
+            data-type="{{ form_name }}"
+            data-test="yes">
 
         <div class="title"> Root login </div>
 

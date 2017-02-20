@@ -7,59 +7,45 @@
 
 <div class="dialog-content">
 
-    {% if not form %}
+    <!--data-type="{{ form_name }}" data-test="yes"-->
+    <form method="post" data-name="{{ form_name }}">
+
+        {{ form.non_field_errors }}
 
         <div class="dialog-content-part field_shell">
-            New record has been append to database.
-            <script>
-                window.APP.DATA.delay = 1000;
-                window.APP.throw_event(window.EVENTS.dialog_close);
-            </script>
+            <!--fields of form-->
+            {% for field in form %}
+
+                <div class="file_shell">
+                    {% if field|fieldtype == 'ClearableFileInput'%}
+
+                        {{ field }}
+                        <button type="button">Select file</button>
+                        {{ field.errors }}
+
+                    {% else %}
+
+                        {{ field }}
+                        {{ field.errors }}
+
+                    {% endif %}
+                    <div class="status"></div>
+                </div>
+
+            {% endfor %}
+
+            {% if image %}
+                <img data-src="{{ image }}" alt="image">
+            {% endif %}
+
         </div>
 
-    {% else %}
+        <div class="dialog-content-part field_shell">
+            <!--buttons-->
+            <button type="button" class="dialog-content-button" data-name="cancel"> Cancel </button>
+            <button type="button" class="dialog-content-button" data-name="send"> Accept </button>
+        </div>
 
-        <!--data-type="{{ form_name }}" data-test="yes"-->
-        <form method="post" data-name="{{ form_name }}">
-
-            {{ form.non_field_errors }}
-
-            <div class="dialog-content-part field_shell">
-                <!--fields of form-->
-                {% for field in form %}
-
-                    <div>
-                        {% if field|fieldtype == 'ClearableFileInput'%}
-
-                            {{ field }}
-                            <button type="button" class="file_shell">Select file</button>
-                            {{ field.errors }}
-
-                        {% else %}
-
-                            {{ field }}
-                            {{ field.errors }}
-
-                        {% endif %}
-                        <div class="status"></div>
-                    </div>
-
-                {% endfor %}
-
-                {% if image %}
-                    <img data-src="{{ image }}" alt="image">
-                {% endif %}
-
-            </div>
-
-            <div class="dialog-content-part field_shell">
-                <!--buttons-->
-                <button type="button" class="dialog-content-button" data-name="cancel"> Cancel </button>
-                <button type="button" class="dialog-content-button" data-name="send"> Accept </button>
-            </div>
-
-        </form>
-
-    {% endif %}
+    </form>
 
 </div>

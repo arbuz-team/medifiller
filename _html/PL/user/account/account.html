@@ -16,8 +16,8 @@
     <div class="title"> User details: </div>
 
     <div class="hide_form">
-      <div class="label"> Email: </div>
-      <div>
+      <div class="hide_form-label"> Email: </div>
+      <div class="hide_form-field">
         <div> {{ user.email }} </div>
         <input name="email" id="id_email" value="{{ user.email }}" type="text" />
         <button data-type="edit" type="button"> Edit </button>
@@ -25,8 +25,8 @@
     </div>
 
     <div class="hide_form">
-      <div class="label"> Username: </div>
-      <div>
+      <div class="hide_form-label"> Username: </div>
+        <div class="hide_form-field">
         <div> {{ user.username }} </div>
         <input name="username" id="id_username" value="{{ user.username }}" type="text" />
         <button data-type="edit" type="button"> Edit </button>

@@ -2,34 +2,121 @@
 
 <script>
   window.APP.DATA = {
-    title : 'About us'
+    title : 'Payment'
     , description : 'This page is about us. ;)'
   };
 </script>
 
-<div class="ground-block block-1">
+<div class="ground-block block-1" id="PAYMENT">
 
-  <div class="block-background fill-abs"></div>
-  {% include "ground/html/navigation.html" %}
+    <div class="block-background fill-abs"></div>
+    {% include "ground/html/navigation.html" %}
 
-  <div class="block-content">
+    <div class="block-content payment">
 
-    {% for selected in cart %}
+        <ul class="cart-list">
 
-      {{ selected.product }} {{ selected.number }} x
-      {% price selected.product %}<br>
+            {% if cart %}
 
-    {% endfor %}
+                {% if payment_address %}
 
-    {{ total_price }} {{ request.session.translator_currency }}
+                    {% for selected in cart %}
 
-    {{ paypal.render }}
+                    <li>
+                        <div class="cart-list-name">
+                            <a href="/product/{{ selected.product.pk }}/{{ selected.product.details_en.name | to_url }}/">
+                                {{ selected.product.details_en.name }}
+                            </a>
+                        </div>
+                        <div class="cart-list-actions field_shell"> {{ selected.number }} x {% price selected.product %}
+                            <button class="post_button" type="button"
+                                  data-name="Delete_{{ selected.product.pk }}"
+                                  data-action="delete"
+                                  data-value="{{ selected.product.pk }}"
+                                  data-reload="cart ground"
+                                  data-url="/cart/">X</button>
+                        </div>
+                    </li>
 
-    <form action="https://ssl.dotpay.pl/test_payment/" method="post">
-      {{ dotpay.as_p }}
-      <p><input type="submit" value="Proceed" /></p>
-    </form>
+                    {% endfor %}
 
-  </div>
+                    <li class="field_shell">
+                        <br />
+                        Total price: {{ total_price }} {{ request.session.translator_currency }}<br />
+                    </li>
+
+
+                    <br><br>Select address: <br>
+                    {% for item in address %}
+
+                        <li class="field_shell">
+                            {{ item.full_name }}
+                            {{ item.address_line_1 }}
+                            {{ item.address_line_2 }}
+                            {{ item.city }}
+                            {{ item.region }}
+                            {{ item.postcode }}
+                            {{ item.country }}
+                        </li>
+
+                    {% endfor %}
+
+                    <li class="field_shell">
+                        <div class="form_address">
+                            <form method="post" action="" data-name="{{ form_name }}" data-type="payment_address" data-test="yes">
+
+                                <div class="shell_form"></div>
+
+                                <div class="title"> Other address </div>
+
+                                {% for field in payment_address %}
+
+                                    {{ field }}
+                                    {{ field.errors }}
+
+                                {% endfor %}
+
+                                <div>
+                                    <button disabled type="submit"> Save </button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </li>
+
+                {% else %}
+
+                    <li class="field_shell">
+                        <div class="cart-list-button">
+                            <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+                                OPIS DLA PAYPAL <br>
+                                {{ paypal.as_p }}
+                                <input class="button" type="submit" value="PayPal" />
+                            </form>
+                        </div>
+                        <div class="cart-list-button">
+                            <form action="https://ssl.dotpay.pl/test_payment/" method="post">
+                                OPIS DLA DOTPAY <br>
+                                {{ dotpay.as_p }}
+                                <input class="button" type="submit" value="Dotpay" />
+                            </form>
+                        </div>
+                    </li>
+
+                {% endif %}
+
+            {% else %}
+
+                <li>
+                    <div class="cart-list-empty">
+                      Payment is empty
+                    </div>
+                </li>
+
+            {% endif %}
+
+        </ul>
+
+    </div>
 
 </div>
