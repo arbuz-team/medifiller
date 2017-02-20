@@ -1,26 +1,27 @@
+{% load staticfiles %}
+{% load tags %}
+
 <script>
   window.APP.DATA = {
     title : ''
-    , description : 'To jest strona startowa.'
+    , description : 'This is home page.'
   };
 </script>
 
+<div class="ground-block block-1" data-name="start">
 
-<div class="BLOK1">
+  <div class="block-background fill-abs"></div>
 
-  <div class="tlo abs_pelny"></div>
+  <div class="block-content">
 
-  <div class="tresc">
-    {% include 'products/html/block_searcher.html' %}
+      <div class="block-content-banner"><img data-src="{% static 'img/banners/banner_1.jpg' %}" src="{% static 'img/load.jpg' %}" alt="Really beautiful"></div>
+
+      <div class="block-content-describe">Describe briefly your company! ;)</div>
+
+      {% include 'products/html/tiles_recommended.html' %}
+
   </div>
 
 </div>
 
-
-<div class="BLOK2">
-
-  <div class="tlo abs_pelny"></div>
-
-  {% include 'products/html/list.html' %}
-
-</div>
+{% include "ground/html/footer.html" %}

@@ -7,16 +7,19 @@
 <script src='https://www.google.com/recaptcha/api.js'></script>
 
 
-<div class="BLOK1 BLOCK SMALL">
+<div class="ground-block block-1 SMALL">
 
-  <div class="tlo abs_pelny"></div>
-  {% include "content/html/navigation.html" %}
+  <div class="block-background fill-abs"></div>
+  {% include "ground/html/navigation.html" %}
 
-  <div class="tresc">
+  <div class="block-content">
 
     {% if not form %}
 
-      {{ message }}
+      <div class="block-content-message">
+          Hello {{ self.request.session.user_username }}, so nice to meet you! Visit your mailbox and active account ;)
+      </div>
+
       <script>
         window.APP.DATA.redirect = '/';
         window.APP.DATA.delay = 2000;
@@ -25,7 +28,7 @@
 
     {% else %}
 
-      <form method="post" action="" data-name="{{ form_name }}" data-type="{{ form_name }}" data-test="yes">
+      <form method="post" action="" data-name="{{ form_name }}" data-type="{{ form_name }}" data-test="yes" class="field_shell">
 
         <div class="title"> Register </div>
 
@@ -33,7 +36,7 @@
 
           {% if i.name == 'password' %}
 
-            <div class="otoczka_pola">
+            <div>
               {{ i }}
               <input type="checkbox" class="show_password" />
               {{ i.errors }}
@@ -42,7 +45,7 @@
 
           {% else %}
 
-            <div class="otoczka_pola">
+            <div>
               {{ i }}
               {{ i.errors }}
               <div class="status"></div>
@@ -52,7 +55,7 @@
 
         {% endfor %}
 
-        <div class="otoczka_pola"><button disabled type="submit"> Done </button></div>
+        <div><button disabled type="submit"> Done </button></div>
 
       {% endif %}
 

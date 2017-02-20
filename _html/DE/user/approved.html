@@ -2,22 +2,24 @@
   window.APP.DATA = {
     title : 'Register approved',
     description : 'User has been approved.',
-    redirect : '/user/login/',
+    redirect : '/user/sign_in/',
     delay : 2000
   };
 
-  window.dispatchEvent(window.EVENTS.redirect);
+  window.APP.throw_event(window.EVENTS.redirect);
 </script>
 
 
-<div class="BLOK1 BLOCK SMALL">
+<div class="ground-block block-1 SMALL">
 
-  <div class="tlo abs_pelny"></div>
-  {% include "content/html/navigation.html" %}
+  <div class="block-background fill-abs"></div>
+  {% include "ground/html/navigation.html" %}
 
-  <div class="tresc">
-  
-    {{ message }}
+  <div class="block-content">
+
+      <div class="block-content-message">
+          User has been approved.
+      </div>
   
   </div>
 

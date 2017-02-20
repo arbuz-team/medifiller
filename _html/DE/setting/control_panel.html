@@ -5,15 +5,19 @@
   };
 </script>
 
-<div class="BLOK1 BLOCK SMALL">
+<div class="ground-block block-1 SMALL">
 
-  <div class="tlo abs_pelny"></div>
-  {% include "content/html/navigation.html" %}
+    <div class="block-background fill-abs"></div>
+    {% include "ground/html/navigation.html" %}
 
-  <div class="tresc">
+    <div class="block-content field_shell">
 
-    <a href="/setting/reset_databases/">/setting/reset_databases/</a> <br>
+        <button class="post_button" type="button"
+                data-name="Reset_database"
+                data-action="reset_databases"
+                data-url="/setting/">Reset database</button> <br>
+        <!--<a href="/setting/reset_databases/">/setting/reset_databases/</a> <br>-->
 
-  </div>
+    </div>
 
 </div>

@@ -1,9 +1,11 @@
 <script>
-  window.APP.DATA = {
-    title : 'Create root',
-    description : 'Description'
-  };
+    window.APP.throw_event(window.EVENTS.plugins.reload_sign_in);
+
+    window.APP.DATA.redirect = '/';
+    window.APP.DATA.delay = 2000;
+    window.APP.throw_event(window.EVENTS.redirect);
 </script>
+
 
 <div class="ground-block block-1 SMALL">
 
@@ -13,7 +15,7 @@
   <div class="block-content">
 
       <div class="block-content-message">
-          Hi, nice to meet you! This is your password {{ password }}. Write down or remeber this password! ;)
+          You have been logged out.
       </div>
 
   </div>
