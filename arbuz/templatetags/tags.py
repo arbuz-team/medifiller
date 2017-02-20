@@ -52,7 +52,7 @@ def url(context, name):
 
     urls = {
         'EN': reverse(name, urlconf='arbuz.urls.en'),
-        # 'PL': reverse(name, urlconf='arbuz.urls.pl'),
+        'PL': reverse(name, urlconf='arbuz.urls.pl'),
         # 'DE': reverse(name, urlconf='arbuz.urls.de'),
     }
 
@@ -65,7 +65,7 @@ def sign_in_redirect(context, name, *args, **kwargs):
 
     urls = {
         'EN': reverse(name, urlconf='arbuz.urls.en', kwargs=kwargs),
-        # 'PL': reverse(name, urlconf='arbuz.urls.pl', kwargs=kwargs),
+        'PL': reverse(name, urlconf='arbuz.urls.pl', kwargs=kwargs),
         # 'DE': reverse(name, urlconf='arbuz.urls.de', kwargs=kwargs),
     }
 
