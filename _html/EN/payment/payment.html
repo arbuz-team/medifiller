@@ -88,14 +88,17 @@
 
                     <li class="field_shell">
                         <div class="cart-list-button">
-                            OPIS DLA PAYPAL
-                            {{ paypal.render }}
+                            <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+                                OPIS DLA PAYPAL <br>
+                                {{ paypal.as_p }}
+                                <input class="button" type="submit" value="PayPal" />
+                            </form>
                         </div>
                         <div class="cart-list-button">
                             <form action="https://ssl.dotpay.pl/test_payment/" method="post">
                                 OPIS DLA DOTPAY <br>
                                 {{ dotpay.as_p }}
-                                <button type="submit">Dotpay</button>
+                                <input class="button" type="submit" value="Dotpay" />
                             </form>
                         </div>
                     </li>

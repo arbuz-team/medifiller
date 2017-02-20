@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from user import views
 
 urlpatterns = [
@@ -6,7 +6,7 @@ urlpatterns = [
     url(r'^zaloguj/$', views.Sign_In.Launch, name='user.sign_in'),
     url(r'^zarejestruj/$', views.Sign_Up.Launch, name='user.sign_up'),
     url(r'^wyloguj/$', views.Sign_Out.Launch, name='user.logout'),
-    url(r'^konto/$', views.Account.Launch, name='user.account'),
+    url(r'^konto/', include('user.account.urls.en'), name='user.account'),
     url(r'^potwierdzenie/(?P<key>[a-z0-9]{40})/$',
         views.Approved_Register.Update_User_Status, name='user.approved'),
 
@@ -14,7 +14,6 @@ urlpatterns = [
     url(r'^zmien_haslo/(?P<key>[a-z0-9]{40})/$',
         views.Change_Password.Secure, name='user.change_password'),
 
-    url(r'^zaloguj/przekierowanie/product.details/(?P<pk>\d+)/$',
-        views.Sign_In.Product_Details_Redirect,
-        name='user.sign_in.product_details_redirect'),
+    url(r'^zaloguj/przekierowanie/(?P<url>.+)/$',
+        views.Sign_In.Redirect, name='user.sign_in.Redirect'),
 ]
