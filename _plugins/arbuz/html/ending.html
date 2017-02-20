@@ -2,6 +2,15 @@
 
     </div>
 
+    <script>
+        window.DATA = {};
+        window.DATA.dictionary = {
+            '/cart/':           '{% url "cart.start" %}',
+            '/searcher/':       '{% url "searcher.start" %}',
+            '/navigation/':     '{% url "navigation.start" %}',
+        };
+    </script>
+
     <script type="text/javascript" src="{% static 'js/jquery-3.1.1.min.js' %}" charset="utf-8"></script>
     <script type="text/javascript" src="{% static 'js/hammer.min.js' %}" charset="utf-8"></script>
     <script type="text/javascript" src="{% static 'js/jquery.hammer.js' %}" charset="utf-8"></script>

@@ -47,7 +47,7 @@ export let Plugins_Loader_Models = function(config)
 
     // -- URL
       if(typeof config.url !== 'undefined')
-        that.settings.url = config.url;
+        that.settings.url = window.APP.dictionary.get_word(config.url);
 
 
     // -- Container

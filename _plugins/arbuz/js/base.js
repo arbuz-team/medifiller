@@ -1,5 +1,6 @@
 /*    JavaScript    */
 
+import {Dictionary} from '../../dictionary/base';
 
 /*---------------- Interfejs funkcji standardowych ----------------*/
 
@@ -9,6 +10,7 @@
 
 window.APP = {};
 window.APP.DATA = {};
+window.APP.dictionary = new Dictionary();
 
 
 /**
