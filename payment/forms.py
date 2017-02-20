@@ -1,4 +1,6 @@
 from django import forms
+from payment.models import Payment_Address
+from user.forms import Form_Abstract_Address
 
 
 class Form_Dotpay(forms.Form):
@@ -22,7 +24,15 @@ class Form_Dotpay(forms.Form):
     URL = forms.CharField(widget=forms.HiddenInput())
     URLC = forms.CharField(widget=forms.HiddenInput())
 
-
 # Details about dotpay POST
 # Page: 8/44
 # https://ssl.dotpay.pl/s2/login/cloudfs1/magellan_media/common_file/dotpay_instrukcja_techniczna_implementacji_platnosci.pdf
+
+
+
+class Form_Address_Payment(Form_Abstract_Address):
+
+    class Meta(Form_Abstract_Address.Meta):
+        model = Payment_Address
+        exclude = ('payment', )
+

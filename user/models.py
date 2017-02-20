@@ -30,7 +30,7 @@ class User(models.Model):
 
 
 
-class User_Address(models.Model):
+class Abstract_Address(models.Model):
 
     full_name = models.CharField(max_length=50)
     address_line_1 = models.CharField(max_length=50)
@@ -40,10 +40,16 @@ class User_Address(models.Model):
     postcode = models.CharField(max_length=10)  # zip/postal code
     country = models.CharField(max_length=20)
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    class Meta:
+        abstract = True
 
     def __str__(self):
         return self.full_name
+
+
+
+class User_Address(Abstract_Address):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 

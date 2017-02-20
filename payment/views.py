@@ -141,17 +141,57 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
         payment.currency = self.request.session['translator_currency']
         payment.save()
 
-    def Manage_Content_Ground(self):
+    def Load_Payment_Details(self):
 
         unique = self.request.session['user_unique']
         self.content['user'] = User.objects.get(unique=unique)
         self.content['cart'] = Payment_Models_Menager.Get_Selected_Products(self.request)
         self.content['total_price'] = Payment_Models_Menager.Count_Total_Price(self.request)
+        self.content['address'] = User_Address.objects.filter(user=self.content['user'])
         self.Update_Payment()
 
         self.content['paypal'] = self.Create_PayPal_From()
         self.content['dotpay'] = self.Create_DotPay_From()
-        return self.Render_HTML('payment/payment.html')
+
+    def Manage_Content_Ground(self):
+
+        self.content['payment_address'] = Form_Address_Payment()
+        self.Load_Payment_Details()
+
+        return self.Render_HTML('payment/payment.html', 'payment_address')
+
+    def Manage_Form_Address_Payment(self):
+
+        self.content['payment_address'] = Form_Address_Payment(self.request.POST)
+
+        if self.content['payment_address'].is_valid():
+            form = self.content['payment_address']
+            unique = self.request.session['user_unique']
+            user = User.objects.get(unique=unique)
+            payment = Payment.objects.get(user=user, approved=False)
+
+            payment_address = Payment_Address.objects.get(payment=payment)
+            payment_address.full_name = form.cleaned_data['full_name']
+            payment_address.address_line_1 = form.cleaned_data['address_line_1']
+            payment_address.address_line_2 = form.cleaned_data['address_line_2']
+            payment_address.city = form.cleaned_data['city']
+            payment_address.region = form.cleaned_data['region']
+            payment_address.postcode = form.cleaned_data['postcode']
+            payment_address.country = form.cleaned_data['country']
+            payment_address.save()
+
+            self.Load_Payment_Details()
+            self.content['payment_address'] = None
+            return self.Render_HTML('payment/payment.html')
+
+        return self.Render_HTML('payment/payment.html', 'payment_address')
+
+    def Manage_Form(self):
+
+        if self.request.POST['__form__'] == 'payment_address':
+            return self.Manage_Form_Address_Payment()
+
+        return super(Payment_Manager, self).Manage_Form()
 
     @staticmethod
     def Launch(request):

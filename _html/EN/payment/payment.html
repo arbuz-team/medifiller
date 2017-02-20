@@ -9,64 +9,111 @@
 
 <div class="ground-block block-1" id="PAYMENT">
 
-  <div class="block-background fill-abs"></div>
-  {% include "ground/html/navigation.html" %}
+    <div class="block-background fill-abs"></div>
+    {% include "ground/html/navigation.html" %}
 
-  <div class="block-content payment">
+    <div class="block-content payment">
 
-      <ul class="cart-list">
+        <ul class="cart-list">
 
-          {% if cart %}
+            {% if cart %}
 
-          {% for selected in cart %}
+                {% if payment_address %}
 
-          <li>
-              <div class="cart-list-name">
-                  <a href="/product/{{ selected.product.pk }}/{{ selected.product.details_en.name | to_url }}/">
-                      {{ selected.product.details_en.name }}
-                  </a>
-              </div>
-              <div class="cart-list-actions field_shell"> {{ selected.number }} x {{ selected.product.price_usd }} USD
-                  <button class="post_button" type="button"
-                          data-name="Delete_{{ selected.product.pk }}"
-                          data-action="delete"
-                          data-value="{{ selected.product.pk }}"
-                          data-reload="cart ground"
-                          data-url="/cart/">X</button>
-              </div>
-          </li>
+                    {% for selected in cart %}
 
-          {% endfor %}
+                    <li>
+                        <div class="cart-list-name">
+                            <a href="/product/{{ selected.product.pk }}/{{ selected.product.details_en.name | to_url }}/">
+                                {{ selected.product.details_en.name }}
+                            </a>
+                        </div>
+                        <div class="cart-list-actions field_shell"> {{ selected.number }} x {% price selected.product %}
+                            <button class="post_button" type="button"
+                                  data-name="Delete_{{ selected.product.pk }}"
+                                  data-action="delete"
+                                  data-value="{{ selected.product.pk }}"
+                                  data-reload="cart ground"
+                                  data-url="/cart/">X</button>
+                        </div>
+                    </li>
 
-          <li class="field_shell">
-              <br />
-              Total price: {{ total_price }} {{ request.session.translator_currency }}<br />
+                    {% endfor %}
 
-              <div class="cart-list-button">
-                  {{ paypal.render }}
-              </div>
-              <div class="cart-list-button">
-                  <form action="https://ssl.dotpay.pl/test_payment/" method="post">
-                      {{ dotpay.as_p }}
-                      <input class="button" type="submit" value="Proceed by dotpay" />
-                  </form>
-              </div>
-          </li>
+                    <li class="field_shell">
+                        <br />
+                        Total price: {{ total_price }} {{ request.session.translator_currency }}<br />
+                    </li>
 
-          <!--{{ suma }}-->
 
-          {% else %}
+                    <br><br>Select address: <br>
+                    {% for item in address %}
 
-          <li>
-              <div class="cart-list-empty">
-                  Payment is empty
-              </div>
-          </li>
+                        <li class="field_shell">
+                            {{ item.full_name }}
+                            {{ item.address_line_1 }}
+                            {{ item.address_line_2 }}
+                            {{ item.city }}
+                            {{ item.region }}
+                            {{ item.postcode }}
+                            {{ item.country }}
+                        </li>
 
-          {% endif %}
+                    {% endfor %}
 
-      </ul>
+                    <li class="field_shell">
+                        <div class="form_address">
+                            <form method="post" action="" data-name="{{ form_name }}" data-type="payment_address" data-test="yes">
 
-  </div>
+                                <div class="shell_form"></div>
+
+                                <div class="title"> Other address </div>
+
+                                {% for field in payment_address %}
+
+                                    {{ field }}
+                                    {{ field.errors }}
+
+                                {% endfor %}
+
+                                <div>
+                                    <button disabled type="submit"> Save </button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </li>
+
+                {% else %}
+
+                    <li class="field_shell">
+                        <div class="cart-list-button">
+                            OPIS DLA PAYPAL
+                            {{ paypal.render }}
+                        </div>
+                        <div class="cart-list-button">
+                            <form action="https://ssl.dotpay.pl/test_payment/" method="post">
+                                OPIS DLA DOTPAY <br>
+                                {{ dotpay.as_p }}
+                                <input class="button" type="submit" value="Dotpay" />
+                            </form>
+                        </div>
+                    </li>
+
+                {% endif %}
+
+            {% else %}
+
+                <li>
+                    <div class="cart-list-empty">
+                      Payment is empty
+                    </div>
+                </li>
+
+            {% endif %}
+
+        </ul>
+
+    </div>
 
 </div>

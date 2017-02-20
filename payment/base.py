@@ -39,12 +39,24 @@ class Payment_Models_Menager:
 
         if not Payment.objects.filter(user=user, approved=False):
 
-            Payment(
+            payment = Payment(
                 user=user,
                 total_price=0,
                 service='None',
                 currency=request.session['translator_currency'],
                 language=request.session['translator_language']
+            )
+            payment.save()
+
+            Payment_Address(
+                full_name='',
+                address_line_1='',
+                address_line_2='',
+                city='',
+                region='',
+                postcode='',
+                country='',
+                payment=payment
             ).save()
 
     @staticmethod

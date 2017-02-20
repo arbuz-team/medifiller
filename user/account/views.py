@@ -143,7 +143,6 @@ class User_Addresses(Dynamic_Event_Menager):
         # removed address
         if '__button__' in self.request.POST:
             id_address = int(self.request.POST['value'])
-            print(id_address)
 
             if self.Check_ID_Address(id_address):
                 User_Address.objects.get(id=id_address).delete()

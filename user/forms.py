@@ -103,25 +103,16 @@ class Form_Register(forms.ModelForm):
 
 
 
-class Form_User_Address(forms.ModelForm):
+class Form_Abstract_Address(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
-        super(Form_User_Address, self).__init__(*args, **kwargs)
+        super(Form_Abstract_Address, self).__init__(*args, **kwargs)
         self.fields['address_line_2'].required = False
 
     class Meta:
 
-        model = User_Address
-        fields = \
-        (
-            'full_name',
-            'address_line_1',
-            'address_line_2',
-            'city',
-            'region',
-            'postcode',
-            'country',
-        )
+        exclude = '__all__'
+        #fields = '__all__'
 
         widgets = \
         {
@@ -174,6 +165,14 @@ class Form_User_Address(forms.ModelForm):
                     'class': 'test',
                 }),
         }
+
+
+
+class Form_User_Address(Form_Abstract_Address):
+
+    class Meta(Form_Abstract_Address.Meta):
+        model = User_Address
+        exclude = ('user', )
 
 
 

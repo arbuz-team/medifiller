@@ -1,5 +1,5 @@
 from django.db import models
-from user.models import User
+from user.models import User, Abstract_Address
 from product.models import Product
 
 
@@ -14,6 +14,13 @@ class Payment(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+
+class Payment_Address(Abstract_Address):
+    payment = models.OneToOneField(Payment)
+
+
 
 class Selected_Product(models.Model):
 
