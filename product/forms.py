@@ -1,5 +1,5 @@
 from django import forms
-from .models import *
+from product.models import *
 from arbuz.base import *
 
 

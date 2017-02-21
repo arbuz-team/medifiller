@@ -7,7 +7,12 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/.+/$', views.Product_Details.Details, name='product.details_with_name'),
     url(r'^nowy/', views.New_Product.Launch, name='product.new_product'),
     url(r'^edytuj/(?P<pk>\d+)/', views.Edit_Product.Edit, name='product.edit_product'),
-    url(r'^usun/', views.Delete_Product.Launch, name='product.delete_product'),
-    url(r'^usun/producenta/', views.Delete_Brand.Launch, name='product.delete_brand'),
-    url(r'^usun/przeznaczenie/', views.Delete_Purpose.Launch, name='product.delete_purpose'),
+    url(r'^polecane/', views.Append_Recommended_Product.Launch, name='product.recommended'),
+    url(r'^ulubione/', views.Append_Favorite_Product.Launch, name='product.favorite'),
+
+    url(r'^usun/', views.Delete.Product, name='product.delete_product'),
+    url(r'^usun/producenta/', views.Delete.Brand, name='product.delete_brand'),
+    url(r'^usun/przeznaczenie/', views.Delete.Purpose, name='product.delete_purpose'),
+    url(r'^usun/polecane/', views.Delete.Recommended, name='product.delete_recommended'),
+    url(r'^usun/ulubione/', views.Delete.Favorite, name='product.delete_favorite'),
 ]

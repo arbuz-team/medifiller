@@ -1,6 +1,6 @@
 from arbuz.views import *
 from searcher.views import Search_Engine
-from .forms import *
+from product.forms import *
 
 
 class Start_App(Dynamic_Event_Menager):
@@ -274,45 +274,94 @@ class Edit_Product(Product_Elements):
 
 
 
-class Delete_Product(Dynamic_Event_Menager):
+class Append_Recommended_Product(Product_Elements):
 
     def Manage_Content_Ground(self):
         pass
 
     def Manage_Button(self):
-        Product.objects.get(pk=self.request.POST['value']).delete()
+        product = Product.objects.get(pk=self.request.POST['value'])
+
+        if not Recommended_Product.objects.filter(product=product):
+            Recommended_Product(product=product).save()
+
         return JsonResponse({'__button__': 'true'})
 
     @staticmethod
     def Launch(request):
-        return Delete_Product(request, only_root=True).HTML
+        return Append_Recommended_Product(request, only_root=True).HTML
 
 
 
-class Delete_Brand(Dynamic_Event_Menager):
+class Append_Favorite_Product(Product_Elements):
 
     def Manage_Content_Ground(self):
         pass
 
     def Manage_Button(self):
-        Brand.objects.get(pk=self.request.POST['value']).delete()
+        product = Product.objects.get(pk=self.request.POST['value'])
+        user = User.objects.get(unique=self.request.session['user_unique'])
+
+        if not Favorite_Product.objects.filter(product=product, user=user):
+            Favorite_Product(product=product, user=user).save()
+
         return JsonResponse({'__button__': 'true'})
 
     @staticmethod
     def Launch(request):
-        return Delete_Brand(request, only_root=True).HTML
+        return Append_Favorite_Product(request, authorization=True).HTML
 
 
 
-class Delete_Purpose(Dynamic_Event_Menager):
+class Delete(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
         pass
 
     def Manage_Button(self):
-        Purpose.objects.get(pk=self.request.POST['value']).delete()
+
+        if self.other_value == 'product':
+            Product.objects.get(pk=self.request.POST['value']).delete()
+
+        if self.other_value == 'brand':
+            Brand.objects.get(pk=self.request.POST['value']).delete()
+
+        if self.other_value == 'purpose':
+            Purpose.objects.get(pk=self.request.POST['value']).delete()
+
+        if self.other_value == 'recommended':
+            Recommended_Product.objects.get(pk=self.request.POST['value']).delete()
+
+        if self.other_value == 'favorite':
+            Favorite_Product.objects.get(pk=self.request.POST['value']).delete()
+
         return JsonResponse({'__button__': 'true'})
 
     @staticmethod
+    def Product(request):
+        return Delete(request, only_root=True,
+                      other_value='product').HTML
+
+    @staticmethod
+    def Brand(request):
+        return Delete(request, only_root=True,
+                      other_value='brand').HTML
+
+    @staticmethod
+    def Purpose(request):
+        return Delete(request, only_root=True,
+                      other_value='purpose').HTML
+
+    @staticmethod
+    def Recommended(request):
+        return Delete(request, only_root=True,
+                      other_value='recommended').HTML
+
+    @staticmethod
+    def Favorite(request):
+        return Delete(request, only_root=True,
+                      other_value='favorite').HTML
+
+    @staticmethod
     def Launch(request):
-        return Delete_Purpose(request, only_root=True).HTML
+        pass

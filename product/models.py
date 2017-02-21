@@ -1,31 +1,28 @@
 from django.db import models
 from arbuz.settings import BASE_DIR
+from user.models import User
 import os
 
 
-class Details_EN(models.Model):
+class Details(models.Model):
 
     name = models.CharField(max_length=50)
     description = models.TextField()
 
-    def __str__(self):
-        return self.name
-
-class Details_PL(models.Model):
-
-    name = models.CharField(max_length=50)
-    description = models.TextField()
+    class Meta:
+        abstract = True
 
     def __str__(self):
         return self.name
 
-class Details_DE(models.Model):
+class Details_EN(Details):
+    pass
 
-    name = models.CharField(max_length=50)
-    description = models.TextField()
+class Details_PL(Details):
+    pass
 
-    def __str__(self):
-        return self.name
+class Details_DE(Details):
+    pass
 
 
 
@@ -41,21 +38,21 @@ class Where_Display(models.Model):
 
 
 
-class Brand(models.Model):
+class Filter(models.Model):
 
     name = models.CharField(max_length=20)
+
+    class Meta:
+        abstract = True
 
     def __str__(self):
         return self.name
 
+class Brand(Filter):
+    pass
 
-
-class Purpose(models.Model):
-
-    name = models.CharField(max_length=20)
-
-    def __str__(self):
-        return self.name
+class Purpose(Filter):
+    pass
 
 
 
@@ -100,6 +97,16 @@ class Product(models.Model):
 class Recommended_Product(models.Model):
 
     product = models.ForeignKey(Product)
+
+    def __str__(self):
+        return self.product.details_en.name
+
+
+
+class Favorite_Product(models.Model):
+
+    product = models.ForeignKey(Product)
+    user = models.ForeignKey(User)
 
     def __str__(self):
         return self.product.details_en.name

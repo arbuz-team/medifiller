@@ -21,6 +21,10 @@ class Start_App(Dynamic_Event_Menager):
                 'url': '/user/account/my_shopping/',
             },
             {
+                'name': 'Favorite products',
+                'url': '/user/account/favorite/',
+            },
+            {
                 'name': 'Shopping cart',
                 'url': '/payment/',
             },
@@ -165,3 +169,16 @@ class My_Shopping(Dynamic_Event_Menager):
     @staticmethod
     def Launch(request):
         return My_Shopping(request, authorization=True).HTML
+
+
+
+class Favorite(Dynamic_Event_Menager):
+
+    def Manage_Content_Ground(self):
+        user = User.objects.get(unique=self.request.session['user_unique'])
+        self.content['favorites'] = Favorite_Product.objects.filter(user=user)
+        return self.Render_HTML('user/account/favorite.html')
+
+    @staticmethod
+    def Launch(request):
+        return Favorite(request, authorization=True).HTML

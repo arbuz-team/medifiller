@@ -40,6 +40,14 @@ class Dialog_Alert(Dialog):
     def Manage_Language(self):
         return self.Render_HTML('dialog/language.html')
 
+    def Manage_Product_Recommended(self):
+        self.content['title'] = 'Append new recommended product.'
+        self.content['text'] = 'First, recommended product must exist in list product. ' \
+                               'To add recommended product you have to search product ' \
+                               'and click `Reccom` button in details product.'
+
+        return self.Render_HTML('dialog/alert.html')
+
     def __init__(self, request):
         super(Dialog_Alert, self).__init__(request)
         self.HTML = self.Manage()
