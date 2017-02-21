@@ -1,16 +1,7 @@
 <div class="block-content products tiles">
     <ul>
         {% if request.session.root_login %}
-
-            <li class="product new">
-                <button type="button" class="dialog_button EN" data-type="alert" data-name="recommended">
-
-                    <div class="product-img mini_image"></div>
-                    <div class="product-title"> Add recommended product </div>
-
-                </button>
-            </li>
-
+            {% include "products/html/add_recommended.html" %}
         {% endif %}
 
         {% for product in recommended %}

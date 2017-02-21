@@ -2824,7 +2824,7 @@
 	selectors.window = selectors.container + ' > .dialog';
 	selectors.header = selectors.window + ' > .dialog-header';
 	selectors.content = selectors.window + ' > .dialog-content';
-	selectors.external_buttons = 'button.dialog_button';
+	selectors.external_buttons = '.dialog_button';
 
 /***/ },
 /* 43 */
