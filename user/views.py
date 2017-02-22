@@ -12,18 +12,22 @@ class Start_App(Dynamic_Event_Menager):
             {
                 'name': 'Sign in',
                 'url':  '/user/sign_in/',
+                'icon': '/_static/img/icons/128/padlock.png',
             },
             {
                 'name': 'Sign up',
                 'url': '/user/sign_up/',
+                'icon': '/_static/img/icons/128/upload-arrow.png',
             },
             {
                 'name': 'Sign out',
                 'url': '/user/sign_out/',
+                'icon': '/_static/img/icons/128/.png',
             },
             {
                 'name': 'Account',
                 'url': '/user/account/',
+                'icon': '/_static/img/icons/128/settings.png',
             },
         ]
 

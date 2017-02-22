@@ -11,22 +11,27 @@ class Start_App(Dynamic_Event_Menager):
             {
                 'name': 'Account details',
                 'url':  '/user/account/details/',
+                'icon': '/_static/img/icons/128/user-shape.png',
             },
             {
                 'name': 'User addresses',
                 'url': '/user/account/addresses/',
+                'icon': '/_static/img/icons/128/identity-card.png',
             },
             {
                 'name': 'My shopping',
                 'url': '/user/account/my_shopping/',
+                'icon': '/_static/img/icons/128/options-list.png',
             },
             {
                 'name': 'Favorite products',
                 'url': '/user/account/favorite/',
+                'icon': '/_static/img/icons/128/favorite.png',
             },
             {
                 'name': 'Shopping cart',
                 'url': '/payment/',
+                'icon': '/_static/img/icons/128/shopping-cart.png',
             },
         ]
 
