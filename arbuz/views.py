@@ -76,16 +76,11 @@ class Manager(Dynamic_Base):
         if lang_redirect:
             return lang_redirect
 
-        if self.index_clear_session:
-            self.Manage_Clear_Session()
-
         return render(self.request, 'index.html', {})
 
     def __init__(self, request):
         Dynamic_Base.__init__(self, request)
-
         self.clear_session = False
-        self.index_clear_session = False
 
 
 
@@ -243,7 +238,6 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
                  other_value=None,
                  only_root=False,
                  clear_session=False,
-                 index_clear_session=False,
                  length_navigation=None):
 
         Manager.__init__(self, request)
@@ -255,7 +249,6 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
         self.other_value = other_value
         self.only_root = only_root
         self.clear_session = clear_session
-        self.index_clear_session = index_clear_session
         self.length_navigation = length_navigation
 
         if autostart:

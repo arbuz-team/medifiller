@@ -230,6 +230,7 @@ class Searcher(Dynamic_Event_Menager):
         return self.Render_HTML('searcher/searcher.html')
 
     def Manage_Content(self):
+        self.Manage_Clear_Session('searcher')
 
         if self.request.POST['__content__'] == 'searcher':
             return self.Manage_Content_Searcher()
@@ -310,8 +311,7 @@ class Searcher(Dynamic_Event_Menager):
 
     @staticmethod
     def Launch(request):
-        return Searcher(request, index_clear_session=True,
-                        clear_session=True).HTML
+        return Searcher(request, clear_session=True).HTML
 
 
 
