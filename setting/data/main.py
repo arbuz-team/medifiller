@@ -24,7 +24,7 @@ def Load_Default_About():
     Content_Tab(
         tab_name='about',
         header='Sungate Beauty & Spa Warszawa',
-        image='',
+        image='/_static/img/tabs/zabiegi.jpg',
         paragraph='Zarezerwuj już dziś czas na zabiegi medycyny estetycznej, które odmłodzą Cię , '
                  'uelastycznią i ujędrnią skórę twarzy i ciała a także wyeliminują niedoskonałości, '
                  'zmarszczki, bruzdy i cellulit, . Lekarz medycyny estetycznej podczas '
@@ -56,7 +56,7 @@ def Load_Default_About():
     Content_Tab(
         tab_name='about',
         header='Poznaj bogactwo i moc luksusowych zabiegów na twarz i ciało oraz masaży Sungate Beauty & Spa Warszawa',
-        image='',
+        image='/_static/img/tabs/salon.jpg',
         paragraph='Już teraz macie Państwo szansę doświadczyć rozkoszy niczym tej z pól Arkadyjskich. '
                  '<br><br> Nasza oferta skierowana specjalnie do Ciebie to wyrafinowane '
                  'połączenie bogactwa natury z luksusem codzienności, którego możesz doświadczyć '
