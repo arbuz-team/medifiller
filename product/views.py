@@ -39,7 +39,8 @@ class Product_Elements(Dynamic_Event_Menager):
 
     def Manage_Form_Where_Display(self):
 
-        where_display = Form_Where_Display(self.request.POST)
+        where_display = Form_Where_Display(
+            self.request, self.request.POST)
 
         if where_display.is_valid():
 
@@ -56,27 +57,27 @@ class Product_Elements(Dynamic_Event_Menager):
         return Dialog_Prompt(self.request, not_valid=True).HTML
 
     def Manage_Form_Brand(self):
-        brand = Form_Brand(self.request.POST)
+        brand = Form_Brand(self.request, self.request.POST)
 
         if brand.is_valid():
-            brand = brand.Get_Brand()
+            brand = brand.Get_Filter()
             self.request.session['product_brand'] = brand
 
             return Dialog_Prompt(self.request, apply=True).HTML
         return Dialog_Prompt(self.request, not_valid=True).HTML
 
     def Manage_Form_Purpose(self):
-        purpose = Form_Purpose(self.request.POST)
+        purpose = Form_Purpose(self.request, self.request.POST)
 
         if purpose.is_valid():
-            purpose = purpose.Get_Purpose()
+            purpose = purpose.Get_Filter()
             self.request.session['product_purpose'] = purpose
 
             return Dialog_Prompt(self.request, apply=True).HTML
         return Dialog_Prompt(self.request, not_valid=True).HTML
 
     def Manage_Form_Image(self):
-        image = Form_Image(self.request.POST)
+        image = Form_Image(self.request, self.request.POST)
 
         if image.is_valid():
             self.request.session['product_image_url'] = image.data['url']
@@ -95,7 +96,8 @@ class Product_Elements(Dynamic_Event_Menager):
     def Manage_Form_Details(self, language):
 
         if language == 'EN':
-            details = Form_Details_EN(self.request.POST)
+            details = Form_Details_EN(
+                self.request, self.request.POST)
 
             if details.is_valid():
                 details = details.save(commit=False)
@@ -104,7 +106,8 @@ class Product_Elements(Dynamic_Event_Menager):
                 return Dialog_Prompt(self.request, apply=True).HTML
 
         if language == 'PL':
-            details = Form_Details_PL(self.request.POST)
+            details = Form_Details_PL(
+                self.request, self.request.POST)
 
             if details.is_valid():
                 details = details.save(commit=False)
@@ -113,7 +116,8 @@ class Product_Elements(Dynamic_Event_Menager):
                 return Dialog_Prompt(self.request, apply=True).HTML
 
         if language == 'DE':
-            details = Form_Details_DE(self.request.POST)
+            details = Form_Details_DE(
+                self.request, self.request.POST)
 
             if details.is_valid():
                 details = details.save(commit=False)
@@ -152,7 +156,7 @@ class Product_Elements(Dynamic_Event_Menager):
 class New_Product(Product_Elements):
 
     def Manage_Content_Ground(self):
-        self.content['form'] = Form_Product()
+        self.content['form'] = Form_Product(self.request)
         return self.Render_HTML('product/new.html', 'product')
 
     def Manage_Form_New_Product(self):
@@ -229,7 +233,7 @@ class Edit_Product(Product_Elements):
         self.request.session['product_purpose'] = product.purpose
         self.request.session['product_image'] = product.image
 
-        self.content['form'] = Form_Product(instance=product)
+        self.content['form'] = Form_Product(self.request, instance=product)
         return self.Render_HTML('product/edit.html', 'product')
 
     def Manage_Form_Edit_Product(self):

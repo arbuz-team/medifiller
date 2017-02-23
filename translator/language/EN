@@ -6,3 +6,17 @@ Details in germany
 Where display product
 Add image to product
 It's done!
+Append new recommended product
+First, recommended product must exist in list product. To add recommended product you have to search product and click `Recommend` button in details product.
+Price in {0} have to greater than zero.
+stock have to greater than zero.
+English details is required.
+Displays is required.
+Brand name is required.
+Purpose is required.
+Product image is required.
+Keywords
+Name
+Description
+Please select or create new filter.
+Select exist or create new filter. Not both.

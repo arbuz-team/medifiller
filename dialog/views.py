@@ -33,19 +33,12 @@ class Dialog(Dynamic_Base):
 
 class Dialog_Alert(Dialog):
 
-    def Manage_Access_Denied(self):
-        self.content['title'] = 'access_denied'
-        return self.Render_HTML('dialog/alert.html')
-
     def Manage_Language(self):
         return self.Render_HTML('dialog/language.html')
 
     def Manage_Product_Recommended(self):
-        self.content['title'] = 'Append new recommended product.'
-        self.content['text'] = 'First, recommended product must exist in list product. ' \
-                               'To add recommended product you have to search product ' \
-                               'and click `Reccom` button in details product.'
-
+        self.content['title'] = Text(self.request, 9)
+        self.content['text'] = Text(self.request, 10)
         return self.Render_HTML('dialog/alert.html')
 
     def __init__(self, request):
@@ -69,8 +62,8 @@ class Dialog_Prompt(Dialog):
         initial = initial.pk if initial else None
 
         self.content['title'] = Text(self.request, 1)
-        self.content['form'] = Form_Brand(self.Get_POST(),
-                    initial={'exists': initial})
+        self.content['form'] = Form_Brand(self.request,
+            self.Get_POST(), initial={'exists': initial})
 
         return self.Render_HTML('dialog/prompt.html', 'brand')
 
@@ -79,36 +72,36 @@ class Dialog_Prompt(Dialog):
         initial = initial.pk if initial else None
 
         self.content['title'] = Text(self.request, 2)
-        self.content['form'] = Form_Purpose(self.Get_POST(),
-                    initial={'exists': initial})
+        self.content['form'] = Form_Purpose(self.request,
+            self.Get_POST(), initial={'exists': initial})
 
         return self.Render_HTML('dialog/prompt.html', 'purpose')
 
     def Manage_Details_EN(self):
         self.content['title'] = Text(self.request, 3)
-        self.content['form'] = Form_Details_EN(self.Get_POST(),
-                    instance=self.Get_Session_Variable())
+        self.content['form'] = Form_Details_EN(self.request,
+            self.Get_POST(), instance=self.Get_Session_Variable())
 
         return self.Render_HTML('dialog/prompt.html', 'details_en')
 
     def Manage_Details_PL(self):
         self.content['title'] = Text(self.request, 4)
-        self.content['form'] = Form_Details_PL(self.Get_POST(),
-                    instance=self.Get_Session_Variable())
+        self.content['form'] = Form_Details_PL(self.request,
+            self.Get_POST(), instance=self.Get_Session_Variable())
 
         return self.Render_HTML('dialog/prompt.html', 'details_pl')
 
     def Manage_Details_DE(self):
         self.content['title'] = Text(self.request, 5)
-        self.content['form'] = Form_Details_EN(self.Get_POST(),
-                    instance=self.Get_Session_Variable())
+        self.content['form'] = Form_Details_EN(self.request,
+            self.Get_POST(), instance=self.Get_Session_Variable())
 
         return self.Render_HTML('dialog/prompt.html', 'details_de')
 
     def Manage_Where_Display(self):
         self.content['title'] = Text(self.request, 6)
-        self.content['form'] = Form_Where_Display(self.Get_POST(),
-                    instance=self.Get_Session_Variable())
+        self.content['form'] = Form_Where_Display(self.request,
+            self.Get_POST(), instance=self.Get_Session_Variable())
 
         return self.Render_HTML('dialog/prompt.html', 'where_display')
 
@@ -118,8 +111,8 @@ class Dialog_Prompt(Dialog):
 
         self.content['title'] = Text(self.request, 7)
         self.content['image'] = initial
-        self.content['form'] = Form_Image(self.Get_POST(),
-                    initial={'url': url})
+        self.content['form'] = Form_Image(self.request,
+            self.Get_POST(), initial={'url': url})
 
         return self.Render_HTML('dialog/prompt.html', 'image')
 

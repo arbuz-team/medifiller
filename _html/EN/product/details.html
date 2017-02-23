@@ -73,6 +73,12 @@
                                     data-value="{{ product.pk }}"
                                     data-url="/product/delete/">Delete</button>
 
+                            <button class="post_button" type="button"
+                                    data-name="Recommend_{{ product.pk }}"
+                                    data-action="append"
+                                    data-value="{{ product.pk }}"
+                                    data-url="/product/recommended/">Recommend</button>
+
                             <a href="/product/edit/{{ product.pk }}/"><button type="button">Edit</button></a>
                         {% endif %}
 

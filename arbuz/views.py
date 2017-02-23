@@ -1,6 +1,5 @@
 from session.views import *
 from payment.base import *
-from translator.views import *
 from dialog.views import *
 
 from abc import ABCMeta, abstractmethod

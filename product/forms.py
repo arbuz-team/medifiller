@@ -1,19 +1,17 @@
-from django import forms
+from arbuz.forms import *
 from product.models import *
-from arbuz.base import *
 
 
-class Form_Product(forms.ModelForm):
+class Form_Product(Abstract_Model_Form):
 
-    @staticmethod
-    def Clean_Price(price, currency):
+    def Clean_Price(self, price, currency):
 
         if not price:
             return 0
 
         if price < 0:
             raise forms.ValidationError(
-                'Price in {0} have to greater than zero.'
+                Text(self.request, 11)
                     .format(currency))
 
         return int(float(price) * 100) # convert to cents / grosz / pens
@@ -41,7 +39,7 @@ class Form_Product(forms.ModelForm):
 
         if stock < 0:
             raise forms.ValidationError(
-                'stock have to greater than zero.')
+                Text(self.request, 12))
 
         return stock
 
@@ -49,23 +47,40 @@ class Form_Product(forms.ModelForm):
 
         if not self.request.session['product_details_en']:
             raise forms.ValidationError(
-                'English details is required.')
+                Text(self.request, 13))
 
         if not self.request.session['product_where_display']:
             raise forms.ValidationError(
-                'Displays is required.')
+                Text(self.request, 14))
 
         if not self.request.session['product_brand']:
             raise forms.ValidationError(
-                'Brand name is required.')
+                Text(self.request, 15))
 
         if not self.request.session['product_purpose']:
             raise forms.ValidationError(
-                'Purpose is required.')
+                Text(self.request, 16))
 
         if not self.request.session['product_image']:
             raise forms.ValidationError(
-                'Product image is required.')
+                Text(self.request, 17))
+
+    def Set_Widgets(self):
+
+        keywords_attr = {
+            'placeholder': Text(self.request, 18),
+            'class': 'test',
+        }
+
+        price_attr = {
+            'step': '0.01'
+        }
+
+        self.fields['keywords'].widget = forms.Textarea(attrs=keywords_attr)
+        self.fields['price_eur'].widget = forms.NumberInput(attrs=price_attr)
+        self.fields['price_pln'].widget = forms.NumberInput(attrs=price_attr)
+        self.fields['price_gbp'].widget = forms.NumberInput(attrs=price_attr)
+        self.fields['price_usd'].widget = forms.NumberInput(attrs=price_attr)
 
     class Meta:
 
@@ -80,179 +95,68 @@ class Form_Product(forms.ModelForm):
             'stock',
         )
 
-        widgets = \
-        {
-            'keywords': forms.Textarea(
-                attrs=
-                {
-                    'placeholder': 'Keywords',
-                    'class': 'test',
-                }),
 
-            'price_eur': forms.NumberInput(
-                attrs=
-                {
-                    'step': '0.01'
-                }),
 
-            'price_pln': forms.NumberInput(
-                attrs=
-                {
-                    'step': '0.01'
-                }),
+class Form_Details(Abstract_Model_Form):
 
-            'price_gbp': forms.NumberInput(
-                attrs=
-                {
-                    'step': '0.01'
-                }),
+    def Set_Widgets(self):
 
-            'price_usd': forms.NumberInput(
-                attrs=
-                {
-                    'step': '0.01'
-                }),
+        name_attr = {
+            'placeholder': Text(self.request, 19),
+            'class': 'test',
+            'autofocus': 'true',
         }
 
-    def __init__(self, request=None, *args, **kwargs):
-        super(Form_Product, self).__init__(*args, **kwargs)
-        self.request = request
+        description_attr = {
+            'placeholder': Text(self.request, 20),
+            'class': 'test',
+        }
 
-
-
-class Form_Details_EN(forms.ModelForm):
+        self.fields['name'].widget = forms.TextInput(attrs=name_attr)
+        self.fields['description'].widget = forms.Textarea(attrs=description_attr)
 
     class Meta:
+        exclude = '__all__'
+
+
+
+class Form_Details_EN(Form_Details):
+
+    class Meta(Form_Details.Meta):
 
         model = Details_EN
-        fields = \
-        {
-            'name',
-            'description',
-        }
-
-        widgets = \
-        {
-            'name': forms.TextInput(
-                attrs=
-                {
-                    'placeholder': 'Name',
-                    'class': 'test',
-                    'autofocus': 'true',
-                }),
-
-            'description': forms.Textarea(
-                attrs=
-                {
-                    'placeholder': 'Description',
-                    'class': 'test',
-                    'autofocus': 'true',
-                }),
-        }
+        fields = '__all__'
 
 
 
-class Form_Details_PL(forms.ModelForm):
+class Form_Details_PL(Form_Details):
 
-    class Meta:
+    class Meta(Form_Details.Meta):
 
         model = Details_PL
-        fields = \
-        {
-            'name',
-            'description',
-        }
-
-        widgets = \
-        {
-            'name': forms.TextInput(
-                attrs=
-                {
-                    'placeholder': 'Name',
-                    'class': 'test',
-                    'autofocus': 'true',
-                }),
-
-            'description': forms.Textarea(
-                attrs=
-                {
-                    'placeholder': 'Description',
-                    'class': 'test',
-                    'autofocus': 'true',
-                }),
-        }
+        fields = '__all__'
 
 
 
-class Form_Details_DE(forms.ModelForm):
+class Form_Details_DE(Form_Details):
 
-    class Meta:
+    class Meta(Form_Details.Meta):
 
         model = Details_DE
-        fields = \
-        {
-            'name',
-            'description',
-        }
-
-        widgets = \
-        {
-            'name': forms.TextInput(
-                attrs=
-                {
-                    'placeholder': 'Name',
-                    'class': 'test',
-                    'autofocus': 'true',
-                }),
-
-            'description': forms.Textarea(
-                attrs=
-                {
-                    'placeholder': 'Description',
-                    'class': 'test',
-                    'autofocus': 'true',
-                }),
-        }
+        fields = '__all__'
 
 
 
-class Form_Where_Display(forms.ModelForm):
+class Form_Where_Display(Abstract_Model_Form):
 
     class Meta:
 
         model = Where_Display
-        fields = \
-        {
-            'display_en',
-            'display_pl',
-            'display_de',
-        }
+        fields = '__all__'
 
 
 
-class Form_Image(forms.Form):
-
-    image = forms.ImageField(required=False)
-
-    image_base64 = forms.CharField\
-    (
-        required=False,
-        widget=forms.TextInput(
-            attrs=
-            {
-                'hidden': 'true'
-            }),
-    )
-
-    url = forms.URLField\
-    (
-        required=False,
-        widget=forms.TextInput(
-            attrs=
-            {
-                'placeholder': 'Paste image address url'
-            }),
-    )
+class Form_Image(Abstract_Form):
 
     def clean(self):
         url = self.cleaned_data['url']
@@ -295,112 +199,88 @@ class Form_Image(forms.Form):
 
         return image_url
 
+    def Create_Fields(self):
+        self.fields['image'] = forms.ImageField(required=False)
+        self.fields['image_base64'] = forms.CharField(required=False)
+        self.fields['url'] = forms.URLField(required=False)
+
+    def Set_Widgets(self):
+
+        image_base64_attr = {
+            'hidden': 'true'
+        }
+
+        url_attrs = {
+            'placeholder': 'Paste image address url'
+        }
+
+        self.fields['image_base64'].widget = forms.TextInput(attrs=image_base64_attr)
+        self.fields['url'].widget = forms.TextInput(attrs=url_attrs)
 
 
-class Form_Brand(forms.ModelForm):
 
-    exists = forms.ModelChoiceField\
-    (
-        required=False,
-        queryset=Brand.objects.all()
-    )
+class Form_Filter(Abstract_Model_Form):
 
-    name = forms.CharField\
-    (
-        required=False,
-        widget=forms.TextInput(
-            attrs=
-            {
-                'placeholder': 'Name',
-                'class': 'test',
-                'autofocus': 'true',
-            }),
-    )
+    def Get_Filter(self):
+        new_element = self.data['name']
+        selected = self.data['exists']
 
-    def Get_Brand(self):
-        new_brand = self.data['name']
-        select_brand = self.data['exists']
+        if new_element:
+            element = self.save(commit=False)
+            element.save()
+            return element
 
-        if new_brand:
-            brand = self.save(commit=False)
-            brand.save()
-            return brand
-
-        if select_brand:
-            brand = Brand.objects.get(pk=select_brand)
-            return brand
+        if selected:
+            model = self.__class__.Meta.model
+            element = model.objects.get(pk=selected)
+            return element
 
     def clean(self):
-        new_brand = self.data['name']
-        select_brand = self.data['exists']
+        new_element = self.data['name']
+        selected = self.data['exists']
 
-        if not new_brand and not select_brand:
-            raise forms.ValidationError(
-                'Please select or append brand.')
+        if not new_element and not selected:
+            raise forms.ValidationError(Text(self.request, 21))
 
-        if new_brand and select_brand:
-            raise forms.ValidationError(
-                'Select exist or create new brand. Not both.')
+        if new_element and selected:
+            raise forms.ValidationError(Text(self.request, 22))
+
+    def Set_Widgets(self):
+
+        name_attrs = {
+            'placeholder': 'Name',
+            'class': 'test',
+            'autofocus': 'true',
+        }
+
+        self.fields['name'] = forms.CharField(required=False)
+        self.fields['name'].widget = forms.TextInput(attrs=name_attrs)
+
+    class Meta:
+        exclude = '__all__'
+
+
+
+class Form_Brand(Form_Filter):
+
+    def Create_Fields(self):
+        self.fields['exists'] = forms.ModelChoiceField(
+            required=False, queryset=Brand.objects.all())
 
     class Meta:
 
         model = Brand
-        fields = \
-        {
-            'name',
-        }
+        fields = '__all__'
 
 
 
-class Form_Purpose(forms.ModelForm):
+class Form_Purpose(Form_Filter):
 
-    exists = forms.ModelChoiceField \
-    (
-        required=False,
-        queryset=Purpose.objects.all()
-    )
-
-    name = forms.CharField \
-    (
-        required=False,
-        widget=forms.TextInput(
-            attrs=
-            {
-                'placeholder': 'Name',
-                'class': 'test',
-                'autofocus': 'true',
-            }),
-    )
-
-    def Get_Purpose(self):
-        new_purpose = self.data['name']
-        select_purpose = self.data['exists']
-
-        if new_purpose:
-            purpose = self.save(commit=False)
-            purpose.save()
-            return purpose
-
-        if select_purpose:
-            purpose = Purpose.objects.get(pk=select_purpose)
-            return purpose
-
-    def clean(self):
-        new_purpose = self.data['name']
-        select_purpose = self.data['exists']
-
-        if not new_purpose and not select_purpose:
-            raise forms.ValidationError(
-                'Please select or append purpose.')
-
-        if new_purpose and select_purpose:
-            raise forms.ValidationError(
-                'Select exist or create new purpose. Not both.')
+    def Create_Fields(self):
+        self.fields['exists'] = forms.ModelChoiceField(
+            required=False, queryset=Purpose.objects.all())
 
     class Meta:
 
         model = Purpose
-        fields = \
-        {
-            'name',
-        }
+        fields = '__all__'

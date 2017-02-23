@@ -41,14 +41,15 @@ class Editable_Tab(Dynamic_Event_Menager, metaclass=ABCMeta):
 class Contains_Start(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
-        self.content['recommended'] = Product.objects.\
-            filter(pk=Recommended_Product.objects.all())
+        self.content['recommended'] = Product.objects.filter(
+            pk__in=Recommended_Product.objects.all().values('product__pk'))
 
         return self.Render_HTML('main/start.html')
 
     @staticmethod
     def Launch(request):
         return Contains_Start(request).HTML
+
 
 
 class Contains_Products(Dynamic_Event_Menager):
@@ -66,6 +67,7 @@ class Contains_Products(Dynamic_Event_Menager):
         return Contains_Products(request).HTML
 
 
+
 class Contains_About(Editable_Tab):
 
     def Manage_Content_Ground(self):
@@ -78,6 +80,7 @@ class Contains_About(Editable_Tab):
         return Contains_About(request).HTML
 
 
+
 class Contains_Contact(Editable_Tab):
 
     def Manage_Content_Ground(self):
@@ -88,6 +91,7 @@ class Contains_Contact(Editable_Tab):
     @staticmethod
     def Launch(request):
         return Contains_Contact(request).HTML
+
 
 
 class Contains_Edit(Dynamic_Event_Menager):
