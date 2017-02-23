@@ -13,6 +13,8 @@
   <div class="block-content">
 
       {% for text in texts %}
+        <br/>_____<br/>
+        {{ text.pk }}
         {{ text.text | safe }}
       {% endfor %}
 

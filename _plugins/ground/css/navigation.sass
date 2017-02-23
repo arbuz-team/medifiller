@@ -1,0 +1,34 @@
+
+$ground-navigation--background-color: $G-COLOR-3
+$ground-navigation--image: url(/_static/img/icons/32/home.png)
+
+
+#GROUND >.ground >.ground-block
+
+  >.navigation
+    position: relative
+    z-index: 12
+    height: 52px
+    margin: 0
+
+    line-height: 32px
+    padding: 10px 15px
+    background-color: $ground-navigation--background-color
+    border-bottom: $G-STYLE-BORDER
+
+    >*
+      display: inline-block
+      height: 32px
+      margin: auto 5px
+      line-height: 32px
+
+
+      >i
+        display: inline-block
+        width: 30px
+        line-height: 32px
+        background:
+          image: $ground-navigation--image
+          position: center
+          size: 100%
+          repeat: no-repeat

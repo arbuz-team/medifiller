@@ -2,10 +2,8 @@
 //			  DEFINIOWANIE ZMIENNYCH
 // -----------------------------------------
 
-$ground-navigation--background-color: $g-color_3
-
-$ground--background-color: $g-color_4
-$ground--color: $g-color_0
+$ground--background-color: $G-COLOR-4
+$ground--color: $G-COLOR-0
 $ground--border-color: transparent
 
 
@@ -21,8 +19,8 @@ $ground--border-color: transparent
   top: 0
   right: 0
   height: 8px
-  border-bottom: $g-style_border_bold
-  background: #fff
+  border-bottom: $G-STYLE-BORDER-BOLD
+  background: $header--background-color
   content: ''
   z-index: 200
 
@@ -51,35 +49,6 @@ $ground--border-color: transparent
       min-height: 550px
 
 
-      >.navigation
-        position: relative
-        z-index: 12
-        height: 52px
-        margin: 0
-
-        line-height: 32px
-        padding: 10px 15px
-        background-color: $ground-navigation--background-color
-        border-bottom: $g-style_border
-
-        >*
-          display: inline-block
-          height: 32px
-          margin: auto 5px
-          line-height: 32px
-
-
-          >i
-            display: inline-block
-            width: 30px
-            line-height: 32px
-            background:
-              image: url(/_static/img/home.png)
-              position: center
-              size: 100%
-              repeat: no-repeat
-
-
       >.block-title
         position: relative
         z-index: 12
@@ -100,7 +69,7 @@ $ground--border-color: transparent
         font-size: 16px
 
       .block-content-message
-        color: $g-color_1
+        color: $G-COLOR-1
         font-weight: bold
         font-size: 18px
 
@@ -148,7 +117,7 @@ $ground--border-color: transparent
 //				EKRAN KOMPUTERA
 //-----------------------------------------
 
-@media (min-width: 500px)
+@media (min-width: $G-SIZE-1)
 
   #GROUND > .ground > .ground-block > .block-content.contact
 
@@ -156,7 +125,7 @@ $ground--border-color: transparent
       height: 300px
 
 
-@media (min-width: 650px)
+@media (min-width: $G-SIZE-2)
 
   #GROUND > .ground:not(.smaller) > .ground-block > .block-content.contact
 
@@ -175,7 +144,7 @@ $ground--border-color: transparent
       margin-top: 0
 
 
-@media (min-width: 1000px)
+@media (min-width: $G-SIZE-3)
 
   #GROUND
     margin-left: 250px
@@ -190,7 +159,7 @@ $ground--border-color: transparent
         left: 450px
 
 
-@media (min-width: 1200px)
+@media (min-width: $G-SIZE-4)
 
   #GROUND > .ground:not(.smaller) > .ground-block > .block-content.contact
 
@@ -202,7 +171,7 @@ $ground--border-color: transparent
 //	EKRAN KOMPUTERA z wysuniętym koszykiem
 //-----------------------------------------
 
-@media (min-width: 1600px)
+@media (min-width: $G-SIZE-5)
 
   #GROUND > .ground.smaller > .ground-block > .block-content.contact
 

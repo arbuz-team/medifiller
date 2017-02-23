@@ -1,0 +1,53 @@
+
+$header-navigation-secondary--color: $G-COLOR-4
+$header-navigation-secondary--background-color: $G-COLOR-1
+
+
+//--------------------------------------
+//         Navigation secondary
+//--------------------------------------
+
+#HEADER >.header >.navigation-secondary
+  display: none
+
+
+@media (min-width: $G-SIZE-2)
+
+  #HEADER >.header >.navigation-secondary
+    position: absolute
+    left: -250px
+    top: 0
+    right: 0
+
+    display: block
+    height: 30px
+    padding:
+      left: 265px
+      right: 15px
+
+    background-color: $header--color
+    color: $header--background-color
+
+    >.navigation-secondary-root
+      float: left
+      text-align: left
+
+    >.navigation-secondary-user
+      float: right
+      text-align: right
+
+    >ul
+      display: inline-block
+
+      >li
+        display: inline-block
+        width: auto
+        font:
+          size: 14px
+          weight: normal
+
+        >.link
+          position: relative
+
+          font-weight: bold
+          cursor: pointer

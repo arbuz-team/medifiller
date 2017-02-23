@@ -1,0 +1,29 @@
+
+// -----------------------------------------
+//			  ELEMENTY NAGŁÓWKA
+// -----------------------------------------
+
+#HEADER
+  position: relative
+  z-index: 37
+
+  display: block
+  height: $wysokosc_naglowka_m
+
+  background-color: transparent
+
+  >.header
+    position: relative
+    height: inherit
+    background-color: $header--background-color
+
+
+@media screen and (min-width: $G-SIZE-3)
+
+  #HEADER
+    height: $wysokosc_naglowka_d
+    margin-left: 250px
+
+
+    >div
+      height: $wysokosc_naglowka_d
