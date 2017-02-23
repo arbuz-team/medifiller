@@ -54,6 +54,28 @@ class Dynamic_Base:
 
         return urls
 
+    def Get_Path(self, name=None, kwargs=None,
+                 language=None, current_language=False):
+
+        if not name:
+            name = resolve(self.request.path_info).url_name
+            kwargs = resolve(self.request.path_info).kwargs
+
+        urls = \
+        {
+            'en': reverse(name, urlconf='arbuz.urls.en', kwargs=kwargs),
+            'pl': reverse(name, urlconf='arbuz.urls.pl', kwargs=kwargs),
+            # 'de': reverse(name, urlconf='arbuz.urls.de', kwargs=kwargs),
+        }
+
+        if language:
+            return urls[language.lower()]
+
+        if current_language:
+            return urls[self.request.session['translator_language'].lower()]
+
+        return urls
+
     @staticmethod
     def Get_Price(request, product, currency=None,
                   current_currency=False):

@@ -1,4 +1,3 @@
-from arbuz.settings import BASE_DIR
 from arbuz.views import *
 import os
 

@@ -1,5 +1,4 @@
 from arbuz.views import *
-from searcher.models import *
 from product.models import *
 from django.db.models import Q
 from functools import reduce
@@ -203,7 +202,7 @@ class Search_Engine:
     def Get_Polish_Word_Variations(word):
 
         file = open(BASE_DIR + '/searcher/variations/PL')
-        lines = file.readlines()
+        lines = file.read().splitlines()
         file.close()
         for line in lines:
             if word in line:

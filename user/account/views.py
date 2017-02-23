@@ -9,28 +9,28 @@ class Start_App(Dynamic_Event_Menager):
 
         self.content['apps'] = [
             {
-                'name': 'Account details',
-                'url':  '/user/account/details/',
+                'name': Text(self.request, 58),
+                'url':  self.Get_Path('user.account.details', current_language=True),
                 'icon': '/_static/img/icons/128/user-shape.png',
             },
             {
-                'name': 'User addresses',
-                'url': '/user/account/addresses/',
+                'name': Text(self.request, 59),
+                'url': self.Get_Path('user.account.addresses', current_language=True),
                 'icon': '/_static/img/icons/128/identity-card.png',
             },
             {
-                'name': 'My shopping',
-                'url': '/user/account/my_shopping/',
+                'name': Text(self.request, 60),
+                'url': self.Get_Path('user.account.my_shopping', current_language=True),
                 'icon': '/_static/img/icons/128/options-list.png',
             },
             {
-                'name': 'Favorite products',
-                'url': '/user/account/favorite/',
+                'name': Text(self.request, 61),
+                'url': self.Get_Path('user.account.favorite', current_language=True),
                 'icon': '/_static/img/icons/128/favorite.png',
             },
             {
-                'name': 'Shopping cart',
-                'url': '/payment/',
+                'name': Text(self.request, 62),
+                'url': self.Get_Path('payment', current_language=True),
                 'icon': '/_static/img/icons/128/shopping-cart.png',
             },
         ]
@@ -81,7 +81,7 @@ class User_Addresses(Dynamic_Event_Menager):
 
         for address in User_Address.objects.filter(user=unique):
             self.content['edit_forms_address'][address.pk] = \
-                Form_User_Address(instance=address)
+                Form_User_Address(self.request, instance=address)
 
     def Get_User_Address_ID(self):
         form_name = self.request.POST['__form__']
@@ -105,12 +105,12 @@ class User_Addresses(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
         self.Get_User_Details()
-        self.content['new_form_address'] = Form_User_Address()
+        self.content['new_form_address'] = Form_User_Address(self.request)
         return self.Render_HTML('user/account/addresses.html')
 
     def Manage_Form_New_User_Address(self):
 
-        self.content['form'] = Form_User_Address(self.request.POST)
+        self.content['form'] = Form_User_Address(self.request, self.request.POST)
 
         if self.content['form'].is_valid():
             unique = self.request.session['user_unique']
@@ -118,7 +118,7 @@ class User_Addresses(Dynamic_Event_Menager):
             address_user.user = User.objects.get(unique=unique)
             address_user.save()  # create address_user
 
-            self.content['new_form_address'] = Form_User_Address()
+            self.content['new_form_address'] = Form_User_Address(self.request)
 
         self.Get_User_Details()
         return self.Render_HTML('user/account/addresses.html')
@@ -127,13 +127,14 @@ class User_Addresses(Dynamic_Event_Menager):
 
         id_address = self.Get_User_Address_ID()
         address = User_Address.objects.get(id=id_address)
-        self.content['form'] = Form_User_Address(self.request.POST, instance=address)
+        self.content['form'] = Form_User_Address(self.request,
+             self.request.POST, instance=address)
 
         if self.content['form'].is_valid():
             self.content['form'].save() # save change of address_user
 
         self.Get_User_Details()
-        self.content['new_form_address'] = Form_User_Address()
+        self.content['new_form_address'] = Form_User_Address(self.request)
         return self.Render_HTML('user/account/addresses.html')
 
     def Manage_Form(self):

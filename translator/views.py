@@ -19,13 +19,13 @@ class Translator:
         return Language_DE.objects.get(id=pk).value
 
     @staticmethod
-    def Translate(request, pk):
+    def Translate(language, pk):
 
         if not Language_EN.objects.filter(id=pk):
             raise Exception('This value does not exist. '
                             '<translator.Translator.Translate>')
 
-        method = 'Translate_' + request.session['translator_language']
+        method = 'Translate_' + language
         return getattr(Translator, method)(pk)
 
     @staticmethod
@@ -33,21 +33,21 @@ class Translator:
 
         # load EN language
         file = open(BASE_DIR + '/translator/language/EN')
-        lines = file.readlines()
+        lines = file.read().splitlines()
         file.close()
         for line in lines:
             Language_EN(value=line).save()
 
         # load PL language
         file = open(BASE_DIR + '/translator/language/PL')
-        lines = file.readlines()
+        lines = file.read().splitlines()
         file.close()
         for line in lines:
             Language_PL(value=line).save()
 
         # load DE language
         file = open(BASE_DIR + '/translator/language/DE')
-        lines = file.readlines()
+        lines = file.read().splitlines()
         file.close()
         for line in lines:
             Language_DE(value=line).save()
@@ -99,5 +99,9 @@ class Translator:
         return None
 
 
-def Text(request, pk):
-    return Translator.Translate(request, pk)
+def Text(request, pk, language=None):
+
+    if not language:
+        language = request.session['translator_language']
+
+    return Translator.Translate(language, pk)

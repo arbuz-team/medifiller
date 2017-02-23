@@ -210,7 +210,7 @@ class New_Product(Product_Elements):
     def Manage_Get(self):
 
         if self.request.POST['__get__'] == 'keywords':
-            return self.Manage_Form_New_Product()
+            return self.Manage_Get_Keywords()
 
         return super(New_Product, self).Manage_Get()
 

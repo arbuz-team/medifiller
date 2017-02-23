@@ -155,14 +155,15 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
 
     def Manage_Content_Ground(self):
 
-        self.content['payment_address'] = Form_Address_Payment()
+        self.content['payment_address'] = Form_Address_Payment(self.request)
         self.Load_Payment_Details()
 
         return self.Render_HTML('payment/payment.html', 'payment_address')
 
     def Manage_Form_Address_Payment(self):
 
-        self.content['payment_address'] = Form_Address_Payment(self.request.POST)
+        self.content['payment_address'] = Form_Address_Payment(
+            self.request, self.request.POST)
 
         if self.content['payment_address'].is_valid():
             form = self.content['payment_address']

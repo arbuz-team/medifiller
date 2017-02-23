@@ -10,23 +10,23 @@ class Start_App(Dynamic_Event_Menager):
 
         self.content['apps'] = [
             {
-                'name': 'Sign in',
-                'url':  '/user/sign_in/',
+                'name': Text(self.request, 35),
+                'url':  self.Get_Path('user.sign_in', current_language=True),
                 'icon': '/_static/img/icons/128/padlock.png',
             },
             {
-                'name': 'Sign up',
-                'url': '/user/sign_up/',
+                'name': Text(self.request, 36),
+                'url': self.Get_Path('user.sign_up', current_language=True),
                 'icon': '/_static/img/icons/128/upload-arrow.png',
             },
             {
-                'name': 'Sign out',
-                'url': '/user/sign_out/',
+                'name': Text(self.request, 37),
+                'url': self.Get_Path('user.sign_out', current_language=True),
                 'icon': '/_static/img/icons/128/.png',
             },
             {
-                'name': 'Account',
-                'url': '/user/account/',
+                'name': Text(self.request, 38),
+                'url': self.Get_Path('user.account', current_language=True),
                 'icon': '/_static/img/icons/128/settings.png',
             },
         ]
@@ -49,13 +49,13 @@ class Sign_In(Dynamic_Event_Menager):
         return '/'
 
     def Manage_Content_Ground(self):
-        self.content['form'] = Form_Login()
+        self.content['form'] = Form_Login(self.request)
         return self.Render_HTML('user/sign_in.html', 'login')
 
     def Manage_Form_Login(self):
 
         self.content['form'] = \
-            Form_Login(self.request.POST)
+            Form_Login(self.request, self.request.POST)
 
         if self.content['form'].is_valid():
             email = self.content['form'].cleaned_data['email']
@@ -93,12 +93,12 @@ class Sign_In(Dynamic_Event_Menager):
 class Sign_Up(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
-        self.content['form'] = Form_Register()
+        self.content['form'] = Form_Register(self.request)
         return self.Render_HTML('user/sign_up.html', 'register')
 
     def Manage_Form_Register(self):
 
-        self.content['form'] = Form_Register(self.request.POST)
+        self.content['form'] = Form_Register(self.request, self.request.POST)
 
         if self.content['form'].is_valid():
             user = self.content['form'].save(commit=False)
@@ -222,13 +222,13 @@ class Approved_Register(Dynamic_Event_Menager):
 class Forgot_Password(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
-        self.content['form'] = Form_Forgot_Password()
+        self.content['form'] = Form_Forgot_Password(self.request)
         return self.Render_HTML('user/forgot.html', 'forgot_password')
 
     def Manage_Form_Forgot_Password(self):
 
         self.content['form'] = \
-            Form_Forgot_Password(self.request.POST)
+            Form_Forgot_Password(self.request, self.request.POST)
 
         if self.content['form'].is_valid():
             self.content['email'] = self.content['form'].cleaned_data['email']
@@ -265,8 +265,9 @@ class Forgot_Password(Dynamic_Event_Menager):
     def Send_Secure_Link(self):
 
         activate_key = self.content['key'].decode("utf-8")
-        activate_url = self.request.build_absolute_uri().replace('forgot/', '')
-        activate_url = '{0}change_password/{1}'.format(activate_url, activate_key)
+        activate_url = self.Get_Urls('user.change_password',
+             kwargs={'key': activate_key}, current_language=True)
+
         email = self.content['email']
 
         content = {
@@ -277,6 +278,14 @@ class Forgot_Password(Dynamic_Event_Menager):
         language = self.request.session['translator_language']
         Sender(language).Send_Forgot_Password_Link(content, email)
 
+    def Manage_Exist(self):
+
+        if self.request.POST['__exist__'] == 'email':
+            if User.objects.filter(email=self.request.POST['value']):
+                return JsonResponse({'__exist__': 'true'})
+
+        return JsonResponse({'__exist__': 'false'})
+
     @staticmethod
     def Launch(request):
         return Forgot_Password(request).HTML
@@ -286,13 +295,13 @@ class Forgot_Password(Dynamic_Event_Menager):
 class Change_Password(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
-        self.content['form'] = Form_Change_Password()
+        self.content['form'] = Form_Change_Password(self.request)
         return self.Render_HTML('user/change_password.html', 'change_password')
 
     def Manage_Form_Change_Password(self):
 
         self.content['form'] = \
-            Form_Change_Password(self.request.POST)
+            Form_Change_Password(self.request, self.request.POST)
 
         if self.content['form'].is_valid():
 

@@ -4,7 +4,7 @@ from django.template.loader import render_to_string
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from arbuz.base import *
+from translator.views import *
 
 
 class Sender:
@@ -20,17 +20,17 @@ class Sender:
         self.email_html.attach(img)
 
     def Send_Forgot_Password_Link(self, content, recipient):
-        title = 'Change your password.'
+        title = Text(None, 32, self.language)
         html_file = 'forgot_password.html'
         self.Send_Email(title, content, recipient, html_file)
 
     def Send_Register_Approved_Link(self, content, recipient):
-        title = 'Confirm your new account.'
+        title = Text(None, 33, self.language)
         html_file = 'register_approved.html'
         self.Send_Email(title, content, recipient, html_file)
 
     def Send_Payment_Approved(self, content, recipient):
-        title = 'Your order is confirmed'
+        title = Text(None, 34, self.language)
         html_file = 'payment_approved.html'
         self.Send_Email(title, content, recipient, html_file)
 
@@ -47,9 +47,8 @@ class Sender:
         email = EmailMessage(
             subject=title,
             body='',
-            from_email='sender@arbuz.team',
+            from_email='Spa Sungate <sender@arbuz.team>',
             to=[recipient]
-            # headers={'Reply-To': 'reply@arbuz.team'}
         )
 
         email.attach(self.email_html)

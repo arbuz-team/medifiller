@@ -10,18 +10,28 @@ class Start_App(Dynamic_Event_Menager):
 
         self.content['apps'] = [
             {
-                'name': 'Sign in',
-                'url':  '/root/sign_in/',
+                'name': Text(self.request, 23),
+                'url':  self.Get_Path('root.sign_in', current_language=True),
                 'icon': '/_static/img/icons/128/padlock.png',
             },
             {
-                'name': 'Sign out',
-                'url': '/root/sign_out/',
+                'name': Text(self.request, 24),
+                'url': self.Get_Path('root.sign_out', current_language=True),
                 'icon': '/_static/img/icons/128/.png',
             },
             {
-                'name': 'Create root',
-                'url': '/root/create/',
+                'name': Text(self.request, 25),
+                'url': self.Get_Path('root.create', current_language=True),
+                'icon': '/_static/img/icons/128/refresh-arrow.png',
+            },
+            {
+                'name': Text(self.request, 26),
+                'url': self.Get_Path('root.map_references', current_language=True),
+                'icon': '/_static/img/icons/128/refresh-arrow.png',
+            },
+            {
+                'name': Text(self.request, 27),
+                'url': self.Get_Path('root.users_payments', current_language=True),
                 'icon': '/_static/img/icons/128/refresh-arrow.png',
             },
         ]
@@ -37,13 +47,13 @@ class Start_App(Dynamic_Event_Menager):
 class Sign_In(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
-        self.content['form'] = Form_Root_Login()
+        self.content['form'] = Form_Root_Login(self.request)
         return self.Render_HTML('root/sign_in.html', 'login')
 
     def Manage_Form_Login(self):
 
         self.content['form'] = \
-            Form_Root_Login(self.request.POST)
+            Form_Root_Login(self.request, self.request.POST)
 
         if self.content['form'].is_valid():
             self.request.session['root_login'] = True
