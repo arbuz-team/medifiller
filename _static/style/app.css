@@ -537,7 +537,6 @@ img {
   position: relative;
   display: block; }
   #GROUND > .ground {
-    position: relative;
     top: 8px;
     opacity: 0.4;
     overflow-y: auto; }
@@ -710,6 +709,40 @@ img {
       background-color: #f5f5f5;
       border-radius: 2px;
       opacity: 1; }
+
+#GROUND > .ground > .ground-block.about > .block-content {
+  text-align: justify; }
+  #GROUND > .ground > .ground-block.about > .block-content > .block-content-header {
+    font-size: 36px;
+    margin-top: 20px;
+    margin-bottom: 40px; }
+  #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph {
+    line-height: 35px;
+    margin-top: 20px;
+    margin-bottom: 60px; }
+    #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-image {
+      max-width: 650px;
+      margin: 20px auto;
+        margin-bottom: 0;
+      text-align: center;
+      border-bottom: 1px solid #e8e8e8;
+        border-bottom-color: #774D34;
+        border-bottom-width: 5px; }
+      #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-image > img {
+        height: auto;
+        vertical-align: bottom; }
+
+@media (min-width: 1200px) {
+  #GROUND > .ground > .ground-block.about > .block-content {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto; }
+    #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-text.with_image, #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-image {
+      display: inline-block;
+      width: 48%;
+      vertical-align: top; }
+    #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-image {
+      margin-left: 20px; } }
 
 .container-part > div > .posty.tresc {
   padding-left: 0;

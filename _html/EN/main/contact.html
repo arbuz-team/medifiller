@@ -14,18 +14,19 @@
 
       <div class="block-content-left">
 
-          <!--<div class="title"><a href="https://google.com/">Sungate Beauty & Spa</a></div>-->
-          <!--<div class="paragraph">Pl. Powstańców Warszawy 2<br />00-030 Warszawa<br /></div>-->
-          <!--<div class="paragraph">Tel.:	+48 22 58 29 474<br />Tel. kom.: +48 517 012 880<br />E-mail: info@spasungate.pl<br /></div>-->
+          {% for element in content %}
 
-          <!--<div class="title">Godziny otwarcia SPA</div>-->
-          <!--<div class="paragraph">Monday<br />10:00 - 24:00*<br />Tuesday<br />10:00 - 24:00*<br />Wednesday<br />10:00 - 24:00*<br />Thursday<br />10:00 - 24:00*<br />Friday<br />10:00 - 24:00*<br />Saturday<br />10:00 - 24:00*<br />Sunday<br />10:00 - 24:00*<br /></div>-->
+              {% if element.header %}
+              <div class="title">
+                  {{ element.header | safe }}
+              </div>
+              {% endif %}
 
-          <div class="title">{{ texts.0.text }}</div>
-          <div class="paragraph">{{ texts.1.text|safe }}</div>
+              <div class="paragraph">
+                  {{ element.paragraph | safe }}
+              </div>
 
-          <div class="title">{{ texts.2.text }}</div>
-          <div class="paragraph">{{ texts.3.text|safe }}</div>
+          {% endfor %}
 
       </div>
 

@@ -1,28 +1,59 @@
+{% load staticfiles %}
+
 <script>
   window.APP.DATA = {
-    title : 'About us'
+    title : 'About'
     , description : 'This page is about us. ;)'
   };
 </script>
 
-<div class="ground-block block-1">
+<div class="ground-block block-1 about">
 
-  <div class="block-background fill-abs"></div>
-  {% include "ground/html/navigation.html" %}
+    <div class="block-background fill-abs"></div>
+    {% include "ground/html/navigation.html" %}
 
-  <div class="block-content">
+    <div class="block-content">
 
-      {% for text in texts %}
-        <br/>_____<br/>
-        {{ text.pk }}
-        {{ text.text | safe }}
-      {% endfor %}
+        {% for element in content %}
 
-      {% for image in images %}
-        <img data-src="{{ image.image }}"/>
-      {% endfor %}
+            {% if element.header %}
+                <div class="block-content-header">
+                    {{ element.header | safe }}
+                </div>
+            {% endif %}
 
-  </div>
+            <div class="block-content-paragraph">
+
+                {% if element.image %}
+                    <div class="block-content-paragraph-text with_image">
+                        {{ element.paragraph | safe }}
+                    </div>
+                {% else %}
+                    <div class="block-content-paragraph-text">
+                        {{ element.paragraph | safe }}
+                    </div>
+                {% endif %}
+
+
+                {% if element.image and element.header %}
+                    <div class="block-content-paragraph-image">
+                        <img data-src="{{ element.image }}"
+                             alt="{{ element.header }}"
+                             src="{% static 'img/example.jpg' %}"/>
+                    </div>
+                {% elif element.image %}
+                    <div class="block-content-paragraph-image">
+                        <img data-src="{{ element.image }}"
+                             alt="Example image"
+                             src="{% static 'img/example.jpg' %}"/>
+                    </div>
+                {% endif %}
+
+            </div>
+
+        {% endfor %}
+
+    </div>
 
 </div>
 

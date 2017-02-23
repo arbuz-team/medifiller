@@ -3054,10 +3054,11 @@
 	    change_height_content = function change_height_content() {
 	  var height = {
 	    window: $('#CONTAINTER').innerHeight(),
-	    header: $('#HEADER').outerHeight()
+	    header: $('#HEADER').outerHeight(),
+	    ground_top: $(config_loader.container).position().top
 	  };
 	
-	  $(config_loader.container).height(height.window - height.header);
+	  $(config_loader.container).height(height.window - height.header - height.ground_top);
 	};
 	
 	/**

@@ -1,0 +1,48 @@
+
+#GROUND >.ground >.ground-block.about >.block-content
+  text-align: justify
+
+  >.block-content-header
+    font-size: 36px
+    margin:
+      top: 20px
+      bottom: 40px
+
+  >.block-content-paragraph
+    line-height: 35px
+    margin:
+      top: 20px
+      bottom: 60px
+
+    >.block-content-paragraph-image
+      max-width: 650px
+      margin: 20px auto
+        bottom: 0
+
+      text-align: center
+      border-bottom: $G-STYLE-BORDER
+        color: $G-COLOR-1
+        width: 5px
+
+      >img
+        height: auto
+        vertical-align: bottom
+
+
+@media (min-width: $G-SIZE-4)
+
+  #GROUND >.ground >.ground-block.about >.block-content
+    max-width: 1200px
+    margin:
+      left: auto
+      right: auto
+
+    >.block-content-paragraph
+
+      >.block-content-paragraph-text.with_image, >.block-content-paragraph-image
+        display: inline-block
+        width: 48%
+        vertical-align: top
+
+      >.block-content-paragraph-image
+        margin-left: 20px
