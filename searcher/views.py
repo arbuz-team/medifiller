@@ -310,7 +310,8 @@ class Searcher(Dynamic_Event_Menager):
 
     @staticmethod
     def Launch(request):
-        return Searcher(request, index_clear_session=True, clear_session=True).HTML
+        return Searcher(request, index_clear_session=True,
+                        clear_session=True).HTML
 
 
 

@@ -71,6 +71,7 @@ class Manager(Dynamic_Base):
     def Manage_Index(self):
         Check_Session(self.request)
 
+        # change website to other language
         lang_redirect = Translator.Get_Language_Redirect(self.request)
         if lang_redirect:
             return lang_redirect

@@ -38,7 +38,7 @@ class Editable_Tab(Dynamic_Event_Menager, metaclass=ABCMeta):
 
 
 
-class Contains_Start(Dynamic_Event_Menager):
+class Start(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
         self.content['recommended'] = Product.objects.filter(
@@ -48,11 +48,11 @@ class Contains_Start(Dynamic_Event_Menager):
 
     @staticmethod
     def Launch(request):
-        return Contains_Start(request).HTML
+        return Start(request).HTML
 
 
 
-class Contains_Products(Dynamic_Event_Menager):
+class Products(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
         self.content['products'] = Filter_Products(
@@ -64,41 +64,28 @@ class Contains_Products(Dynamic_Event_Menager):
 
     @staticmethod
     def Launch(request):
-        return Contains_Products(request).HTML
+        return Products(request).HTML
 
 
 
-class Contains_About(Editable_Tab):
+class About(Editable_Tab):
 
     def Manage_Content_Ground(self):
-        self.content['texts'] = Text_Content.objects.filter(tab_name='about')
-        self.content['images'] = Image_Content.objects.filter(tab_name='about')
+        self.content['content'] = Content_Tab.objects.filter(tab_name='about')
         return self.Render_HTML('main/about.html')
 
     @staticmethod
     def Launch(request):
-        return Contains_About(request).HTML
+        return About(request).HTML
 
 
 
-class Contains_Contact(Editable_Tab):
+class Contact(Editable_Tab):
 
     def Manage_Content_Ground(self):
-        self.content['texts'] = Text_Content.objects.filter(tab_name='contact')
-        self.content['images'] = Image_Content.objects.filter(tab_name='contact')
+        self.content['content'] = Content_Tab.objects.filter(tab_name='contact')
         return self.Render_HTML('main/contact.html')
 
     @staticmethod
     def Launch(request):
-        return Contains_Contact(request).HTML
-
-
-
-class Contains_Edit(Dynamic_Event_Menager):
-
-    def Manage_Content_Ground(self):
-        return self.Render_HTML('main/edit.html')
-
-    @staticmethod
-    def Launch(request):
-        return Contains_Edit(request, autostart=True).HTML
+        return Contact(request).HTML

@@ -1,10 +1,12 @@
 from django.db import models
 
 
-class Text_Content(models.Model):
-    tab_name = models.CharField(max_length=20)
-    text = models.TextField()
+class Content_Tab(models.Model):
 
-class Image_Content(models.Model):
     tab_name = models.CharField(max_length=20)
+    header = models.CharField(max_length=200)
+    paragraph = models.TextField()
     image = models.ImageField()
+
+    def __str__(self):
+        return self.header
