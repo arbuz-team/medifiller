@@ -64,8 +64,6 @@ class Product(models.Model):
 
     price_eur = models.IntegerField(blank=True)
     price_pln = models.IntegerField(blank=True)
-    price_gbp = models.IntegerField(blank=True)
-    price_usd = models.IntegerField(blank=True)
 
     image = models.ImageField(blank=True)
     keywords = models.TextField(blank=True)

@@ -25,8 +25,6 @@ def price(context, product):
     prices = {
         'EUR': product.price_eur,
         'PLN': product.price_pln,
-        'GBP': product.price_gbp,
-        'USD': product.price_usd
     }
 
     request = context['request']
@@ -40,8 +38,6 @@ def price_currency(product, currency):
     prices = {
         'EUR': product.price_eur,
         'PLN': product.price_pln,
-        'GBP': product.price_gbp,
-        'USD': product.price_usd
     }
 
     selected_price = str(to_money(prices[currency]))

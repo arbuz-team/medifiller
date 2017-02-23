@@ -251,8 +251,6 @@ class Edit_Product(Product_Elements):
             product.purpose = self.request.session['product_purpose']
             product.price_eur = self.content['form'].cleaned_data['price_eur']
             product.price_pln = self.content['form'].cleaned_data['price_pln']
-            product.price_gbp = self.content['form'].cleaned_data['price_gbp']
-            product.price_usd = self.content['form'].cleaned_data['price_usd']
             product.keywords = self.content['form'].cleaned_data['keywords']
             product.save()
 

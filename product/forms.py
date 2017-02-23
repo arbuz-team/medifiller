@@ -24,14 +24,6 @@ class Form_Product(Abstract_Model_Form):
         price = self.cleaned_data['price_pln']
         return self.Clean_Price(price, 'PLN')
 
-    def clean_price_gbp(self):
-        price = self.cleaned_data['price_gbp']
-        return self.Clean_Price(price, 'GBP')
-
-    def clean_price_usd(self):
-        price = self.cleaned_data['price_usd']
-        return self.Clean_Price(price, 'USD')
-
     def clean_stock(self):
         stock = self.cleaned_data['stock']
         if not stock:
@@ -79,8 +71,6 @@ class Form_Product(Abstract_Model_Form):
         self.fields['keywords'].widget = forms.Textarea(attrs=keywords_attr)
         self.fields['price_eur'].widget = forms.NumberInput(attrs=price_attr)
         self.fields['price_pln'].widget = forms.NumberInput(attrs=price_attr)
-        self.fields['price_gbp'].widget = forms.NumberInput(attrs=price_attr)
-        self.fields['price_usd'].widget = forms.NumberInput(attrs=price_attr)
 
     class Meta:
 
@@ -89,8 +79,6 @@ class Form_Product(Abstract_Model_Form):
         (
             'price_eur',
             'price_pln',
-            'price_gbp',
-            'price_usd',
             'keywords',
             'stock',
         )

@@ -85,8 +85,6 @@ def Load_Default_Product():
             image='/_static/img/product/{0}.jpeg'.format(numer),
             price_eur=100*numer,
             price_pln=400*numer,
-            price_gbp=600*numer,
-            price_usd=300*numer,
             stock=3,
 
             brand=Brand.objects.get(pk=numer),
