@@ -4,7 +4,7 @@ export let list_configs = {};
 list_configs.register = {
 	username: 'length_3',
 	password: 'password',
-	email: 'email_db',
+	email: 'email_not_in_db',
 };
 
 list_configs.login = {
@@ -19,4 +19,8 @@ list_configs.user_address = {
   region : 'proper_name',
   postcode : 'no_empty',
   country : 'proper_name',
+};
+
+list_configs.forgot_password = {
+  email : 'email',
 };

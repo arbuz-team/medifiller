@@ -1519,7 +1519,7 @@
 	  callback(result);
 	});
 	
-	_views.checker.create_checker('email_db', function (value, callback) {
+	_views.checker.create_checker('email_not_in_db', function (value, callback) {
 	  var result = _views.checker.create_result(),
 	      re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	
@@ -1530,6 +1530,23 @@
 	    _views.checker.exist_in_db('email', value, callback, 'Someone already has that email. Try another?');
 	  }
 	});
+	
+	// checker.create_checker('email_in_db', function(value, callback)
+	// {
+	//   let result = checker.create_result(),
+	//     re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	//
+	//   if(checker.check_condition( re.test(value) ))
+	//   {
+	//     result = checker.create_error('It\'s not email.');
+	//     callback(result);
+	//   }
+	//   else
+	//   {
+	//     checker.exist_in_db('email', value, callback, 'Someone already has that email. Try another?');
+	//   }
+	// });
+	
 	
 	_views.checker.create_checker('password', function (value, callback) {
 	  var result = _views.checker.create_result();
@@ -1744,7 +1761,7 @@
 	list_configs.register = {
 	  username: 'length_3',
 	  password: 'password',
-	  email: 'email_db'
+	  email: 'email_not_in_db'
 	};
 	
 	list_configs.login = {
@@ -1759,6 +1776,10 @@
 	  region: 'proper_name',
 	  postcode: 'no_empty',
 	  country: 'proper_name'
+	};
+	
+	list_configs.forgot_password = {
+	  email: 'email'
 	};
 
 /***/ },
