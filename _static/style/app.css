@@ -639,6 +639,12 @@ img {
   padding: 10px 15px;
   background-color: #f2f2f2;
   border-bottom: 1px solid #e8e8e8; }
+  #GROUND > .ground > .ground-block > .navigation > a, #GROUND > .ground > .ground-block > .navigation > span {
+    opacity: .6; }
+  #GROUND > .ground > .ground-block > .navigation > a:first-child, #GROUND > .ground > .ground-block > .navigation > a:last-child {
+    opacity: .9; }
+  #GROUND > .ground > .ground-block > .navigation > a:hover {
+    opacity: 1; }
   #GROUND > .ground > .ground-block > .navigation > * {
     display: inline-block;
     height: 32px;
