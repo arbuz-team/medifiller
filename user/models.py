@@ -33,6 +33,7 @@ class User(models.Model):
 class Abstract_Address(models.Model):
 
     full_name = models.CharField(max_length=50)
+    doctor_number = models.CharField(max_length=7) # for polish users
     address_line_1 = models.CharField(max_length=50)
     address_line_2 = models.CharField(max_length=50, default='')
     city = models.CharField(max_length=50)

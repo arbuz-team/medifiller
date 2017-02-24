@@ -152,12 +152,10 @@ class Form_Image(Abstract_Form):
 
         if url and image:
             os.remove(BASE_DIR + image)
-            raise forms.ValidationError(
-                'Only one image can save.')
+            raise forms.ValidationError(Text(self.request, 64))
 
         if not url and not image:
-            raise forms.ValidationError(
-                'Please select image.')
+            raise forms.ValidationError(Text(self.request, 65))
 
         return self.cleaned_data
 
@@ -169,8 +167,7 @@ class Form_Image(Abstract_Form):
                 Save_Image_From_Base64(image_base64)
 
             if not image_base64:
-                raise forms.ValidationError(
-                    'It\'s not image.')
+                raise forms.ValidationError(Text(self.request, 66))
 
         return image_base64
 
@@ -182,8 +179,7 @@ class Form_Image(Abstract_Form):
                 Save_Image_From_URL(image_url)
 
             if not image_url:
-                raise forms.ValidationError(
-                    'It\'s not image.')
+                raise forms.ValidationError(Text(self.request, 67))
 
         return image_url
 
@@ -236,7 +232,7 @@ class Form_Filter(Abstract_Model_Form):
     def Set_Widgets(self):
 
         name_attrs = {
-            'placeholder': 'Name',
+            'placeholder': Text(self.request, 68),
             'class': 'test',
             'autofocus': 'true',
         }

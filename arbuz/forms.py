@@ -11,10 +11,14 @@ class Base_Form:
     def Set_Widgets(self):
         pass
 
+    def Exclude_Fields(self):
+        pass
+
     def __init__(self, request):
         self.request = request
         self.Create_Fields()
         self.Set_Widgets()
+        self.Exclude_Fields()
 
 
 

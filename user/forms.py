@@ -113,6 +113,11 @@ class Form_Abstract_Address(Abstract_Model_Form):
             'autofocus': 'true',
         }
 
+        doctor_number_attr = {
+            'placeholder': Text(self.request, 63),
+            'class': 'test',
+        }
+
         address_line_1_attr = {
             'placeholder': Text(self.request, 48),
             'class': 'test',
@@ -143,12 +148,17 @@ class Form_Abstract_Address(Abstract_Model_Form):
         }
 
         self.fields['full_name'].widget = forms.TextInput(attrs=full_name_attr)
+        self.fields['doctor_number'].widget = forms.TextInput(attrs=doctor_number_attr)
         self.fields['address_line_1'].widget = forms.TextInput(attrs=address_line_1_attr)
         self.fields['address_line_2'].widget = forms.TextInput(attrs=address_line_2_attr)
         self.fields['city'].widget = forms.TextInput(attrs=city_attr)
         self.fields['region'].widget = forms.TextInput(attrs=region_attr)
         self.fields['postcode'].widget = forms.TextInput(attrs=postcode_attr)
         self.fields['country'].widget = forms.TextInput(attrs=country_attr)
+
+    def Exclude_Fields(self):
+        if self.request.session['translator_language'] != 'PL':
+            del self.fields['doctor_number']
 
 
 

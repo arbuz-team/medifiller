@@ -98,7 +98,8 @@ class Sign_Up(Dynamic_Event_Menager):
 
     def Manage_Form_Register(self):
 
-        self.content['form'] = Form_Register(self.request, self.request.POST)
+        self.content['form'] = Form_Register(
+            self.request, self.request.POST)
 
         if self.content['form'].is_valid():
             user = self.content['form'].save(commit=False)
@@ -109,14 +110,15 @@ class Sign_Up(Dynamic_Event_Menager):
             self.Create_No_Approved_User()
             self.Send_Activate_Link()
 
-            self.content['form'] = Form_User_Address()
+            self.content['form'] = Form_User_Address(self.request)
             return self.Render_HTML('user/sign_up.html', 'user_address')
 
         return self.Render_HTML('user/sign_up.html', 'register')
 
     def Manage_Form_User_Address(self):
 
-        self.content['form'] = Form_User_Address(self.request.POST)
+        self.content['form'] = Form_User_Address(
+            self.request, self.request.POST)
 
         if self.content['form'].is_valid():
             unique = self.request.session['user_unique']
