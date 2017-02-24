@@ -182,7 +182,9 @@ class Favorite(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
         user = User.objects.get(unique=self.request.session['user_unique'])
-        self.content['favorites'] = Favorite_Product.objects.filter(user=user)
+        self.content['favorites'] = Product.objects.filter(
+            pk__in=Favorite_Product.objects.filter(user=user).values('product__pk'))
+
         return self.Render_HTML('user/account/favorite.html')
 
     @staticmethod
