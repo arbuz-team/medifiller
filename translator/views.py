@@ -36,21 +36,21 @@ class Translator:
         lines = file.read().splitlines()
         file.close()
         for line in lines:
-            Language_EN(value=line).save()
+            Language_EN(value=line.encode()).save()
 
         # load PL language
         file = open(BASE_DIR + '/translator/language/PL')
         lines = file.read().splitlines()
         file.close()
         for line in lines:
-            Language_PL(value=line).save()
+            Language_PL(value=line.encode()).save()
 
         # load DE language
         file = open(BASE_DIR + '/translator/language/DE')
         lines = file.read().splitlines()
         file.close()
         for line in lines:
-            Language_DE(value=line).save()
+            Language_DE(value=line.encode()).save()
 
     @staticmethod
     def Set_Subdomain_Language(request):
