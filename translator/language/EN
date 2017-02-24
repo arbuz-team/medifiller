@@ -1,8 +1,8 @@
-Select or create brand
-Select or create purpose
-Details in english
-Details in polish
-Details in germany
+Select or create product brand
+Select or create product purpose
+Details product in english
+Details product in polish
+Details product in germany
 Where display product
 Add image to product
 It's done!
@@ -12,8 +12,8 @@ Price in {0} have to greater than zero.
 stock have to greater than zero.
 English details is required.
 Displays is required.
-Brand name is required.
-Purpose is required.
+Product brand name is required.
+Product purpose is required.
 Product image is required.
 Keywords
 Name
@@ -39,7 +39,7 @@ Account
 Email
 Password
 User with this email does not exist.
-User with this email is not approved.
+User with this email is not approved. Check your mailbox.
 Wrong password. Try again.
 Username
 Password
@@ -52,7 +52,7 @@ State / Province / Region
 ZIP / Postal Code
 Country
 User with this email does not exist.
-User with this email is not approved.
+User with this email is not approved. Check your mailbox.
 Email
 Password
 Account details
@@ -61,7 +61,7 @@ My shopping
 Favorite products
 Shopping cart
 Doctor number
-Only one image can save.
+Product may have only one image.
 Please select image.
 It's not image.
 It's not image.
