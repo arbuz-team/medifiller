@@ -38,14 +38,14 @@
 
                 <div class="product_details-section action_panel">
 
-                        <div class="product_details-action_panel-prices">
-                            {% if request.session.user_login %}
-                                {% price product %}
-                            {% else %}
-                                If you want buy a product you must login.
-                                <a href="{% sign_in_redirect 'product.details' pk=product.pk %}">Sign in!</a>
-                            {% endif %}
-                        </div>
+                    <div class="product_details-action_panel-prices">
+                        {% if request.session.user_login %}
+                            {% price product %}
+                        {% else %}
+                            If you want buy a product you must login.
+                            <a href="{% sign_in_redirect 'product.details' pk=product.pk %}">Sign in!</a>
+                        {% endif %}
+                    </div>
 
                     <div class="product_details-action_panel-buttons field_shell">
 
@@ -57,14 +57,26 @@
                                     data-reload="cart"
                                     data-url="/cart/">Add to cart</button>
 
-                            <button class="post_button" type="button"
-                                    data-name="Favorite_{{ product.pk }}"
-                                    data-action="append"
-                                    data-value="{{ product.pk }}"
-                                    data-url="/product/favorite/">Add to favorite</button>
+
+                            {% if is_favorite %}
+                                <button class="post_button" type="button"
+                                        data-name="Favorite_{{ product.pk }}"
+                                        data-action="delete"
+                                        data-value="{{ product.pk }}"
+                                        data-url="/product/favorite/">Remove from favorite</button>
+                            {% else %}
+                                <button class="post_button" type="button"
+                                        data-name="Favorite_{{ product.pk }}"
+                                        data-action="append"
+                                        data-value="{{ product.pk }}"
+                                        data-url="/product/favorite/">Add to favorite</button>
+                            {% endif %}
+
 
                             <a href="/payment/buy/{{ product.pk }}/"><button type="button">Buy</button></a>
                         {% endif %}
+
+                        <br>
 
                         {% if request.session.root_login %}
                             <button class="post_button" type="button"
@@ -73,11 +85,21 @@
                                     data-value="{{ product.pk }}"
                                     data-url="/product/delete/">Delete</button>
 
-                            <button class="post_button" type="button"
-                                    data-name="Recommend_{{ product.pk }}"
-                                    data-action="append"
-                                    data-value="{{ product.pk }}"
-                                    data-url="/product/recommended/">Recommend</button>
+
+                            {% if is_recommended %}
+                                <button class="post_button" type="button"
+                                        data-name="Recommend_{{ product.pk }}"
+                                        data-action="delete"
+                                        data-value="{{ product.pk }}"
+                                        data-url="/product/recommended/">Remove form recommended</button>
+                            {% else %}
+                                <button class="post_button" type="button"
+                                        data-name="Recommend_{{ product.pk }}"
+                                        data-action="append"
+                                        data-value="{{ product.pk }}"
+                                        data-url="/product/recommended/">Add to recommended</button>
+                            {% endif %}
+
 
                             <a href="/product/edit/{{ product.pk }}/"><button type="button">Edit</button></a>
                         {% endif %}
