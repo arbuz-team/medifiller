@@ -96,6 +96,11 @@ class Checker(Dynamic_Base):
 
     def Check_Authorization(self):
 
+        # dialog is checked in dialog abstract class
+        if '__content__' in self.request.POST:
+            if self.request.POST['__content__'] == 'dialog':
+                return True
+
         if self.authorization:
             if self.request.session['user_login']:
                 return True

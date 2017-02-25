@@ -17,14 +17,24 @@ class Start_App(Dynamic_Event_Menager):
 class Product_Details(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
-        self.content['product'] = \
-            Product.objects.get(pk=self.other_value['pk'])
+        product = Product.objects.get(pk=self.other_value)
+        user = User.objects.get(unique=self.request.session['user_unique'])
+
+        self.content['is_favorite'] = False
+        self.content['is_recommended'] = False
+        self.content['product'] = product
+
+        if Favorite_Product.objects.filter(product=product, user=user):
+            self.content['is_favorite'] = True
+
+        if Recommended_Product.objects.filter(product=product):
+            self.content['is_recommended'] = True
 
         return self.Render_HTML('product/details.html')
 
     @staticmethod
     def Details(request, pk):
-        return Product_Details(request, other_value={'pk': pk}).HTML
+        return Product_Details(request, other_value=pk).HTML
 
     @staticmethod
     def Launch(request):
