@@ -70,3 +70,7 @@ def sign_in_redirect(context, name, *args, **kwargs):
     selected_url = b64encode(bytes(urls[language], 'utf-8'))
     selected_url = selected_url.decode('utf-8')
     return '/user/sign_in/redirect/{0}/'.format(selected_url)
+
+@register.simple_tag
+def dict_value(my_dict, value):
+    return my_dict[value]

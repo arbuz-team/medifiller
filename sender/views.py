@@ -5,6 +5,7 @@ from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from translator.views import *
+from arbuz.settings import ROOT_EMAIL
 
 
 class Sender:
@@ -22,16 +23,24 @@ class Sender:
     def Send_Forgot_Password_Link(self, content, recipient):
         title = Text(None, 32, self.language)
         html_file = 'forgot_password.html'
+        recipient = [recipient]
         self.Send_Email(title, content, recipient, html_file)
 
     def Send_Register_Approved_Link(self, content, recipient):
         title = Text(None, 33, self.language)
         html_file = 'register_approved.html'
+        recipient = [recipient]
         self.Send_Email(title, content, recipient, html_file)
 
     def Send_Payment_Approved(self, content, recipient):
         title = Text(None, 34, self.language)
         html_file = 'payment_approved.html'
+        recipient = [recipient, ROOT_EMAIL]
+        self.Send_Email(title, content, recipient, html_file)
+
+    def Send_Contact_Question(self, title, content, recipient):
+        html_file = 'contact_question.html'
+        recipient = [recipient, ROOT_EMAIL]
         self.Send_Email(title, content, recipient, html_file)
 
     def Send_Email(self, title, content, recipient, html_file):
@@ -48,7 +57,7 @@ class Sender:
             subject=title,
             body='',
             from_email='Spa Sungate <sender@arbuz.team>',
-            to=[recipient]
+            to=recipient
         )
 
         email.attach(self.email_html)

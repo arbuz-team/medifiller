@@ -1,9 +1,12 @@
+{% load tags %}
+
 <script>
   window.APP.DATA = {
     title : 'Kontakt'
     , description : 'Na tej stronie jest kontakt. ;)'
   };
 </script>
+<script src='https://www.google.com/recaptcha/api.js'></script>
 
 <div class="ground-block block-1">
 
@@ -25,6 +28,31 @@
               <div class="paragraph">
                   {{ element.paragraph | safe }}
               </div>
+
+          {% endfor %}
+
+          {% for form_name, form in forms.items %}
+
+              <form method="post" action="" id="form_{{ form_name }}" data-name="{{ form_name }}" data-type="{{ form_name }}" data-test="yes" class="field_shell">
+
+                <div class="title"> Contact us: {% dict_value titles form_name %} </div>
+
+                    {% for i in form %}
+
+                        <div>
+
+                            {{ i }}
+                            {% include "forms/html/field_error.html" %}
+
+                        </div>
+
+                    {% endfor %}
+
+                <div>
+                  <button disabled type="submit"> Done </button>
+                </div>
+
+              </form>
 
           {% endfor %}
 
