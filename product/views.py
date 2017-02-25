@@ -287,18 +287,35 @@ class Edit_Product(Product_Elements):
 
 
 
-class Recommended_Product_Manager(Product_Elements):
+class Recommended_Product_Manager(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
         pass
 
-    def Manage_Button(self):
-        product = Product.objects.get(pk=self.request.POST['value'])
-
+    @staticmethod
+    def Manage_Button_Append(product):
         if not Recommended_Product.objects.filter(product=product):
             Recommended_Product(product=product).save()
 
         return JsonResponse({'__button__': 'true'})
+
+    @staticmethod
+    def Manage_Button_Delete(product):
+        if Recommended_Product.objects.filter(product=product):
+            Recommended_Product.objects.get(product=product).delete()
+
+        return JsonResponse({'__button__': 'true'})
+
+    def Manage_Button(self):
+        product = Product.objects.get(pk=self.request.POST['value'])
+
+        if self.request.POST['__button__'] == 'append':
+            return self.Manage_Button_Append(product)
+
+        if self.request.POST['__button__'] == 'delete':
+            return self.Manage_Button_Delete(product)
+
+        return JsonResponse({'__button__': 'false'})
 
     @staticmethod
     def Launch(request):
@@ -306,19 +323,36 @@ class Recommended_Product_Manager(Product_Elements):
 
 
 
-class Favorite_Product_Manager(Product_Elements):
+class Favorite_Product_Manager(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
         pass
+
+    @staticmethod
+    def Manage_Button_Append(product, user):
+        if not Favorite_Product.objects.filter(product=product, user=user):
+            Favorite_Product(product=product, user=user).save()
+
+        return JsonResponse({'__button__': 'true'})
+
+    @staticmethod
+    def Manage_Button_Delete(product, user):
+        if Favorite_Product.objects.filter(product=product, user=user):
+            Favorite_Product.objects.get(product=product, user=user).delete()
+
+        return JsonResponse({'__button__': 'true'})
 
     def Manage_Button(self):
         product = Product.objects.get(pk=self.request.POST['value'])
         user = User.objects.get(unique=self.request.session['user_unique'])
 
-        if not Favorite_Product.objects.filter(product=product, user=user):
-            Favorite_Product(product=product, user=user).save()
+        if self.request.POST['__button__'] == 'append':
+            return self.Manage_Button_Append(product, user)
 
-        return JsonResponse({'__button__': 'true'})
+        if self.request.POST['__button__'] == 'delete':
+            return self.Manage_Button_Delete(product, user)
+
+        return JsonResponse({'__button__': 'false'})
 
     @staticmethod
     def Launch(request):
