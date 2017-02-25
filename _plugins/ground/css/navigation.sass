@@ -1,4 +1,5 @@
 
+$ground-navigation--height: 25px
 $ground-navigation--background-color: $G-COLOR-3
 $ground-navigation--image: url(/_static/img/icons/32/home.png)
 
@@ -8,34 +9,36 @@ $ground-navigation--image: url(/_static/img/icons/32/home.png)
   >.navigation
     position: relative
     z-index: 12
-    height: 52px
+    height: $ground-navigation--height + 20px
     margin: 0
 
-    line-height: 32px
     padding: 10px 15px
     background-color: $ground-navigation--background-color
     border-bottom: $G-STYLE-BORDER
+
+    line-height: $ground-navigation--height
+    font-size: 16px
 
     >a, >span
       opacity: .6
 
     >a:first-child, >a:last-child
-      opacity: .9
+      opacity: .8
 
     >a:hover
       opacity: 1
 
     >*
       display: inline-block
-      height: 32px
-      margin: auto 5px
-      line-height: 32px
+      height: $ground-navigation--height
+      margin: auto 3px
+      line-height: $ground-navigation--height
 
 
       >i
         display: inline-block
-        width: 30px
-        line-height: 32px
+        width: $ground-navigation--height
+        line-height: $ground-navigation--height
         background:
           image: $ground-navigation--image
           position: center

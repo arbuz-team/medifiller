@@ -2,6 +2,6 @@
 <nav class="navigation">
   <a href="/"> <i> &nbsp; </i> </a>
   {% for element in request.session.arbuz_navigation %}
-  <span> > </span> <a href="{{ element.1 }}">{{ element.0 }}</a>
+  <span> / </span> <a href="{{ element.1 }}">{{ element.0 }}</a>
   {% endfor %}
 </nav>

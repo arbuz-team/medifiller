@@ -633,27 +633,28 @@ img {
 #GROUND > .ground > .ground-block > .navigation {
   position: relative;
   z-index: 12;
-  height: 52px;
+  height: 45px;
   margin: 0;
-  line-height: 32px;
   padding: 10px 15px;
   background-color: #f2f2f2;
-  border-bottom: 1px solid #e8e8e8; }
+  border-bottom: 1px solid #e8e8e8;
+  line-height: 25px;
+  font-size: 16px; }
   #GROUND > .ground > .ground-block > .navigation > a, #GROUND > .ground > .ground-block > .navigation > span {
     opacity: .6; }
   #GROUND > .ground > .ground-block > .navigation > a:first-child, #GROUND > .ground > .ground-block > .navigation > a:last-child {
-    opacity: .9; }
+    opacity: .8; }
   #GROUND > .ground > .ground-block > .navigation > a:hover {
     opacity: 1; }
   #GROUND > .ground > .ground-block > .navigation > * {
     display: inline-block;
-    height: 32px;
-    margin: auto 5px;
-    line-height: 32px; }
+    height: 25px;
+    margin: auto 3px;
+    line-height: 25px; }
     #GROUND > .ground > .ground-block > .navigation > * > i {
       display: inline-block;
-      width: 30px;
-      line-height: 32px;
+      width: 25px;
+      line-height: 25px;
       background-image: url(/_static/img/icons/32/home.png);
       background-position: center;
       background-size: 100%;
