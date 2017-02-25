@@ -5,6 +5,7 @@ from setting.data import main
 from setting.data import setting
 from setting.data import products
 from setting.data import users
+from setting.data import payment
 
 
 class Control_Panel(Dynamic_Event_Menager):
@@ -29,6 +30,7 @@ class Control_Panel(Dynamic_Event_Menager):
         setting.Load_Default_Data()
         products.Load_Default_Data()
         users.Load_Default_Data()
+        payment.Load_Default_Data()
         return JsonResponse({})
 
     @staticmethod

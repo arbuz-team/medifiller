@@ -286,7 +286,7 @@ class Edit_Product(Product_Elements):
 
 
 
-class Append_Recommended_Product(Product_Elements):
+class Recommended_Product_Manager(Product_Elements):
 
     def Manage_Content_Ground(self):
         pass
@@ -305,7 +305,7 @@ class Append_Recommended_Product(Product_Elements):
 
 
 
-class Append_Favorite_Product(Product_Elements):
+class Favorite_Product_Manager(Product_Elements):
 
     def Manage_Content_Ground(self):
         pass
