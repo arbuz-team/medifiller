@@ -5,7 +5,7 @@ from nocaptcha_recaptcha.fields import NoReCaptchaField
 class Form_Email_Contact(Abstract_Form):
 
     def Create_Fields(self):
-        self.fields['title'] = forms.CharField(max_length=100)
+        self.fields['title'] = forms.CharField(max_length=100, initial=Text(self.request, 83))
         self.fields['client'] = forms.CharField(max_length=50)
         self.fields['email'] = forms.EmailField(max_length=50)
         self.fields['product'] = forms.CharField(max_length=50, required=False)
