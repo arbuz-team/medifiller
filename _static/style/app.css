@@ -89,6 +89,58 @@ strong {
 .container-part {
   z-index: 5; }
 
+#NAVIGATION {
+  top: 100%;
+  right: 0;
+  left: 0;
+  height: auto; }
+  #NAVIGATION > .navigation {
+    position: relative;
+    height: auto;
+    color: #ffffff;
+    background-color: #382B1B; }
+    #NAVIGATION > .navigation > .navigation-mobile {
+      display: none; }
+    #NAVIGATION > .navigation > .navigation-primary .navigation-secondary-space, #NAVIGATION > .navigation > .navigation-secondary .navigation-secondary-space {
+      display: none; }
+    #NAVIGATION > .navigation > .navigation-primary li, #NAVIGATION > .navigation > .navigation-secondary li {
+      position: relative;
+      height: 45px;
+      border-bottom: solid #666 1px;
+      background-color: #774D34; }
+      #NAVIGATION > .navigation > .navigation-primary li > .link, #NAVIGATION > .navigation > .navigation-secondary li > .link {
+        padding: 0 15px;
+        line-height: 45px;
+        background-color: #382B1B; }
+    #NAVIGATION > .navigation > .navigation-primary li.navigation-primary-language, #NAVIGATION > .navigation > .navigation-secondary li.navigation-primary-language {
+      display: none; }
+      #NAVIGATION > .navigation > .navigation-primary li.navigation-primary-language button, #NAVIGATION > .navigation > .navigation-secondary li.navigation-primary-language button {
+        background: transparent;
+        border: none;
+        margin: 0;
+        padding: 0;
+        color: #ffffff;
+        font-size: 19px;
+        font-weight: bold; }
+    #NAVIGATION > .navigation > .navigation-primary li.navigation-secondary-cart, #NAVIGATION > .navigation > .navigation-secondary li.navigation-secondary-cart {
+      font-weight: bold; }
+    #NAVIGATION > .navigation > .navigation-primary li.navigation-secondary-searcher, #NAVIGATION > .navigation > .navigation-secondary li.navigation-secondary-searcher {
+      display: none; }
+  #NAVIGATION > .hide {
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background-image: -webkit-linear-gradient(bottom, transparent, rgba(100, 100, 100, 0.2));
+    background-image: -moz-linear-gradient(bottom, transparent, rgba(100, 100, 100, 0.2));
+    background-image: -ms-linear-gradient(bottom, transparent, rgba(100, 100, 100, 0.2));
+    background-image: -o-linear-gradient(bottom, transparent, rgba(100, 100, 100, 0.2));
+    background-image: linear-gradient(bottom, transparent, rgba(100, 100, 100, 0.2)); }
+
+@media (min-width: 650px) {
+  #NAVIGATION {
+    top: -100% !important; } }
+
 #HEADER {
   position: relative;
   z-index: 37;
@@ -326,7 +378,7 @@ strong {
         text-align: right; }
 
 #CART {
-  top: 72px;
+  top: 60px;
   right: -400px;
   bottom: 0;
   width: 100%;
@@ -517,63 +569,6 @@ strong {
       #SEARCHER > .searcher > .searcher-logo img {
         width: 140px;
         height: auto; } }
-
-#NAVIGATION {
-  top: 100%;
-  right: 0;
-  left: 0;
-  height: auto; }
-  #NAVIGATION > .navigation {
-    position: relative;
-    height: auto;
-    color: #ffffff;
-    background-color: #382B1B; }
-    #NAVIGATION > .navigation > .navigation-mobile {
-      display: none; }
-    #NAVIGATION > .navigation > .navigation-primary .navigation-secondary-space, #NAVIGATION > .navigation > .navigation-secondary .navigation-secondary-space {
-      display: none; }
-    #NAVIGATION > .navigation > .navigation-primary li, #NAVIGATION > .navigation > .navigation-secondary li {
-      position: relative;
-      height: 45px;
-      border-bottom: solid #666 1px;
-      background-color: #774D34; }
-      #NAVIGATION > .navigation > .navigation-primary li > .link, #NAVIGATION > .navigation > .navigation-secondary li > .link {
-        padding: 0 15px;
-        line-height: 45px;
-        background-color: #382B1B;
-        -webkit-transition: left 0.2s, -webkit-transform 0.2s;
-        transition: left 0.2s, transform 0.2s; }
-      #NAVIGATION > .navigation > .navigation-primary li > .link:hover, #NAVIGATION > .navigation > .navigation-primary li > .link.wybrany, #NAVIGATION > .navigation > .navigation-secondary li > .link:hover, #NAVIGATION > .navigation > .navigation-secondary li > .link.wybrany {
-        left: 20px;
-        color: #ffffff; }
-    #NAVIGATION > .navigation > .navigation-primary li.navigation-primary-language, #NAVIGATION > .navigation > .navigation-secondary li.navigation-primary-language {
-      display: none; }
-      #NAVIGATION > .navigation > .navigation-primary li.navigation-primary-language button, #NAVIGATION > .navigation > .navigation-secondary li.navigation-primary-language button {
-        background: transparent;
-        border: none;
-        margin: 0;
-        padding: 0;
-        color: #ffffff;
-        font-size: 19px;
-        font-weight: bold; }
-    #NAVIGATION > .navigation > .navigation-primary li.navigation-secondary-cart, #NAVIGATION > .navigation > .navigation-secondary li.navigation-secondary-cart {
-      font-weight: bold; }
-    #NAVIGATION > .navigation > .navigation-primary li.navigation-secondary-searcher, #NAVIGATION > .navigation > .navigation-secondary li.navigation-secondary-searcher {
-      display: none; }
-  #NAVIGATION > .hide {
-    top: 100%;
-    left: 0;
-    right: 0;
-    height: 200px;
-    background-image: -webkit-linear-gradient(bottom, transparent, rgba(100, 100, 100, 0.2));
-    background-image: -moz-linear-gradient(bottom, transparent, rgba(100, 100, 100, 0.2));
-    background-image: -ms-linear-gradient(bottom, transparent, rgba(100, 100, 100, 0.2));
-    background-image: -o-linear-gradient(bottom, transparent, rgba(100, 100, 100, 0.2));
-    background-image: linear-gradient(bottom, transparent, rgba(100, 100, 100, 0.2)); }
-
-@media (min-width: 650px) {
-  #NAVIGATION {
-    top: -100% !important; } }
 
 img {
   display: inline-block;
