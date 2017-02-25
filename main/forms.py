@@ -38,13 +38,11 @@ class Form_Email_Contact(Abstract_Form):
 
         product_attr = {
             'placeholder': Text(self.request, 79),
-            'class': 'test',
             'hidden': 'true',
         }
 
         url_attr = {
             'placeholder': Text(self.request, 80),
-            'class': 'test',
             'hidden': 'true',
         }
 
