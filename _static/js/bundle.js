@@ -632,12 +632,15 @@
 	  },
 	      prepare_content_to_show = function prepare_content_to_show(html, status, code) {
 	    var container = models.settings.container,
+	        $container = $(container),
 	        url = models.variables.url,
 	        error = models.variables.error;
 	
+	    $container.scrollTop(0);
+	
 	    if (check_for_errors(status, code)) return false;
 	
-	    if (error !== true || status === 'success') $(container).html(html).add_data('url', url);
+	    if (error !== true || status === 'success') $container.html(html).add_data('url', url);
 	
 	    models.variables.error = false;
 	    models.variables.url = '';
