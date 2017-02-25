@@ -1,9 +1,9 @@
 
 //--------------------------------------
-//         Navigation mini
+//         Mobile navigation
 //--------------------------------------
 
-#HEADER >.header >.navigation-mini
+#HEADER >.header >.navigation-mobile
   display: block
   position: relative
   height: inherit
@@ -15,8 +15,8 @@
     position: relative
     z-index: 38
 
-    height: $header--height_mobile - 26px
-    width: $header--height_mobile - 26px
+    height: $header--height_mobile - 22px
+    width: $header--height_mobile - 22px
     margin:
       top: 15px
       left: 15px
@@ -36,31 +36,31 @@
 
   ////////////////////////////////////////
 
-  >li.navigation-mini-filter
+  >li.navigation-mobile-filter
     float: left
     text-align: left
 
     >button, >a
-      +background-img( url('/_static/img/icons/64/searcher.png'), 100% 100% )
+      +background-img( url('/_static/img/icons/64/dark/searcher.png'), 100% 100% )
 
 
-  >li.navigation-mini-navigation
+  >li.navigation-mobile-navigation
     text-align: center
 
     >button, >a
-      +background-img( url('/_static/img/icons/64/lines-menu.png'), 100% 100% )
+      +background-img( url('/_static/img/icons/64/dark/lines_menu.png'), 100% 100% )
 
 
-  >li.navigation-mini-cart
+  >li.navigation-mobile-cart
     float: right
     text-align: right
 
     >button, >a
-      +background-img( url('/_static/img/icons/64/shopping-cart.png'), 100% 100% )
+      +background-img( url('/_static/img/icons/64/dark/shopping_cart.png'), 100% 100% )
 
 ////////////////////////////////////////
 
 @media (min-width: $G-SIZE-2)
 
-  #HEADER >.header >.navigation-mini
+  #HEADER >.header >.navigation-mobile
     display: none

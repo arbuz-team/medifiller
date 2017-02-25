@@ -32,13 +32,17 @@ export let
 
   define = function()
   {
-    $('#HEADER .navigation-mini-filter > button').click(searcher_controllers.plugin_open);
+    let $header = $('#HEADER');
 
-    $('#HEADER .navigation-mini-navigation > button').click(navigation_controllers.plugin_open);
+    $('.navigation-mobile-filter button', $header).click(searcher_controllers.plugin_open);
 
-    $('#HEADER .navigation-mini-cart > button').click(cart_controllers.open_or_close);
+    $('.navigation-mobile-navigation button', $header).click(navigation_controllers.plugin_open);
 
-    $('#HEADER .navigation-secondary-cart > *').click(cart_controllers.open_or_close);
+    $('.navigation-mobile-cart button', $header).click(cart_controllers.open_or_close);
+
+    $('.navigation-secondary-searcher > *', $header).click(searcher_controllers.plugin_open);
+
+    $('.navigation-secondary-cart > *', $header).click(cart_controllers.open_or_close);
   },
 
 

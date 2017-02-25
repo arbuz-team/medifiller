@@ -1535,23 +1535,6 @@
 	  }
 	});
 	
-	// checker.create_checker('email_in_db', function(value, callback)
-	// {
-	//   let result = checker.create_result(),
-	//     re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	//
-	//   if(checker.check_condition( re.test(value) ))
-	//   {
-	//     result = checker.create_error('It\'s not email.');
-	//     callback(result);
-	//   }
-	//   else
-	//   {
-	//     checker.exist_in_db('email', value, callback, 'Someone already has that email. Try another?');
-	//   }
-	// });
-	
-	
 	_views.checker.create_checker('password', function (value, callback) {
 	  var result = _views.checker.create_result();
 	
@@ -1734,10 +1717,10 @@
 	      type = this.config[name];
 	      _checker = this.types[type];
 	
-	      if (!_checker) throw {
-	        name: 'Validation Error',
-	        message: 'No manual for the key ' + name + '.'
-	      };
+	      if (!_checker) {
+	        console.error('Validation Error: No manual for the key ' + name + '.');
+	        return false;
+	      }
 	
 	      _checker.validate(value, callback);
 	    } else if (value !== '') {
@@ -1784,6 +1767,12 @@
 	
 	list_configs.forgot_password = {
 	  email: 'email'
+	};
+	
+	list_configs.email_contact = {
+	  client: 'proper_name',
+	  email: 'email',
+	  message: 'no_empty'
 	};
 
 /***/ },
@@ -2657,13 +2646,17 @@
 	 */
 	
 	var define = exports.define = function define() {
-	  $('#HEADER .navigation-mini-filter > button').click(searcher_controllers.plugin_open);
+	  var $header = $('#HEADER');
 	
-	  $('#HEADER .navigation-mini-navigation > button').click(navigation_controllers.plugin_open);
+	  $('.navigation-mobile-filter button', $header).click(searcher_controllers.plugin_open);
 	
-	  $('#HEADER .navigation-mini-cart > button').click(cart_controllers.open_or_close);
+	  $('.navigation-mobile-navigation button', $header).click(navigation_controllers.plugin_open);
 	
-	  $('#HEADER .navigation-secondary-cart > *').click(cart_controllers.open_or_close);
+	  $('.navigation-mobile-cart button', $header).click(cart_controllers.open_or_close);
+	
+	  $('.navigation-secondary-searcher > *', $header).click(searcher_controllers.plugin_open);
+	
+	  $('.navigation-secondary-cart > *', $header).click(cart_controllers.open_or_close);
 	},
 	    start = exports.start = function start() {
 	  header_loader_events = new _controllers.Plugins_Loader_Controllers(config_loader);

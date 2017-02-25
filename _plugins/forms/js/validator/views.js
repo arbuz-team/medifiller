@@ -141,14 +141,15 @@ export let Constructor_Validator = function(form_name, form_type)
 		
 			type = this.config[name];
 			checker = this.types[type];
-			
+
+
 			if(!checker)
-				throw {
-					name: 'Validation Error',
-					message: 'No manual for the key '+ name +'.'
-				};
-			
-			checker.validate(value, callback);
+      {
+        console.error('Validation Error: No manual for the key '+ name +'.');
+        return false;
+      }
+
+      checker.validate(value, callback);
 		}
 		else if(value !== '')
 		{

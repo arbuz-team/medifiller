@@ -17,7 +17,6 @@ class Form_Email_Contact(Abstract_Form):
 
         title_attr = {
             'placeholder': Text(self.request, 71),
-            'class': 'test',
             'hidden': 'true',
         }
 

@@ -12,27 +12,27 @@ class Start_App(Dynamic_Event_Menager):
             {
                 'name': Text(self.request, 23),
                 'url':  self.Get_Path('root.sign_in', current_language=True),
-                'icon': '/_static/img/icons/128/padlock.png',
+                'icon': '/_static/img/icons/128/dark/padlock_open.png',
             },
             {
                 'name': Text(self.request, 24),
                 'url': self.Get_Path('root.sign_out', current_language=True),
-                'icon': '/_static/img/icons/128/.png',
+                'icon': '/_static/img/icons/128/dark/logout.png',
             },
             {
                 'name': Text(self.request, 25),
                 'url': self.Get_Path('root.create', current_language=True),
-                'icon': '/_static/img/icons/128/refresh-arrow.png',
+                'icon': '/_static/img/icons/128/dark/moustache.png',
             },
             {
                 'name': Text(self.request, 26),
                 'url': self.Get_Path('root.map_references', current_language=True),
-                'icon': '/_static/img/icons/128/refresh-arrow.png',
+                'icon': '/_static/img/icons/128/dark/list_options.png',
             },
             {
                 'name': Text(self.request, 27),
                 'url': self.Get_Path('root.users_payments', current_language=True),
-                'icon': '/_static/img/icons/128/refresh-arrow.png',
+                'icon': '/_static/img/icons/128/dark/money.png',
             },
         ]
 

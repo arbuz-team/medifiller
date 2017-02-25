@@ -30,19 +30,22 @@ $searcher--color: $G-COLOR-0
 
   >.searcher
 
-    >.logo
+    >.searcher-header
+      display: none
+
+    >.searcher-logo
       display: block
-      height: 165px
+      height: 130px
 
       text-align: center
 
       a
         position: relative
-        top: 0
+        top: -30px
         display: inline-block
 
       img
-        width: 140px
+        width: 125px
         height: auto
 
     >.logo_text
@@ -146,14 +149,30 @@ $searcher--color: $G-COLOR-0
 //			  EKRAN KOMPUTERA
 //-----------------------------------------
 
+@media (min-width: $G-SIZE-2)
+
+  #SEARCHER >.searcher
+
+    >.searcher-header
+      display: block
+      height: 30px
+      background-color: #382B1B
+
+
 @media (min-width: $G-SIZE-3)
 
   #SEARCHER
     left: 0 !important
     top: 30px
 
-    >.searcher >.logo
-      height: 145px
+    >.searcher
 
-      a
-        top: -30px
+      >.searcher-header
+        display: none
+
+      >.searcher-logo
+        height: 145px
+
+        img
+          width: 140px
+          height: auto

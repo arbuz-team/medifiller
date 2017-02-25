@@ -93,7 +93,7 @@ strong {
   position: relative;
   z-index: 37;
   display: block;
-  height: 64px;
+  height: 52px;
   background-color: transparent; }
   #HEADER > .header {
     position: relative;
@@ -111,21 +111,21 @@ strong {
     height: 82px;
     margin-left: 250px; } }
 
-#HEADER > .header > .navigation-mini {
+#HEADER > .header > .navigation-mobile {
   display: block;
   position: relative;
   height: inherit;
   text-align: center; }
-  #HEADER > .header > .navigation-mini > li {
+  #HEADER > .header > .navigation-mobile > li {
     display: inline-block;
     position: relative;
     z-index: 38;
-    height: 38px;
-    width: 38px;
+    height: 30px;
+    width: 30px;
     margin-top: 15px;
     margin-left: 15px;
     margin-right: 15px; }
-    #HEADER > .header > .navigation-mini > li > button, #HEADER > .header > .navigation-mini > li > a {
+    #HEADER > .header > .navigation-mobile > li > button, #HEADER > .header > .navigation-mobile > li > a {
       display: inline-block;
       width: inherit;
       height: inherit;
@@ -134,32 +134,32 @@ strong {
       line-height: 100%;
       border: none;
       background: none; }
-  #HEADER > .header > .navigation-mini > li.navigation-mini-filter {
+  #HEADER > .header > .navigation-mobile > li.navigation-mobile-filter {
     float: left;
     text-align: left; }
-    #HEADER > .header > .navigation-mini > li.navigation-mini-filter > button, #HEADER > .header > .navigation-mini > li.navigation-mini-filter > a {
-      background-image: url("/_static/img/icons/64/searcher.png");
+    #HEADER > .header > .navigation-mobile > li.navigation-mobile-filter > button, #HEADER > .header > .navigation-mobile > li.navigation-mobile-filter > a {
+      background-image: url("/_static/img/icons/64/dark/searcher.png");
       background-size: 100% 100%;
       background-position: 0 0;
       background-repeat: no-repeat; }
-  #HEADER > .header > .navigation-mini > li.navigation-mini-navigation {
+  #HEADER > .header > .navigation-mobile > li.navigation-mobile-navigation {
     text-align: center; }
-    #HEADER > .header > .navigation-mini > li.navigation-mini-navigation > button, #HEADER > .header > .navigation-mini > li.navigation-mini-navigation > a {
-      background-image: url("/_static/img/icons/64/lines-menu.png");
+    #HEADER > .header > .navigation-mobile > li.navigation-mobile-navigation > button, #HEADER > .header > .navigation-mobile > li.navigation-mobile-navigation > a {
+      background-image: url("/_static/img/icons/64/dark/lines_menu.png");
       background-size: 100% 100%;
       background-position: 0 0;
       background-repeat: no-repeat; }
-  #HEADER > .header > .navigation-mini > li.navigation-mini-cart {
+  #HEADER > .header > .navigation-mobile > li.navigation-mobile-cart {
     float: right;
     text-align: right; }
-    #HEADER > .header > .navigation-mini > li.navigation-mini-cart > button, #HEADER > .header > .navigation-mini > li.navigation-mini-cart > a {
-      background-image: url("/_static/img/icons/64/shopping-cart.png");
+    #HEADER > .header > .navigation-mobile > li.navigation-mobile-cart > button, #HEADER > .header > .navigation-mobile > li.navigation-mobile-cart > a {
+      background-image: url("/_static/img/icons/64/dark/shopping_cart.png");
       background-size: 100% 100%;
       background-position: 0 0;
       background-repeat: no-repeat; }
 
 @media (min-width: 675px) {
-  #HEADER > .header > .navigation-mini {
+  #HEADER > .header > .navigation-mobile {
     display: none; } }
 
 #HEADER > .header > .navigation-primary {
@@ -253,10 +253,10 @@ strong {
     padding-right: 15px;
     background-color: #382B1B;
     color: #ffffff; }
-    #HEADER > .header > .navigation-secondary > .navigation-secondary-root {
+    #HEADER > .header > .navigation-secondary > .navigation-secondary-left {
       float: left;
       text-align: left; }
-    #HEADER > .header > .navigation-secondary > .navigation-secondary-user {
+    #HEADER > .header > .navigation-secondary > .navigation-secondary-right {
       float: right;
       text-align: right; }
     #HEADER > .header > .navigation-secondary > ul {
@@ -269,7 +269,22 @@ strong {
         #HEADER > .header > .navigation-secondary > ul > li > .link {
           position: relative;
           font-weight: bold;
-          cursor: pointer; } }
+          cursor: pointer; }
+    #HEADER > .header > .navigation-secondary .navigation-secondary-searcher > div > i {
+      display: inline-block;
+      position: relative;
+      top: 2px;
+      width: 15px;
+      height: 15px;
+      margin-right: 3px;
+      background-image: url(/_static/img/icons/32/light/searcher.png);
+      background-size: 100%;
+      background-position: center;
+      background-repeat: no-repeat; } }
+
+@media (min-width: 1000px) {
+  #HEADER > .header > .navigation-secondary .navigation-secondary-searcher, #HEADER > .header > .navigation-secondary .navigation-secondary-space.for_searcher {
+    display: none; } }
 
 #DIALOG {
   display: none;
@@ -333,7 +348,7 @@ strong {
     width: 20px;
     height: 20px;
     opacity: 0.7;
-    background-image: url("/_static/img/icons/32/close.png");
+    background-image: url("/_static/img/icons/32/dark/close.png");
     background-size: 100%;
     background-position: center;
     background-repeat: no-repeat; }
@@ -404,16 +419,18 @@ strong {
   color: #382B1B;
   border-right: 2px solid #e8e8e8;
   overflow: visible; }
-  #SEARCHER > .searcher > .logo {
+  #SEARCHER > .searcher > .searcher-header {
+    display: none; }
+  #SEARCHER > .searcher > .searcher-logo {
     display: block;
-    height: 165px;
+    height: 130px;
     text-align: center; }
-    #SEARCHER > .searcher > .logo a {
+    #SEARCHER > .searcher > .searcher-logo a {
       position: relative;
-      top: 0;
+      top: -30px;
       display: inline-block; }
-    #SEARCHER > .searcher > .logo img {
-      width: 140px;
+    #SEARCHER > .searcher > .searcher-logo img {
+      width: 125px;
       height: auto; }
   #SEARCHER > .searcher > .logo_text {
     display: block;
@@ -487,14 +504,23 @@ strong {
       background-image: -o-linear-gradient(right, transparent, rgba(100, 100, 100, 0.2));
       background-image: linear-gradient(right, transparent, rgba(100, 100, 100, 0.2)); }
 
+@media (min-width: 675px) {
+  #SEARCHER > .searcher > .searcher-header {
+    display: block;
+    height: 30px;
+    background-color: #382B1B; } }
+
 @media (min-width: 1000px) {
   #SEARCHER {
     left: 0 !important;
     top: 30px; }
-    #SEARCHER > .searcher > .logo {
+    #SEARCHER > .searcher > .searcher-header {
+      display: none; }
+    #SEARCHER > .searcher > .searcher-logo {
       height: 145px; }
-      #SEARCHER > .searcher > .logo a {
-        top: -30px; } }
+      #SEARCHER > .searcher > .searcher-logo img {
+        width: 140px;
+        height: auto; } }
 
 #NAVIGATION {
   top: 100%;
@@ -506,7 +532,7 @@ strong {
     height: auto;
     color: #ffffff;
     background-color: #382B1B; }
-    #NAVIGATION > .navigation > .navigation-mini {
+    #NAVIGATION > .navigation > .navigation-mobile {
       display: none; }
     #NAVIGATION > .navigation > .navigation-primary .navigation-secondary-space, #NAVIGATION > .navigation > .navigation-secondary .navigation-secondary-space {
       display: none; }
@@ -692,7 +718,7 @@ img {
       display: inline-block;
       width: 25px;
       line-height: 25px;
-      background-image: url(/_static/img/icons/32/home.png);
+      background-image: url(/_static/img/icons/32/dark/home.png);
       background-position: center;
       background-size: 100%;
       background-repeat: no-repeat; }
@@ -735,7 +761,7 @@ img {
       display: block;
       width: 250px;
       text-align: center;
-      opacity: .8; }
+      opacity: .85; }
       #GROUND > .ground > .ground-block > .block-link_tiles > li > a > .block-link_tiles-icon {
         position: relative;
         display: block;
@@ -766,7 +792,7 @@ img {
     margin-top: 20px;
     margin-bottom: 40px; }
   #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph {
-    line-height: 35px;
+    line-height: 30px;
     margin-top: 20px;
     margin-bottom: 60px; }
     #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-image {
@@ -995,7 +1021,7 @@ button {
   display: inline-block;
   text-align: center; }
 
-.field_shell input[type=text], .field_shell input[type=email], .field_shell input[type=password], .field_shell input[type=number], .field_shell select, .field_shell button, .field_shell .button, .field_shell textarea {
+.field_shell input[type=text], .field_shell input[type=email], .field_shell input[type=password], .field_shell input[type=number], .field_shell input[type=url], .field_shell select, .field_shell button, .field_shell .button, .field_shell textarea {
   margin: 2px 3px;
     margin-bottom: 8px;
   outline: none;
@@ -1007,11 +1033,11 @@ button {
   font-size: 14px;
   font-family: 'OS_Regular', sans-serif; }
 
-.field_shell input[type=text]:disabled, .field_shell input[type=email]:disabled, .field_shell input[type=password]:disabled, .field_shell input[type=number]:disabled, .field_shell select:disabled, .field_shell button:disabled, .field_shell .button.disabled, .field_shell textarea:disabled {
+.field_shell input[type=text]:disabled, .field_shell input[type=email]:disabled, .field_shell input[type=password]:disabled, .field_shell input[type=number]:disabled, .field_shell input[type=url]:disabled, .field_shell select:disabled, .field_shell button:disabled, .field_shell .button.disabled, .field_shell textarea:disabled {
   background-color: #efefef;
   border: 1px solid #d9d9d9; }
 
-.field_shell input[type=text]:focus, .field_shell input[type=email]:focus, .field_shell input[type=password]:focus, .field_shell input[type=number]:focus, .field_shell select:focus, .field_shell button:focus, .field_shell .button:focus, .field_shell textarea:focus {
+.field_shell input[type=text]:focus, .field_shell input[type=email]:focus, .field_shell input[type=password]:focus, .field_shell input[type=number]:focus, .field_shell input[type=url]:focus, .field_shell select:focus, .field_shell button:focus, .field_shell .button:focus, .field_shell textarea:focus {
   border: 1px solid #b9b9b9;
     border-top: 1px solid #a0a0a0;
   -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -1100,8 +1126,8 @@ button {
         opacity: 1; }
 
 .field_shell select {
-  background-image: url("/_static/img/select_arrow_down.png");
-  background-size: 20px;
+  background-image: url("/_static/img/icons/32/dark/sort_down.png");
+  background-size: 15px;
   background-position: right;
   background-repeat: no-repeat;
   min-width: 150px;
@@ -1111,19 +1137,13 @@ button {
     border-bottom: #aaa;
   font-size: 16px;
   cursor: pointer;
-  opacity: .9;
+  opacity: .7;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none; }
 
-.field_shell select:focus {
-  background-image: url("/_static/img/select_arrow_up.png");
-  background-size: 20px;
-  background-position: right;
-  background-repeat: no-repeat; }
-
 .field_shell select:hover, .field_shell select:focus {
-  opacity: 1; }
+  opacity: .9; }
 
 #GROUND .ground-block > .block-content > .title, #GROUND .ground-block > .block-content form > .title {
   padding: 10px 0;

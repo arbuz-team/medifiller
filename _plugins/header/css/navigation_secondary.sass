@@ -28,11 +28,11 @@ $header-navigation-secondary--background-color: $G-COLOR-1
     background-color: $header--color
     color: $header--background-color
 
-    >.navigation-secondary-root
+    >.navigation-secondary-left
       float: left
       text-align: left
 
-    >.navigation-secondary-user
+    >.navigation-secondary-right
       float: right
       text-align: right
 
@@ -51,3 +51,23 @@ $header-navigation-secondary--background-color: $G-COLOR-1
 
           font-weight: bold
           cursor: pointer
+
+    .navigation-secondary-searcher
+      >div >i
+        display: inline-block
+        position: relative
+        top: 2px
+
+        width: 15px
+        height: 15px
+        margin-right: 3px
+
+        +background-img( url(/_static/img/icons/32/light/searcher.png), 100%, center)
+
+
+@media (min-width: $G-SIZE-3)
+
+  #HEADER >.header >.navigation-secondary
+
+    .navigation-secondary-searcher, .navigation-secondary-space.for_searcher
+      display: none

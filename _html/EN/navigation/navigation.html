@@ -1,27 +1,30 @@
 
-<ul class="navigation-mini">
 
-    <li class="navigation-mini-filter">
+<!-- //     MOBILE NAVIGATION    // -->
+
+<ul class="navigation-mobile">
+
+    <li class="navigation-mobile-filter">
         <button></button>
     </li>
 
-    <li class="navigation-mini-navigation">
+    <li class="navigation-mobile-navigation">
         <button></button>
     </li>
 
     {% if request.session.user_login %}
-    <li class="navigation-mini-cart">
+    <li class="navigation-mobile-cart">
         <button></button>
     </li>
     {% else %}
-    <li class="navigation-mini-cart">
+    <li class="navigation-mobile-cart">
         <a href="/user/sign_in/"></a>
     </li>
     {% endif %}
 
 </ul>
 
-<!-- /////////////////////////////////////////////////////// -->
+<!-- //     PRIMARY NAVIGATION    // -->
 
 <ul class="navigation-primary">
 
@@ -68,38 +71,39 @@
 
 </ul>
 
-<!-- /////////////////////////////////////////////////////// -->
+<!-- //     SECONDARY NAVIGATION    // -->
 
 <div class="navigation-secondary">
-    {% if request.session.root_login %}
-    <ul class="navigation-secondary-root">
+    <ul class="navigation-secondary-left">
 
-        <li>
-            <a class="link fill-abs" href="/root/map_references/">
-                Map references
-            </a>
+        <li class="navigation-secondary-searcher" title="CTRL+SHIFT+S">
+            <div class="link fill-abs">
+                <i> &nbsp; </i> Search
+            </div>
         </li>
 
-        <li class="navigation-secondary-space"> | </li>
+        {% if request.session.root_login %}
 
-        <li>
-            <a class="link fill-abs" href="/root/users_payments/">
-                Users payments
-            </a>
-        </li>
+            <li class="navigation-secondary-space for_searcher"> | </li>
 
-        <li class="navigation-secondary-space"> | </li>
+            <li>
+                <a class="link fill-abs" href="/root/">
+                    Root settings
+                </a>
+            </li>
 
-        <li>
-            <a class="link fill-abs" href="/root/sign_out/">
-                Root sign out
-            </a>
-        </li>
+            <li class="navigation-secondary-space"> | </li>
+
+            <li>
+                <a class="link fill-abs" href="/root/sign_out/">
+                    Root sign out
+                </a>
+            </li>
+        {% endif %}
 
     </ul>
-    {% endif %}
 
-    <ul class="navigation-secondary-user">
+    <ul class="navigation-secondary-right">
 
         {% if request.session.user_login %}
             <li>

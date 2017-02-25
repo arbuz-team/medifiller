@@ -12,22 +12,22 @@ class Start_App(Dynamic_Event_Menager):
             {
                 'name': Text(self.request, 35),
                 'url':  self.Get_Path('user.sign_in', current_language=True),
-                'icon': '/_static/img/icons/128/padlock.png',
+                'icon': '/_static/img/icons/128/dark/padlock_open.png',
             },
             {
                 'name': Text(self.request, 36),
                 'url': self.Get_Path('user.sign_up', current_language=True),
-                'icon': '/_static/img/icons/128/upload-arrow.png',
+                'icon': '/_static/img/icons/128/dark/moustache.png',
             },
             {
                 'name': Text(self.request, 37),
                 'url': self.Get_Path('user.sign_out', current_language=True),
-                'icon': '/_static/img/icons/128/.png',
+                'icon': '/_static/img/icons/128/dark/logout.png',
             },
             {
                 'name': Text(self.request, 38),
                 'url': self.Get_Path('user.account', current_language=True),
-                'icon': '/_static/img/icons/128/settings.png',
+                'icon': '/_static/img/icons/128/dark/settings.png',
             },
         ]
 
