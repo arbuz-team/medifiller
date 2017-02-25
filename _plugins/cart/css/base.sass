@@ -7,7 +7,7 @@ $cart--color: $G-COLOR-0
 
 
 #CART
-  top: 80px
+  top: 72px
   right: -$cart--width
   bottom: 0
 
@@ -40,7 +40,7 @@ $cart--color: $G-COLOR-0
         height: 20px
 
         opacity: 0.7
-        +background-img('/_static/img/close.gif', 100%, center)
+        +background-img(url('/_static/img/icons/32/close.png'), 100%, center)
 
       >span
         position: relative
@@ -100,13 +100,19 @@ $cart--color: $G-COLOR-0
           width: 98%
 
 
+@media (min-width: $G-SIZE-2)
+
+  #CART
+    top: 80px
+
+
 @media (min-width: 750px)
 
   #CART
     width: $cart--width
 
 
-@media (min-width: 1000px)
+@media (min-width: $G-SIZE-3)
 
   #CART
     top: 90px

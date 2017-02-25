@@ -32,7 +32,7 @@ let
     can_open_to: 650,
 
     duration_open: 300,
-    duration_close: 200,
+    duration_close: 100,
   };
 
 

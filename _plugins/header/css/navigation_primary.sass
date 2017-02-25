@@ -20,10 +20,11 @@
       position: relative
       z-index: 38
 
-      margin-top: 30px
+      margin-top: 34px
       height: 40px
       min-width: 150px
 
+      line-height: 40px
       border-radius: 2px
 
       >a
@@ -52,32 +53,42 @@
       height: 40px !important
 
       margin: 0
-        top: 40px
-        right: 15px
+        top: 35px
+        right: 10px
 
-      >button
+      button
         position: absolute
         left: 0
         top: 0
+
         width: 100%
         height: 100%
-
         margin: 0
 
         border: none
         background-color: transparent
 
-      >button.EN
-        +background-img('/_static/img/flags/uk_UK.png', 100% 100%, center bottom)
-      >button.PL
-        +background-img('/_static/img/flags/pl_PL.png', 100% 100%, center bottom)
-      >button.DE
-        +background-img('/_static/img/flags/de_DE.png', 100% 100%, center bottom)
+        *
+          display: none
 
+      button.EN
+        +background-img(url('/_static/img/flags/uk_UK.png'), 100% 100%, center bottom)
+      button.PL
+        +background-img(url('/_static/img/flags/pl_PL.png'), 100% 100%, center bottom)
+      button.DE
+        +background-img(url('/_static/img/flags/de_DE.png'), 100% 100%, center bottom)
 
 
 @media (min-width: $G-SIZE-3)
 
-  #HEADER >.header >.navigation-primary >li
-    height: 55px
-    line-height: 55px
+  #HEADER >.header >.navigation-primary
+
+    >li
+      height: 55px
+      margin-top: 30px
+      line-height: 55px
+
+    >li.navigation-primary-language
+      margin:
+        top: 40px
+        right: 15px
