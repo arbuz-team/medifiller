@@ -420,7 +420,9 @@ strong {
   border-right: 2px solid #e8e8e8;
   overflow: visible; }
   #SEARCHER > .searcher > .searcher-header {
-    display: none; }
+    display: block;
+    height: 30px;
+    background-color: #382B1B; }
   #SEARCHER > .searcher > .searcher-logo {
     display: block;
     height: 130px;
@@ -504,12 +506,6 @@ strong {
       background-image: -o-linear-gradient(right, transparent, rgba(100, 100, 100, 0.2));
       background-image: linear-gradient(right, transparent, rgba(100, 100, 100, 0.2)); }
 
-@media (min-width: 675px) {
-  #SEARCHER > .searcher > .searcher-header {
-    display: block;
-    height: 30px;
-    background-color: #382B1B; } }
-
 @media (min-width: 1000px) {
   #SEARCHER {
     left: 0 !important;
@@ -550,16 +546,20 @@ strong {
       #NAVIGATION > .navigation > .navigation-primary li > .link:hover, #NAVIGATION > .navigation > .navigation-primary li > .link.wybrany, #NAVIGATION > .navigation > .navigation-secondary li > .link:hover, #NAVIGATION > .navigation > .navigation-secondary li > .link.wybrany {
         left: 20px;
         color: #ffffff; }
-    #NAVIGATION > .navigation > .navigation-primary li.navigation-primary-language button, #NAVIGATION > .navigation > .navigation-secondary li.navigation-primary-language button {
-      background: transparent;
-      border: none;
-      margin: 0;
-      padding: 0;
-      color: #ffffff;
-      font-size: 19px;
-      font-weight: bold; }
+    #NAVIGATION > .navigation > .navigation-primary li.navigation-primary-language, #NAVIGATION > .navigation > .navigation-secondary li.navigation-primary-language {
+      display: none; }
+      #NAVIGATION > .navigation > .navigation-primary li.navigation-primary-language button, #NAVIGATION > .navigation > .navigation-secondary li.navigation-primary-language button {
+        background: transparent;
+        border: none;
+        margin: 0;
+        padding: 0;
+        color: #ffffff;
+        font-size: 19px;
+        font-weight: bold; }
     #NAVIGATION > .navigation > .navigation-primary li.navigation-secondary-cart, #NAVIGATION > .navigation > .navigation-secondary li.navigation-secondary-cart {
       font-weight: bold; }
+    #NAVIGATION > .navigation > .navigation-primary li.navigation-secondary-searcher, #NAVIGATION > .navigation > .navigation-secondary li.navigation-secondary-searcher {
+      display: none; }
   #NAVIGATION > .hide {
     top: 100%;
     left: 0;
