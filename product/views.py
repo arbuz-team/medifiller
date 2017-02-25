@@ -18,14 +18,15 @@ class Product_Details(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
         product = Product.objects.get(pk=self.other_value)
-        user = User.objects.get(unique=self.request.session['user_unique'])
 
         self.content['is_favorite'] = False
         self.content['is_recommended'] = False
         self.content['product'] = product
 
-        if Favorite_Product.objects.filter(product=product, user=user):
-            self.content['is_favorite'] = True
+        if self.request.session['user_unique']:
+            user = User.objects.get(unique=self.request.session['user_unique'])
+            if Favorite_Product.objects.filter(product=product, user=user):
+                self.content['is_favorite'] = True
 
         if Recommended_Product.objects.filter(product=product):
             self.content['is_recommended'] = True
@@ -301,7 +302,7 @@ class Recommended_Product_Manager(Product_Elements):
 
     @staticmethod
     def Launch(request):
-        return Append_Recommended_Product(request, only_root=True).HTML
+        return Recommended_Product_Manager(request, only_root=True).HTML
 
 
 
@@ -321,7 +322,7 @@ class Favorite_Product_Manager(Product_Elements):
 
     @staticmethod
     def Launch(request):
-        return Append_Favorite_Product(request, authorization=True).HTML
+        return Favorite_Product_Manager(request, authorization=True).HTML
 
 
 

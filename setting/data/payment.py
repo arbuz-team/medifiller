@@ -1,4 +1,4 @@
-from payment.models import *
+from payment.base import *
 from user.models import *
 from product.models import *
 
@@ -7,6 +7,7 @@ def Load_Default_Data():
     user = User.objects.get(email='dominik.betka@gmail.com')
     payment = Payment(
         user=user,
+        date=date.today(),
         total_price=300,
         currency='PLN',
         service='Dotpay',
@@ -44,6 +45,7 @@ def Load_Default_Data():
 
     payment = Payment(
         user=user,
+        date=date.today(),
         total_price=150,
         currency='EUR',
         service='PayPal',

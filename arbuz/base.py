@@ -7,6 +7,7 @@ from arbuz.settings import *
 from PIL import Image
 from io import BytesIO
 from urllib.request import urlopen
+from datetime import date
 import base64, imghdr, os, random
 
 

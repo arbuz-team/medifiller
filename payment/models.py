@@ -6,6 +6,7 @@ from product.models import Product
 class Payment(models.Model):
 
     user = models.ForeignKey(User)
+    date = models.DateField()
     total_price = models.CharField(max_length=10)
     currency = models.CharField(max_length=3)
     service = models.CharField(max_length=10)

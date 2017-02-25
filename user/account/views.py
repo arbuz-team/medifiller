@@ -168,8 +168,25 @@ class User_Addresses(Dynamic_Event_Menager):
 
 class My_Shopping(Dynamic_Event_Menager):
 
+    def Create_Payment_Structure(self):
+
+        self.content['shopping'] = []
+        user = User.objects.get(unique=self.request.session['user_unique'])
+        addresses = Payment_Address.objects.filter(payment__in=Payment.objects.
+                               filter(user=user, approved=True).values('pk'))
+
+        for address in addresses:
+
+            details = {
+                'payment':  address.payment,
+                'address':  address,
+                'products': Selected_Product.objects.filter(payment=address.payment)
+            }
+
+            self.content['shopping'].append(details)
+
     def Manage_Content_Ground(self):
-        self.content['payments'] = Payment.objects.filter(approved=True)
+        self.Create_Payment_Structure()
         return self.Render_HTML('user/account/my_shopping.html')
 
     @staticmethod

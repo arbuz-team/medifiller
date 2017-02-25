@@ -137,6 +137,7 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
             user=self.content['user'], approved=False)
 
         self.content['payment'] = payment.pk
+        payment.date = date.today()
         payment.total_price = self.content['total_price']
         payment.currency = self.request.session['translator_currency']
         payment.save()
