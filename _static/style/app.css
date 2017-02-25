@@ -571,11 +571,17 @@ strong {
         height: auto; } }
 
 img {
+  width: 300px;
+  height: 200px;
   display: inline-block;
   max-width: 100%;
   position: relative;
   opacity: 0.4;
-  z-index: 1; }
+  z-index: 1;
+  background-image: url(/_static/img/puzzle_128.png);
+  background-size: 128px 128px;
+  background-position: center;
+  background-repeat: no-repeat; }
 
 #GROUND::before {
   box-sizing: border-box;
@@ -1269,42 +1275,46 @@ button {
         color: #999;
         cursor: auto; } }
 
-.hide_form {
-  margin-bottom: 0; }
-  .hide_form > div {
-    display: inline-block; }
-  .hide_form .hide_form-label {
-    display: none; }
-  .hide_form .hide_form-field {
-    width: 100%; }
-    .hide_form .hide_form-field div {
-      display: inline-block;
-      line-height: 25px;
-      padding: 6px 11px;
-      font-size: 14px;
-      min-width: 150px;
-      width: 70%;
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box; }
-    .hide_form .hide_form-field input {
-      display: none;
-      margin: 0;
-      min-width: 150px;
-      width: 70% !important; }
-
-@media (min-width: 370px) {
-  .hide_form {
-    margin-bottom: 10px; }
-    .hide_form .hide_form-label {
-      display: inline-block;
-      max-width: 150px;
-      width: 30%; }
-    .hide_form .hide_form-field {
-      width: 60%; } }
-
 .field_shell input[type=file] {
   display: none; }
+
+.field_shell .edit_field > .edit_field-label {
+  opacity: .6;
+  font-size: 15px;
+  font-weight: bold; }
+
+.field_shell .edit_field > .edit_field-content {
+  position: relative;
+  padding: 5px 10px;
+  opacity: .85;
+  font-weight: bold; }
+  .field_shell .edit_field > .edit_field-content > button {
+    position: absolute;
+    top: -5px;
+    right: 5px;
+    padding: 5px;
+    line-height: 17px; }
+    .field_shell .edit_field > .edit_field-content > button > i {
+      display: inline-block;
+      width: 17px;
+      height: 17px;
+      opacity: .8;
+      background-image: url(/_static/img/icons/32/dark/edit.png);
+      background-size: 100%;
+      background-position: center;
+      background-repeat: no-repeat; }
+    .field_shell .edit_field > .edit_field-content > button > i:hover {
+      opacity: 1; }
+
+@media (min-width: 1000px) {
+  .field_shell .edit_field > .edit_field-label {
+    display: block; }
+  .field_shell .edit_field > .edit_field-content > button {
+    display: none; }
+  .field_shell .edit_field:hover > .edit_field-content {
+    opacity: 1; }
+    .field_shell .edit_field:hover > .edit_field-content > button {
+      display: block; } }
 
 .container-motion {
   position: absolute;

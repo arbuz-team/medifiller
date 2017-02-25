@@ -6,44 +6,41 @@
 </script>
 
 
-<div class="ground-block block-1 BIG">
+<div class="ground-block block-1 SMALL">
 
-  <div class="block-background fill-abs"></div>
-  {% include "ground/html/navigation.html" %}
+    <div class="block-background fill-abs"></div>
+    {% include "ground/html/navigation.html" %}
 
-  <div class="block-content field_shell">
-  
-    <div class="title"> User details: </div>
+    <div class="block-content field_shell">
 
-    <div class="hide_form">
-      <div class="hide_form-label"> Email: </div>
-      <div class="hide_form-field">
-        <div> {{ user.email }} </div>
-        <input name="email" id="id_email" value="{{ user.email }}" type="text" />
-        <button data-type="edit" type="button"> Edit </button>
-      </div>
-    </div>
+        <div class="title"> User details: </div>
 
-    <div class="hide_form">
-      <div class="hide_form-label"> Username: </div>
-        <div class="hide_form-field">
-        <div> {{ user.username }} </div>
-        <input name="username" id="id_username" value="{{ user.username }}" type="text" />
-        <button data-type="edit" type="button"> Edit </button>
-      </div>
-    </div>
+        <div class="edit_field">
+            <div class="edit_field-label"> Email: </div>
+            <div class="edit_field-content">
+                <div> {{ user.email }} </div>
+                <button type="button" class="dialog_button" data-type="prompt" data-name="edit_email"> <i> &nbsp; </i> </button>
+            </div>
+        </div><!-- edit_field -->
 
-    <div class="hide_form">
-      <div class="hide_form-label"> Password: </div>
-        <div class="hide_form-field">
-        <div> ******** </div>
-        <input name="password" id="id_password" value="" type="text" />
-        <button data-type="edit" type="button"> New </button>
-      </div>
-    </div>
+        <div class="edit_field">
+            <div class="edit_field-label"> Username: </div>
+            <div class="edit_field-content">
+                <div> {{ user.username }} </div>
+                <button type="button" class="dialog_button" data-type="prompt" data-name="edit_username"> <i> &nbsp; </i> </button>
+            </div>
+        </div><!-- edit_field -->
 
-  </div>
+        <div class="edit_field">
+            <div class="edit_field-label"> Password: </div>
+            <div class="edit_field-content">
+                <div> ******** </div>
+                <button type="button" class="dialog_button" data-type="prompt" data-name="edit_password"> <i> &nbsp; </i> </button>
+            </div>
+        </div><!-- edit_field -->
 
-</div>
+    </div><!-- block-content -->
+
+</div><!-- ground-block -->
 
 {% include "ground/html/footer.html" %}
