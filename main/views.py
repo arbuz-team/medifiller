@@ -83,57 +83,53 @@ class About(Editable_Tab):
 
 class Contact(Editable_Tab):
 
-    def Create_Contact_Forms(self, post=None):
+    def Create_Titles(self):
 
-        product_availability = Form_Email_Contact(self.request, post)
-        product_availability.Convert_To_Product_Availability()
-
-        comments_on_website = Form_Email_Contact(self.request, post)
-        comments_on_website.Convert_To_Comments_On_Website()
-
-        other_message = Form_Email_Contact(self.request, post)
-        other_message.Convert_To_Other_Message()
-
-        self.content['titles'] = {
-            'product_availability': Text(self.request, 81),
-            'comments_on_website': Text(self.request, 82),
-            'other_message': Text(self.request, 83),
-        }
-
-        self.content['forms'] = {
-            'product_availability': product_availability,
-            'comments_on_website': comments_on_website,
-            'other_message': other_message,
-        }
+        self.content['form_detail'] = [
+            {
+                'title':    Text(self.request, 81),
+                'hidden':   'url',
+            },
+            {
+                'title':    Text(self.request, 82),
+                'hidden':   'product',
+            },
+            {
+                'title':    Text(self.request, 83),
+                'hidden':   'url product',
+            },
+        ]
 
     def Manage_Content_Ground(self):
         self.content['content'] = Content_Tab.objects.filter(tab_name='contact')
-        self.Create_Contact_Forms()
-        return self.Render_HTML('main/contact.html')
+        self.content['form'] = Form_Email_Contact(self.request)
+
+        self.Create_Titles()
+        return self.Render_HTML('main/contact.html', 'email_contact')
 
     def Manage_Form(self):
 
-        self.Create_Contact_Forms(self.request.POST)
-        form_name = self.request.POST['__form__']
-        email_contact = self.content['forms'][form_name]
+        self.Create_Titles()
+        self.content['form'] = Form_Email_Contact(
+            self.request, self.request.POST)
 
-        if email_contact.is_valid():
+        if self.content['form'].is_valid():
 
             language = self.request.session['translator_language']
-            title = self.content['titles'][form_name]
-            email = email_contact.cleaned_data['email']
+            title = self.content['form'].cleaned_data['title']
+            email = self.content['form'].cleaned_data['email']
 
             content = {
-                'client':   email_contact.cleaned_data['client'],
-                'question': email_contact.cleaned_data['message'],
-                'product':  email_contact.cleaned_data['product'],
-                'url':      email_contact.cleaned_data['url'],
+                'client':   self.content['form'].cleaned_data['client'],
+                'question': self.content['form'].cleaned_data['message'],
+                'product':  self.content['form'].cleaned_data['product'],
+                'url':      self.content['form'].cleaned_data['url'],
             }
 
             Sender(language).Send_Contact_Question(title, content, email)
 
-            return self.Render_HTML('main/contact.html')
-        return self.Render_HTML('main/contact.html')
+            return self.Render_HTML('main/contact.html', 'email_contact')
+        return self.Render_HTML('main/contact.html', 'email_contact')
 
     @staticmethod
     def Launch(request):

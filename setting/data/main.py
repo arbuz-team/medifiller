@@ -103,26 +103,6 @@ def Load_Default_Contact():
                     E-mail: info@spasungate.pl''',
     ).save()
 
-    Content_Tab(
-        tab_name='contact',
-        header='Godziny otwarcia SPA',
-        image='',
-        paragraph='''Monday<br>
-                    10:00 - 24:00*<br>
-                    Tuesday<br>
-                    10:00 - 24:00*<br>
-                    Wednesday<br>
-                    10:00 - 24:00*<br>
-                    Thursday<br>
-                    10:00 - 24:00*<br>
-                    Friday<br>
-                    10:00 - 24:00*<br>
-                    Saturday<br>
-                    10:00 - 24:00*<br>
-                    Sunday<br>
-                    10:00 - 24:00*''',
-    ).save()
-
 def Load_Default_Data():
     Load_Default_About()
     Load_Default_Contact()
