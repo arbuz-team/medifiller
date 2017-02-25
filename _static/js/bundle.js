@@ -961,11 +961,15 @@
 	
 	    // -- Swipe events
 	
-	    if (settings.direction_open === 'top' || settings.direction_open === 'bottom') $body.hammer().on(settings.swipe_open, pre_swipe_open);else $body.hammer().on(settings.swipe_open, swipe_open);
+	    // if(settings.direction_open === 'top' || settings.direction_open === 'bottom')
+	    //   $body.hammer().on(settings.swipe_open, pre_swipe_open);
+	    // else
+	    //   $body.hammer().on(settings.swipe_open, swipe_open);
+	    //
+	    // $body.hammer().on(settings.swipe_close, swipe_close);
 	
-	    $body.hammer().on(settings.swipe_close, swipe_close);
+	    // $body.data('hammer').get('swipe').set({ direction: Hammer.DIRECTION_ALL });
 	
-	    $body.data('hammer').get('swipe').set({ direction: Hammer.DIRECTION_ALL });
 	
 	    if (settings.container !== '#CART') {
 	      // -- Other events
@@ -2574,7 +2578,7 @@
 	  can_open_to: 650,
 	
 	  duration_open: 300,
-	  duration_close: 200
+	  duration_close: 100
 	};
 	
 	/**

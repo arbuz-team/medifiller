@@ -2,6 +2,7 @@
 button
   cursor: pointer
 
+
 .field_shell
 
   .button
@@ -144,21 +145,30 @@ button
         &:after, & + label.checkbox-text
           opacity: 1
 
-    
-        
-    //////////////////////////////////////////////////////////////
+
 
   select
-    +background-img('/_static/img/select_arrow_down.png', 20px, right)
+    +background-img(url('/_static/img/select_arrow_down.png'), 20px, right)
     min-width: 150px
+    height: 34px
     padding: 5px 35px 5px 5px
-    font-size: 16px
+
     border: 1px solid #999
       bottom: #aaa
-    height: 34px
+    font-size: 16px
+    cursor: pointer
+    opacity: .9
+
     -webkit-appearance: none
     -moz-appearance: none
     appearance: none
 
   select:focus
-    +background-img('/_static/img/select_arrow_up.png', 20px, right)
+    +background-img(url('/_static/img/select_arrow_up.png'), 20px, right)
+
+  select:hover, select:focus
+    opacity: 1
+
+
+    //////////////////////////////////////////////////////////////
+

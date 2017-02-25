@@ -32,10 +32,10 @@ $navigation-focus--background-color: $G-COLOR-1
 
     >.navigation-primary, >.navigation-secondary
 
-      >.navigation-secondary-space
+      .navigation-secondary-space
         display: none
 
-      >li
+      li
         position: relative
         height: $navigation-primery_secondery--height
 
@@ -55,12 +55,20 @@ $navigation-focus--background-color: $G-COLOR-1
           color: $navigation--color
 
 
-      .guzik_menu
-        display: none
-        //@extend #HEADER .menu .guzik_menu
-        margin: 0 30px
-          top: 20px
+      li.navigation-primary-language
 
+        button
+          background: transparent
+          border: none
+          margin: 0
+          padding: 0
+
+          color: $navigation--color
+          font-size: 19px
+          font-weight: bold
+
+      li.navigation-secondary-cart
+        font-weight: bold
 
   >.hide
     top: 100%
@@ -68,7 +76,7 @@ $navigation-focus--background-color: $G-COLOR-1
     right: 0
 
     height: 200px
-    +linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(51, 51, 51, 0.4))
+    +linear-gradient(bottom, transparent, $G-GRAY-SHADOW-1)
 
 
 //--------------------------------------

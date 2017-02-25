@@ -8,7 +8,7 @@
   z-index: 37
 
   display: block
-  height: $wysokosc_naglowka_m
+  height: $header--height_mobile
 
   background-color: transparent
 
@@ -17,13 +17,18 @@
     height: inherit
     background-color: $header--background-color
 
+  >div
+    height: inherit
+
+
+@media screen and (min-width: $G-SIZE-2)
+
+  #HEADER
+    height: $header--height_small
+
 
 @media screen and (min-width: $G-SIZE-3)
 
   #HEADER
-    height: $wysokosc_naglowka_d
+    height: $header--height_big
     margin-left: 250px
-
-
-    >div
-      height: $wysokosc_naglowka_d
