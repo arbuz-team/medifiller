@@ -48,15 +48,17 @@ export let Plugins_Loader_Views = function(config)
     {
       let
         container = models.settings.container,
+        $container = $(container),
         url = models.variables.url,
         error = models.variables.error;
 
+      $container.scrollTop(0);
 
       if(check_for_errors(status, code))
         return false;
 
       if(error !== true || status === 'success')
-        $(container).html(html).add_data('url', url);
+        $container.html(html).add_data('url', url);
 
       models.variables.error = false;
       models.variables.url = '';
