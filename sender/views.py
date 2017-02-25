@@ -40,10 +40,11 @@ class Sender:
 
     def Send_Contact_Question(self, title, content, recipient):
         html_file = 'contact_question.html'
+        reply_to = recipient
         recipient = [recipient, ROOT_EMAIL]
-        self.Send_Email(title, content, recipient, html_file)
+        self.Send_Email(title, content, recipient, html_file, reply_to)
 
-    def Send_Email(self, title, content, recipient, html_file):
+    def Send_Email(self, title, content, recipient, html_file, reply_to=None):
 
         html_name = self.language + '/sender/' + html_file
         html = render_to_string(html_name, content)
@@ -57,7 +58,8 @@ class Sender:
             subject=title,
             body='',
             from_email='Spa Sungate <sender@arbuz.team>',
-            to=recipient
+            to=recipient,
+            reply_to=reply_to
         )
 
         email.attach(self.email_html)

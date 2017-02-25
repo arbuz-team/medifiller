@@ -63,6 +63,11 @@ class Account_Details(Dynamic_Event_Menager):
             user.save()
             return JsonResponse({'__edit__': 'true'})
 
+        if self.request.POST['__edit__'] == 'password':
+            user.password = self.Encrypt(self.request.POST['value'])
+            user.save()
+            return JsonResponse({'__edit__': 'true'})
+
         return JsonResponse({'__edit__': 'false'})
 
     @staticmethod
