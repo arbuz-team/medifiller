@@ -5,22 +5,31 @@
 
 export let Post_Button_Models = function(config)
 {
-  let that = this;
+  let
+    that = this,
+    dictionary = window.APP.dictionary;
 
   this.settings = {
-    container: undefined,
-    button: undefined,
-    button_name: undefined,
-    button_action: undefined,
-    button_value: undefined,
-    button_reload: undefined,
-    button_url: undefined,
-    callback: undefined,
+    container:          undefined,
+    button:             undefined,
 
-    text_loading: 'Sending...',
-    text_done: "It's done!",
-    text_error: 'Error / Resend',
-    text_standard: undefined,
+    button_name:        undefined,
+    button_action:      undefined,
+    button_value:       undefined,
+    button_reload:      undefined,
+    button_redirect:    undefined,
+    button_url:         undefined,
+
+    callback:           undefined,
+
+    text_sending:       dictionary.get_word('Sending...'),
+    text_waiting:       dictionary.get_word('Waiting...'),
+    text_done:          dictionary.get_word("It's done!"),
+    text_error:         dictionary.get_word('Error / Resend'),
+    text_standard:      undefined,
+
+    delay_text_waiting: 500,
+    delay_text_standard: 1000,
   };
 
   let load_settings = function()
@@ -34,13 +43,10 @@ export let Post_Button_Models = function(config)
       window.APP.add_if_isset(config, that.settings, 'button');
 
       window.APP.add_if_isset(config, that.settings, 'button_name');
-
       window.APP.add_if_isset(config, that.settings, 'button_action');
-
       window.APP.add_if_isset(config, that.settings, 'button_value');
-
       window.APP.add_if_isset(config, that.settings, 'button_reload');
-
+      window.APP.add_if_isset(config, that.settings, 'button_redirect');
       window.APP.add_if_isset(config, that.settings, 'button_url');
 
       window.APP.add_if_isset(config, that.settings, 'button_html', 'text_standard');

@@ -21,6 +21,8 @@ export let Plugins_Loader_Controllers = function(config)
 
   this.redirect = function()
   {
+    console.log('redirect');
+    console.trace();
     let
       url = data_controller.get('path'),
       delay = 0,

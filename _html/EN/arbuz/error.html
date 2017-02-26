@@ -26,8 +26,10 @@
                         window.APP.DATA.redirect = '/user/sign_in/';
                     // {% endif %}
 
-                    window.APP.DATA.delay = 0;
-                    window.APP.throw_event(window.EVENTS.redirect);
+                    // {% if request.session.arbuz_permissions == 'only_root' or request.session.arbuz_permissions == 'authorization' %}
+                        window.APP.DATA.delay = 0;
+                        window.APP.throw_event(window.EVENTS.redirect);
+                    // {% endif %}
 
                 </script>
 

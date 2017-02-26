@@ -38,11 +38,14 @@ export let Post_Button_Controllers = function(config)
       let
         button_name = $(this).data('name');
       config.button = this;
+
       config.button_name = button_name;
       config.button_action = $(this).data('action');
       config.button_value = $(this).data('value');
       config.button_reload = $(this).data('reload');
+      config.button_redirect = $(this).data('redirect');
       config.button_url = $(this).data('url');
+
       config.button_html = $(this).html();
 
       buttons_views[button_name] = new Post_Button_Views(config);

@@ -537,6 +537,8 @@
 	  this.redirect = function () {
 	    var _this = this;
 	
+	    console.log('redirect');
+	    console.trace();
 	    var url = _structure.data_controller.get('path'),
 	        delay = 0,
 	        variables = plugin_loader_views.models.variables;
@@ -2344,11 +2346,14 @@
 	      create_button_views = function create_button_views() {
 	    var button_name = $(this).data('name');
 	    config.button = this;
+	
 	    config.button_name = button_name;
 	    config.button_action = $(this).data('action');
 	    config.button_value = $(this).data('value');
 	    config.button_reload = $(this).data('reload');
+	    config.button_redirect = $(this).data('redirect');
 	    config.button_url = $(this).data('url');
+	
 	    config.button_html = $(this).html();
 	
 	    buttons_views[button_name] = new _views.Post_Button_Views(config);
@@ -2380,9 +2385,37 @@
 	
 	var Post_Button_Views = exports.Post_Button_Views = function Post_Button_Views(config) {
 	  var models = new _models.Post_Button_Models(config),
+	      set_text = {
+	    sending: function sending() {
+	      clearTimeout(set_text.set_waiting);
+	      clearTimeout(set_text.set_standard);
+	
+	      $(models.settings.button).html(models.settings.text_sending);
+	    },
+	
+	    set_waiting: undefined,
+	    waiting: function waiting() {
+	      set_text.set_waiting = setTimeout(function () {
+	        $(models.settings.button).html(models.settings.text_waiting);
+	      }, models.settings.delay_text_waiting);
+	    },
+	
+	    done: function done() {
+	      clearTimeout(set_text.set_waiting);
+	      $(models.settings.button).html(models.settings.text_done);
+	    },
+	
+	    set_standard: undefined,
+	    standard: function standard() {
+	      set_text.set_standard = setTimeout(function () {
+	        $(models.settings.button).html(models.settings.text_standard);
+	      }, models.settings.delay_text_standard);
+	    }
+	  },
 	      start_loading = function start_loading() {
 	    models.state.is_loading = true;
-	    $(models.settings.button).html(models.settings.text_loading);
+	    set_text.sending();
+	    set_text.waiting();
 	  },
 	      is_error = function is_error(JSON_response, status) {
 	    if (status !== 'success') {
@@ -2404,7 +2437,7 @@
 	        plugins_array = void 0,
 	        array_length = void 0;
 	
-	    if (!plugins && typeof plugins === 'string') return false;
+	    if (!plugins || typeof plugins !== 'string') return false;
 	
 	    plugins_array = plugins.split(' ');
 	    array_length = plugins_array.length;
@@ -2416,14 +2449,26 @@
 	      }
 	    }
 	  },
+	      redirect_ground = function redirect_ground() {
+	    var url = models.settings.button_redirect;
+	
+	    if (!url || typeof url !== 'string') return false;
+	
+	    window.APP.DATA.redirect = url;
+	    window.APP.DATA.delay = 100;
+	    window.APP.throw_event(window.EVENTS.redirect);
+	  },
 	      end_loading = function end_loading(JSON_response, status) {
 	    models.state.is_loading = false;
 	
 	    if (is_error(JSON_response, status)) return false;
 	
-	    $(models.settings.button).html(models.settings.text_done);
+	    set_text.done();
 	
 	    reload_plugins();
+	    redirect_ground();
+	
+	    set_text.standard();
 	  };
 	
 	  this.start = function () {
@@ -2452,22 +2497,30 @@
 	 */
 	
 	var Post_Button_Models = exports.Post_Button_Models = function Post_Button_Models(config) {
-	  var that = this;
+	  var that = this,
+	      dictionary = window.APP.dictionary;
 	
 	  this.settings = {
 	    container: undefined,
 	    button: undefined,
+	
 	    button_name: undefined,
 	    button_action: undefined,
 	    button_value: undefined,
 	    button_reload: undefined,
+	    button_redirect: undefined,
 	    button_url: undefined,
+	
 	    callback: undefined,
 	
-	    text_loading: 'Sending...',
-	    text_done: "It's done!",
-	    text_error: 'Error / Resend',
-	    text_standard: undefined
+	    text_sending: dictionary.get_word('Sending...'),
+	    text_waiting: dictionary.get_word('Waiting...'),
+	    text_done: dictionary.get_word("It's done!"),
+	    text_error: dictionary.get_word('Error / Resend'),
+	    text_standard: undefined,
+	
+	    delay_text_waiting: 500,
+	    delay_text_standard: 1000
 	  };
 	
 	  var load_settings = function load_settings() {
@@ -2479,13 +2532,10 @@
 	      window.APP.add_if_isset(config, that.settings, 'button');
 	
 	      window.APP.add_if_isset(config, that.settings, 'button_name');
-	
 	      window.APP.add_if_isset(config, that.settings, 'button_action');
-	
 	      window.APP.add_if_isset(config, that.settings, 'button_value');
-	
 	      window.APP.add_if_isset(config, that.settings, 'button_reload');
-	
+	      window.APP.add_if_isset(config, that.settings, 'button_redirect');
 	      window.APP.add_if_isset(config, that.settings, 'button_url');
 	
 	      window.APP.add_if_isset(config, that.settings, 'button_html', 'text_standard');

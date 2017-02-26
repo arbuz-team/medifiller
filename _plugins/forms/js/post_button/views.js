@@ -11,10 +11,44 @@ export let Post_Button_Views = function(config)
     models = new Post_Button_Models(config),
 
 
+    set_text = {
+      sending: function()
+      {
+        clearTimeout(set_text.set_waiting);
+        clearTimeout(set_text.set_standard);
+
+        $(models.settings.button).html(models.settings.text_sending);
+      },
+
+      set_waiting: undefined,
+      waiting: function()
+      {
+        set_text.set_waiting = setTimeout(function(){
+          $(models.settings.button).html(models.settings.text_waiting);
+        }, models.settings.delay_text_waiting);
+      },
+
+      done: function()
+      {
+        clearTimeout(set_text.set_waiting);
+        $(models.settings.button).html(models.settings.text_done);
+      },
+
+      set_standard: undefined,
+      standard: function()
+      {
+        set_text.set_standard = setTimeout(function(){
+          $(models.settings.button).html(models.settings.text_standard);
+        }, models.settings.delay_text_standard);
+      },
+    },
+
+
     start_loading = function()
     {
       models.state.is_loading = true;
-      $(models.settings.button).html(models.settings.text_loading);
+      set_text.sending();
+      set_text.waiting();
     },
 
 
@@ -37,14 +71,13 @@ export let Post_Button_Views = function(config)
       return false;
     },
 
-
     reload_plugins = function()
     {
       let
         plugins = models.settings.button_reload,
         plugins_array, array_length;
 
-      if(!plugins && typeof plugins === 'string')
+      if(!plugins || typeof plugins !== 'string')
         return false;
 
       plugins_array = plugins.split(' ');
@@ -59,6 +92,20 @@ export let Post_Button_Views = function(config)
     },
 
 
+    redirect_ground = function()
+    {
+      let
+        url = models.settings.button_redirect;
+
+      if(!url || typeof url !== 'string')
+        return false;
+
+      window.APP.DATA.redirect = url;
+      window.APP.DATA.delay = 100;
+      window.APP.throw_event(window.EVENTS.redirect);
+    },
+
+
     end_loading = function(JSON_response, status)
     {
       models.state.is_loading = false;
@@ -66,9 +113,12 @@ export let Post_Button_Views = function(config)
       if(is_error(JSON_response, status))
         return false;
 
-      $(models.settings.button).html(models.settings.text_done);
+      set_text.done();
 
       reload_plugins();
+      redirect_ground();
+
+      set_text.standard();
     };
 
 
