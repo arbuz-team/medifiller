@@ -8,14 +8,15 @@
 
     <div class="dialog-content-part field_shell">
         <!--dialog text-->
-        TEXT CONFIRM
+        {{ description }}
     </div><!-- dialog-content-part -->
 
 
     <div class="dialog-content-part field_shell">
         <!--buttons-->
-        <button class="dialog-content-button" data-name="cancel"> Cancel </button>
-        <button class="post_button" type="button"
+        <button class="dialog-content-button" data-dialog-button="cancel"> Cancel </button>
+        <button class="dialog-content-button post_button" type="button"
+                data-dialog-button="cancel"
                 data-name="{{ post_button.name }}"
                 data-action="{{ post_button.action }}"
                 data-value="{{ post_button.value }}"

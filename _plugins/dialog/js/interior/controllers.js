@@ -29,8 +29,7 @@ export let
     let
       $button = $(this);
 
-    variables.button_type = $button.data('type');
-    variables.button_name = $button.data('name');
+    variables.button_name = $button.data('dialog-button');
 
     switch(variables.button_name)
     {

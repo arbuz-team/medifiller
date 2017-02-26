@@ -537,8 +537,6 @@
 	  this.redirect = function () {
 	    var _this = this;
 	
-	    console.log('redirect');
-	    console.trace();
 	    var url = _structure.data_controller.get('path'),
 	        delay = 0,
 	        variables = plugin_loader_views.models.variables;
@@ -2783,12 +2781,22 @@
 	
 	var open = exports.open = function open() {
 	  var $button = $(this),
-	      type = $button.data('type'),
-	      name = $button.data('name'),
-	      url = $button.data('url'),
-	      value = $button.data('value');
+	      button_data = {
+	    type: $button.data('type'),
+	    name: $button.data('name'),
+	    url: $button.data('url'),
+	    value: $button.data('value')
+	  },
+	      dialog_data = {
+	    dialog_name: $button.data('dialog-name'),
+	    dialog_action: $button.data('dialog-action'),
+	    dialog_value: $button.data('dialog-value'),
+	    dialog_reload: $button.data('dialog-reload'),
+	    dialog_redirect: $button.data('dialog-redirect'),
+	    dialog_url: $button.data('dialog-url')
+	  };
 	
-	  dialog_views.open(type, name, url, value);
+	  dialog_views.open(button_data, dialog_data);
 	},
 	    close = exports.close = dialog_views.close;
 
@@ -2858,14 +2866,26 @@
 	  interior_dialog_models.variables.button_type = result_type;
 	  interior_dialog_models.variables.button_name = result_name;
 	  interior_dialog_models.variables.button_value = value;
+	},
+	    prepare_post_data = function prepare_post_data(dialog_data) {
+	  var post_data = {};
+	
+	  for (var data in dialog_data) {
+	    if (dialog_data.hasOwnProperty(data) && dialog_data[data]) post_data[data] = dialog_data[data];
+	  }
+	  dialog_models.variables.post_data = post_data;
 	};
 	
 	///////////////////////////////////////
 	
-	var open = exports.open = function open(type, name, url, value) {
-	  save_type_and_name(type, name, value);
+	var open = exports.open = function open(button_data, dialog_data) {
+	  save_type_and_name(button_data);
 	
-	  interior_dialog_controllers.load(url, undefined, show);
+	  prepare_post_data(dialog_data);
+	
+	  console.log(dialog_models.variables.post_data);
+	
+	  interior_dialog_controllers.load(button_data.url, dialog_models.variables.post_data, show);
 	},
 	    close = exports.close = function close() {
 	  hide();
@@ -2890,7 +2910,8 @@
 	    variables = exports.variables = {
 	  type: '',
 	  name: '',
-	  content: ''
+	  content: '',
+	  post_data: {}
 	},
 	    selectors = exports.selectors = {
 	  container: '#DIALOG'

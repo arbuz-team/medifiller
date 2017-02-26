@@ -69,6 +69,19 @@ let
     interior_dialog_models.variables.button_type = result_type;
     interior_dialog_models.variables.button_name = result_name;
     interior_dialog_models.variables.button_value = value;
+  },
+
+
+  prepare_post_data = function(dialog_data)
+  {
+    let post_data = {};
+
+    for(let data in dialog_data)
+    {
+      if(dialog_data.hasOwnProperty(data) && dialog_data[data])
+        post_data[data] = dialog_data[data];
+    }
+    dialog_models.variables.post_data = post_data;
   };
 
 
@@ -76,11 +89,13 @@ let
 
 export let
 
-  open = function(type, name, url, value)
+  open = function(button_data, dialog_data)
   {
-    save_type_and_name(type, name, value);
+    save_type_and_name(button_data);
 
-    interior_dialog_controllers.load(url, undefined, show);
+    prepare_post_data(dialog_data);
+
+    interior_dialog_controllers.load(button_data.url, dialog_models.variables.post_data, show);
   },
 
 

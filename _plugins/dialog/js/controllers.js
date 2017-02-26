@@ -70,12 +70,22 @@ export let
   {
     let
       $button = $(this),
-      type = $button.data('type'),
-      name = $button.data('name'),
-      url = $button.data('url'),
-      value = $button.data('value');
+      button_data = {
+        type:   $button.data('type'),
+        name:   $button.data('name'),
+        url:    $button.data('url'),
+        value:  $button.data('value'),
+      },
+      dialog_data = {
+        dialog_name:   $button.data('dialog-name'),
+        dialog_action:    $button.data('dialog-action'),
+        dialog_value:    $button.data('dialog-value'),
+        dialog_reload:    $button.data('dialog-reload'),
+        dialog_redirect:    $button.data('dialog-redirect'),
+        dialog_url:    $button.data('dialog-url'),
+      };
 
-    dialog_views.open(type, name, url, value)
+    dialog_views.open(button_data, dialog_data)
   },
 
 
