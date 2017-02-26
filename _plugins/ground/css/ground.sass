@@ -39,69 +39,69 @@ $ground--border-color: transparent
     >.block-1
       border-bottom: 1px solid $ground--border-color
 
-    >.ground-block
-      position: relative
-      display: inline-block
-      margin: 0
-      padding-bottom: 100px
+.ground-block
+  position: relative
+  display: inline-block
+  margin: 0
+  padding-bottom: 100px
 
-      width: 100%
-      min-height: 550px
-
-
-      >.block-title
-        position: relative
-        z-index: 12
-
-        margin-top: 15px
-        padding-left: 30px
-
-        color: $ground--color
-        font-size: 18px
-        font-weight: bold
-
-      >.block-content, >.block-content-message
-        position: relative
-        padding: 10px 15px
-        z-index: 12
-
-        color: $ground--color
-        font-size: 16px
-
-      .block-content-message
-        color: $G-COLOR-1
-        font-weight: bold
-        font-size: 18px
-
-      >.block-background
-        z-index: 10
-        background-color: $ground--background-color
+  width: 100%
+  min-height: 550px
 
 
-    >.block-2 > .block-background
-      background-color: $ground--background-color
+  >.block-title
+    position: relative
+    z-index: 12
+
+    margin-top: 15px
+    padding-left: 30px
+
+    color: $ground--color
+    font-size: 18px
+    font-weight: bold
+
+  >.block-content, >.block-content-message
+    position: relative
+    padding: 10px 15px
+    z-index: 12
+
+    color: $ground--color
+    font-size: 16px
+
+  .block-content-message
+    color: $G-COLOR-1
+    font-weight: bold
+    font-size: 18px
+
+  >.block-background
+    z-index: 10
+    background-color: $ground--background-color
 
 
-    .block-content
-
-      .title
-        margin:
-          top: 15px
-          bottom: 8px
-
-        font-size: 18px
-        font-weight: bold
+>.block-2 > .block-background
+  background-color: $ground--background-color
 
 
-      .paragraph
-        margin-bottom: 15px
-        margin-left: 15px
+.block-content
+
+  .title
+    margin:
+      top: 15px
+      bottom: 8px
+
+    font-size: 18px
+    font-weight: bold
 
 
-    .block-content.contact
+  .paragraph
+    margin-bottom: 15px
+    margin-left: 15px
 
-      >.block-content-right
-        margin-top: 15px
+
+.block-content.contact
+
+  >.block-content-right
+    margin-top: 15px
 
 
 
@@ -119,7 +119,7 @@ $ground--border-color: transparent
 
 @media (min-width: $G-SIZE-1)
 
-  #GROUND > .ground > .ground-block > .block-content.contact
+  .ground > .ground-block > .block-content.contact
 
     >.block-content-right
       height: 300px
@@ -127,7 +127,7 @@ $ground--border-color: transparent
 
 @media (min-width: $G-SIZE-2)
 
-  #GROUND > .ground:not(.smaller) > .ground-block > .block-content.contact
+  .ground:not(.smaller) > .ground-block > .block-content.contact
 
     >.block-content-left, >.block-content-right
       display: inline-block
@@ -149,19 +149,19 @@ $ground--border-color: transparent
   #GROUND
     margin-left: 250px
 
-    > .ground:not(.smaller) > .ground-block > .block-content.contact
+  .ground:not(.smaller) > .ground-block > .block-content.contact
 
-      >.block-content-left
-        width: 400px
+    >.block-content-left
+      width: 400px
 
-      >.block-content-right
-        width: auto
-        left: 450px
+    >.block-content-right
+      width: auto
+      left: 450px
 
 
 @media (min-width: $G-SIZE-4)
 
-  #GROUND > .ground:not(.smaller) > .ground-block > .block-content.contact
+  .ground:not(.smaller) > .ground-block > .block-content.contact
 
     >.block-content-right
       height: 500px
@@ -173,7 +173,7 @@ $ground--border-color: transparent
 
 @media (min-width: $G-SIZE-5)
 
-  #GROUND > .ground.smaller > .ground-block > .block-content.contact
+  .ground.smaller > .ground-block > .block-content.contact
 
     >.block-content-right
       position: absolute

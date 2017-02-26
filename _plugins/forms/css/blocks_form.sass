@@ -120,10 +120,8 @@ $BIG-input--width-normal: $BIG-form_block--width-normal - 10px
 
   input[type=text], input[type=email], input[type=password], input[type=number], input[type=url], select, textarea
     display: block
-    width: $SMALL-input--width
-    margin:
-      left: auto
-      right: auto
+    min-width: $SMALL-input--width
+    margin-left: 5px
 
 
 @media (min-width: $G-SIZE-2)
@@ -147,7 +145,7 @@ $BIG-input--width-normal: $BIG-form_block--width-normal - 10px
         cursor: auto
 
     input[type=text], input[type=email], input[type=password], input[type=number], input[type=url], select, textarea
-      width: $BIG-input--width-normal
+      min-width: $BIG-input--width-normal
 
 
 @media (min-width: 1300px)
@@ -171,4 +169,4 @@ $BIG-input--width-normal: $BIG-form_block--width-normal - 10px
         cursor: auto
 
     input[type=text], input[type=email], input[type=password], input[type=number], input[type=url], select, textarea
-      width: $BIG-input--width-normal
+      min-width: $BIG-input--width-normal

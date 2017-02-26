@@ -599,46 +599,51 @@ img {
     background-color: #f2f2f2; }
     #GROUND > .ground > .block-1 {
       border-bottom: 1px solid transparent; }
-    #GROUND > .ground > .ground-block {
-      position: relative;
-      display: inline-block;
-      margin: 0;
-      padding-bottom: 100px;
-      width: 100%;
-      min-height: 550px; }
-      #GROUND > .ground > .ground-block > .block-title {
-        position: relative;
-        z-index: 12;
-        margin-top: 15px;
-        padding-left: 30px;
-        color: #382B1B;
-        font-size: 18px;
-        font-weight: bold; }
-      #GROUND > .ground > .ground-block > .block-content, #GROUND > .ground > .ground-block > .block-content-message {
-        position: relative;
-        padding: 10px 15px;
-        z-index: 12;
-        color: #382B1B;
-        font-size: 16px; }
-      #GROUND > .ground > .ground-block .block-content-message {
-        color: #774D34;
-        font-weight: bold;
-        font-size: 18px; }
-      #GROUND > .ground > .ground-block > .block-background {
-        z-index: 10;
-        background-color: #ffffff; }
-    #GROUND > .ground > .block-2 > .block-background {
-      background-color: #ffffff; }
-    #GROUND > .ground .block-content .title {
-      margin-top: 15px;
-      margin-bottom: 8px;
-      font-size: 18px;
-      font-weight: bold; }
-    #GROUND > .ground .block-content .paragraph {
-      margin-bottom: 15px;
-      margin-left: 15px; }
-    #GROUND > .ground .block-content.contact > .block-content-right {
-      margin-top: 15px; }
+
+.ground-block {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  padding-bottom: 100px;
+  width: 100%;
+  min-height: 550px; }
+  .ground-block > .block-title {
+    position: relative;
+    z-index: 12;
+    margin-top: 15px;
+    padding-left: 30px;
+    color: #382B1B;
+    font-size: 18px;
+    font-weight: bold; }
+  .ground-block > .block-content, .ground-block > .block-content-message {
+    position: relative;
+    padding: 10px 15px;
+    z-index: 12;
+    color: #382B1B;
+    font-size: 16px; }
+  .ground-block .block-content-message {
+    color: #774D34;
+    font-weight: bold;
+    font-size: 18px; }
+  .ground-block > .block-background {
+    z-index: 10;
+    background-color: #ffffff; }
+
+> .block-2 > .block-background {
+  background-color: #ffffff; }
+
+.block-content .title {
+  margin-top: 15px;
+  margin-bottom: 8px;
+  font-size: 18px;
+  font-weight: bold; }
+
+.block-content .paragraph {
+  margin-bottom: 15px;
+  margin-left: 15px; }
+
+.block-content.contact > .block-content-right {
+  margin-top: 15px; }
 
 .block-content {
   position: relative;
@@ -649,15 +654,15 @@ img {
   z-index: 10; }
 
 @media (min-width: 500px) {
-  #GROUND > .ground > .ground-block > .block-content.contact > .block-content-right {
+  .ground > .ground-block > .block-content.contact > .block-content-right {
     height: 300px; } }
 
 @media (min-width: 675px) {
-  #GROUND > .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-left, #GROUND > .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-right {
+  .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-left, .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-right {
     display: inline-block; }
-  #GROUND > .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-left {
+  .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-left {
     width: 47%; }
-  #GROUND > .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-right {
+  .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-right {
     position: absolute;
     top: 30px;
     right: 30px;
@@ -668,18 +673,18 @@ img {
 @media (min-width: 1000px) {
   #GROUND {
     margin-left: 250px; }
-    #GROUND > .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-left {
-      width: 400px; }
-    #GROUND > .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-right {
-      width: auto;
-      left: 450px; } }
+  .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-left {
+    width: 400px; }
+  .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-right {
+    width: auto;
+    left: 450px; } }
 
 @media (min-width: 1200px) {
-  #GROUND > .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-right {
+  .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-right {
     height: 500px; } }
 
 @media (min-width: 1600px) {
-  #GROUND > .ground.smaller > .ground-block > .block-content.contact > .block-content-right {
+  .ground.smaller > .ground-block > .block-content.contact > .block-content-right {
     position: absolute;
     left: 415px;
     top: 30px;
@@ -799,54 +804,76 @@ img {
   #GROUND > .ground > .ground-block > .block-link_tiles {
     padding-top: 50px; } }
 
-#GROUND > .ground > .ground-block.about > .block-content {
-  text-align: justify; }
-  #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph {
-    position: relative;
-    line-height: 30px;
+.ground-block.about > .block-content > .block-content-paragraph {
+  position: relative;
+  line-height: 30px;
+  margin-top: 20px;
+  margin-bottom: 60px; }
+  .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-actions {
+    position: absolute;
+    top: -30px;
+    right: 0;
+    text-align: right; }
+    .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-actions > button {
+      padding-top: 2px;
+      padding-bottom: 2px; }
+  .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-header {
+    font-size: 36px;
     margin-top: 20px;
-    margin-bottom: 60px; }
-    #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-actions {
-      position: absolute;
-      top: -20px;
-      right: 0;
-      text-align: right; }
-      #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-actions > button {
-        padding-top: 2px;
-        padding-bottom: 2px; }
-    #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-header {
-      font-size: 36px;
-      margin-top: 20px;
-      margin-bottom: 40px; }
-    #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-image {
-      max-width: 650px;
-      margin: 20px auto;
-        margin-bottom: 0;
-      text-align: center;
-      border-bottom: 1px solid #e8e8e8;
-        border-bottom-color: #774D34;
-        border-bottom-width: 5px; }
-      #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-image > img {
-        height: auto;
-        vertical-align: bottom; }
+    margin-bottom: 40px; }
+  .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-image {
+    max-width: 650px;
+    margin: 20px auto;
+      margin-bottom: 0;
+    text-align: center;
+    border-bottom: 1px solid #e8e8e8;
+      border-bottom-color: #774D34;
+      border-bottom-width: 5px; }
+    .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-image > img {
+      height: auto;
+      vertical-align: bottom; }
+
+.ground-block.about > .block-content > .block-content-paragraph.new {
+  margin-left: 10%;
+  margin-right: 10%; }
+  .ground-block.about > .block-content > .block-content-paragraph.new > div > .block-content-paragraph-new-image {
+    height: 200px;
+    background-image: url(/_static/img/icons/128/dark/add.png);
+    background-size: 100px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 3px dashed #d1d1d1;
+    opacity: .8; }
+  .ground-block.about > .block-content > .block-content-paragraph.new > div > .block-content-paragraph-new-title {
+    min-height: 30px; }
+
+.ground-block.about > .block-content > .block-content-paragraph.new:hover > div > .block-content-paragraph-new-image {
+  opacity: .9; }
 
 @media (min-width: 1000px) {
-  #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-actions {
+  .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-actions {
+    top: -20px;
     display: none; }
-  #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph:hover > .block-content-paragraph-actions {
+  .ground-block.about > .block-content > .block-content-paragraph:hover > .block-content-paragraph-actions {
     display: block; } }
 
 @media (min-width: 1200px) {
-  #GROUND > .ground > .ground-block.about > .block-content {
+  .ground-block.about > .block-content {
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto; }
-    #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-text.with_image, #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-image {
+    .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-text.with_image, .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-image {
       display: inline-block;
       width: 48%;
       vertical-align: top; }
-    #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-image {
+    .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-image {
       margin-left: 20px; } }
+
+@media (min-width: 1300px) {
+  .ground-block.about > .block-content > .block-content-paragraph.new {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto; } }
 
 .container-part > div > .posty.tresc {
   padding-left: 0;
@@ -1263,9 +1290,8 @@ button {
       padding-bottom: 5px; }
   #GROUND .ground-block.BIG > .block-content input[type=text], #GROUND .ground-block.BIG > .block-content input[type=email], #GROUND .ground-block.BIG > .block-content input[type=password], #GROUND .ground-block.BIG > .block-content input[type=number], #GROUND .ground-block.BIG > .block-content input[type=url], #GROUND .ground-block.BIG > .block-content select, #GROUND .ground-block.BIG > .block-content textarea {
     display: block;
-    width: 300px;
-    margin-left: auto;
-    margin-right: auto; }
+    min-width: 300px;
+    margin-left: 5px; }
 
 @media (min-width: 675px) {
   #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content {
@@ -1282,7 +1308,7 @@ button {
         color: #999;
         cursor: auto; }
     #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content input[type=text], #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content input[type=email], #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content input[type=password], #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content input[type=number], #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content input[type=url], #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content select, #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content textarea {
-      width: 185px; } }
+      min-width: 185px; } }
 
 @media (min-width: 1300px) {
   #GROUND > .ground.smaller .ground-block.BIG > .block-content {
@@ -1299,7 +1325,7 @@ button {
         color: #999;
         cursor: auto; }
     #GROUND > .ground.smaller .ground-block.BIG > .block-content input[type=text], #GROUND > .ground.smaller .ground-block.BIG > .block-content input[type=email], #GROUND > .ground.smaller .ground-block.BIG > .block-content input[type=password], #GROUND > .ground.smaller .ground-block.BIG > .block-content input[type=number], #GROUND > .ground.smaller .ground-block.BIG > .block-content input[type=url], #GROUND > .ground.smaller .ground-block.BIG > .block-content select, #GROUND > .ground.smaller .ground-block.BIG > .block-content textarea {
-      width: 185px; } }
+      min-width: 185px; } }
 
 .field_shell input[type=file] {
   display: none; }
