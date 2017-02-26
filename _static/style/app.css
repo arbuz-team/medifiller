@@ -1187,16 +1187,19 @@ button {
     width: 18px;
     height: 18px; }
 
-#GROUND .ground-block > .block-content form > div:last-child {
+#GROUND .ground-block > .block-content form > .form_buttons:not(.long) {
+  padding-left: 5px; }
+
+#GROUND .ground-block > .block-content form > .form_buttons:first-child {
   margin-top: 10px;
-  padding-left: 5px;
   padding-top: 10px;
   border-top: 1px solid #eee; }
 
 #GROUND .ground-block.SMALL > .block-content {
   width: 300px;
   margin: 30px auto; }
-  #GROUND .ground-block.SMALL > .block-content input[type=text], #GROUND .ground-block.SMALL > .block-content input[type=email], #GROUND .ground-block.SMALL > .block-content input[type=password], #GROUND .ground-block.SMALL > .block-content input[type=number], #GROUND .ground-block.SMALL > .block-content input[type=url], #GROUND .ground-block.SMALL > .block-content select, #GROUND .ground-block.SMALL > .block-content button, #GROUND .ground-block.SMALL > .block-content textarea {
+  #GROUND .ground-block.SMALL > .block-content form > div:not(.short) > input[type=text], #GROUND .ground-block.SMALL > .block-content form > div:not(.short) > input[type=email], #GROUND .ground-block.SMALL > .block-content form > div:not(.short) > input[type=password], #GROUND .ground-block.SMALL > .block-content form > div:not(.short) > input[type=number], #GROUND .ground-block.SMALL > .block-content form > div:not(.short) > input[type=url], #GROUND .ground-block.SMALL > .block-content form > div:not(.short) > select, #GROUND .ground-block.SMALL > .block-content form > div:not(.short) > button, #GROUND .ground-block.SMALL > .block-content form > div:not(.short) > textarea, #GROUND .ground-block.SMALL > .block-content form > div.long > input[type=text], #GROUND .ground-block.SMALL > .block-content form > div.long > input[type=email], #GROUND .ground-block.SMALL > .block-content form > div.long > input[type=password], #GROUND .ground-block.SMALL > .block-content form > div.long > input[type=number], #GROUND .ground-block.SMALL > .block-content form > div.long > input[type=url], #GROUND .ground-block.SMALL > .block-content form > div.long > select, #GROUND .ground-block.SMALL > .block-content form > div.long > button, #GROUND .ground-block.SMALL > .block-content form > div.long > textarea {
+    display: block;
     width: 260px;
     margin-left: auto;
     margin-right: auto; }

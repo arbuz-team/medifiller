@@ -47,13 +47,13 @@ $BIG-input--width-normal: $BIG-form_block--width-normal - 10px
         height: 18px
 
 
-    form > div:last-child
+    form > .form_buttons:not(.long)
+      padding-left: 5px
+
+    form > .form_buttons:first-child
       margin:
         top: 10px
-      padding:
-        left: 5px
-        top: 10px
-
+      padding-top: 10px
       border-top: 1px solid #eee
 
 
@@ -61,11 +61,14 @@ $BIG-input--width-normal: $BIG-form_block--width-normal - 10px
   width: $SMALL--width
   margin: $ALL_blocks--margin
 
-  input[type=text], input[type=email], input[type=password], input[type=number], input[type=url], select, button, textarea
-    width: $SMALL-input--width
-    margin:
-      left: auto
-      right: auto
+  form
+    >div:not(.short), >div.long
+      >input[type=text], >input[type=email], >input[type=password], >input[type=number], >input[type=url], >select, >button, >textarea
+        display: block
+        width: $SMALL-input--width
+        margin:
+          left: auto
+          right: auto
 
 
 /////////////////////////////////////////////////
