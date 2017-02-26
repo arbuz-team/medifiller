@@ -6,7 +6,7 @@ from nocaptcha_recaptcha.fields import NoReCaptchaField
 class Form_Login(Abstract_Form):
 
     def clean_email(self):
-        email = self.cleaned_data['email']
+        email = self.data['email']
 
         if not User.objects.filter(email=email):
             raise forms.ValidationError(Text(self.request, 41))
@@ -18,7 +18,7 @@ class Form_Login(Abstract_Form):
 
     def clean_password(self):
         email = self.data['email']
-        password = self.cleaned_data['password']
+        password = self.data['password']
 
         if not User.objects.filter(email=email):
             return ''
@@ -66,7 +66,7 @@ class Form_Register(Abstract_Model_Form):
         )
 
     def clean_password(self):
-        password = self.cleaned_data['password']
+        password = self.data['password']
         return Dynamic_Base.Encrypt(password)
 
     def Create_Fields(self):
@@ -173,7 +173,7 @@ class Form_User_Address(Form_Abstract_Address):
 class Form_Forgot_Password(Abstract_Form):
 
     def clean_email(self):
-        email = self.cleaned_data['email']
+        email = self.data['email']
 
         if not User.objects.filter(email=email):
             raise forms.ValidationError(Text(self.request, 54))
@@ -201,7 +201,7 @@ class Form_Forgot_Password(Abstract_Form):
 class Form_Change_Password(Abstract_Form):
 
     def clean_password(self):
-        return Dynamic_Base.Encrypt(self.cleaned_data['password'])
+        return Dynamic_Base.Encrypt(self.data['password'])
 
     def Create_Fields(self):
         self.fields['password'] = forms.CharField(max_length=100)

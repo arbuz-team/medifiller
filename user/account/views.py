@@ -1,5 +1,6 @@
 from arbuz.views import *
 from user.forms import *
+from user.account.forms import *
 from payment.models import *
 
 
@@ -50,25 +51,62 @@ class Account_Details(Dynamic_Event_Menager):
         self.content['user'] = User.objects.get(unique=unique)
         return self.Render_HTML('user/account/details.html')
 
-    def Manage_Edit(self):
-        user = User.objects.get(unique=self.request.session['user_unique'])
+    def Manage_Form_Edit_Email(self):
 
-        if self.request.POST['__edit__'] == 'email':
-            user.email = self.request.POST['value']
+        details = Form_User_Details(
+            self.request, self.request.POST)
+
+        if details.is_valid():
+            unique = self.request.session['user_unique']
+            user = User.objects.get(unique=unique)
+            user.email = details.cleaned_data['email']
             user.save()
-            return JsonResponse({'__edit__': 'true'})
 
-        if self.request.POST['__edit__'] == 'username':
-            user.username = self.request.POST['value']
+            return Dialog_Prompt(self.request, apply=True).HTML
+        return Dialog_Prompt(self.request, not_valid=True).HTML
+
+    def Manage_Form_Edit_Username(self):
+
+        details = Form_User_Details(
+            self.request, self.request.POST)
+
+        if details.is_valid():
+            unique = self.request.session['user_unique']
+            user = User.objects.get(unique=unique)
+            user.username = details.cleaned_data['username']
             user.save()
-            return JsonResponse({'__edit__': 'true'})
 
-        if self.request.POST['__edit__'] == 'password':
-            user.password = self.Encrypt(self.request.POST['value'])
+            return Dialog_Prompt(self.request, apply=True).HTML
+        return Dialog_Prompt(self.request, not_valid=True).HTML
+
+    def Manage_Form_Edit_Password(self):
+
+        details = Form_User_Details(
+            self.request, self.request.POST)
+
+        if details.is_valid():
+            unique = self.request.session['user_unique']
+            user = User.objects.get(unique=unique)
+            user.password = details.cleaned_data['password']
             user.save()
-            return JsonResponse({'__edit__': 'true'})
 
-        return JsonResponse({'__edit__': 'false'})
+            return Dialog_Prompt(self.request, apply=True).HTML
+        return Dialog_Prompt(self.request, not_valid=True).HTML
+
+    def Manage_Form(self):
+
+        print(self.request.POST['__form__'])
+
+        if self.request.POST['__form__'] == 'edit_email':
+            return self.Manage_Form_Edit_Email()
+
+        if self.request.POST['__form__'] == 'edit_username':
+            return self.Manage_Form_Edit_Username()
+
+        if self.request.POST['__form__'] == 'edit_password':
+            return self.Manage_Form_Edit_Password()
+
+        return super(Account_Details, self).Manage_Form()
 
     @staticmethod
     def Launch(request):

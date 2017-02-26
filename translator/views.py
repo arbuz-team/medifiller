@@ -1,7 +1,7 @@
 from django.contrib.gis.geoip import GeoIP
 from django.shortcuts import redirect
 from arbuz.base import *
-from .models import *
+from translator.models import *
 
 
 class Translator:

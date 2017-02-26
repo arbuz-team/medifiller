@@ -1,4 +1,5 @@
 from product.forms import *
+from user.account.forms import *
 from translator.views import *
 from inspect import getmembers, ismethod
 
@@ -143,6 +144,40 @@ class Dialog_Prompt(Dialog):
 
         return self.Render_Dialog('dialog/prompt.html',
                                   'image', only_root=True)
+
+
+    def Manage_Edit_Email(self):
+        self.content['title'] = Text(self.request, 86)
+        self.content['form'] = Form_User_Details(
+            self.request, self.Get_POST())
+
+        self.content['form'].Set_Hidden('username')
+        self.content['form'].Set_Hidden('password')
+
+        return self.Render_Dialog('dialog/prompt.html',
+                                  'edit_email', authorization=True)
+
+    def Manage_Edit_Username(self):
+        self.content['title'] = Text(self.request, 87)
+        self.content['form'] = Form_User_Details(
+            self.request, self.Get_POST())
+
+        self.content['form'].Set_Hidden('email')
+        self.content['form'].Set_Hidden('password')
+
+        return self.Render_Dialog('dialog/prompt.html',
+                                  'edit_username', authorization=True)
+
+    def Manage_Edit_Password(self):
+        self.content['title'] = Text(self.request, 88)
+        self.content['form'] = Form_User_Details(
+            self.request, self.Get_POST())
+
+        self.content['form'].Set_Hidden('username')
+        self.content['form'].Set_Hidden('email')
+
+        return self.Render_Dialog('dialog/prompt.html',
+                                  'edit_password', authorization=True)
 
 
     def Get_POST(self):

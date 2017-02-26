@@ -4,7 +4,7 @@ from root.models import *
 class Form_Root_Login(Abstract_Form):
 
     def clean_password(self):
-        password = self.cleaned_data['password']
+        password = self.data['password']
 
         if not Root.objects.all():
             raise forms.ValidationError(Text(self.request, 28))

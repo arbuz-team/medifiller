@@ -17,15 +17,15 @@ class Form_Product(Abstract_Model_Form):
         return int(float(price) * 100) # convert to cents / grosz / pens
 
     def clean_price_eur(self):
-        price = self.cleaned_data['price_eur']
+        price = self.data['price_eur']
         return self.Clean_Price(price, 'EUR')
 
     def clean_price_pln(self):
-        price = self.cleaned_data['price_pln']
+        price = self.data['price_pln']
         return self.Clean_Price(price, 'PLN')
 
     def clean_stock(self):
-        stock = self.cleaned_data['stock']
+        stock = self.data['stock']
         if not stock:
             return 0
 
@@ -147,8 +147,8 @@ class Form_Where_Display(Abstract_Model_Form):
 class Form_Image(Abstract_Form):
 
     def clean(self):
-        url = self.cleaned_data['url']
-        image = self.cleaned_data['image_base64']
+        url = self.data['url']
+        image = self.data['image_base64']
 
         if url and image:
             os.remove(BASE_DIR + image)
@@ -157,10 +157,10 @@ class Form_Image(Abstract_Form):
         if not url and not image:
             raise forms.ValidationError(Text(self.request, 65))
 
-        return self.cleaned_data
+        return self.data
 
     def clean_image_base64(self):
-        image_base64 = self.cleaned_data['image_base64']
+        image_base64 = self.data['image_base64']
 
         if image_base64:
             image_base64 = Dynamic_Base.\
@@ -172,7 +172,7 @@ class Form_Image(Abstract_Form):
         return image_base64
 
     def clean_url(self):
-        image_url = self.cleaned_data['url']
+        image_url = self.data['url']
 
         if image_url:
             image_url = Dynamic_Base.\

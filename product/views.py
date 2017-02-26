@@ -92,8 +92,8 @@ class Product_Elements(Dynamic_Event_Menager):
 
         if image.is_valid():
             self.request.session['product_image_url'] = image.data['url']
-            image_base64 = image.cleaned_data['image_base64']
-            image_url = image.cleaned_data['url']
+            image_base64 = image.data['image_base64']
+            image_url = image.data['url']
 
             if image_base64:
                 self.request.session['product_image'] = image_base64

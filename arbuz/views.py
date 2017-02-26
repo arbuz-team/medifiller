@@ -38,9 +38,6 @@ class Manager(Dynamic_Base):
         self.content['error'] = 'form'
         return self.Render_HTML('arbuz/error.html')
 
-    def Manage_Edit(self):
-        return JsonResponse({'__edit__': 'false'})
-
     def Manage_Exist(self):
         return JsonResponse({'__exist__': 'false'})
 
@@ -200,10 +197,6 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
         # manage forms
         if '__form__' in self.request.POST:
             return self.Manage_Form()
-
-        # mini forms - edit single value database
-        if '__edit__' in self.request.POST:
-            return self.Manage_Edit()
 
         # checkers
         if '__exist__' in self.request.POST:

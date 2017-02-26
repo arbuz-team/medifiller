@@ -6,36 +6,7 @@ from main.forms import *
 
 
 class Editable_Tab(Dynamic_Event_Menager, metaclass=ABCMeta):
-
-    def Manage_Edit_Text(self):
-
-        pk = self.request.POST['pk']
-        value = self.request.POST['value']
-
-        record = Text_Content.objects.get(pk=pk)
-        record.text = value
-
-    def Manage_Edit_Image(self):
-
-        pk = self.request.POST['pk']
-        value = self.request.POST['value']
-
-        record = Image_Content.objects.get(pk=pk)
-        record.image = value
-
-    def Manage_Edit(self):
-
-        self.only_root = True
-        if not self.Check():
-            return self.ERROR_HTML
-
-        if 'text' in self.request.POST['__edit__']:
-            self.Manage_Edit_Text()
-
-        if 'text' in self.request.POST['__edit__']:
-            self.Manage_Edit_Image()
-
-        return super(Editable_Tab, self).Manage_Edit()
+    pass
 
 
 
