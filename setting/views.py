@@ -22,7 +22,7 @@ class Control_Panel(Dynamic_Event_Menager):
         if self.request.POST['__button__'] == 'reset_databases':
             return self.Manage_Button_Reset_Database()
 
-        super(Control_Panel, self).Manage_Button()
+        return Dynamic_Event_Menager.Manage_Button(self)
 
     @staticmethod
     def Load_Default_Data(request):

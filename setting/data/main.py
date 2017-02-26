@@ -6,6 +6,7 @@ def Load_Default_About():
         tab_name='about',
         header='',
         image='',
+        language='EN',
         paragraph='Day Spa Warszawa Sungate Beauty & SPA – jest takie magiczne miejsce… '
                  'miejsce w Warszawie, w którym doświadczycie Państwo wielu niezapomnianych '
                  'doznań w miłej atmosferze przepełnionej tradycyjną, polską gościnnością. '
@@ -25,6 +26,7 @@ def Load_Default_About():
         tab_name='about',
         header='Sungate Beauty & Spa Warszawa',
         image='/_static/img/tabs/zabiegi.jpg',
+        language='EN',
         paragraph='Zarezerwuj już dziś czas na zabiegi medycyny estetycznej, które odmłodzą Cię , '
                  'uelastycznią i ujędrnią skórę twarzy i ciała a także wyeliminują niedoskonałości, '
                  'zmarszczki, bruzdy i cellulit, . Lekarz medycyny estetycznej podczas '
@@ -38,6 +40,7 @@ def Load_Default_About():
         tab_name='about',
         header='',
         image='',
+        language='EN',
         paragraph='''Oferujemy:<br>
                     WYPEŁNIANIE ZMARSZCZEK NA BAZIE PREPARATU NATURALNEGO<br>
                     POWIĘKSZENIE, MODELOWANIE I NAWILŻENIE UST<br>
@@ -57,6 +60,7 @@ def Load_Default_About():
         tab_name='about',
         header='Poznaj bogactwo i moc luksusowych zabiegów na twarz i ciało oraz masaży Sungate Beauty & Spa Warszawa',
         image='/_static/img/tabs/salon.jpg',
+        language='EN',
         paragraph='Już teraz macie Państwo szansę doświadczyć rozkoszy niczym tej z pól Arkadyjskich. '
                  '<br><br> Nasza oferta skierowana specjalnie do Ciebie to wyrafinowane '
                  'połączenie bogactwa natury z luksusem codzienności, którego możesz doświadczyć '
@@ -67,6 +71,7 @@ def Load_Default_About():
         tab_name='about',
         header='',
         image='',
+        language='EN',
         paragraph='''Odważ się podarować swojemu ciału „czarną perłę” wśród zabiegów kosmetycznych i skorzystaj z naszej oferty na: <br>
                     zabiegi pielęgnacyjne twarzy (nawilżenie, odżywienie, złuszczenie, oczyszczenie )<br>
                     zabiegi pielęgnacyjne ciała (peelingi, rytuały Spa & Wellness)<br>
@@ -80,6 +85,7 @@ def Load_Default_About():
         tab_name='about',
         header='',
         image='',
+        language='EN',
         paragraph='Gwarantujemy, że Twoje ciało dzięki odpowiednio dobranym maskom oraz '
                  'na przykład zabiegom wspomagającym odchudzanie szybko odwdzięczy Ci się '
                  'za to niebywałą energią, chęcią do życia, do tworzenia czegoś nowego '
@@ -96,6 +102,7 @@ def Load_Default_Contact():
         tab_name='contact',
         header='Sungate Beauty & Spa',
         image='',
+        language='EN',
         paragraph='''Pl. Powstańców Warszawy 2<br>
                     00-030 Warszawa<br>
                     Tel.: +48 22 58 29 474<br>

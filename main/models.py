@@ -7,6 +7,7 @@ class Content_Tab(models.Model):
     header = models.CharField(max_length=200)
     paragraph = models.TextField()
     image = models.ImageField()
+    language = models.CharField(max_length=2)
 
     def __str__(self):
         return self.header

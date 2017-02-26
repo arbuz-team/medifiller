@@ -1,5 +1,6 @@
 from product.forms import *
 from user.account.forms import *
+from main.forms import *
 from translator.views import *
 from inspect import getmembers, ismethod
 
@@ -47,8 +48,9 @@ class Dialog(Dynamic_Base):
             if dialog_name in method.lower():
                 return getattr(self.__class__, method)(self)
 
-    def __init__(self, request, apply=False):
-        super(Dialog, self).__init__(request)
+    def __init__(self, request, app_name, apply=False):
+        Dynamic_Base.__init__(self, request)
+        self.parent_app_name= app_name
         self.apply = apply
 
 
@@ -63,16 +65,16 @@ class Dialog_Alert(Dialog):
         self.content['text'] = Text(self.request, 10)
         return self.Render_Dialog('dialog/alert.html', only_root=True)
 
-    def __init__(self, request):
-        super(Dialog_Alert, self).__init__(request)
+    def __init__(self, request, app_name):
+        Dialog.__init__(self, request, app_name)
         self.HTML = self.Manage()
 
 
 
 class Dialog_Confirm(Dialog):
 
-    def __init__(self, request):
-        super(Dialog_Confirm, self).__init__(request)
+    def __init__(self, request, app_name):
+        Dialog.__init__(self, request, app_name)
         self.HTML = self.Manage()
 
 
@@ -180,6 +182,15 @@ class Dialog_Prompt(Dialog):
                                   'edit_password', authorization=True)
 
 
+    def Manage_Content_Tab(self):
+        self.content['title'] = Text(self.request, 93)
+        self.content['form'] = Form_Content_Tab(
+            self.request, self.Get_POST())
+
+        return self.Render_Dialog('dialog/prompt.html',
+                                  'content_tab', authorization=True)
+
+
     def Get_POST(self):
 
         if self.not_valid:
@@ -189,7 +200,9 @@ class Dialog_Prompt(Dialog):
 
     def Get_Session_Variable(self):
 
-        session_variable = 'product_' + self.Get_Dialog_Name()
+        session_variable = '{0}_{1}'.format(
+            self.parent_app_name, self.Get_Dialog_Name())
+
         if session_variable in self.request.session:
             if self.request.session[session_variable]:
                 return self.request.session[session_variable]
@@ -203,7 +216,7 @@ class Dialog_Prompt(Dialog):
 
         return self.request.POST['__form__']
 
-    def __init__(self, request, apply=False, not_valid=False):
-        super(Dialog_Prompt, self).__init__(request, apply)
+    def __init__(self, request, app_name, apply=False, not_valid=False):
+        Dialog.__init__(self, request, app_name, apply)
         self.not_valid = not_valid
         self.HTML = self.Manage()
