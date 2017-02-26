@@ -801,14 +801,23 @@ img {
 
 #GROUND > .ground > .ground-block.about > .block-content {
   text-align: justify; }
-  #GROUND > .ground > .ground-block.about > .block-content > .block-content-header {
-    font-size: 36px;
-    margin-top: 20px;
-    margin-bottom: 40px; }
   #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph {
+    position: relative;
     line-height: 30px;
     margin-top: 20px;
     margin-bottom: 60px; }
+    #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-actions {
+      position: absolute;
+      top: -20px;
+      right: 0;
+      text-align: right; }
+      #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-actions > button {
+        padding-top: 2px;
+        padding-bottom: 2px; }
+    #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-header {
+      font-size: 36px;
+      margin-top: 20px;
+      margin-bottom: 40px; }
     #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-image {
       max-width: 650px;
       margin: 20px auto;
@@ -820,6 +829,12 @@ img {
       #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-image > img {
         height: auto;
         vertical-align: bottom; }
+
+@media (min-width: 1000px) {
+  #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph > .block-content-paragraph-actions {
+    display: none; }
+  #GROUND > .ground > .ground-block.about > .block-content > .block-content-paragraph:hover > .block-content-paragraph-actions {
+    display: block; } }
 
 @media (min-width: 1200px) {
   #GROUND > .ground > .ground-block.about > .block-content {
@@ -1186,6 +1201,8 @@ button {
     top: 9px;
     width: 18px;
     height: 18px; }
+  #GROUND .ground-block > .block-content .field_shell .g-recaptcha, #GROUND .ground-block > .block-content form > div .g-recaptcha {
+    margin-left: 5px; }
 
 #GROUND .ground-block > .block-content form > .form_buttons:not(.long) {
   padding-left: 5px; }
@@ -1196,16 +1213,16 @@ button {
   border-top: 1px solid #eee; }
 
 #GROUND .ground-block.SMALL > .block-content {
-  width: 300px;
+  width: 340px;
   margin: 30px auto; }
   #GROUND .ground-block.SMALL > .block-content form > div:not(.short) > input[type=text], #GROUND .ground-block.SMALL > .block-content form > div:not(.short) > input[type=email], #GROUND .ground-block.SMALL > .block-content form > div:not(.short) > input[type=password], #GROUND .ground-block.SMALL > .block-content form > div:not(.short) > input[type=number], #GROUND .ground-block.SMALL > .block-content form > div:not(.short) > input[type=url], #GROUND .ground-block.SMALL > .block-content form > div:not(.short) > select, #GROUND .ground-block.SMALL > .block-content form > div:not(.short) > button, #GROUND .ground-block.SMALL > .block-content form > div:not(.short) > textarea, #GROUND .ground-block.SMALL > .block-content form > div.long > input[type=text], #GROUND .ground-block.SMALL > .block-content form > div.long > input[type=email], #GROUND .ground-block.SMALL > .block-content form > div.long > input[type=password], #GROUND .ground-block.SMALL > .block-content form > div.long > input[type=number], #GROUND .ground-block.SMALL > .block-content form > div.long > input[type=url], #GROUND .ground-block.SMALL > .block-content form > div.long > select, #GROUND .ground-block.SMALL > .block-content form > div.long > button, #GROUND .ground-block.SMALL > .block-content form > div.long > textarea {
     display: block;
-    width: 260px;
+    width: 300px;
     margin-left: auto;
     margin-right: auto; }
 
 #GROUND .ground-block.BIG > .block-content {
-  width: 300px;
+  width: 340px;
   margin: 30px auto; }
   #GROUND .ground-block.BIG > .block-content .form_block.visible {
     max-height: 700px;
@@ -1246,7 +1263,7 @@ button {
       padding-bottom: 5px; }
   #GROUND .ground-block.BIG > .block-content input[type=text], #GROUND .ground-block.BIG > .block-content input[type=email], #GROUND .ground-block.BIG > .block-content input[type=password], #GROUND .ground-block.BIG > .block-content input[type=number], #GROUND .ground-block.BIG > .block-content input[type=url], #GROUND .ground-block.BIG > .block-content select, #GROUND .ground-block.BIG > .block-content textarea {
     display: block;
-    width: 260px;
+    width: 300px;
     margin-left: auto;
     margin-right: auto; }
 

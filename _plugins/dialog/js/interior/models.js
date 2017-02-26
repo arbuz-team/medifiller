@@ -34,7 +34,9 @@ export let
   variables = {
     button_type: '',
     button_name: '',
-    post_data: {}
+    button_url: '',
+    button_value: '',
+    post_data: {},
   },
 
 
@@ -46,6 +48,9 @@ export let
 
       variables.post_data.type = variables.button_type;
       variables.post_data.dialog_name = variables.button_name;
+
+      if(variables.button_value)
+        variables.post_data.value = variables.button_value;
     }
     else
       variables.post_data = post_data;

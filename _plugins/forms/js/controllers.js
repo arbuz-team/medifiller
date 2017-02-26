@@ -46,7 +46,7 @@ export let Form_Controllers = function(content_loader_controllers)
 
     show_hide_form_address = function(event)
     {
-      let $element = $(this).parents('.form_address');
+      let $element = $(this).parents('.form_block');
       event.stopPropagation();
 
       if($element.hasClass('visible'))

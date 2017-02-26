@@ -71,9 +71,11 @@ export let
     let
       $button = $(this),
       type = $button.data('type'),
-      name = $button.data('name');
+      name = $button.data('name'),
+      url = $button.data('url'),
+      value = $button.data('value');
 
-    dialog_views.open(type, name)
+    dialog_views.open(type, name, url, value)
   },
 
 

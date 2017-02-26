@@ -44,7 +44,7 @@ let
   },
 
 
-  save_type_and_name = function(type, name)
+  save_type_and_name = function(type, name, value)
   {
     let
       result_type,
@@ -65,8 +65,10 @@ let
 
     dialog_models.variables.type = result_type;
     dialog_models.variables.name = result_name;
+
     interior_dialog_models.variables.button_type = result_type;
     interior_dialog_models.variables.button_name = result_name;
+    interior_dialog_models.variables.button_value = value;
   };
 
 
@@ -74,11 +76,11 @@ let
 
 export let
 
-  open = function(type, name)
+  open = function(type, name, url, value)
   {
-    save_type_and_name(type, name);
+    save_type_and_name(type, name, value);
 
-    interior_dialog_controllers.load(undefined, undefined, show);
+    interior_dialog_controllers.load(url, undefined, show);
   },
 
 

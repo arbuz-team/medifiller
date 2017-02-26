@@ -1279,7 +1279,7 @@
 	    }
 	  },
 	      show_hide_form_address = function show_hide_form_address(event) {
-	    var $element = $(this).parents('.form_address');
+	    var $element = $(this).parents('.form_block');
 	    event.stopPropagation();
 	
 	    if ($element.hasClass('visible')) $element.removeClass('visible');else $element.addClass('visible');
@@ -2734,9 +2734,11 @@
 	var open = exports.open = function open() {
 	  var $button = $(this),
 	      type = $button.data('type'),
-	      name = $button.data('name');
+	      name = $button.data('name'),
+	      url = $button.data('url'),
+	      value = $button.data('value');
 	
-	  dialog_views.open(type, name);
+	  dialog_views.open(type, name, url, value);
 	},
 	    close = exports.close = dialog_views.close;
 
@@ -2790,7 +2792,7 @@
 	
 	  $(selectors.content).html('Loading...');
 	},
-	    save_type_and_name = function save_type_and_name(type, name) {
+	    save_type_and_name = function save_type_and_name(type, name, value) {
 	  var result_type = void 0,
 	      result_name = void 0,
 	      default_type = 'alert',
@@ -2802,16 +2804,18 @@
 	
 	  dialog_models.variables.type = result_type;
 	  dialog_models.variables.name = result_name;
+	
 	  interior_dialog_models.variables.button_type = result_type;
 	  interior_dialog_models.variables.button_name = result_name;
+	  interior_dialog_models.variables.button_value = value;
 	};
 	
 	///////////////////////////////////////
 	
-	var open = exports.open = function open(type, name) {
-	  save_type_and_name(type, name);
+	var open = exports.open = function open(type, name, url, value) {
+	  save_type_and_name(type, name, value);
 	
-	  interior_dialog_controllers.load(undefined, undefined, show);
+	  interior_dialog_controllers.load(url, undefined, show);
 	},
 	    close = exports.close = function close() {
 	  hide();
@@ -2966,6 +2970,8 @@
 	    variables = exports.variables = {
 	  button_type: '',
 	  button_name: '',
+	  button_url: '',
+	  button_value: '',
 	  post_data: {}
 	},
 	    prepare_post_data = exports.prepare_post_data = function prepare_post_data(post_data) {
@@ -2974,10 +2980,14 @@
 	
 	    variables.post_data.type = variables.button_type;
 	    variables.post_data.dialog_name = variables.button_name;
+	
+	    if (variables.button_value) variables.post_data.value = variables.button_value;
 	  } else variables.post_data = post_data;
 	},
 	    load = exports.load = function load(url, post_data, callback) {
 	  prepare_post_data(post_data);
+	  console.log(variables.post_data);
+	  console.log(url);
 	
 	  dialog_loader_controllers.load(url, variables.post_data, callback);
 	};
