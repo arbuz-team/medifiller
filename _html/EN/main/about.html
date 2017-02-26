@@ -34,7 +34,7 @@
 
                         <button type="button" class="dialog_button submit"
                                 data-type="prompt"
-                                data-name="edit_about"
+                                data-name="content_tab"
                                 data-url="/about/edit/{{ element.pk }}/">
                             Edit
                         </button>
@@ -79,17 +79,21 @@
         {% endfor %}
 
 
-        <div class="block-content-paragraph new">
+        {% if request.session.root_login %}
 
-            <div class="dialog_button" data-type="alert" data-name="recommended">
+            <div class="block-content-paragraph new">
 
-                <div class="block-content-paragraph-new-image"></div>
+                <div class="dialog_button" data-type="alert" data-name="recommended">
 
-                <div class="block-content-paragraph-new-title"> Add new paragraph </div>
+                    <div class="block-content-paragraph-new-image"></div>
 
-            </div>
+                    <div class="block-content-paragraph-new-title"> Add new paragraph </div>
 
-        </div><!-- block-content-paragraph new -->
+                </div>
+
+            </div><!-- block-content-paragraph new -->
+
+        {% endif %}
 
     </div><!-- block-content -->
 
