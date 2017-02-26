@@ -24,7 +24,7 @@ let
 
 export let
 
-  recognize_button = function(event)
+  recognize_button = function()
   {
     let
       $button = $(this);
@@ -39,6 +39,8 @@ export let
 
       case 'send': $('form', selectors.container).submit();
         break;
+
+      default: console.error('Dialog error: Don\'t recognize button.');
     }
   },
 

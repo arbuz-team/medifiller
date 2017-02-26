@@ -6,8 +6,16 @@
     >a, >div
       
       >.product-img.mini_image
-        +background-img(url('/_static/img/add_big.png'), 40%, center)
+        +background-img(url(/_static/img/icons/128/dark/add.png), 40%, center)
         border: $G-STYLE-BORDER-DASHED
+        opacity: .8
 
       >.product-title
         min-height: 60px
+
+  >.product.new:hover
+
+    >a, >div
+
+      >.product-img.mini_image
+        opacity: .9

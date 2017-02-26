@@ -858,7 +858,7 @@
 	
 	var define = exports.define = function define() {
 	  var $images = $query('img'),
-	      default_src = '/_static/img/load.jpg',
+	      default_src = '/_static/img/puzzle_256.png',
 	      image = new Image();
 	
 	  function download_img($imgs, i) {
@@ -2222,7 +2222,7 @@
 	var settings = exports.settings = {
 	  form: 'form',
 	  input_file: 'input[type=file]',
-	  button_shell: 'button.file_shell',
+	  button_shell: '.file_shell button',
 	  input_base64: {
 	    start: 'input[name=',
 	    end: '_base64]'
@@ -2878,7 +2878,7 @@
 	    variables = interior_dialog_views.variables,
 	    dialog_form_controllers = new _controllers2.Form_Controllers(interior_dialog_views);
 	
-	var recognize_button = exports.recognize_button = function recognize_button(event) {
+	var recognize_button = exports.recognize_button = function recognize_button() {
 	  var $button = $(this);
 	
 	  variables.button_type = $button.data('type');
@@ -2892,6 +2892,9 @@
 	    case 'send':
 	      $('form', selectors.container).submit();
 	      break;
+	
+	    default:
+	      console.error('Dialog error: Don\'t recognize button.');
 	  }
 	},
 	    define = exports.define = function define() {

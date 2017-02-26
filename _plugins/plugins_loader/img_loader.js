@@ -15,7 +15,7 @@ let attr = function(elem, name)
 export let define = function()
 {
   let $images = $query('img'),
-    default_src = '/_static/img/load.jpg',
+    default_src = '/_static/img/puzzle_256.png',
     image = new Image();
 
   function download_img($imgs, i)

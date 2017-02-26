@@ -571,24 +571,11 @@ strong {
         height: auto; } }
 
 img {
-  width: 300px;
-  height: 200px;
   display: inline-block;
   max-width: 100%;
   position: relative;
   opacity: 0.4;
   z-index: 1; }
-  img:after {
-    content: '';
-    display: block;
-    width: 128px;
-    height: 128px;
-    margin: 0 auto;
-      margin-top: 40%;
-    background-image: url(/_static/img/puzzle_128.png);
-    background-size: 128px 128px;
-    background-position: center;
-    background-repeat: no-repeat; }
 
 #GROUND::before {
   box-sizing: border-box;
@@ -908,14 +895,18 @@ img {
       font-weight: bold; }
 
 .products.tiles > ul > .product.new > a > .product-img.mini_image, .products.tiles > ul > .product.new > div > .product-img.mini_image {
-  background-image: url("/_static/img/add_big.png");
+  background-image: url(/_static/img/icons/128/dark/add.png);
   background-size: 40%;
   background-position: center;
   background-repeat: no-repeat;
-  border: 3px dashed #e8e8e8; }
+  border: 3px dashed #e8e8e8;
+  opacity: .8; }
 
 .products.tiles > ul > .product.new > a > .product-title, .products.tiles > ul > .product.new > div > .product-title {
   min-height: 60px; }
+
+.products.tiles > ul > .product.new:hover > a > .product-img.mini_image, .products.tiles > ul > .product.new:hover > div > .product-img.mini_image {
+  opacity: .9; }
 
 .products.tiles {
   padding-top: 0;

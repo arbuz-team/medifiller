@@ -31,7 +31,6 @@ export let
     buttons: dialog_selectors.content +' button.dialog-content-button',
   },
 
-
   variables = {
     button_type: '',
     button_name: '',
