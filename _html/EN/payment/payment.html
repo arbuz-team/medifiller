@@ -7,7 +7,7 @@
   };
 </script>
 
-<div class="ground-block block-1" id="PAYMENT">
+<div class="ground-block block-1 BIG" id="PAYMENT">
 
     <div class="block-background fill-abs"></div>
     {% include "ground/html/navigation.html" %}
@@ -62,7 +62,7 @@
                     {% endfor %}
 
                     <li class="field_shell">
-                        <div class="form_address">
+                        <div class="form_block">
                             <form method="post" action="" data-name="{{ form_name }}" data-type="payment_address" data-test="yes">
 
                                 <div class="shell_form"></div>
@@ -81,7 +81,7 @@
                                 </div>
 
                             </form>
-                        </div>
+                        </div><!-- form_block -->
                     </li>
 
                 {% else %}
@@ -115,10 +115,10 @@
 
             {% endif %}
 
-        </ul>
+        </ul><!-- cart-list -->
 
-    </div>
+    </div><!-- block-content -->
 
-</div>
+</div><!-- ground-block -->
 
 {% include "ground/html/footer.html" %}

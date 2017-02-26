@@ -1,72 +1,68 @@
 <script>
-  window.APP.DATA = {
-    title : 'Login',
-    description : 'Here you can login.'
-  };
+    window.APP.DATA = {
+        title : 'Login',
+        description : 'Here you can login.'
+    };
 </script>
 
 
 <div class="ground-block block-1 SMALL">
 
-  <div class="block-background fill-abs"></div>
-  {% include "ground/html/navigation.html" %}
+    <div class="block-background fill-abs"></div>
+    {% include "ground/html/navigation.html" %}
 
-  <div class="block-content">
-  
-    {% if not form or request.session.user_login %}
+    <div class="block-content">
 
-      <div class="block-content-message">
-          Hello {{ request.session.user_username }}. Have a nice shopping! ;)
-      </div>
+        {% if not form or request.session.user_login %}
 
-      <script>
-        window.APP.throw_event(window.EVENTS.plugins.reload_sign_in);
+            <div class="block-content-message">
+                Hello {{ request.session.user_username }}. Have a nice shopping! ;)
+            </div>
 
-        window.APP.DATA.redirect = '/';
+            <script>
+                window.APP.throw_event(window.EVENTS.plugins.reload_sign_in);
 
-        // {% if go_back %}
-            window.APP.DATA.redirect = '{{ go_back }}';
-        // {% endif %}
+                window.APP.DATA.redirect = '/';
 
-        window.APP.DATA.delay = 2000;
-        window.APP.throw_event(window.EVENTS.redirect);
-      </script>
+                // {% if go_back %}
+                window.APP.DATA.redirect = '{{ go_back }}';
+                // {% endif %}
 
-    {% else %}
+                window.APP.DATA.delay = 2000;
+                window.APP.throw_event(window.EVENTS.redirect);
+            </script>
 
-      <form method="post" action="" id="form_{{ form_name }}" data-name="{{ form_name }}" data-type="{{ form_name }}" data-test="yes" class="field_shell">
+        {% else %}
 
-        <div class="title"> Sign in </div>
+            <form method="post" action="" id="form_{{ form_name }}" data-name="{{ form_name }}" data-type="{{ form_name }}" data-test="yes" class="field_shell">
 
-        {% for i in form %}
+                <div class="title"> Sign in </div>
 
-          <div>
-            {{ i }}
-            {{ i.errors }}
+                {% for i in form %}
 
-            {% if i.name == 'email' %}
-            <div class="status"></div>
-            {% endif %}
-          </div>
+                    <div>
+                        {{ i }}
+                        {{ i.errors }}
 
-        {% endfor %}
+                        {% if i.name == 'email' %}
+                            <div class="status"></div>
+                        {% endif %}
+                    </div>
 
-        <div>
-          <button disabled type="submit"> Done </button>
-        </div>
-        <a href="/user/sign_up/">
-          <button type="button"> Register </button>
-        </a>
-        <a href="/user/forgot/">
-          <button type="button"> Forgot your password? </button>
-        </a>
+                {% endfor %}
 
-      </form>
+                <div><button disabled type="submit"> Done </button></div>
 
-    {% endif %}
-  
-  </div>
+                <a href="/user/sign_up/"><button type="button"> Register </button></a>
 
-</div>
+                <a href="/user/forgot/"><button type="button"> Forgot your password? </button></a>
+
+            </form>
+
+        {% endif %}
+
+    </div><!-- block-content -->
+
+</div><!-- ground-block -->
 
 {% include "ground/html/footer.html" %}

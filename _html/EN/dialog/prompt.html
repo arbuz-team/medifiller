@@ -5,7 +5,7 @@
 </div>
 
 
-<div class="dialog-content">
+<div class="">
 
     <!--data-type="{{ form_name }}" data-test="yes"-->
     <form method="post" data-name="{{ form_name }}">
@@ -38,14 +38,14 @@
                 <img data-src="{{ image }}" alt="image">
             {% endif %}
 
-        </div>
+        </div><!-- dialog-content-part -->
 
         <div class="dialog-content-part field_shell">
             <!--buttons-->
             <button type="button" class="dialog-content-button" data-name="cancel"> Cancel </button>
             <button type="button" class="dialog-content-button" data-name="send"> Accept </button>
-        </div>
+        </div><!-- dialog-content-part -->
 
     </form>
 
-</div>
+</div><!-- dialog-content -->

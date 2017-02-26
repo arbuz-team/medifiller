@@ -20,11 +20,11 @@
 
             <div class="product_details-image">
                 <div class="fill-abs">
-                    <img data-src="{{ product.image }}" src="{% static 'img/load.jpg' %}" alt="{{ product.details_en.name }}">
+                    <img data-src="{{ product.image }}" src="{% static 'img/pixel.png' %}" alt="{{ product.details_en.name }}">
                 </div>
             </div>
 
-        </div>
+        </div><!-- block-content-left -->
 
 
         <div class="block-content-right">
@@ -104,8 +104,9 @@
                             <a href="/product/edit/{{ product.pk }}/"><button type="button">Edit</button></a>
                         {% endif %}
 
-                    </div>
-                </div>
+                    </div><!-- product_details-action_panel-buttons -->
+
+                </div><!-- product_details-section action_panel -->
 
             {% else %}
 
@@ -129,10 +130,10 @@
                 {{ product.details_en.description }}<br>
             </div>
 
-        </div>
+        </div><!-- block-content-right -->
 
-    </div>
+    </div><!-- block-content -->
 
-</div>
+</div><!-- ground-block -->
 
 {% include "ground/html/footer.html" %}

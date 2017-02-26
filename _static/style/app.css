@@ -577,11 +577,18 @@ img {
   max-width: 100%;
   position: relative;
   opacity: 0.4;
-  z-index: 1;
-  background-image: url(/_static/img/puzzle_128.png);
-  background-size: 128px 128px;
-  background-position: center;
-  background-repeat: no-repeat; }
+  z-index: 1; }
+  img:after {
+    content: '';
+    display: block;
+    width: 128px;
+    height: 128px;
+    margin: 0 auto;
+      margin-top: 40%;
+    background-image: url(/_static/img/puzzle_128.png);
+    background-size: 128px 128px;
+    background-position: center;
+    background-repeat: no-repeat; }
 
 #GROUND::before {
   box-sizing: border-box;
@@ -741,9 +748,9 @@ img {
       border-bottom-width: 5px; }
     #GROUND > .ground > .ground-block[data-name=start] > .block-content > .block-content-banner > img {
       max-width: 100%;
-      width: auto;
+      width: 100%;
       max-height: 700px;
-      height: auto;
+      min-height: 300px;
       vertical-align: bottom; }
   #GROUND > .ground > .ground-block[data-name=start] > .block-content > .block-content-describe, #GROUND > .ground > .ground-block[data-name=start] > .block-content > .block-content.products.tiles {
     margin-left: 15px;
@@ -1176,7 +1183,7 @@ button {
 
 #GROUND .ground-block > .block-content .field_shell, #GROUND .ground-block > .block-content form > div {
   position: relative; }
-  #GROUND .ground-block > .block-content .field_shell input[type=text], #GROUND .ground-block > .block-content .field_shell input[type=email], #GROUND .ground-block > .block-content .field_shell input[type=password], #GROUND .ground-block > .block-content .field_shell input[type=number], #GROUND .ground-block > .block-content .field_shell select, #GROUND .ground-block > .block-content .field_shell button, #GROUND .ground-block > .block-content .field_shell textarea, #GROUND .ground-block > .block-content form > div input[type=text], #GROUND .ground-block > .block-content form > div input[type=email], #GROUND .ground-block > .block-content form > div input[type=password], #GROUND .ground-block > .block-content form > div input[type=number], #GROUND .ground-block > .block-content form > div select, #GROUND .ground-block > .block-content form > div button, #GROUND .ground-block > .block-content form > div textarea {
+  #GROUND .ground-block > .block-content .field_shell input[type=text], #GROUND .ground-block > .block-content .field_shell input[type=email], #GROUND .ground-block > .block-content .field_shell input[type=password], #GROUND .ground-block > .block-content .field_shell input[type=number], #GROUND .ground-block > .block-content .field_shell input[type=url], #GROUND .ground-block > .block-content .field_shell select, #GROUND .ground-block > .block-content .field_shell button, #GROUND .ground-block > .block-content .field_shell textarea, #GROUND .ground-block > .block-content form > div input[type=text], #GROUND .ground-block > .block-content form > div input[type=email], #GROUND .ground-block > .block-content form > div input[type=password], #GROUND .ground-block > .block-content form > div input[type=number], #GROUND .ground-block > .block-content form > div input[type=url], #GROUND .ground-block > .block-content form > div select, #GROUND .ground-block > .block-content form > div button, #GROUND .ground-block > .block-content form > div textarea {
     margin-left: 0;
     margin-right: 0;
     -webkit-box-sizing: border-box;
@@ -1190,32 +1197,35 @@ button {
     height: 18px; }
 
 #GROUND .ground-block > .block-content form > div:last-child {
-  padding-top: 10px;
   margin-top: 10px;
+  padding-left: 5px;
+  padding-top: 10px;
   border-top: 1px solid #eee; }
 
 #GROUND .ground-block.SMALL > .block-content {
-  width: 330px;
+  width: 300px;
   margin: 30px auto; }
-  #GROUND .ground-block.SMALL > .block-content .field_shell input[type=text], #GROUND .ground-block.SMALL > .block-content .field_shell input[type=email], #GROUND .ground-block.SMALL > .block-content .field_shell input[type=password], #GROUND .ground-block.SMALL > .block-content .field_shell input[type=number], #GROUND .ground-block.SMALL > .block-content .field_shell select, #GROUND .ground-block.SMALL > .block-content .field_shell button, #GROUND .ground-block.SMALL > .block-content .field_shell textarea {
-    width: 100%; }
+  #GROUND .ground-block.SMALL > .block-content input[type=text], #GROUND .ground-block.SMALL > .block-content input[type=email], #GROUND .ground-block.SMALL > .block-content input[type=password], #GROUND .ground-block.SMALL > .block-content input[type=number], #GROUND .ground-block.SMALL > .block-content input[type=url], #GROUND .ground-block.SMALL > .block-content select, #GROUND .ground-block.SMALL > .block-content button, #GROUND .ground-block.SMALL > .block-content textarea {
+    width: 260px;
+    margin-left: auto;
+    margin-right: auto; }
 
 #GROUND .ground-block.BIG > .block-content {
   width: 300px;
   margin: 30px auto; }
-  #GROUND .ground-block.BIG > .block-content .form_address.visible {
+  #GROUND .ground-block.BIG > .block-content .form_block.visible {
     max-height: 700px;
     cursor: auto; }
-    #GROUND .ground-block.BIG > .block-content .form_address.visible .shell_form {
+    #GROUND .ground-block.BIG > .block-content .form_block.visible .shell_form {
       height: 0; }
-    #GROUND .ground-block.BIG > .block-content .form_address.visible .title {
+    #GROUND .ground-block.BIG > .block-content .form_block.visible .title {
       color: #999;
       cursor: pointer; }
-  #GROUND .ground-block.BIG > .block-content .form_address {
+  #GROUND .ground-block.BIG > .block-content .form_block {
     position: relative;
     display: block;
-    overflow: hidden;
     max-height: 100px;
+    overflow: hidden;
     -webkit-transition: max-height 500ms ease;
     -moz-transition: max-height 500ms ease;
     -ms-transition: max-height 500ms ease;
@@ -1223,7 +1233,7 @@ button {
     transition: max-height 500ms ease;
     cursor: pointer;
     vertical-align: top; }
-    #GROUND .ground-block.BIG > .block-content .form_address .shell_form {
+    #GROUND .ground-block.BIG > .block-content .form_block .shell_form {
       position: absolute;
       left: 0;
       right: 0;
@@ -1235,45 +1245,50 @@ button {
       -ms-transition: height 500ms ease;
       -o-transition: height 500ms ease;
       transition: height 500ms ease; }
-    #GROUND .ground-block.BIG > .block-content .form_address .title {
+    #GROUND .ground-block.BIG > .block-content .form_block .title {
       font-size: 14px;
       color: #774D34;
       text-align: left;
       padding-bottom: 5px; }
-    #GROUND .ground-block.BIG > .block-content .form_address .field_shell input[type=text], #GROUND .ground-block.BIG > .block-content .form_address .field_shell input[type=email], #GROUND .ground-block.BIG > .block-content .form_address .field_shell input[type=password], #GROUND .ground-block.BIG > .block-content .form_address .field_shell input[type=number], #GROUND .ground-block.BIG > .block-content .form_address .field_shell select, #GROUND .ground-block.BIG > .block-content .form_address .field_shell textarea {
-      width: 90%; }
-  #GROUND .ground-block.BIG > .block-content .field_shell input[type=text], #GROUND .ground-block.BIG > .block-content .field_shell input[type=email], #GROUND .ground-block.BIG > .block-content .field_shell input[type=password], #GROUND .ground-block.BIG > .block-content .field_shell input[type=number], #GROUND .ground-block.BIG > .block-content .field_shell select, #GROUND .ground-block.BIG > .block-content .field_shell button, #GROUND .ground-block.BIG > .block-content .field_shell textarea {
-    width: auto; }
+  #GROUND .ground-block.BIG > .block-content input[type=text], #GROUND .ground-block.BIG > .block-content input[type=email], #GROUND .ground-block.BIG > .block-content input[type=password], #GROUND .ground-block.BIG > .block-content input[type=number], #GROUND .ground-block.BIG > .block-content input[type=url], #GROUND .ground-block.BIG > .block-content select, #GROUND .ground-block.BIG > .block-content textarea {
+    display: block;
+    width: 260px;
+    margin-left: auto;
+    margin-right: auto; }
 
 @media (min-width: 675px) {
   #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content {
-    width: 660px;
-    margin: 30px auto; }
-    #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content .form_address {
+    width: 675px; }
+    #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content .form_block {
       display: inline-block;
-      width: 215px;
+      width: 195px;
       max-height: 700px;
+      margin-right: 15px;
       cursor: auto; }
-      #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content .form_address .shell_form {
+      #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content .form_block .shell_form {
         height: 0; }
-      #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content .form_address .title {
+      #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content .form_block .title {
         color: #999;
-        cursor: auto; } }
+        cursor: auto; }
+    #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content input[type=text], #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content input[type=email], #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content input[type=password], #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content input[type=number], #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content input[type=url], #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content select, #GROUND > .ground:not(.smaller) .ground-block.BIG > .block-content textarea {
+      width: 185px; } }
 
 @media (min-width: 1300px) {
   #GROUND > .ground.smaller .ground-block.BIG > .block-content {
-    width: 660px;
-    margin: 30px auto; }
-    #GROUND > .ground.smaller .ground-block.BIG > .block-content .form_address {
+    width: 675px; }
+    #GROUND > .ground.smaller .ground-block.BIG > .block-content .form_block {
       display: inline-block;
-      width: 215px;
+      width: 195px;
       max-height: 700px;
+      margin-right: 15px;
       cursor: auto; }
-      #GROUND > .ground.smaller .ground-block.BIG > .block-content .form_address .shell_form {
+      #GROUND > .ground.smaller .ground-block.BIG > .block-content .form_block .shell_form {
         height: 0; }
-      #GROUND > .ground.smaller .ground-block.BIG > .block-content .form_address .title {
+      #GROUND > .ground.smaller .ground-block.BIG > .block-content .form_block .title {
         color: #999;
-        cursor: auto; } }
+        cursor: auto; }
+    #GROUND > .ground.smaller .ground-block.BIG > .block-content input[type=text], #GROUND > .ground.smaller .ground-block.BIG > .block-content input[type=email], #GROUND > .ground.smaller .ground-block.BIG > .block-content input[type=password], #GROUND > .ground.smaller .ground-block.BIG > .block-content input[type=number], #GROUND > .ground.smaller .ground-block.BIG > .block-content input[type=url], #GROUND > .ground.smaller .ground-block.BIG > .block-content select, #GROUND > .ground.smaller .ground-block.BIG > .block-content textarea {
+      width: 185px; } }
 
 .field_shell input[type=file] {
   display: none; }

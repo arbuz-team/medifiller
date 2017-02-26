@@ -1,11 +1,29 @@
 
+$ALL_blocks--margin-width: 30px
+$ALL_blocks--margin: $ALL_blocks--margin-width auto
+$ALL_blocks--padding-width: 15px
+$ALL_blocks--padding: $ALL_blocks--padding-width * 2
+
+
+$SMALL--width: 300px
+$SMALL-input--width: $SMALL--width - $ALL_blocks--padding - 10px
+
+$BIG--width: 675px
+$BIG-form_block--width-mobile: $SMALL--width - $ALL_blocks--padding
+$BIG-form_block--width-normal: ($BIG--width - $ALL_blocks--padding) / 3 - 20px
+$BIG-input--width-normal: $BIG-form_block--width-normal - 10px
+
+
+
 #GROUND .ground-block
 
   >.block-content
 
     >.title, form > .title
       padding: 10px 0
-      margin-bottom: 10px
+      margin:
+        bottom: 10px
+
       border-bottom: 1px solid #eee
       color: #666
       font-weight: bold
@@ -15,7 +33,7 @@
     .field_shell, form > div
       position: relative
 
-      input[type=text], input[type=email], input[type=password], input[type=number], select, button, textarea
+      input[type=text], input[type=email], input[type=password], input[type=number], input[type=url], select, button, textarea
         margin:
           left: 0
           right: 0
@@ -30,28 +48,33 @@
 
 
     form > div:last-child
-      padding-top: 10px
-      margin-top: 10px
+      margin:
+        top: 10px
+      padding:
+        left: 5px
+        top: 10px
+
       border-top: 1px solid #eee
 
 
 #GROUND .ground-block.SMALL > .block-content
-  width: 330px
-  margin: 30px auto
+  width: $SMALL--width
+  margin: $ALL_blocks--margin
 
-  .field_shell
-
-    input[type=text], input[type=email], input[type=password], input[type=number], select, button, textarea
-      width: 100%
+  input[type=text], input[type=email], input[type=password], input[type=number], input[type=url], select, button, textarea
+    width: $SMALL-input--width
+    margin:
+      left: auto
+      right: auto
 
 
 /////////////////////////////////////////////////
 
 #GROUND .ground-block.BIG > .block-content
-  width: 300px
-  margin: 30px auto
+  width: $SMALL--width
+  margin: $ALL_blocks--margin
 
-  .form_address.visible
+  .form_block.visible
     max-height: 700px
     cursor: auto
 
@@ -63,11 +86,12 @@
       cursor: pointer
 
 
-  .form_address
+  .form_block
     position: relative
     display: block
-    overflow: hidden
     max-height: 100px
+    overflow: hidden
+
     +transition(max-height 500ms ease)
     cursor: pointer
     vertical-align: top
@@ -88,27 +112,25 @@
       text-align: left
       padding-bottom: 5px
 
-    .field_shell
-
-      input[type=text], input[type=email], input[type=password], input[type=number], select, textarea
-        width: 90%
-
-  .field_shell
-
-    input[type=text], input[type=email], input[type=password], input[type=number], select, button, textarea
-      width: auto
+  input[type=text], input[type=email], input[type=password], input[type=number], input[type=url], select, textarea
+    display: block
+    width: $SMALL-input--width
+    margin:
+      left: auto
+      right: auto
 
 
 @media (min-width: $G-SIZE-2)
 
   #GROUND >.ground:not(.smaller) .ground-block.BIG > .block-content
-    width: 660px
-    margin: 30px auto
+    width: $BIG--width
 
-    .form_address
+    .form_block
       display: inline-block
-      width: 215px
+      width: $BIG-form_block--width-normal
       max-height: 700px
+      margin-right: $ALL_blocks--padding-width
+
       cursor: auto
 
       .shell_form
@@ -117,18 +139,22 @@
       .title
         color: #999
         cursor: auto
+
+    input[type=text], input[type=email], input[type=password], input[type=number], input[type=url], select, textarea
+      width: $BIG-input--width-normal
 
 
 @media (min-width: 1300px)
 
   #GROUND >.ground.smaller .ground-block.BIG > .block-content
-    width: 660px
-    margin: 30px auto
+    width: $BIG--width
 
-    .form_address
+    .form_block
       display: inline-block
-      width: 215px
+      width: $BIG-form_block--width-normal
       max-height: 700px
+      margin-right: $ALL_blocks--padding-width
+
       cursor: auto
 
       .shell_form
@@ -137,3 +163,6 @@
       .title
         color: #999
         cursor: auto
+
+    input[type=text], input[type=email], input[type=password], input[type=number], input[type=url], select, textarea
+      width: $BIG-input--width-normal

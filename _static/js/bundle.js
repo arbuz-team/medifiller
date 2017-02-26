@@ -1299,9 +1299,9 @@
 	
 	    $('form', $container).submit(prepare_form_to_send);
 	
-	    $('.form_address', $container).click(show_form_address);
+	    $('.form_block', $container).click(show_form_address);
 	
-	    $('.form_address .title', $container).click(show_hide_form_address);
+	    $('.form_block .title', $container).click(show_hide_form_address);
 	
 	    validator.define($container);
 	    hide_form.define($container);
