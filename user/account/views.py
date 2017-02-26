@@ -62,8 +62,8 @@ class Account_Details(Dynamic_Event_Menager):
             user.email = details.cleaned_data['email']
             user.save()
 
-            return Dialog_Prompt(self.request, apply=True).HTML
-        return Dialog_Prompt(self.request, not_valid=True).HTML
+            return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
+        return Dialog_Prompt(self.request, self.app_name, not_valid=True).HTML
 
     def Manage_Form_Edit_Username(self):
 
@@ -76,8 +76,8 @@ class Account_Details(Dynamic_Event_Menager):
             user.username = details.cleaned_data['username']
             user.save()
 
-            return Dialog_Prompt(self.request, apply=True).HTML
-        return Dialog_Prompt(self.request, not_valid=True).HTML
+            return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
+        return Dialog_Prompt(self.request, self.app_name, not_valid=True).HTML
 
     def Manage_Form_Edit_Password(self):
 
@@ -90,12 +90,10 @@ class Account_Details(Dynamic_Event_Menager):
             user.password = details.cleaned_data['password']
             user.save()
 
-            return Dialog_Prompt(self.request, apply=True).HTML
-        return Dialog_Prompt(self.request, not_valid=True).HTML
+            return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
+        return Dialog_Prompt(self.request, self.app_name, not_valid=True).HTML
 
     def Manage_Form(self):
-
-        print(self.request.POST['__form__'])
 
         if self.request.POST['__form__'] == 'edit_email':
             return self.Manage_Form_Edit_Email()
@@ -106,7 +104,7 @@ class Account_Details(Dynamic_Event_Menager):
         if self.request.POST['__form__'] == 'edit_password':
             return self.Manage_Form_Edit_Password()
 
-        return super(Account_Details, self).Manage_Form()
+        return Dynamic_Event_Menager.Manage_Form(self)
 
     @staticmethod
     def Launch(request):
@@ -189,7 +187,7 @@ class User_Addresses(Dynamic_Event_Menager):
         if 'edit_user_address' in self.request.POST['__form__']:
             return self.Manage_Form_Edit_User_Address()
 
-        return super(User_Addresses, self).Manage_Form()
+        return Dynamic_Event_Menager.Manage_Form(self)
 
     def Manage_Button(self):
 

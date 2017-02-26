@@ -64,8 +64,8 @@ class Product_Elements(Dynamic_Event_Menager):
 
             self.request.session['product_where_display'] = where_display
 
-            return Dialog_Prompt(self.request, apply=True).HTML
-        return Dialog_Prompt(self.request, not_valid=True).HTML
+            return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
+        return Dialog_Prompt(self.request, self.app_name, not_valid=True).HTML
 
     def Manage_Form_Brand(self):
         brand = Form_Brand(self.request, self.request.POST)
@@ -74,8 +74,8 @@ class Product_Elements(Dynamic_Event_Menager):
             brand = brand.Get_Filter()
             self.request.session['product_brand'] = brand
 
-            return Dialog_Prompt(self.request, apply=True).HTML
-        return Dialog_Prompt(self.request, not_valid=True).HTML
+            return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
+        return Dialog_Prompt(self.request, self.app_name, not_valid=True).HTML
 
     def Manage_Form_Purpose(self):
         purpose = Form_Purpose(self.request, self.request.POST)
@@ -84,8 +84,8 @@ class Product_Elements(Dynamic_Event_Menager):
             purpose = purpose.Get_Filter()
             self.request.session['product_purpose'] = purpose
 
-            return Dialog_Prompt(self.request, apply=True).HTML
-        return Dialog_Prompt(self.request, not_valid=True).HTML
+            return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
+        return Dialog_Prompt(self.request, self.app_name, not_valid=True).HTML
 
     def Manage_Form_Image(self):
         image = Form_Image(self.request, self.request.POST)
@@ -101,8 +101,8 @@ class Product_Elements(Dynamic_Event_Menager):
             if image_url:
                 self.request.session['product_image'] = image_url
 
-            return Dialog_Prompt(self.request, apply=True).HTML
-        return Dialog_Prompt(self.request, not_valid=True).HTML
+            return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
+        return Dialog_Prompt(self.request, self.app_name, not_valid=True).HTML
 
     def Manage_Form_Details(self, language):
 
@@ -114,7 +114,7 @@ class Product_Elements(Dynamic_Event_Menager):
                 details = details.save(commit=False)
                 details.save()
                 self.request.session['product_details_en'] = details
-                return Dialog_Prompt(self.request, apply=True).HTML
+                return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
 
         if language == 'PL':
             details = Form_Details_PL(
@@ -124,7 +124,7 @@ class Product_Elements(Dynamic_Event_Menager):
                 details = details.save(commit=False)
                 details.save()
                 self.request.session['product_details_pl'] = details
-                return Dialog_Prompt(self.request, apply=True).HTML
+                return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
 
         if language == 'DE':
             details = Form_Details_DE(
@@ -134,9 +134,9 @@ class Product_Elements(Dynamic_Event_Menager):
                 details = details.save(commit=False)
                 details.save()
                 self.request.session['product_details_de'] = details
-                return Dialog_Prompt(self.request, apply=True).HTML
+                return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
 
-        return Dialog_Prompt(self.request, not_valid=True).HTML
+        return Dialog_Prompt(self.request, self.app_name, not_valid=True).HTML
 
     def Manage_Form(self):
 
@@ -156,7 +156,7 @@ class Product_Elements(Dynamic_Event_Menager):
             return self.Manage_Form_Details\
                     (self.request.POST['__form__'][-2:].upper())
 
-        return super(Product_Elements, self).Manage_Form()
+        return Dynamic_Event_Menager.Manage_Form(self)
 
     @staticmethod
     def Launch(request):
@@ -199,7 +199,7 @@ class New_Product(Product_Elements):
         if self.request.POST['__form__'] == 'product':
             return self.Manage_Form_New_Product()
 
-        return super(New_Product, self).Manage_Form()
+        return Dynamic_Event_Menager.Manage_Form(self)
 
     def Manage_Get_Keywords(self):
         details_pl = self.request.session['product_details_pl']
@@ -223,7 +223,7 @@ class New_Product(Product_Elements):
         if self.request.POST['__get__'] == 'keywords':
             return self.Manage_Get_Keywords()
 
-        return super(New_Product, self).Manage_Get()
+        return Dynamic_Event_Menager.Manage_Get(self)
 
     @staticmethod
     def Launch(request):
@@ -279,7 +279,7 @@ class Edit_Product(Product_Elements):
         if self.request.POST['__form__'] == 'product':
             return self.Manage_Form_Edit_Product()
 
-        return super(Edit_Product, self).Manage_Form()
+        return Dynamic_Event_Menager.Manage_Form(self)
 
     @staticmethod
     def Edit(request, pk):

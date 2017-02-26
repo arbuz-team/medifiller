@@ -78,7 +78,7 @@ class Sign_In(Dynamic_Event_Menager):
         if self.request.POST['__form__'] == 'login':
             return self.Manage_Form_Login()
 
-        return super(Sign_In, self).Manage_Form()
+        return Dynamic_Event_Menager.Manage_Form(self)
 
     @staticmethod
     def Redirect(request, url):
@@ -139,7 +139,7 @@ class Sign_Up(Dynamic_Event_Menager):
         if self.request.POST['__form__'] == 'user_address':
             return self.Manage_Form_User_Address()
 
-        return super(Sign_Up, self).Manage_Form()
+        return Dynamic_Event_Menager.Manage_Form(self)
 
     def Manage_Exist(self):
 
@@ -250,7 +250,7 @@ class Forgot_Password(Dynamic_Event_Menager):
         if self.request.POST['__form__'] == 'forgot_password':
             return self.Manage_Form_Forgot_Password()
 
-        return super(Forgot_Password, self).Manage_Form()
+        return Dynamic_Event_Menager.Manage_Form(self)
 
     def Create_Forgot_Password_User(self):
         self.content['key'] = binascii.hexlify(os.urandom(20))
@@ -324,7 +324,7 @@ class Change_Password(Dynamic_Event_Menager):
         if self.request.POST['__form__'] == 'change_password':
             return self.Manage_Form_Change_Password()
 
-        return super(Change_Password, self).Manage_Form()
+        return Dynamic_Event_Menager.Manage_Form(self)
 
     @staticmethod
     def Secure(request, key):

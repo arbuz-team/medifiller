@@ -18,7 +18,7 @@ class Cart_Manager(Dynamic_Event_Menager):
         if self.request.POST['__content__'] == 'cart':
             return self.Manage_Content_Cart()
 
-        return super(Cart_Manager, self).Manage_Content()
+        return Dynamic_Event_Menager.Manage_Content(self)
 
     def Manage_Button_Append(self):
         product = Product.objects.get(pk=self.request.POST['value'])

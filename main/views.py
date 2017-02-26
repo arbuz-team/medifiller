@@ -6,7 +6,24 @@ from main.forms import *
 
 
 class Editable_Tab(Dynamic_Event_Menager, metaclass=ABCMeta):
-    pass
+
+    def Manage_Form_Edit_Password(self):
+
+        content_tab = Form_Content_Tab(
+            self.request, self.request.POST)
+
+        if content_tab.is_valid():
+            content_tab.save()
+
+            return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
+        return Dialog_Prompt(self.request, self.app_name, not_valid=True).HTML
+
+    def Manage_Form(self):
+
+        if self.request.POST['__form__'] == 'content_tab':
+            return self.Manage_Form_Edit_Password()
+
+        return Dynamic_Event_Menager.Manage_Form(self)
 
 
 
@@ -43,8 +60,18 @@ class Products(Dynamic_Event_Menager):
 class About(Editable_Tab):
 
     def Manage_Content_Ground(self):
-        self.content['content'] = Content_Tab.objects.filter(tab_name='about')
+        language = self.request.session['translator_language']
+        self.content['content'] = Content_Tab.objects.filter(
+            tab_name='about', language=language)
+
         return self.Render_HTML('main/about.html')
+
+    @staticmethod
+    def Edit(request, pk):
+        request.session['main_content_tab'] = \
+            Content_Tab.objects.get(pk=pk)
+
+        return About(request, only_root=True).HTML
 
     @staticmethod
     def Launch(request):
@@ -72,8 +99,10 @@ class Contact(Editable_Tab):
         ]
 
     def Manage_Content_Ground(self):
-        self.content['content'] = Content_Tab.objects.filter(tab_name='contact')
+        language = self.request.session['translator_language']
         self.content['form'] = Form_Email_Contact(self.request)
+        self.content['content'] = Content_Tab.objects.filter(
+            tab_name='contact', language=language)
 
         self.Create_Titles()
         return self.Render_HTML('main/contact.html', 'email_contact')
@@ -101,6 +130,13 @@ class Contact(Editable_Tab):
 
             return self.Render_HTML('main/contact.html', 'email_contact')
         return self.Render_HTML('main/contact.html', 'email_contact')
+
+    @staticmethod
+    def Edit(request, pk):
+        request.session['main_content_tab'] = \
+            Content_Tab.objects.get(pk=pk)
+
+        return Contact(request, only_root=True).HTML
 
     @staticmethod
     def Launch(request):

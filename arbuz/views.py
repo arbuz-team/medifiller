@@ -15,13 +15,13 @@ class Manager(Dynamic_Base):
     def Manage_Content_Dialog(self):
 
         if self.request.POST['type'] == 'alert':
-            return Dialog_Alert(self.request).HTML
+            return Dialog_Alert(self.request, self.app_name).HTML
 
         if self.request.POST['type'] == 'confirm':
-            return Dialog_Confirm(self.request).HTML
+            return Dialog_Confirm(self.request, self.app_name).HTML
 
         if self.request.POST['type'] == 'prompt':
-            return Dialog_Prompt(self.request).HTML
+            return Dialog_Prompt(self.request, self.app_name).HTML
 
     def Manage_Content(self):
 

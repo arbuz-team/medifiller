@@ -193,7 +193,7 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
         if self.request.POST['__form__'] == 'payment_address':
             return self.Manage_Form_Address_Payment()
 
-        return super(Payment_Manager, self).Manage_Form()
+        return Dynamic_Event_Menager.Manage_Form(self)
 
     @staticmethod
     def Launch(request):
