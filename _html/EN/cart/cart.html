@@ -35,11 +35,15 @@
 
             <li class="field_shell">
                 <div class="cart-list-button">
-                    <button class="post_button" type="button"
-                            data-name="Clear_cart"
-                            data-action="clear"
-                            data-reload="cart"
-                            data-url="/cart/">Clear cart</button>
+                    <button class="dialog_button" type="button"
+                            data-type="confirm"
+                            data-name="clear_cart"
+                            data-dialog-name="Clear_cart"
+                            data-dialog-action="clear"
+                            data-dialog-reload="cart"
+                            data-dialog-url="/cart/">
+                        Clear cart
+                    </button>
                 </div>
                 <a class="cart-list-button" href="/payment/">
                     <button class="submit" type="button">Go to paymants</button>
