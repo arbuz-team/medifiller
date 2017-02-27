@@ -37,7 +37,11 @@ class Payment_Models_Menager:
         unique = request.session['user_unique']
         user = User.objects.get(unique=unique)
 
-        if not Payment.objects.filter(user=user, approved=False):
+        payments = Payment.objects.filter(user=user, approved=False)
+        if payments.count() > 1:
+            payments.delete()
+
+        if payments.count() == 0:
 
             payment = Payment(
                 user=user,
