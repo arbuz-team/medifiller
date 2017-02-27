@@ -14,6 +14,7 @@ class Manager(Dynamic_Base):
 
     def Manage_Content_Dialog(self):
 
+        print(self.request.POST)
         if self.request.POST['type'] == 'alert':
             return Dialog_Alert(self.request, self.app_name).HTML
 
@@ -144,9 +145,25 @@ class Updater(Dynamic_Base):
     def Update_Current_Url(self):
         self.request.session['arbuz_url'] = self.Get_Urls()
 
+    def Update_Website_Permissions(self):
+
+        self.request.session['arbuz_permissions'] = ''
+        if '__content__' not in self.request.POST:
+            return
+
+        if self.request.POST['__content__'] == 'ground':
+
+            if self.only_root:
+                self.request.session['arbuz_permissions'] = 'only_root'
+
+            if self.authorization:
+                self.request.session['arbuz_permissions'] = 'authorization'
+
     def __init__(self, request):
         Dynamic_Base.__init__(self, request)
         self.length_navigation = None
+        self.only_root = False
+        self.authorization = False
 
 
 

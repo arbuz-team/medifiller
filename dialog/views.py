@@ -183,12 +183,20 @@ class Dialog_Prompt(Dialog):
 
 
     def Manage_Content_Tab(self):
+        content = self.Get_Session_Variable()
+
+        initial = {
+            'header':       content.header,
+            'paragraph':    content.paragraph,
+        }
+
         self.content['title'] = Text(self.request, 93)
-        self.content['form'] = Form_Content_Tab(
-            self.request, self.Get_POST())
+        self.content['image'] = content.image
+        self.content['form'] = Form_Content_Tab(self.request,
+            self.Get_POST(), initial=initial)
 
         return self.Render_Dialog('dialog/prompt.html',
-                                  'content_tab', authorization=True)
+                                  'content_tab', only_root=True)
 
 
     def Get_POST(self):

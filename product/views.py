@@ -91,15 +91,8 @@ class Product_Elements(Dynamic_Event_Menager):
         image = Form_Image(self.request, self.request.POST)
 
         if image.is_valid():
-            self.request.session['product_image_url'] = image.data['url']
-            image_base64 = image.data['image_base64']
-            image_url = image.data['url']
-
-            if image_base64:
-                self.request.session['product_image'] = image_base64
-
-            if image_url:
-                self.request.session['product_image'] = image_url
+            self.request.session['product_image_url'] = image.cleaned_data['url']
+            self.request.session['product_image'] = image.cleaned_data['image']
 
             return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
         return Dialog_Prompt(self.request, self.app_name, not_valid=True).HTML
@@ -160,7 +153,7 @@ class Product_Elements(Dynamic_Event_Menager):
 
     @staticmethod
     def Launch(request):
-        return New_Product(request, only_root=True).HTML
+        return Product_Elements(request, only_root=True).HTML
 
 
 
@@ -199,7 +192,7 @@ class New_Product(Product_Elements):
         if self.request.POST['__form__'] == 'product':
             return self.Manage_Form_New_Product()
 
-        return Dynamic_Event_Menager.Manage_Form(self)
+        return Product_Elements.Manage_Form(self)
 
     def Manage_Get_Keywords(self):
         details_pl = self.request.session['product_details_pl']
@@ -279,7 +272,7 @@ class Edit_Product(Product_Elements):
         if self.request.POST['__form__'] == 'product':
             return self.Manage_Form_Edit_Product()
 
-        return Dynamic_Event_Menager.Manage_Form(self)
+        return Product_Elements.Manage_Form(self)
 
     @staticmethod
     def Edit(request, pk):
@@ -376,12 +369,6 @@ class Delete(Dynamic_Event_Menager):
         if self.other_value == 'purpose':
             Purpose.objects.get(pk=self.request.POST['value']).delete()
 
-        if self.other_value == 'recommended':
-            Recommended_Product.objects.get(pk=self.request.POST['value']).delete()
-
-        if self.other_value == 'favorite':
-            Favorite_Product.objects.get(pk=self.request.POST['value']).delete()
-
         return JsonResponse({'__button__': 'true'})
 
     @staticmethod
@@ -398,16 +385,6 @@ class Delete(Dynamic_Event_Menager):
     def Purpose(request):
         return Delete(request, only_root=True,
                       other_value='purpose').HTML
-
-    @staticmethod
-    def Recommended(request):
-        return Delete(request, only_root=True,
-                      other_value='recommended').HTML
-
-    @staticmethod
-    def Favorite(request):
-        return Delete(request, only_root=True,
-                      other_value='favorite').HTML
 
     @staticmethod
     def Launch(request):

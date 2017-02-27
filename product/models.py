@@ -1,7 +1,5 @@
-from django.db import models
-from arbuz.settings import BASE_DIR
+from arbuz.models import *
 from user.models import User
-import os
 
 
 class Details(models.Model):
@@ -56,7 +54,7 @@ class Purpose(Filter):
 
 
 
-class Product(models.Model):
+class Product(Abstract_Model):
 
     details_en = models.ForeignKey(Details_EN)
     details_pl = models.ForeignKey(Details_PL, null=True)
@@ -73,19 +71,8 @@ class Product(models.Model):
     brand = models.ForeignKey(Brand)
     purpose = models.ForeignKey(Purpose)
 
-    def Save_Image(self, name):
-
-        if '/_static/img/product/' in str(name):
-            return 
-
-        image_format = os.path.splitext(name)[1]
-        old_path = BASE_DIR + name
-        new_path = '/_static/img/product/{0}{1}' \
-            .format(self.pk, image_format)
-
-        os.rename(old_path, BASE_DIR + new_path)
-        self.image.name = new_path
-        self.save()
+    def Set_Variables(self):
+        self.image_dir = '/_static/img/product/'
 
     def __str__(self):
         return self.details_en.name

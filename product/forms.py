@@ -9,7 +9,7 @@ class Form_Product(Abstract_Model_Form):
         if not price:
             return 0
 
-        if price < 0:
+        if int(price) < 0:
             raise forms.ValidationError(
                 Text(self.request, 11)
                     .format(currency))
@@ -29,7 +29,7 @@ class Form_Product(Abstract_Model_Form):
         if not stock:
             return 0
 
-        if stock < 0:
+        if int(stock) < 0:
             raise forms.ValidationError(
                 Text(self.request, 12))
 
@@ -144,62 +144,20 @@ class Form_Where_Display(Abstract_Model_Form):
 
 
 
-class Form_Image(Abstract_Form):
+class Form_Image(Abstract_Image_Form):
 
     def clean(self):
-        url = self.data['url']
-        image = self.data['image_base64']
+
+        url = self.cleaned_data['url']
+        image = self.cleaned_data['image_base64']
 
         if url and image:
-            os.remove(BASE_DIR + image)
             raise forms.ValidationError(Text(self.request, 64))
 
         if not url and not image:
             raise forms.ValidationError(Text(self.request, 65))
 
-        return self.data
-
-    def clean_image_base64(self):
-        image_base64 = self.data['image_base64']
-
-        if image_base64:
-            image_base64 = Dynamic_Base.\
-                Save_Image_From_Base64(image_base64)
-
-            if not image_base64:
-                raise forms.ValidationError(Text(self.request, 66))
-
-        return image_base64
-
-    def clean_url(self):
-        image_url = self.data['url']
-
-        if image_url:
-            image_url = Dynamic_Base.\
-                Save_Image_From_URL(image_url)
-
-            if not image_url:
-                raise forms.ValidationError(Text(self.request, 67))
-
-        return image_url
-
-    def Create_Fields(self):
-        self.fields['image'] = forms.ImageField(required=False)
-        self.fields['image_base64'] = forms.CharField(required=False)
-        self.fields['url'] = forms.URLField(required=False)
-
-    def Set_Widgets(self):
-
-        image_base64_attr = {
-            'hidden': 'true'
-        }
-
-        url_attrs = {
-            'placeholder': 'Paste image address url'
-        }
-
-        self.fields['image_base64'].widget = forms.TextInput(attrs=image_base64_attr)
-        self.fields['url'].widget = forms.TextInput(attrs=url_attrs)
+        return Abstract_Image_Form.clean(self)
 
 
 

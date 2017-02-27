@@ -53,8 +53,6 @@ class Form_Login(Abstract_Form):
 
 class Form_Register(Abstract_Model_Form):
 
-    captcha = NoReCaptchaField()
-
     class Meta:
 
         model = User

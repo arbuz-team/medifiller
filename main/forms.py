@@ -1,4 +1,5 @@
 from arbuz.forms import *
+from main.models import *
 from nocaptcha_recaptcha.fields import NoReCaptchaField
 
 
@@ -54,24 +55,27 @@ class Form_Email_Contact(Abstract_Form):
 
 
 
-class Form_Content_Tab(Abstract_Model_Form):
+class Form_Content_Tab(Abstract_Image_Form):
 
     def clean_tab_name(self):
         tab_name = resolve(self.request.path_info).url_name
 
-        if tab_name == 'main.edit_about':
+        if 'about' in tab_name:
             return 'about'
 
-        if tab_name == 'main.edit_contact':
+        if 'contact' in tab_name:
             return 'contact'
 
         raise forms.ValidationError(Text(self.request, 94))
 
-    def Create_Fields(self):
-        language = self.request.session['translator_language']
+    def clean(self):
+        return Abstract_Image_Form.clean(self)
 
+    def Create_Fields(self):
         self.fields['tab_name'] = forms.CharField(required=False)
-        self.fields['language'] = forms.CharField(initial=language)
+        self.fields['header'] = forms.CharField(required=False)
+        self.fields['paragraph'] = forms.CharField(required=False)
+        Abstract_Image_Form.Create_Fields(self)
 
     def Set_Widgets(self):
 
@@ -88,7 +92,4 @@ class Form_Content_Tab(Abstract_Model_Form):
         self.fields['header'].widget = forms.TextInput(attrs=header_attr)
         self.fields['paragraph'].widget = forms.Textarea(attrs=paragraph_attr)
         self.fields['tab_name'].widget.attrs = {'hidden': 'true'}
-        self.fields['language'].widget.attrs = {'hidden': 'true'}
-
-    class Meta:
-        fields = '__all__'
+        Abstract_Image_Form.Set_Widgets(self)

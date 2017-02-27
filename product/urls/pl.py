@@ -13,6 +13,4 @@ urlpatterns = [
     url(r'^usun/', views.Delete.Product, name='product.delete_product'),
     url(r'^usun/producenta/', views.Delete.Brand, name='product.delete_brand'),
     url(r'^usun/przeznaczenie/', views.Delete.Purpose, name='product.delete_purpose'),
-    url(r'^usun/polecane/', views.Delete.Recommended, name='product.delete_recommended'),
-    url(r'^usun/ulubione/', views.Delete.Favorite, name='product.delete_favorite'),
 ]

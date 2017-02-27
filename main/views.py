@@ -5,7 +5,10 @@ from main.models import *
 from main.forms import *
 
 
-class Editable_Tab(Dynamic_Event_Menager, metaclass=ABCMeta):
+class Editable_Tab(Dynamic_Event_Menager):
+
+    def Manage_Content_Ground(self):
+        pass
 
     def Manage_Form_Edit_Password(self):
 
@@ -13,7 +16,19 @@ class Editable_Tab(Dynamic_Event_Menager, metaclass=ABCMeta):
             self.request, self.request.POST)
 
         if content_tab.is_valid():
-            content_tab.save()
+
+            if self.request.session['main_content_tab']:
+                content = self.request.session['main_content_tab']
+
+            else: content = content_tab.save(commit=False)
+
+            content.tab_name = content_tab.cleaned_data['tab_name']
+            content.header = content_tab.cleaned_data['header']
+            content.paragraph = content_tab.cleaned_data['paragraph']
+            content.language = self.request.session['translator_language']
+            content.save()
+
+            content.Save_Image(content_tab.cleaned_data['image'])
 
             return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
         return Dialog_Prompt(self.request, self.app_name, not_valid=True).HTML
@@ -24,6 +39,32 @@ class Editable_Tab(Dynamic_Event_Menager, metaclass=ABCMeta):
             return self.Manage_Form_Edit_Password()
 
         return Dynamic_Event_Menager.Manage_Form(self)
+
+    def Manage_Button(self):
+
+        if self.request.POST['__button__'] == 'delete':
+            Content_Tab.objects.get(pk=self.request.POST['value']).delete()
+
+        return JsonResponse({'__button__': 'true'})
+
+    @staticmethod
+    def New(request):
+        return Editable_Tab(request, only_root=True).HTML
+
+    @staticmethod
+    def Edit(request, pk):
+        request.session['main_content_tab'] = \
+            Content_Tab.objects.get(pk=pk)
+
+        return Editable_Tab(request, only_root=True).HTML
+
+    @staticmethod
+    def Delete(request):
+        return Editable_Tab(request, only_root=True).HTML
+
+    @staticmethod
+    def Launch(request):
+        pass
 
 
 
@@ -65,13 +106,6 @@ class About(Editable_Tab):
             tab_name='about', language=language)
 
         return self.Render_HTML('main/about.html')
-
-    @staticmethod
-    def Edit(request, pk):
-        request.session['main_content_tab'] = \
-            Content_Tab.objects.get(pk=pk)
-
-        return About(request, only_root=True).HTML
 
     @staticmethod
     def Launch(request):
@@ -130,13 +164,6 @@ class Contact(Editable_Tab):
 
             return self.Render_HTML('main/contact.html', 'email_contact')
         return self.Render_HTML('main/contact.html', 'email_contact')
-
-    @staticmethod
-    def Edit(request, pk):
-        request.session['main_content_tab'] = \
-            Content_Tab.objects.get(pk=pk)
-
-        return Contact(request, only_root=True).HTML
 
     @staticmethod
     def Launch(request):
