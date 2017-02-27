@@ -67,6 +67,7 @@ export let
   define = function()
   {
     $('.cart-close', $('#CART')).click(cart_motion_controllers.plugin_close);
+    window.APP.add_own_event('cart_close', cart_motion_controllers.plugin_close);
 
     $('body').keydown(manage_key);
 

@@ -433,14 +433,19 @@ strong {
   #CART > .cart > .cart-list > li > *, #CART > .payment > .cart-list > li > *, #PAYMENT > .cart > .cart-list > li > *, #PAYMENT > .payment > .cart-list > li > * {
     display: inline-block; }
   #CART > .cart > .cart-list > li > .cart-list-name, #CART > .payment > .cart-list > li > .cart-list-name, #PAYMENT > .cart > .cart-list > li > .cart-list-name, #PAYMENT > .payment > .cart-list > li > .cart-list-name {
+    opacity: .8;
     width: 58%; }
+  #CART > .cart > .cart-list > li > .cart-list-name:hover, #CART > .payment > .cart-list > li > .cart-list-name:hover, #PAYMENT > .cart > .cart-list > li > .cart-list-name:hover, #PAYMENT > .payment > .cart-list > li > .cart-list-name:hover {
+    opacity: .95; }
   #CART > .cart > .cart-list > li > .cart-list-actions, #CART > .payment > .cart-list > li > .cart-list-actions, #PAYMENT > .cart > .cart-list > li > .cart-list-actions, #PAYMENT > .payment > .cart-list > li > .cart-list-actions {
+    opacity: .6;
     width: 40%;
-    color: #c6a68d; }
+    color: #382B1B; }
   #CART > .cart > .cart-list > li > .cart-list-empty, #CART > .payment > .cart-list > li > .cart-list-empty, #PAYMENT > .cart > .cart-list > li > .cart-list-empty, #PAYMENT > .payment > .cart-list > li > .cart-list-empty {
+    opacity: .6;
     display: block;
     text-align: center;
-    color: #c6a68d;
+    color: #774D34;
     font-weight: bold; }
   #CART > .cart > .cart-list > li > .cart-list-button, #CART > .payment > .cart-list > li > .cart-list-button, #PAYMENT > .cart > .cart-list > li > .cart-list-button, #PAYMENT > .payment > .cart-list > li > .cart-list-button {
     margin-top: 50px;
@@ -1244,9 +1249,12 @@ button {
 .ground-block.SMALL > .block-content {
   width: 340px;
   margin: 30px auto; }
-  .ground-block.SMALL > .block-content form > div:not(.short) > input[type=text], .ground-block.SMALL > .block-content form > div:not(.short) > input[type=email], .ground-block.SMALL > .block-content form > div:not(.short) > input[type=password], .ground-block.SMALL > .block-content form > div:not(.short) > input[type=number], .ground-block.SMALL > .block-content form > div:not(.short) > input[type=url], .ground-block.SMALL > .block-content form > div:not(.short) > select, .ground-block.SMALL > .block-content form > div:not(.short) > button, .ground-block.SMALL > .block-content form > div:not(.short) > textarea, .ground-block.SMALL > .block-content form > div.long > input[type=text], .ground-block.SMALL > .block-content form > div.long > input[type=email], .ground-block.SMALL > .block-content form > div.long > input[type=password], .ground-block.SMALL > .block-content form > div.long > input[type=number], .ground-block.SMALL > .block-content form > div.long > input[type=url], .ground-block.SMALL > .block-content form > div.long > select, .ground-block.SMALL > .block-content form > div.long > button, .ground-block.SMALL > .block-content form > div.long > textarea {
+  .ground-block.SMALL > .block-content form > div:not(.short) > input[type=text], .ground-block.SMALL > .block-content form > div:not(.short) > input[type=email], .ground-block.SMALL > .block-content form > div:not(.short) > input[type=password], .ground-block.SMALL > .block-content form > div:not(.short) > input[type=number], .ground-block.SMALL > .block-content form > div:not(.short) > input[type=url], .ground-block.SMALL > .block-content form > div:not(.short) > select, .ground-block.SMALL > .block-content form > div:not(.short) > button, .ground-block.SMALL > .block-content form > div:not(.short) > textarea,
+  .ground-block.SMALL > .block-content form > div:not(.short) > a > button, .ground-block.SMALL > .block-content form > div.long > input[type=text], .ground-block.SMALL > .block-content form > div.long > input[type=email], .ground-block.SMALL > .block-content form > div.long > input[type=password], .ground-block.SMALL > .block-content form > div.long > input[type=number], .ground-block.SMALL > .block-content form > div.long > input[type=url], .ground-block.SMALL > .block-content form > div.long > select, .ground-block.SMALL > .block-content form > div.long > button, .ground-block.SMALL > .block-content form > div.long > textarea,
+  .ground-block.SMALL > .block-content form > div.long > a > button {
     display: block;
-    width: 310px;
+    min-width: 300px;
+    max-width: 300px;
     margin-left: auto;
     margin-right: auto; }
 
@@ -1292,8 +1300,8 @@ button {
       padding-bottom: 5px; }
   .ground-block.BIG > .block-content input[type=text], .ground-block.BIG > .block-content input[type=email], .ground-block.BIG > .block-content input[type=password], .ground-block.BIG > .block-content input[type=number], .ground-block.BIG > .block-content input[type=url], .ground-block.BIG > .block-content select, .ground-block.BIG > .block-content textarea {
     display: block;
-    min-width: 310px;
-    max-width: 310px;
+    min-width: 300px;
+    max-width: 300px;
     margin-left: 5px; }
 
 @media (min-width: 675px) {
