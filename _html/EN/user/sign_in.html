@@ -21,13 +21,10 @@
 
             <script>
                 window.APP.throw_event(window.EVENTS.plugins.reload_sign_in);
-
                 window.APP.DATA.redirect = '/';
-
                 // {% if go_back %}
                 window.APP.DATA.redirect = '{{ go_back }}';
                 // {% endif %}
-
                 window.APP.DATA.delay = 2000;
                 window.APP.throw_event(window.EVENTS.redirect);
             </script>
@@ -51,10 +48,9 @@
 
                 {% endfor %}
 
-                <div class="form_buttons long"><button disabled type="submit"> Done </button></div>
                 <div class="form_buttons long">
+                    <button disabled type="submit"> Done </button>
                     <a href="/user/sign_up/"><button type="button"> Register </button></a>
-
                     <a href="/user/forgot/"><button type="button"> Forgot your password? </button></a>
                 </div>
 

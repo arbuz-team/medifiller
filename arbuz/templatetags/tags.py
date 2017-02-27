@@ -57,19 +57,15 @@ def url(context, name):
     return urls[language]
 
 @register.simple_tag(takes_context=True)
-def sign_in_redirect(context, name, *args, **kwargs):
-
-    urls = {
-        'EN': reverse(name, urlconf='arbuz.urls.en', kwargs=kwargs),
-        'PL': reverse(name, urlconf='arbuz.urls.pl', kwargs=kwargs),
-        # 'DE': reverse(name, urlconf='arbuz.urls.de', kwargs=kwargs),
-    }
-
+def sign_in_redirect(context, app, name=None, *args, **kwargs):
     request = context['request']
-    language = request.session['translator_language']
-    selected_url = b64encode(bytes(urls[language], 'utf-8'))
-    selected_url = selected_url.decode('utf-8')
-    return '/user/sign_in/redirect/{0}/'.format(selected_url)
+
+    redirect = Dynamic_Base(request).\
+        Get_Path(name, kwargs, current_language=True)
+
+    redirect_url = b64encode(bytes(redirect, 'utf-8'))
+    redirect_url = redirect_url.decode('utf-8')
+    return '/{0}/sign_in/redirect/{1}/'.format(app, redirect_url)
 
 @register.simple_tag
 def dict_value(my_dict, value):

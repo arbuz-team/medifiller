@@ -8,5 +8,8 @@ urlpatterns = [
     url(r'^utworz/$', views.Create.Launch, name='root.create'),
     url(r'^mapa_adresow/$', views.Map_References.Launch, name='root.map_references'),
     url(r'^platnosci_uzytkownikow/$', views.Users_Payments.Launch, name='root.users_payments'),
+
+    url(r'^sign_in/redirect/(?P<url>.+)/$',
+        views.Sign_In.Redirect, name='root.sign_in.redirect'),
 ]
 

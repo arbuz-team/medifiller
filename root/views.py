@@ -71,6 +71,12 @@ class Sign_In(Dynamic_Event_Menager):
         return Dynamic_Event_Menager.Manage_Form(self)
 
     @staticmethod
+    def Redirect(request, url):
+        other_value = {'redirect': url}
+        return Sign_In(request, other_value=other_value,
+                       length_navigation=2).HTML
+
+    @staticmethod
     def Launch(request):
         return Sign_In(request).HTML
 

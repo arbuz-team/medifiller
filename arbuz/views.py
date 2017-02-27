@@ -3,12 +3,10 @@ from payment.base import *
 from dialog.views import *
 
 from abc import ABCMeta, abstractmethod
-import re
 
 
 class Manager(Dynamic_Base):
 
-    @abstractmethod
     def Manage_Content_Ground(self):
         pass
 
@@ -158,11 +156,19 @@ class Updater(Dynamic_Base):
             if self.authorization:
                 self.request.session['arbuz_permissions'] = 'authorization'
 
+    def Update_Redirect_URL(self):
+        self.content['go_back'] = '/'
+
+        if 'redirect' in self.other_value:
+            self.content['go_back'] = base64.b64decode(
+                bytes(self.other_value['redirect'], 'utf-8'))
+
     def __init__(self, request):
         Dynamic_Base.__init__(self, request)
         self.length_navigation = None
         self.only_root = False
         self.authorization = False
+        self.other_value = None
 
 
 
@@ -249,7 +255,7 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
                  autostart=True,
                  authorization=False,
                  error_method=None,
-                 other_value=None,
+                 other_value={},
                  only_root=False,
                  clear_session=False,
                  length_navigation=None):

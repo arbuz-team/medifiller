@@ -199,9 +199,8 @@ class New_Product(Product_Elements):
 
         if details_pl:
 
-            keywords = details_pl.keywords
             name = details_pl.name
-            result = keywords
+            result = ''
 
             for word in name:
                 result += Search_Engine.\

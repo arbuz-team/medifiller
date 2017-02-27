@@ -15,5 +15,5 @@ urlpatterns = [
         views.Change_Password.Secure, name='user.change_password'),
 
     url(r'^sign_in/redirect/(?P<url>.+)/$',
-        views.Sign_In.Redirect, name='user.sign_in.Redirect'),
+        views.Sign_In.Redirect, name='user.sign_in.redirect'),
 ]
