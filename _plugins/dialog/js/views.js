@@ -30,7 +30,7 @@ let
   hide = function()
   {
     $(selectors.container)
-      .fadeOut(200, clear_data);
+      .fadeOut(200);
   },
 
 

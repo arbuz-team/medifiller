@@ -2292,13 +2292,13 @@
 	 */
 	
 	var define = exports.define = function define() {
-	  cart_form_controllers.define();
-	  cart_motion_controllers.define();
-	  post_button_controllers.define();
-	
 	  $('.cart-close', $('#CART')).click(cart_motion_controllers.plugin_close);
 	
 	  $('body').keydown(manage_key);
+	
+	  cart_form_controllers.define();
+	  cart_motion_controllers.define();
+	  post_button_controllers.define();
 	},
 	    start = exports.start = function start() {
 	  cart_loader_controllers.define();
@@ -2843,7 +2843,7 @@
 	  $(selectors.container).fadeIn(200);
 	},
 	    hide = function hide() {
-	  $(selectors.container).fadeOut(200, clear_data);
+	  $(selectors.container).fadeOut(200);
 	},
 	    clear_data = function clear_data() {
 	  $(selectors.header).html('Loading...');
@@ -2949,16 +2949,23 @@
 	
 	var _controllers2 = __webpack_require__(20);
 	
+	var _controllers3 = __webpack_require__(35);
+	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	/////////////////////////////
 	
-	var load = exports.load = interior_dialog_views.load; /**
-	                                                       * Created by mrskull on 21.01.17.
-	                                                       */
+	/**
+	 * Created by mrskull on 21.01.17.
+	 */
+	
+	var load = exports.load = interior_dialog_views.load;
 	
 	var selectors = interior_dialog_views.selectors,
 	    variables = interior_dialog_views.variables,
+	    post_button_controllers = new _controllers3.Post_Button_Controllers({
+	  container: '#DIALOG > .dialog'
+	}),
 	    dialog_form_controllers = new _controllers2.Form_Controllers(interior_dialog_views);
 	
 	var recognize_button = exports.recognize_button = function recognize_button() {
@@ -2981,6 +2988,8 @@
 	},
 	    define = exports.define = function define() {
 	  $(selectors.buttons).click(recognize_button);
+	
+	  post_button_controllers.define();
 	  dialog_form_controllers.define();
 	};
 

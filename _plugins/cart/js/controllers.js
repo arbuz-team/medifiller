@@ -66,13 +66,13 @@ export let
 
   define = function()
   {
-    cart_form_controllers.define();
-    cart_motion_controllers.define();
-    post_button_controllers.define();
-
     $('.cart-close', $('#CART')).click(cart_motion_controllers.plugin_close);
 
     $('body').keydown(manage_key);
+
+    cart_form_controllers.define();
+    cart_motion_controllers.define();
+    post_button_controllers.define();
   },
 
 

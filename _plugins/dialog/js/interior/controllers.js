@@ -2,9 +2,10 @@
  * Created by mrskull on 21.01.17.
  */
 
-import * as interior_dialog_views from './views'
-import {close as dialog_close} from '../controllers'
-import {Form_Controllers}  from '../../../forms/js/controllers'
+import * as interior_dialog_views   from './views'
+import {close as dialog_close}      from '../controllers'
+import {Form_Controllers}           from '../../../forms/js/controllers'
+import {Post_Button_Controllers}    from '../../../forms/js/post_button/controllers'
 
 
 /////////////////////////////
@@ -18,6 +19,10 @@ let
 
   selectors = interior_dialog_views.selectors,
   variables = interior_dialog_views.variables,
+
+  post_button_controllers = new Post_Button_Controllers({
+    container: '#DIALOG > .dialog'
+  }),
 
   dialog_form_controllers = new Form_Controllers(interior_dialog_views);
 
@@ -47,5 +52,7 @@ export let
   define = function()
   {
     $(selectors.buttons).click(recognize_button);
+
+    post_button_controllers.define();
     dialog_form_controllers.define();
   };
