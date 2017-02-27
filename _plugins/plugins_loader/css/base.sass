@@ -1,3 +1,16 @@
 
 .container-part-loading
   padding: 10px 15px
+
+
+@media (min-width: $G-SIZE-3)
+
+  .container-part
+    >.translucent
+      >*
+        opacity: .85
+
+  .container-part:hover
+    >.translucent
+      >*
+        opacity: 1

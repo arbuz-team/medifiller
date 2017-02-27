@@ -472,10 +472,12 @@ strong {
   border-right: 2px solid #e8e8e8;
   overflow: visible; }
   #SEARCHER > .searcher > .searcher-header {
+    opacity: 1;
     display: block;
     height: 30px;
     background-color: #382B1B; }
   #SEARCHER > .searcher > .searcher-logo {
+    opacity: 1;
     display: block;
     height: 130px;
     text-align: center; }
@@ -487,6 +489,7 @@ strong {
       width: 125px;
       height: auto; }
   #SEARCHER > .searcher > .logo_text {
+    opacity: 1;
     display: block;
     height: 100px;
     line-height: 100px;
@@ -533,7 +536,6 @@ strong {
       line-height: 40px;
       font-weight: bold;
       text-align: center;
-      opacity: .7;
       background-color: transparent;
       border-top: 1px solid #e8e8e8; }
     #SEARCHER > .searcher > .searcher-filters > .searcher-filters-content {
@@ -1161,7 +1163,7 @@ button {
     position: relative;
     left: 2px;
     font-size: 16px;
-    opacity: .65; }
+    opacity: .8; }
   .field_shell .checkbox label.checkbox-field:after {
     content: '\2714';
     width: 9px;
@@ -1177,7 +1179,7 @@ button {
   .field_shell .checkbox label.checkbox-field:hover {
     border-color: #aaa; }
   .field_shell .checkbox label.checkbox-field:hover + label.checkbox-text, .field_shell .checkbox label.checkbox-field + label.checkbox-text:hover {
-    opacity: .85; }
+    opacity: 1; }
   .field_shell .checkbox input[type=checkbox] {
     visibility: hidden; }
     .field_shell .checkbox input[type=checkbox]:checked + label.checkbox-field {
@@ -1197,7 +1199,7 @@ button {
     border-bottom: #aaa;
   font-size: 16px;
   cursor: pointer;
-  opacity: .7;
+  opacity: .8;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none; }
@@ -1388,6 +1390,12 @@ button {
 
 .container-part-loading {
   padding: 10px 15px; }
+
+@media (min-width: 1000px) {
+  .container-part > .translucent > * {
+    opacity: .85; }
+  .container-part:hover > .translucent > * {
+    opacity: 1; } }
 
 .content_editable {
   position: relative;
