@@ -154,39 +154,44 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
         self.content['paypal'] = self.Create_PayPal_From()
         self.content['dotpay'] = self.Create_DotPay_From()
 
+    def Create_Address(self, pk, model):
+
+        address = User_Address.objects.get(pk=pk)
+        new_address = None
+
+        unique = self.request.session['user_unique']
+        user = User.objects.get(unique=unique)
+        payment = Payment.objects.get(user=user, approved=False)
+
+        if model == 'payment_address':
+            new_address = Payment_Address(payment=payment)
+
+        if model == 'invoice_address':
+            new_address = Invoice_Address(payment=payment)
+
+        new_address.full_name = address.full_name
+        new_address.address_line_1 = address.address_line_1
+        new_address.address_line_2 = address.address_line_2
+        new_address.city = address.city
+        new_address.region = address.region
+        new_address.postcode = address.postcode
+        new_address.country = address.country
+        new_address.save()
+
     def Manage_Content_Ground(self):
-
-        self.content['payment_address'] = Form_Address_Payment(self.request)
         self.Load_Payment_Details()
-
-        return self.Render_HTML('payment/payment.html', 'payment_address')
+        return self.Render_HTML('payment/payment.html')
 
     def Manage_Form_Address_Payment(self):
 
-        self.content['payment_address'] = Form_Address_Payment(
-            self.request, self.request.POST)
+        address_payment_pk = self.request.POST['shipment']
+        address_invoice_pk = self.request.POST['invoice']
 
-        if self.content['payment_address'].is_valid():
-            form = self.content['payment_address']
-            unique = self.request.session['user_unique']
-            user = User.objects.get(unique=unique)
-            payment = Payment.objects.get(user=user, approved=False)
+        self.Create_Address(address_payment_pk, 'payment_address')
+        self.Create_Address(address_invoice_pk, 'invoice_address')
 
-            payment_address = Payment_Address.objects.get(payment=payment)
-            payment_address.full_name = form.cleaned_data['full_name']
-            payment_address.address_line_1 = form.cleaned_data['address_line_1']
-            payment_address.address_line_2 = form.cleaned_data['address_line_2']
-            payment_address.city = form.cleaned_data['city']
-            payment_address.region = form.cleaned_data['region']
-            payment_address.postcode = form.cleaned_data['postcode']
-            payment_address.country = form.cleaned_data['country']
-            payment_address.save()
-
-            self.Load_Payment_Details()
-            self.content['payment_address'] = None
-            return self.Render_HTML('payment/payment.html')
-
-        return self.Render_HTML('payment/payment.html', 'payment_address')
+        self.Load_Payment_Details()
+        return self.Render_HTML('payment/payment.html')
 
     def Manage_Form(self):
 

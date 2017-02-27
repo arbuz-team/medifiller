@@ -1,21 +1,33 @@
 from arbuz.base import *
+from payment.models import *
 import pdfkit
 
 
 class PDF_Generator(Dynamic_Base):
 
-    def get_report(self):
+    def Invoice(self, payment_pk):
+        payment = Payment.objects.get(pk=payment_pk)
+        address = Invoice_Address.objects.get(payment=payment)
+        products = Selected_Product.objects.filter(payment=payment)
 
-        html_name = BASE_DIR + '/_html/' + \
-            self.request.session['translator_language'] \
-                    + '/invoice/invoice.html'
+        self.content['invoice'] = {
+            'unique':           payment.pk,
+            'date':             payment.date,
+            # seller
+            'client':           address,
+            'products':         products,
+            # total_vats
+            # netto_price
+            'brutto_price':     payment.total_price,
 
-        pdf = pdfkit.from_file(html_name, False)
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'inline;filename=some_file.pdf'
-        response.write(pdf)
+        }
 
-        return response
+        return self.Generate()
+
+    def Generate(self):
+        html = self.Render_HTML('invoice/invoice.html')
+        pdf = pdfkit.from_string(html.content.decode(), False)
+        return HttpResponse(pdf, content_type='application/pdf')
 
     def __init__(self, request):
         Dynamic_Base.__init__(self, request)

@@ -23,6 +23,11 @@ class Payment_Address(Abstract_Address):
 
 
 
+class Invoice_Address(Abstract_Address):
+    payment = models.OneToOneField(Payment)
+
+
+
 class Selected_Product(models.Model):
 
     payment = models.ForeignKey(Payment)

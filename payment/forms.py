@@ -29,10 +29,3 @@ class Form_Dotpay(forms.Form):
 # https://ssl.dotpay.pl/s2/login/cloudfs1/magellan_media/common_file/dotpay_instrukcja_techniczna_implementacji_platnosci.pdf
 
 
-
-class Form_Address_Payment(Form_Abstract_Address):
-
-    class Meta(Form_Abstract_Address.Meta):
-        model = Payment_Address
-        exclude = ('payment', )
-
