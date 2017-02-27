@@ -6,7 +6,7 @@ $ALL_blocks--padding: $ALL_blocks--padding-width * 2
 
 
 $SMALL--width: 340px
-$SMALL-input--width: $SMALL--width - $ALL_blocks--padding - 10px
+$SMALL-input--width: $SMALL--width - $ALL_blocks--padding - 20px
 
 $BIG--width: 670px
 $BIG-form_block--width-mobile: $SMALL--width - $ALL_blocks--padding
@@ -66,9 +66,11 @@ $BIG-input--width-normal: $BIG-form_block--width-normal - 10px
 
   form
     >div:not(.short), >div.long
-      >input[type=text], >input[type=email], >input[type=password], >input[type=number], >input[type=url], >select, >button, >textarea
+      >input[type=text], >input[type=email], >input[type=password], >input[type=number], >input[type=url], >select, >button, >textarea,
+      >a >button
         display: block
-        width: $SMALL-input--width
+        min-width: $SMALL-input--width
+        max-width: $SMALL-input--width
         margin:
           left: auto
           right: auto

@@ -9,6 +9,7 @@ window.EVENTS = {
 
   plugins: {
     close: new Event('plugins_close'),
+    close_cart: new Event('cart_close'),
 
     reload_sign_in: new Event('plugins_reload_sign_in'),
 

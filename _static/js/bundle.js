@@ -353,6 +353,7 @@
 	
 	  plugins: {
 	    close: new Event('plugins_close'),
+	    close_cart: new Event('cart_close'),
 	
 	    reload_sign_in: new Event('plugins_reload_sign_in'),
 	
@@ -2293,6 +2294,7 @@
 	
 	var define = exports.define = function define() {
 	  $('.cart-close', $('#CART')).click(cart_motion_controllers.plugin_close);
+	  window.APP.add_own_event('cart_close', cart_motion_controllers.plugin_close);
 	
 	  $('body').keydown(manage_key);
 	
