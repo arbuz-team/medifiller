@@ -14,7 +14,6 @@ class Manager(Dynamic_Base):
 
     def Manage_Content_Dialog(self):
 
-        print(self.request.POST)
         if self.request.POST['type'] == 'alert':
             return Dialog_Alert(self.request, self.app_name).HTML
 

@@ -119,7 +119,7 @@ class Abstract_Image_Form(Abstract_Form):
         }
 
         url_attrs = {
-            'placeholder': 'Paste image address url'
+            'placeholder': Text(self.request, 97)
         }
 
         self.fields['image_base64'].widget = forms.TextInput(attrs=image_base64_attr)

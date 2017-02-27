@@ -73,6 +73,19 @@ class Dialog_Alert(Dialog):
 
 class Dialog_Confirm(Dialog):
 
+    def Manage_Delete_Product(self):
+
+        self.content['post_button'] = {
+            'name':     self.request.POST['dialog_name'],
+            'action':   self.request.POST['dialog_action'],
+            'value':    self.request.POST['dialog_value'],
+            'reload':   self.request.POST['dialog_reload'],
+            'redirect': self.request.POST['dialog_redirect'],
+            'url':      self.request.POST['dialog_url'],
+        }
+
+        return self.Render_Dialog('dialog/confirm.html', only_root=True)
+
     def __init__(self, request, app_name):
         Dialog.__init__(self, request, app_name)
         self.HTML = self.Manage()
