@@ -1,21 +1,21 @@
 
 $ALL_blocks--margin-width: 30px
 $ALL_blocks--margin: $ALL_blocks--margin-width auto
-$ALL_blocks--padding-width: 15px
+$ALL_blocks--padding-width: 10px
 $ALL_blocks--padding: $ALL_blocks--padding-width * 2
 
 
 $SMALL--width: 340px
 $SMALL-input--width: $SMALL--width - $ALL_blocks--padding - 10px
 
-$BIG--width: 675px
+$BIG--width: 670px
 $BIG-form_block--width-mobile: $SMALL--width - $ALL_blocks--padding
-$BIG-form_block--width-normal: ($BIG--width - $ALL_blocks--padding) / 3 - 20px
+$BIG-form_block--width-normal: ($BIG--width - $ALL_blocks--padding) / 3 - 13px
 $BIG-input--width-normal: $BIG-form_block--width-normal - 10px
 
 
 
-#GROUND .ground-block
+.ground-block
 
   >.block-content
 
@@ -60,7 +60,7 @@ $BIG-input--width-normal: $BIG-form_block--width-normal - 10px
       border-top: 1px solid #eee
 
 
-#GROUND .ground-block.SMALL > .block-content
+.ground-block.SMALL > .block-content
   width: $SMALL--width
   margin: $ALL_blocks--margin
 
@@ -76,7 +76,7 @@ $BIG-input--width-normal: $BIG-form_block--width-normal - 10px
 
 /////////////////////////////////////////////////
 
-#GROUND .ground-block.BIG > .block-content
+.ground-block.BIG > .block-content
   width: $SMALL--width
   margin: $ALL_blocks--margin
 
@@ -121,12 +121,13 @@ $BIG-input--width-normal: $BIG-form_block--width-normal - 10px
   input[type=text], input[type=email], input[type=password], input[type=number], input[type=url], select, textarea
     display: block
     min-width: $SMALL-input--width
+    max-width: $SMALL-input--width
     margin-left: 5px
 
 
 @media (min-width: $G-SIZE-2)
 
-  #GROUND >.ground:not(.smaller) .ground-block.BIG > .block-content
+  .ground:not(.smaller) .ground-block.BIG > .block-content
     width: $BIG--width
 
     .form_block
@@ -144,13 +145,17 @@ $BIG-input--width-normal: $BIG-form_block--width-normal - 10px
         color: #999
         cursor: auto
 
+    .form_block:nth-child(3n + 4)
+      margin-right: 0
+
     input[type=text], input[type=email], input[type=password], input[type=number], input[type=url], select, textarea
       min-width: $BIG-input--width-normal
+      max-width: $BIG-input--width-normal
 
 
 @media (min-width: 1300px)
 
-  #GROUND >.ground.smaller .ground-block.BIG > .block-content
+  .ground.smaller .ground-block.BIG > .block-content
     width: $BIG--width
 
     .form_block
@@ -168,5 +173,9 @@ $BIG-input--width-normal: $BIG-form_block--width-normal - 10px
         color: #999
         cursor: auto
 
+    .form_block:nth-child(3n + 4)
+      margin-right: 0
+
     input[type=text], input[type=email], input[type=password], input[type=number], input[type=url], select, textarea
       min-width: $BIG-input--width-normal
+      max-width: $BIG-input--width-normal
