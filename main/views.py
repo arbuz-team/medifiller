@@ -68,6 +68,7 @@ class Editable_Tab(Dynamic_Event_Menager):
 
 
 
+from invoice.views import *
 class Start(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):

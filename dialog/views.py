@@ -73,17 +73,27 @@ class Dialog_Alert(Dialog):
 
 class Dialog_Confirm(Dialog):
 
-    def Manage_Delete_Product(self):
+    def Generate_Content(self):
 
         self.content['post_button'] = {
-            'name':     self.request.POST['post_button_name'],
-            'action':   self.request.POST['post_button_action'],
-            'value':    self.request.POST['post_button_value'],
-            'reload':   self.request.POST['post_button_reload'],
+            'name': self.request.POST['post_button_name'],
+            'action': self.request.POST['post_button_action'],
+            'value': self.request.POST['post_button_value'],
+            'reload': self.request.POST['post_button_reload'],
             'redirect': self.request.POST['post_button_redirect'],
-            'url':      self.request.POST['post_button_url'],
+            'url': self.request.POST['post_button_url'],
         }
 
+    def Manage_Delete_Product(self):
+        self.content['title'] = Text(self.request, 98)
+        self.content['description'] = Text(self.request, 99)
+        self.Generate_Content()
+        return self.Render_Dialog('dialog/confirm.html', only_root=True)
+
+    def Manage_Clear_Cart(self):
+        self.content['title'] = Text(self.request, 100)
+        self.content['description'] = Text(self.request, 101)
+        self.Generate_Content()
         return self.Render_Dialog('dialog/confirm.html', only_root=True)
 
     def __init__(self, request, app_name):
