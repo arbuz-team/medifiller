@@ -44,9 +44,12 @@ let
   },
 
 
-  save_type_and_name = function(type, name, value)
+  save_type_and_name = function(button_data)
   {
     let
+      type = button_data.type,
+      name = button_data.name,
+      value = button_data.value,
       result_type,
       result_name,
       default_type = 'alert',
@@ -74,14 +77,23 @@ let
 
   prepare_post_data = function(dialog_data)
   {
-    let post_data = {};
+    let
+      post_data = {},
+      isset = 0;
 
     for(let data in dialog_data)
     {
       if(dialog_data.hasOwnProperty(data) && dialog_data[data])
+      {
         post_data[data] = dialog_data[data];
+        ++isset;
+      }
     }
-    dialog_models.variables.post_data = post_data;
+
+    if(isset > 0)
+      dialog_models.variables.post_data = post_data;
+    else
+      dialog_models.variables.post_data = undefined;
   };
 
 

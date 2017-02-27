@@ -77,12 +77,12 @@ export let
         value:  $button.data('value'),
       },
       dialog_data = {
-        dialog_name:   $button.data('dialog-name'),
-        dialog_action:    $button.data('dialog-action'),
-        dialog_value:    $button.data('dialog-value'),
-        dialog_reload:    $button.data('dialog-reload'),
-        dialog_redirect:    $button.data('dialog-redirect'),
-        dialog_url:    $button.data('dialog-url'),
+        post_button_name:   $button.data('dialog-name'),
+        post_button_action:    $button.data('dialog-action'),
+        post_button_value:    $button.data('dialog-value'),
+        post_button_reload:    $button.data('dialog-reload'),
+        post_button_redirect:    $button.data('dialog-redirect'),
+        post_button_url:    $button.data('dialog-url'),
       };
 
     dialog_views.open(button_data, dialog_data)

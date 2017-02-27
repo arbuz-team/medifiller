@@ -36,30 +36,30 @@ export let
     button_name: '',
     button_url: '',
     button_value: '',
-    post_data: {},
+    post_data: undefined,
   },
 
 
   prepare_post_data = function(post_data)
   {
     if(!post_data)
-    {
       variables.post_data = {};
-
-      variables.post_data.type = variables.button_type;
-      variables.post_data.dialog_name = variables.button_name;
-
-      if(variables.button_value)
-        variables.post_data.value = variables.button_value;
-    }
     else
       variables.post_data = post_data;
+
+    variables.post_data.type = variables.button_type;
+    variables.post_data.dialog_name = variables.button_name;
+
+    if(variables.button_value)
+      variables.post_data.value = variables.button_value;
   },
 
 
   load = function(url, post_data, callback)
   {
     prepare_post_data(post_data);
+
+    console.log(variables.post_data);
 
     dialog_loader_controllers.load(url, variables.post_data, callback);
   };

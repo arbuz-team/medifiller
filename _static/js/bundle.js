@@ -2788,12 +2788,12 @@
 	    value: $button.data('value')
 	  },
 	      dialog_data = {
-	    dialog_name: $button.data('dialog-name'),
-	    dialog_action: $button.data('dialog-action'),
-	    dialog_value: $button.data('dialog-value'),
-	    dialog_reload: $button.data('dialog-reload'),
-	    dialog_redirect: $button.data('dialog-redirect'),
-	    dialog_url: $button.data('dialog-url')
+	    post_button_name: $button.data('dialog-name'),
+	    post_button_action: $button.data('dialog-action'),
+	    post_button_value: $button.data('dialog-value'),
+	    post_button_reload: $button.data('dialog-reload'),
+	    post_button_redirect: $button.data('dialog-redirect'),
+	    post_button_url: $button.data('dialog-url')
 	  };
 	
 	  dialog_views.open(button_data, dialog_data);
@@ -2850,8 +2850,11 @@
 	
 	  $(selectors.content).html('Loading...');
 	},
-	    save_type_and_name = function save_type_and_name(type, name, value) {
-	  var result_type = void 0,
+	    save_type_and_name = function save_type_and_name(button_data) {
+	  var type = button_data.type,
+	      name = button_data.name,
+	      value = button_data.value,
+	      result_type = void 0,
 	      result_name = void 0,
 	      default_type = 'alert',
 	      default_name = 'default';
@@ -2868,12 +2871,17 @@
 	  interior_dialog_models.variables.button_value = value;
 	},
 	    prepare_post_data = function prepare_post_data(dialog_data) {
-	  var post_data = {};
+	  var post_data = {},
+	      isset = 0;
 	
 	  for (var data in dialog_data) {
-	    if (dialog_data.hasOwnProperty(data) && dialog_data[data]) post_data[data] = dialog_data[data];
+	    if (dialog_data.hasOwnProperty(data) && dialog_data[data]) {
+	      post_data[data] = dialog_data[data];
+	      ++isset;
+	    }
 	  }
-	  dialog_models.variables.post_data = post_data;
+	
+	  if (isset > 0) dialog_models.variables.post_data = post_data;else dialog_models.variables.post_data = undefined;
 	};
 	
 	///////////////////////////////////////
@@ -2882,8 +2890,6 @@
 	  save_type_and_name(button_data);
 	
 	  prepare_post_data(dialog_data);
-	
-	  console.log(dialog_models.variables.post_data);
 	
 	  interior_dialog_controllers.load(button_data.url, dialog_models.variables.post_data, show);
 	},
@@ -2956,8 +2962,7 @@
 	var recognize_button = exports.recognize_button = function recognize_button() {
 	  var $button = $(this);
 	
-	  variables.button_type = $button.data('type');
-	  variables.button_name = $button.data('name');
+	  variables.button_name = $button.data('dialog-button');
 	
 	  switch (variables.button_name) {
 	    case 'cancel':
@@ -3043,20 +3048,20 @@
 	  button_name: '',
 	  button_url: '',
 	  button_value: '',
-	  post_data: {}
+	  post_data: undefined
 	},
 	    prepare_post_data = exports.prepare_post_data = function prepare_post_data(post_data) {
-	  if (!post_data) {
-	    variables.post_data = {};
+	  if (!post_data) variables.post_data = {};else variables.post_data = post_data;
 	
-	    variables.post_data.type = variables.button_type;
-	    variables.post_data.dialog_name = variables.button_name;
+	  variables.post_data.type = variables.button_type;
+	  variables.post_data.dialog_name = variables.button_name;
 	
-	    if (variables.button_value) variables.post_data.value = variables.button_value;
-	  } else variables.post_data = post_data;
+	  if (variables.button_value) variables.post_data.value = variables.button_value;
 	},
 	    load = exports.load = function load(url, post_data, callback) {
 	  prepare_post_data(post_data);
+	
+	  console.log(variables.post_data);
 	
 	  dialog_loader_controllers.load(url, variables.post_data, callback);
 	};
