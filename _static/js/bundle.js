@@ -2874,9 +2874,12 @@
 	  var post_data = {},
 	      isset = 0;
 	
-	  for (var data in dialog_data) {
-	    if (dialog_data.hasOwnProperty(data) && dialog_data[data]) {
+	  if (dialog_models.variables.type === 'confirm') for (var data in dialog_data) {
+	    if (dialog_data.hasOwnProperty(data)) if (dialog_data[data]) {
 	      post_data[data] = dialog_data[data];
+	      ++isset;
+	    } else {
+	      post_data[data] = '';
 	      ++isset;
 	    }
 	  }
@@ -2888,7 +2891,6 @@
 	
 	var open = exports.open = function open(button_data, dialog_data) {
 	  save_type_and_name(button_data);
-	
 	  prepare_post_data(dialog_data);
 	
 	  interior_dialog_controllers.load(button_data.url, dialog_models.variables.post_data, show);
@@ -3060,8 +3062,6 @@
 	},
 	    load = exports.load = function load(url, post_data, callback) {
 	  prepare_post_data(post_data);
-	
-	  console.log(variables.post_data);
 	
 	  dialog_loader_controllers.load(url, variables.post_data, callback);
 	};

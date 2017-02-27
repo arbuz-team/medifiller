@@ -81,14 +81,21 @@ let
       post_data = {},
       isset = 0;
 
-    for(let data in dialog_data)
-    {
-      if(dialog_data.hasOwnProperty(data) && dialog_data[data])
+    if(dialog_models.variables.type === 'confirm')
+      for(let data in dialog_data)
       {
-        post_data[data] = dialog_data[data];
-        ++isset;
+        if(dialog_data.hasOwnProperty(data))
+          if(dialog_data[data])
+          {
+            post_data[data] = dialog_data[data];
+            ++isset;
+          }
+          else
+          {
+            post_data[data] = '';
+            ++isset;
+          }
       }
-    }
 
     if(isset > 0)
       dialog_models.variables.post_data = post_data;
@@ -104,7 +111,6 @@ export let
   open = function(button_data, dialog_data)
   {
     save_type_and_name(button_data);
-
     prepare_post_data(dialog_data);
 
     interior_dialog_controllers.load(button_data.url, dialog_models.variables.post_data, show);
