@@ -8,27 +8,18 @@
     };
 </script>
 
-<div class="ground-block block-1" data-name="start">
+<div class="ground-block block-1 start">
 
     <div class="block-background fill-abs"></div>
 
     <div class="block-content">
 
-        <!--<div class="block-content-banner"><img data-src="{% static 'img/banners/banner_1.jpg' %}" src="{% static 'img/pixel.png' %}" alt="Really beautiful"></div>-->
+        <div class="block-content-banner"><img data-src="{% static 'img/banners/banner_1.jpg' %}" src="{% static 'img/pixel.png' %}" alt="Really beautiful"></div>
 
-        <div class="block-content-describe">Describe briefly your company! ;)</div>
-
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
         {% include 'products/html/tiles_recommended.html' %}
 
     </div><!-- block-content -->
 
 </div><!-- ground-block -->
 
-{% include "ground/html/footer.html" %}
+{% include "ground/html/footer_start.html" %}

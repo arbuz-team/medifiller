@@ -736,24 +736,29 @@ img {
   background-color: #f2f2f2;
   border-top: 1px solid #e8e8e8; }
 
-#GROUND > .ground > .ground-block[data-name=start] > .block-content {
+.ground-block.start > .block-background {
+  background-color: #f2f2f2; }
+
+.ground-block.start > .block-content {
   padding: 0;
     padding-bottom: 50px; }
-  #GROUND > .ground > .ground-block[data-name=start] > .block-content > .block-content-banner {
+  .ground-block.start > .block-content > .block-content-banner {
     width: 100%;
     position: relative;
-    border-bottom: 1px solid #e8e8e8;
-      border-bottom-color: #774D34;
-      border-bottom-width: 5px; }
-    #GROUND > .ground > .ground-block[data-name=start] > .block-content > .block-content-banner > img {
+    border-bottom: 2px solid #e8e8e8;
+    -moz-box-shadow: inset 0px -10px 5px 0px rgba(50, 50, 50, 0.3);
+    -webkit-box-shadow: inset 0px -10px 5px 0px rgba(50, 50, 50, 0.3);
+    box-shadow: inset 0px -10px 5px 0px rgba(50, 50, 50, 0.3); }
+    .ground-block.start > .block-content > .block-content-banner > img {
       max-width: 100%;
-      width: 100%;
-      max-height: 700px;
+      width: auto;
+      max-height: 500px;
       min-height: 300px;
       vertical-align: bottom; }
-  #GROUND > .ground > .ground-block[data-name=start] > .block-content > .block-content-describe, #GROUND > .ground > .ground-block[data-name=start] > .block-content > .block-content.products.tiles {
-    margin-left: 15px;
-    margin-right: 15px; }
+
+.footer.start > .footer-content {
+  background-color: #ffffff;
+  border-top: 2px solid #e8e8e8; }
 
 #GROUND > .ground > .ground-block > .block-link_tiles {
   background-color: transparent;
@@ -970,13 +975,13 @@ img {
         margin-left: auto;
         margin-right: auto;
       border-bottom: 1px solid #e8e8e8; }
-      .products.tiles > ul .product > a > .product-img {
+      .products.tiles > ul .product > a > .product-img, .products.tiles > ul .product > .dialog_button > .product-img {
         position: relative;
         width: 100%;
         height: 200px;
         overflow: hidden;
         text-align: center; }
-      .products.tiles > ul .product > a > .product-title {
+      .products.tiles > ul .product > a > .product-title, .products.tiles > ul .product > .dialog_button > .product-title {
         margin-top: 10px;
         margin-bottom: 10px;
         font-weight: bold; }
@@ -992,6 +997,18 @@ img {
           bottom: 0;
           height: 38px;
           line-height: 38px; }
+
+.products.tiles.recommended {
+  padding: 15px 0; }
+  .products.tiles.recommended .product {
+    margin: 0 5px;
+      margin-bottom: 10px;
+    background-color: #ffffff;
+    -moz-box-shadow: 0px 0px 1px 1px #e8e8e8;
+    -webkit-box-shadow: 0px 0px 1px 1px #e8e8e8;
+    box-shadow: 0px 0px 1px 1px #e8e8e8;
+    border: 1px solid #e8e8e8;
+      border-radius: 1px; }
 
 @media (min-width: 675px) {
   .products.tiles > ul {
@@ -1088,7 +1105,8 @@ button {
   display: inline-block;
   text-align: center; }
 
-.field_shell input[type=text], .field_shell input[type=email], .field_shell input[type=password], .field_shell input[type=number], .field_shell input[type=url], .field_shell select, .field_shell button, .field_shell .button, .field_shell textarea {
+.field_shell input[type=text], .field_shell input[type=email], .field_shell input[type=password], .field_shell input[type=number], .field_shell input[type=url],
+.field_shell select, .field_shell button, .field_shell .button, .field_shell .field, .field_shell textarea {
   margin: 2px 3px;
     margin-bottom: 8px;
   outline: none;
@@ -1100,11 +1118,13 @@ button {
   font-size: 14px;
   font-family: 'OS_Regular', sans-serif; }
 
-.field_shell input[type=text]:disabled, .field_shell input[type=email]:disabled, .field_shell input[type=password]:disabled, .field_shell input[type=number]:disabled, .field_shell input[type=url]:disabled, .field_shell select:disabled, .field_shell button:disabled, .field_shell .button.disabled, .field_shell textarea:disabled {
+.field_shell input[type=text]:disabled, .field_shell input[type=email]:disabled, .field_shell input[type=password]:disabled, .field_shell input[type=number]:disabled, .field_shell input[type=url]:disabled,
+.field_shell select:disabled, .field_shell button:disabled, .field_shell .button.disabled, .field_shell textarea:disabled {
   background-color: #efefef;
   border: 1px solid #d9d9d9; }
 
-.field_shell input[type=text]:focus, .field_shell input[type=email]:focus, .field_shell input[type=password]:focus, .field_shell input[type=number]:focus, .field_shell input[type=url]:focus, .field_shell select:focus, .field_shell button:focus, .field_shell .button:focus, .field_shell textarea:focus {
+.field_shell input[type=text]:focus, .field_shell input[type=email]:focus, .field_shell input[type=password]:focus, .field_shell input[type=number]:focus, .field_shell input[type=url]:focus,
+.field_shell select:focus, .field_shell button:focus, .field_shell .button:focus, .field_shell textarea:focus {
   border: 1px solid #b9b9b9;
     border-top: 1px solid #a0a0a0;
   -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -1149,9 +1169,18 @@ button {
 .field_shell .form_error {
   border: 1px solid #dd4b39 !important; }
 
+.field_shell .field {
+  border: 1px solid transparent; }
+
+.field_shell .form_block .field {
+  margin: 0;
+  padding: 0;
+    padding-left: 5px; }
+
 .field_shell .checkbox {
   width: 100%;
-  position: relative; }
+  position: relative;
+  min-height: 27px; }
   .field_shell .checkbox label {
     cursor: pointer; }
   .field_shell .checkbox label.checkbox-field {
@@ -1163,7 +1192,8 @@ button {
     left: 0;
     background: linear-gradient(top, #222 0%, #45484d 100%);
     border: 1px solid #d1d1d1;
-      border-radius: 2px; }
+      border-radius: 2px;
+    font-size: 19px; }
   .field_shell .checkbox label.checkbox-text {
     position: relative;
     left: 2px;
@@ -1261,15 +1291,32 @@ button {
 .ground-block.BIG > .block-content {
   width: 340px;
   margin: 30px auto; }
-  .ground-block.BIG > .block-content .form_block.visible {
+  .ground-block.BIG > .block-content .form_block.visible, .ground-block.BIG > .block-content .form_block.visible.fields {
     max-height: 700px;
     cursor: auto; }
-    .ground-block.BIG > .block-content .form_block.visible .shell_form {
+    .ground-block.BIG > .block-content .form_block.visible .shell_form, .ground-block.BIG > .block-content .form_block.visible.fields .shell_form {
       height: 0; }
-    .ground-block.BIG > .block-content .form_block.visible .title {
+    .ground-block.BIG > .block-content .form_block.visible .title, .ground-block.BIG > .block-content .form_block.visible.fields .title {
       color: #999;
       cursor: pointer; }
+  .ground-block.BIG > .block-content .form_block.fields {
+    max-height: 80px;
+    padding: 5px 10px;
+    background-color: #f8f8f8;
+    border: 1px solid #e8e8e8;
+      border-radius: 3px; }
+    .ground-block.BIG > .block-content .form_block.fields .title {
+      padding-top: 10px;
+      margin-bottom: 5px;
+      border-bottom: 1px solid #d1d1d1;
+      color: #774D34 !important; }
+    .ground-block.BIG > .block-content .form_block.fields > div > div:last-child {
+      padding-top: 5px;
+      border-top: 1px solid #d1d1d1; }
+  .ground-block.BIG > .block-content .form_block.fields:hover {
+    background-color: #f8f8f8; }
   .ground-block.BIG > .block-content .form_block {
+    margin-top: 15px;
     position: relative;
     display: block;
     max-height: 100px;
@@ -1294,10 +1341,11 @@ button {
       -o-transition: height 500ms ease;
       transition: height 500ms ease; }
     .ground-block.BIG > .block-content .form_block .title {
+      margin-top: 0;
+      padding-bottom: 5px;
       font-size: 14px;
       color: #774D34;
-      text-align: left;
-      padding-bottom: 5px; }
+      text-align: left; }
   .ground-block.BIG > .block-content input[type=text], .ground-block.BIG > .block-content input[type=email], .ground-block.BIG > .block-content input[type=password], .ground-block.BIG > .block-content input[type=number], .ground-block.BIG > .block-content input[type=url], .ground-block.BIG > .block-content select, .ground-block.BIG > .block-content textarea {
     display: block;
     min-width: 300px;
@@ -1320,6 +1368,9 @@ button {
         cursor: auto; }
     .ground:not(.smaller) .ground-block.BIG > .block-content .form_block:nth-child(3n + 4) {
       margin-right: 0; }
+    .ground:not(.smaller) .ground-block.BIG > .block-content .form_block.fields {
+      width: 201.66667px;
+      background-color: #fafafa; }
     .ground:not(.smaller) .ground-block.BIG > .block-content input[type=text], .ground:not(.smaller) .ground-block.BIG > .block-content input[type=email], .ground:not(.smaller) .ground-block.BIG > .block-content input[type=password], .ground:not(.smaller) .ground-block.BIG > .block-content input[type=number], .ground:not(.smaller) .ground-block.BIG > .block-content input[type=url], .ground:not(.smaller) .ground-block.BIG > .block-content select, .ground:not(.smaller) .ground-block.BIG > .block-content textarea {
       min-width: 193.66667px;
       max-width: 193.66667px; } }
@@ -1340,6 +1391,9 @@ button {
         cursor: auto; }
     .ground.smaller .ground-block.BIG > .block-content .form_block:nth-child(3n + 4) {
       margin-right: 0; }
+    .ground.smaller .ground-block.BIG > .block-content .form_block.fields {
+      width: 201.66667px;
+      background-color: #fafafa; }
     .ground.smaller .ground-block.BIG > .block-content input[type=text], .ground.smaller .ground-block.BIG > .block-content input[type=email], .ground.smaller .ground-block.BIG > .block-content input[type=password], .ground.smaller .ground-block.BIG > .block-content input[type=number], .ground.smaller .ground-block.BIG > .block-content input[type=url], .ground.smaller .ground-block.BIG > .block-content select, .ground.smaller .ground-block.BIG > .block-content textarea {
       min-width: 193.66667px;
       max-width: 193.66667px; } }

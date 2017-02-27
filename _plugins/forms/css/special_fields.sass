@@ -1,9 +1,18 @@
 
 .field_shell
 
+  .field
+    border: 1px solid transparent
+
+  .form_block .field
+    margin: 0
+    padding: 0
+      left: 5px
+
   .checkbox
     width: 100%
     position: relative
+    min-height: 27px
 
     label
       cursor: pointer
@@ -18,9 +27,7 @@
       background: linear-gradient(top, #222 0%, #45484d 100%)
       border: $G-STYLE-DARK-BORDER
         radius: 2px
-    //  left: 0
-      right: 0
-    //box-shadow: inset 0 1px 1px rgba(100,100,100,.2), 0 1px 0 rgba(255,255,255,.2)
+      font-size: 19px
 
     label.checkbox-text
       position: relative
