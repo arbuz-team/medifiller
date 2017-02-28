@@ -30,8 +30,8 @@
                                     {{ selected.product.details_en.name }}
                                 </a>
                             </div>
-                            <div class="cart-list-actions"> {{ selected.number }} x {% price selected.product %}
-
+                            <div class="cart-list-actions">
+                                <span>{{ selected.number }} x {% price selected.product %}</span>
                                 <button class="post_button icon" type="button"
                                       data-name="Delete_{{ selected.product.pk }}"
                                       data-action="delete"
