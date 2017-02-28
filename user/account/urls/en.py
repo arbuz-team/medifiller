@@ -7,4 +7,7 @@ urlpatterns = [
     url(r'^addresses/$', views.User_Addresses.Launch, name='user.account.addresses'),
     url(r'^my_shopping/$', views.My_Shopping.Launch, name='user.account.my_shopping'),
     url(r'^favorite/$', views.Favorite.Launch, name='user.account.favorite'),
+
+    url(r'^addresses/redirect/(?P<url>.+)/$',
+        views.User_Addresses.Redirect, name='user.account.addresses.redirect'),
 ]

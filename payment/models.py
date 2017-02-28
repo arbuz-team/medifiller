@@ -10,7 +10,6 @@ class Payment(models.Model):
     total_price = models.CharField(max_length=10)
     currency = models.CharField(max_length=3)
     service = models.CharField(max_length=10)
-    language = models.CharField(max_length=2)
     approved = models.BooleanField(default=False)
 
     def __str__(self):

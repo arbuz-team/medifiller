@@ -11,7 +11,6 @@ def Load_Default_Data():
         total_price=300,
         currency='PLN',
         service='Dotpay',
-        language='PL',
         approved=True
     )
 
@@ -61,7 +60,6 @@ def Load_Default_Data():
         total_price=150,
         currency='EUR',
         service='PayPal',
-        language='EN',
         approved=True
     )
 

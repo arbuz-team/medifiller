@@ -1,21 +1,22 @@
 from arbuz.views import *
-from arbuz.settings import *
 from payment.forms import *
 from payment.base import *
 from sender.views import *
 
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.sites.models import Site
 
 from paypal.standard.forms import PayPalPaymentsForm
 from paypal.standard.models import ST_PP_COMPLETED
 from paypal.standard.ipn.signals import valid_ipn_received
 from paypal.standard.ipn.signals import invalid_ipn_received
+from requests import post
 
 
 class Payment_System(Dynamic_Base):
 
     @staticmethod
-    def Send_Confirm(payment):
+    def Send_Confirm(request, payment):
 
         content = {
             'payment':              payment,
@@ -24,11 +25,23 @@ class Payment_System(Dynamic_Base):
         }
 
         email = payment.user.email
-        Sender(payment.language).Send_Payment_Approved(content, email)
+        Sender(request).Send_Payment_Approved(content, email)
 
 
 
 class PayPal(Payment_System):
+
+    @staticmethod
+    @csrf_exempt
+    def Generate_Mail(request):
+
+        Check_Session(request)
+        if request.method == 'POST':
+            payment = Payment.objects.get(pk=request.POST['pk'])
+            PayPal.Send_Confirm(request, payment)
+            return HttpResponse('OK')
+
+        return HttpResponse('It is not for you.')
 
     @staticmethod
     def Valid_PayPal(sender, **kwargs):
@@ -53,7 +66,10 @@ class PayPal(Payment_System):
             payment.service = 'PayPal'
             payment.save()
 
-            DotPay.Send_Confirm(payment)
+            # redirect to self.Generate_Mail()
+            current_site = Site.objects.get_current()
+            url = '{0}://{1}/payment/paypal/'.format(PROTOCOL, current_site)
+            post(url, data={'pk': 1})
 
     def Create_PayPal_From(self):
 
@@ -101,7 +117,7 @@ class DotPay(Payment_System):
                 payment.service = 'DotPay'
                 payment.save()
 
-                DotPay.Send_Confirm(payment)
+                DotPay.Send_Confirm(request, payment)
                 return HttpResponse('OK')
 
         return HttpResponse('It is not for you.')

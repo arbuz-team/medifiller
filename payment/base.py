@@ -48,8 +48,7 @@ class Payment_Models_Menager:
                 date=date.today(),
                 total_price=0,
                 service='None',
-                currency=request.session['translator_currency'],
-                language=request.session['translator_language']
+                currency=request.session['translator_currency']
             )
             payment.save()
 

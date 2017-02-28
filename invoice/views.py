@@ -3,7 +3,7 @@ from payment.models import *
 import pdfkit
 
 
-class PDF_Generator(Dynamic_Base):
+class Generator_PDF(Dynamic_Base):
 
     def Invoice(self, payment_pk):
         payment = Payment.objects.get(pk=payment_pk)

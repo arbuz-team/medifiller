@@ -202,6 +202,12 @@ class User_Addresses(Dynamic_Event_Menager):
         return JsonResponse({'__button__': 'false'})
 
     @staticmethod
+    def Redirect(request, url):
+        other_value = {'redirect': url}
+        return User_Addresses(request, other_value=other_value,
+                              length_navigation=3).HTML
+
+    @staticmethod
     def Launch(request):
         return User_Addresses(request, authorization=True).HTML
 

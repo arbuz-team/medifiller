@@ -164,7 +164,6 @@ class Contact(Editable_Tab):
 
         if self.content['form'].is_valid():
 
-            language = self.request.session['translator_language']
             title = self.content['form'].cleaned_data['title']
             email = self.content['form'].cleaned_data['email']
 
@@ -175,7 +174,7 @@ class Contact(Editable_Tab):
                 'url':      self.content['form'].cleaned_data['url'],
             }
 
-            Sender(language).Send_Contact_Question(title, content, email)
+            Sender(self.request).Send_Contact_Question(title, content, email)
 
             return self.Render_HTML('main/contact.html', 'email_contact')
         return self.Render_HTML('main/contact.html', 'email_contact')
