@@ -53,16 +53,6 @@ class Form_Login(Abstract_Form):
 
 class Form_Register(Abstract_Model_Form):
 
-    class Meta:
-
-        model = User
-        fields = \
-        (
-            'email',
-            'username',
-            'password',
-        )
-
     def clean_password(self):
         password = self.data['password']
         return Dynamic_Base.Encrypt(password)
@@ -92,13 +82,19 @@ class Form_Register(Abstract_Model_Form):
         self.fields['password'].widget = forms.PasswordInput(attrs=password_attr)
         self.fields['email'].widget = forms.TextInput(attrs=email_attr)
 
+    class Meta:
+
+        model = User
+        fields = \
+        (
+            'email',
+            'username',
+            'password',
+        )
+
 
 
 class Form_Abstract_Address(Abstract_Model_Form):
-
-    class Meta:
-        exclude = '__all__'
-        #fields = '__all__'
 
     def Create_Fields(self):
         self.fields['address_line_2'].required = False
@@ -157,6 +153,10 @@ class Form_Abstract_Address(Abstract_Model_Form):
     def Exclude_Fields(self):
         if self.request.session['translator_language'] != 'PL':
             del self.fields['doctor_number']
+
+    class Meta:
+        exclude = '__all__'
+        # fields = '__all__'
 
 
 
