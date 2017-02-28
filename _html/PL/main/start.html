@@ -2,26 +2,26 @@
 {% load tags %}
 
 <script>
-  window.APP.DATA = {
-    title : ''
-    , description : 'This is home page.'
-  };
+    window.APP.DATA = {
+        title : '',
+        description : 'This is home page.',
+    };
 </script>
 
-<div class="ground-block block-1" data-name="start">
+<div class="ground-block block-1 start">
 
-  <div class="block-background fill-abs"></div>
+    <div class="block-background fill-abs"></div>
 
-  <div class="block-content">
+    <div class="block-content">
 
-      <div class="block-content-banner"><img data-src="{% static 'img/banners/banner_1.jpg' %}" src="{% static 'img/pixel.png' %}" alt="Really beautiful"></div>
+        <div class="block-content-recommended-title"><span>Polecamy</span></div>
 
-      <div class="block-content-describe">Describe briefly your company! ;)</div>
+        <div class="block-content-image"><img data-src="{% static 'img/home_image/home_1.jpg' %}" src="{% static 'img/pixel.png' %}" alt="Really beautiful"></div>
 
-      {% include 'products/html/tiles_recommended.html' %}
+        {% include 'products/html/tiles_recommended.html' %}
 
-  </div>
+    </div><!-- block-content -->
 
-</div>
+</div><!-- ground-block -->
 
-{% include "ground/html/footer.html" %}
+{% include "ground/html/footer_start.html" %}

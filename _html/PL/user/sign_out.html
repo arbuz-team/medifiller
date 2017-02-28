@@ -1,5 +1,6 @@
 <script>
     window.APP.throw_event(window.EVENTS.plugins.reload_sign_in);
+    window.APP.throw_event(window.EVENTS.plugins.close_cart);
 
     window.APP.DATA.redirect = '/';
     window.APP.DATA.delay = 2000;
@@ -9,15 +10,17 @@
 
 <div class="ground-block block-1 SMALL">
 
-  <div class="block-background fill-abs"></div>
-  {% include "ground/html/navigation.html" %}
+    <div class="block-background fill-abs"></div>
+    {% include "ground/html/navigation.html" %}
 
-  <div class="block-content">
+    <div class="block-content">
 
-      <div class="block-content-message">
-          You have been logged out.
-      </div>
+        <div class="block-content-message">
+            You have been logged out.
+        </div>
 
-  </div>
+    </div><!-- block-content -->
 
-</div>
+</div><!-- ground-block -->
+
+{% include "ground/html/footer.html" %}

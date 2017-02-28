@@ -1,7 +1,7 @@
 <script>
   window.APP.DATA = {
-    title : 'O nas'
-    , description : 'Ta strona opowiada o nas. ;)'
+    title : 'O nas',
+    description : 'Ta strona opowiada o nas. ;)',
   };
 </script>
 
@@ -11,6 +11,12 @@
 
     {% include "ground/html/navigation.html" %}
 
-    {% include 'products/html/tiles.html' %}
+    {% if products %}
+        {% include 'products/html/tiles.html' %}
+    {% else %}
+        <div class="block-content-message">Products not found</div>
+    {% endif %}
 
-</div>
+</div><!-- ground-block -->
+
+{% include "ground/html/footer.html" %}

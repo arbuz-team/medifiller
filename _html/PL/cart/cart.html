@@ -15,31 +15,43 @@
 
             {% for selected in cart %}
 
-            <li>
+            <li class="cart-list-product">
                 <div class="cart-list-name">
                     <a href="/product/{{ selected.product.pk }}/{{ selected.product.details_en.name | to_url }}/">
                         {{ selected.product.details_en.name }}
                     </a>
                 </div>
-                <div class="cart-list-actions field_shell"> {{ selected.number }} x {% price selected.product %}
-                    <!--<button class="post_button" type="button"-->
-                           <!--data-name="Delete_{{ product.pk }}"-->
-                           <!--data-action=""-->
-                           <!--data-value="{{ product.pk }}"-->
-                           <!--data-reload="cart"-->
-                           <!--data-url="/cart/">X</button>-->
+                <div class="cart-list-actions field_shell">
+                    <span>{{ selected.number }} x {% price selected.product %}</span>
+                    <button class="post_button icon" type="button"
+                            data-name="Delete_{{ selected.product.pk }}"
+                            data-action="delete"
+                            data-value="{{ selected.product.pk }}"
+                            data-reload="cart ground"
+                            data-url="/cart/">
+                        <i style="background-image: url(/_static/img/icons/32/dark/waste_bin.png)"> &nbsp; </i>
+                    </button>
                 </div>
             </li>
 
             {% endfor %}
 
+            <li class="cart-list-total_price">
+                <div>Total price:</div>
+                <div>{{ payment.total_price }} {{ request.session.translator_currency }}</div>
+            </li>
+
             <li class="field_shell">
                 <div class="cart-list-button">
-                    <button class="post_button" type="button"
-                            data-name="Clear_cart"
-                            data-action="clear"
-                            data-reload="cart"
-                            data-url="/cart/">Clear cart</button>
+                    <button class="dialog_button" type="button"
+                            data-type="confirm"
+                            data-name="clear_cart"
+                            data-dialog-name="Clear_cart"
+                            data-dialog-action="clear"
+                            data-dialog-reload="cart"
+                            data-dialog-url="/cart/">
+                        Clear cart
+                    </button>
                 </div>
                 <a class="cart-list-button" href="/payment/">
                     <button class="submit" type="button">Go to paymants</button>
@@ -58,8 +70,7 @@
 
         {% endif %}
 
-    </ul>
-
+    </ul><!-- cart-list -->
 {% else %}
 
     Loading...

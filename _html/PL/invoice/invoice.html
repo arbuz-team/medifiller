@@ -97,8 +97,27 @@
 
 			<div id="content">
 
-				{% block content %}
-                {% endblock %}
+                {{ invoice.unique }}<br>
+                {{ invoice.date }}<br>
+                {{ invoice.seller }}<br>
+                {{ invoice.client }}<br><br><br>
+
+                {% for selected in invoice.products %}
+                    {{ selected.product }} <br>
+                    {{ selected.number }} <br>
+                    cena netto <br>
+                    vat <br>
+                    rabaty <br>
+                {% endfor %}<br><br>
+
+                {% for total in invoice.total_vats %}
+                    {{ total.netto }} <br>
+                    {{ total.vat }} <br>
+                    {{ total.brutto }} <br>
+                {% endfor %}<br><br>
+
+                {{ invoice.netto_price }}<br>
+                {{ invoice.brutto_price  }}<br>
 
 			</div><!-- content -->
 

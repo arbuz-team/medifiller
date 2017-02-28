@@ -1,103 +1,112 @@
 
-<ul class="navigation-mini">
 
-    <li class="navigation-mini-filter">
+<!-- //     MOBILE NAVIGATION    // -->
+
+<ul class="navigation-mobile">
+
+    <li class="navigation-mobile-filter">
         <button></button>
     </li>
 
-    <li class="navigation-mini-navigation">
+    <li class="navigation-mobile-navigation">
         <button></button>
     </li>
 
     {% if request.session.user_login %}
-    <li class="navigation-mini-cart">
+    <li class="navigation-mobile-cart">
         <button></button>
     </li>
     {% else %}
-    <li class="navigation-mini-cart">
+    <li class="navigation-mobile-cart">
         <a href="/user/sign_in/"></a>
     </li>
     {% endif %}
 
-</ul>
+</ul><!-- navigation-mobile -->
 
-<!-- /////////////////////////////////////////////////////// -->
+
+<!-- //     PRIMARY NAVIGATION    // -->
 
 <ul class="navigation-primary">
 
     <li>
-        <a class="link" href="/">
+        <a class="link fill-abs" href="/">
             Home
         </a>
     </li>
 
     <li>
-        <a class="link" href="/products/">
+        <a class="link fill-abs" href="/products/">
             Products
         </a>
     </li>
 
     <li>
-        <a class="link" href="/about/">
+        <a class="link fill-abs" href="/about/">
             About
         </a>
     </li>
 
     {% if request.session.user_login %}
         <li>
-            <a class="link" href="/user/account/">
+            <a class="link fill-abs" href="/user/account/">
                 Account
             </a>
         </li>
     {% else %}
         <li>
-            <a class="link" href="/user/sign_in/">
+            <a class="link fill-abs" href="/user/sign_in/">
                 Sign in
             </a>
         </li>
     {% endif %}
 
     <li class="navigation-primary-language field_shell">
-        <button type="button"
-                class="dialog_button {{ request.session.translator_language }}"
-                data-type="alert"
-                data-name="language"></button>
+        <div class="link fill-abs">
+            <button type="button"
+                    class="dialog_button {{ request.session.translator_language }}"
+                    data-type="alert"
+                    data-name="language"><span>Change language</span></button>
+        </div>
     </li>
 
-</ul>
+</ul><!-- navigation-primary -->
 
-<!-- /////////////////////////////////////////////////////// -->
+
+<!-- //     SECONDARY NAVIGATION    // -->
 
 <div class="navigation-secondary">
-    {% if request.session.root_login %}
-    <ul class="navigation-secondary-root">
 
-        <li>
-            <a class="link" href="/root/map_references/">
-                Map references
-            </a>
+    <ul class="navigation-secondary-left">
+
+        <li class="navigation-secondary-searcher" title="CTRL+SHIFT+S">
+            <div class="link fill-abs">
+                <i> &nbsp; </i> Search
+            </div>
         </li>
 
-        <li class="navigation-secondary-space"> | </li>
+        {% if request.session.root_login %}
 
-        <li>
-            <a class="link" href="/root/users_payments/">
-                Users payments
-            </a>
-        </li>
+            <li class="navigation-secondary-space for_searcher"> | </li>
 
-        <li class="navigation-secondary-space"> | </li>
+            <li>
+                <a class="link fill-abs" href="/root/">
+                    Root settings
+                </a>
+            </li>
 
-        <li>
-            <a class="link fill-abs" href="/root/sign_out/">
-                Root sign out
-            </a>
-        </li>
+            <li class="navigation-secondary-space"> | </li>
 
-    </ul>
-    {% endif %}
+            <li>
+                <a class="link fill-abs" href="/root/sign_out/">
+                    Root sign out
+                </a>
+            </li>
+        {% endif %}
 
-    <ul class="navigation-secondary-user">
+    </ul><!-- navigation-secondary-left -->
+
+    <ul class="navigation-secondary-right">
 
         {% if request.session.user_login %}
             <li>
@@ -137,5 +146,7 @@
             </li>
         {% endif %}
 
-    </ul>
-</div>
+    </ul><!-- navigation-secondary-right -->
+
+</div><!-- navigation-secondary -->
+

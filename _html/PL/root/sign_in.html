@@ -8,53 +8,54 @@
 
 <div class="ground-block block-1 SMALL">
 
-  <div class="block-background fill-abs"></div>
-  {% include "ground/html/navigation.html" %}
+    <div class="block-background fill-abs"></div>
+    {% include "ground/html/navigation.html" %}
 
-  <div class="block-content">
-      {% if not form or request.session.root_login %}
+    <div class="block-content">
 
-      <div class="block-content-message">
-          Hello root! Have fun at work. ;)
-      </div>
+        {% if not form or request.session.root_login %}
 
-      <script>
-        window.APP.throw_event(window.EVENTS.plugins.reload_sign_in);
+            <div class="block-content-message">
+                Hello root! Have fun at work. ;)
+            </div>
 
-        window.APP.DATA.redirect = '/';
-        window.APP.DATA.delay = 2000;
-        window.APP.throw_event(window.EVENTS.redirect);
-      </script>
+            <script>
+                window.APP.throw_event(window.EVENTS.plugins.reload_sign_in);
+                window.APP.DATA.redirect = '{{ go_back }}';
 
-    {% else %}
+                window.APP.DATA.delay = 2000;
+                window.APP.throw_event(window.EVENTS.redirect);
+            </script>
 
-      <form method="post" class="field_shell"
-            data-name="{{ form_name }}"
-            data-type="{{ form_name }}"
-            data-test="yes">
 
-        <div class="title"> Root login </div>
+        {% else %}
 
-        <div>
-          <input disabled type="text" value="root" />
-        </div>
+            <form method="post" class="field_shell"
+                    data-name="{{ form_name }}"
+                    data-type="{{ form_name }}"
+                    data-test="yes">
 
-        {% for i in form %}
+                <div class="title"> Root login </div>
 
-          <div>
-            {{ i }}
-            {{ i.errors }}
-          </div>
+                <div><input disabled type="text" value="root" /></div>
 
-        {% endfor %}
+                {% for i in form %}
 
-        <div>
-          <button disabled type="submit"> Done </button>
-        </div>
+                    <div>
+                        {{ i }}
+                        {{ i.errors }}
+                    </div>
 
-      </form>
+                {% endfor %}
 
-    {% endif %}
-  </div>
+                <div><button disabled type="submit"> Done </button></div>
 
-</div>
+            </form>
+
+        {% endif %}
+
+    </div><!-- block-content -->
+
+</div><!-- ground-block -->
+
+{% include "ground/html/footer.html" %}

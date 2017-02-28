@@ -11,7 +11,7 @@
 
 <div class="ground-block block-1">
 
-    <div class="block-background"></div>
+    <div class="block-background fill-abs"></div>
     {% include "ground/html/navigation.html" %}
 
     <div class="block-content product_details">
@@ -24,7 +24,7 @@
                 </div>
             </div>
 
-        </div>
+        </div><!-- block-content-left -->
 
 
         <div class="block-content-right">
@@ -38,46 +38,100 @@
 
                 <div class="product_details-section action_panel">
 
-                        <div class="product_details-action_panel-prices">
-                            {% if request.session.user_login %}
-                                {% price product %}
-                            {% else %}
-                                If you want buy a product you must login.
-                                <a href="{% sign_in_redirect 'product.details' pk=product.pk %}">Sign in!</a>
-                            {% endif %}
-                        </div>
+                    <div class="product_details-action_panel-prices">
+                        {% if request.session.user_login %}
+                            {% price product %}
+                        {% else %}
+                            If you want buy a product you must login.
+                            <a href="{% sign_in_redirect 'user' %}">Sign in!</a>
+                        {% endif %}
+                    </div>
 
                     <div class="product_details-action_panel-buttons field_shell">
 
                         {% if request.session.user_login %}
                             <button class="post_button" type="button"
-                                    data-name="Append_{{ product.pk }}"
+                                    data-name="Cart_{{ product.pk }}"
                                     data-action="append"
                                     data-value="{{ product.pk }}"
                                     data-reload="cart"
-                                    data-url="/cart/">Add to cart</button>
+                                    data-url="/cart/">
+                                Add to cart
+                            </button>
+
+
+                            {% if is_favorite %}
+                                <button class="post_button" type="button"
+                                        data-name="Favorite_{{ product.pk }}"
+                                        data-action="delete"
+                                        data-value="{{ product.pk }}"
+                                        data-reload="ground"
+                                        data-url="/product/favorite/">
+                                    Remove from favorite
+                                </button>
+                            {% else %}
+                                <button class="post_button" type="button"
+                                        data-name="Favorite_{{ product.pk }}"
+                                        data-action="append"
+                                        data-value="{{ product.pk }}"
+                                        data-reload="ground"
+                                        data-url="/product/favorite/">
+                                    Add to favorite
+                                </button>
+                            {% endif %}
+
 
                             <a href="/payment/buy/{{ product.pk }}/"><button type="button">Buy</button></a>
                         {% endif %}
 
+                        <br>
+
                         {% if request.session.root_login %}
-                            <button class="post_button" type="button"
-                                    data-name="Delete_{{ product.pk }}"
-                                    data-action="delete"
-                                    data-value="{{ product.pk }}"
-                                    data-url="/product/delete/">Delete</button>
+                            <button class="dialog_button" type="button"
+                                    data-type="confirm"
+                                    data-name="delete_product"
+                                    data-dialog-name="Delete_{{ product.pk }}"
+                                    data-dialog-action="delete"
+                                    data-dialog-value="{{ product.pk }}"
+                                    data-dialog-redirect="/products/"
+                                    data-dialog-url="/product/delete/">
+                                Delete
+                            </button>
+
+
+                            {% if is_recommended %}
+                                <button class="post_button" type="button"
+                                        data-name="Recommend_{{ product.pk }}"
+                                        data-action="delete"
+                                        data-value="{{ product.pk }}"
+                                        data-reload="ground"
+                                        data-url="/product/recommended/">
+                                    Remove form recommended
+                                </button>
+                            {% else %}
+                                <button class="post_button" type="button"
+                                        data-name="Recommend_{{ product.pk }}"
+                                        data-action="append"
+                                        data-value="{{ product.pk }}"
+                                        data-reload="ground"
+                                        data-url="/product/recommended/">
+                                    Add to recommended
+                                </button>
+                            {% endif %}
+
 
                             <a href="/product/edit/{{ product.pk }}/"><button type="button">Edit</button></a>
                         {% endif %}
 
-                    </div>
-                </div>
+                    </div><!-- product_details-action_panel-buttons -->
+
+                </div><!-- product_details-section action_panel -->
 
             {% else %}
 
                 <div class="product_details-section">
                     If you want buy a product you must login.
-                    <a href="{% sign_in_redirect 'product.details' pk=product.pk %}">Sign in!</a>
+                    <a href="{% sign_in_redirect 'user' %}">Sign in!</a>
                 </div>
 
             {% endif %}
@@ -95,11 +149,10 @@
                 {{ product.details_en.description }}<br>
             </div>
 
-        </div>
+        </div><!-- block-content-right -->
 
-    </div>
+    </div><!-- block-content -->
 
-</div>
-
+</div><!-- ground-block -->
 
 {% include "ground/html/footer.html" %}

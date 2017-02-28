@@ -1,8 +1,11 @@
 {% load staticfiles %}
 
-<div class="logo">
+<div class="searcher-header"></div>
+
+<div class="searcher-logo">
   <a href="/"><img data-src="{% static 'img/logo.png' %}" src="{% static 'img/pixel.png' %}" alt="SPA Sungate" title="Home page"></a>
 </div>
+
 
 <!--<h1 class="logo_text">-->
     <!--<a href="/">Shop - fillers</a>-->
@@ -15,6 +18,7 @@
     </form>
 </div>
 
+
 <form class="searcher-filters auto_form" action="/searcher/" data-origin="filter" data-target="ground">
 
     <div class="searcher-sort">
@@ -25,7 +29,7 @@
                 <option value="name_of_product"> name of product </option>
             </select>
         </div>
-    </div>
+    </div><!-- searcher-sort -->
 
 
     <div class="searcher-order">
@@ -35,7 +39,7 @@
                 <option value="ascending"> ascending </option>
             </select>
         </div>
-    </div>
+    </div><!-- searcher-order -->
 
 
     <div class="searcher-filters-title">Brand</div>
@@ -55,7 +59,7 @@
 
             {% endfor %}
         </ul>
-    </div>
+    </div><!-- searcher-filters-content -->
 
 
     <div class="searcher-filters-title">Purpose</div>
@@ -76,5 +80,6 @@
 
             {% endfor %}
         </ul>
-    </div>
-</form>
+    </div><!-- searcher-filters-content -->
+
+</form><!-- searcher-filters -->
