@@ -25,7 +25,8 @@ class Payment_System(Dynamic_Base):
         }
 
         email = payment.user.email
-        Sender(request).Send_Payment_Approved(content, email)
+        pdf = Generator_PDF(request).Invoice(payment.pk)
+        Sender(request).Send_Payment_Approved(content, email, pdf)
 
 
 
@@ -69,7 +70,7 @@ class PayPal(Payment_System):
             # redirect to self.Generate_Mail()
             current_site = Site.objects.get_current()
             url = '{0}://{1}/payment/paypal/'.format(PROTOCOL, current_site)
-            post(url, data={'pk': 1})
+            post(url, data={'pk': payment.pk})
 
     def Create_PayPal_From(self):
 
