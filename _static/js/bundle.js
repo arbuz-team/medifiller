@@ -1586,6 +1586,8 @@
 	_views.checker.create_checker('no_empty', function (value, callback) {
 	  var result = _views.checker.create_result();
 	
+	  console.log(value);
+	
 	  if (_views.checker.check_condition(value !== '')) result = _views.checker.create_error("You can't leave this empty.", value);
 	
 	  callback(result);
@@ -1777,6 +1779,11 @@
 	  client: 'proper_name',
 	  email: 'email',
 	  message: 'no_empty'
+	};
+	
+	list_configs.payment_address = {
+	  shipment: 'no_empty',
+	  invoice: 'no_empty'
 	};
 
 /***/ },

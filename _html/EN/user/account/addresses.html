@@ -33,11 +33,15 @@
 
                     <div class="form_buttons short">
                         <button disabled type="submit"> Update </button>
-                        <button class="post_button" type="button"
-                                data-name="delete_address_{{ id_address }}"
-                                data-action="delete"
-                                data-reload="ground"
-                                data-value="{{ id_address }}"> Delete </button>
+                        <button class="dialog_button" type="button"
+                                data-type="confirm"
+                                data-name="delete_address"
+                                data-dialog-name="delete_address_{{ id_address }}"
+                                data-dialog-action="delete"
+                                data-dialog-reload="ground"
+                                data-dialog-value="{{ id_address }}">
+                            Delete
+                        </button>
                     </div>
 
                 </form>

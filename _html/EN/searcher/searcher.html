@@ -48,13 +48,13 @@
         <ul class="field_shell">
             {% for brand in brands %}
 
-                <li class="checkbox">
+                <li class="selecter checkbox">
                     <input type="checkbox" class="auto_field"
                            data-name="brand"
                            id="id_{{ brand.name }}"
                            name="{{ brand.name }}" />
-                    <label for="id_{{ brand.name }}" class="checkbox-field"></label>
-                    <label for="id_{{ brand.name }}" class="checkbox-text">{{ brand.name }}</label>
+                    <label for="id_{{ brand.name }}" class="selecter-field"></label>
+                    <label for="id_{{ brand.name }}" class="selecter-text">{{ brand.name }}</label>
                 </li>
 
             {% endfor %}
@@ -68,13 +68,13 @@
         <ul class="field_shell">
             {% for purpose in purposes %}
 
-                <li class="checkbox">
+                <li class="selecter checkbox">
                     <input type="checkbox" class="auto_field"
                            data-name="purpose"
                            id="id_{{ purpose.name }}"
                            name="{{ purpose.name }}" />
-                    <label for="id_{{ purpose.name }}" class="checkbox-field"></label>
-                    <label for="id_{{ purpose.name }}" class="checkbox-text">{{ purpose.name }}</label>
+                    <label for="id_{{ purpose.name }}" class="selecter-field"></label>
+                    <label for="id_{{ purpose.name }}" class="selecter-text">{{ purpose.name }}</label>
                 </li>
             <!--<li> <input name="{{ purpose.name }}" type="checkbox" class="auto_field" data-name="purpose" /> <label for>{{ purpose.name }}</label> </li>-->
 

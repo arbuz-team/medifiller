@@ -947,6 +947,26 @@ img {
 .payment .cart-list {
   margin: 0; }
 
+.payment form .form-accept {
+  margin-top: 30px;
+  padding-right: 10px;
+  text-align: right; }
+  .payment form .form-accept > div {
+    font-weight: bold; }
+  .payment form .form-accept > button {
+    margin-left: 15px !important;
+    min-width: 200px; }
+
+.payment .radio {
+  font-weight: bold; }
+
+@media (min-width: 675px) {
+  .payment form .form-accept > div {
+    display: inline-block;
+    width: 60%; }
+  .payment form .form-accept > * {
+    vertical-align: top; } }
+
 .container-part > div > .posty.tresc {
   padding-left: 0;
   padding-right: 0; }
@@ -1269,13 +1289,13 @@ button {
   .field_shell button.icon > i:hover {
     opacity: 1; }
 
-.field_shell .checkbox {
+.field_shell .selecter {
   width: 100%;
   position: relative;
   min-height: 27px; }
-  .field_shell .checkbox label {
+  .field_shell .selecter label {
     cursor: pointer; }
-  .field_shell .checkbox label.checkbox-field {
+  .field_shell .selecter label.selecter-field {
     width: 20px;
     height: 20px;
     cursor: pointer;
@@ -1286,33 +1306,48 @@ button {
     border: 1px solid #d1d1d1;
       border-radius: 2px;
     font-size: 19px; }
-  .field_shell .checkbox label.checkbox-text {
+  .field_shell .selecter label.selecter-text {
     position: relative;
     left: 2px;
     font-size: 16px;
     opacity: .8; }
-  .field_shell .checkbox label.checkbox-field:after {
-    content: '\2714';
-    width: 9px;
-    height: 5px;
+  .field_shell .selecter label.selecter-field:after {
     position: absolute;
-    top: -4px;
-    left: 2px;
     border: none;
     background: transparent;
     opacity: 0; }
-  .field_shell .checkbox label.checkbox-field:hover::after {
+  .field_shell .selecter label.selecter-field:hover::after {
     opacity: .3; }
-  .field_shell .checkbox label.checkbox-field:hover {
+  .field_shell .selecter label.selecter-field:hover {
     border-color: #aaa; }
-  .field_shell .checkbox label.checkbox-field:hover + label.checkbox-text, .field_shell .checkbox label.checkbox-field + label.checkbox-text:hover {
+  .field_shell .selecter label.selecter-field:hover + label.selecter-text, .field_shell .selecter label.selecter-field + label.selecter-text:hover {
     opacity: 1; }
-  .field_shell .checkbox input[type=checkbox] {
+  .field_shell .selecter input[type=checkbox], .field_shell .selecter input[type=radio] {
     visibility: hidden; }
-    .field_shell .checkbox input[type=checkbox]:checked + label.checkbox-field {
+    .field_shell .selecter input[type=checkbox]:checked + label.selecter-field, .field_shell .selecter input[type=radio]:checked + label.selecter-field {
       border-color: #aaa; }
-      .field_shell .checkbox input[type=checkbox]:checked + label.checkbox-field:after, .field_shell .checkbox input[type=checkbox]:checked + label.checkbox-field + label.checkbox-text {
+      .field_shell .selecter input[type=checkbox]:checked + label.selecter-field:after, .field_shell .selecter input[type=checkbox]:checked + label.selecter-field + label.selecter-text, .field_shell .selecter input[type=radio]:checked + label.selecter-field:after, .field_shell .selecter input[type=radio]:checked + label.selecter-field + label.selecter-text {
         opacity: 1; }
+
+.field_shell .checkbox label.selecter-field {
+  border-radius: 2px; }
+  .field_shell .checkbox label.selecter-field:after {
+    content: '\2714';
+    width: 9px;
+    height: 5px;
+    top: -4px;
+    left: 2px; }
+
+.field_shell .radio label.selecter-field {
+  border-radius: 50%; }
+  .field_shell .radio label.selecter-field:after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    top: 3px;
+    left: 3px;
+    background-color: #555;
+    border-radius: 50%; }
 
 .field_shell select {
   background-image: url("/_static/img/icons/32/dark/sort_down.png");
@@ -1340,7 +1375,7 @@ button {
   border-bottom: 1px solid #eee;
   color: #666;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 16px;
   text-align: center; }
 
 .ground-block > .block-content .field_shell, .ground-block > .block-content form > div {
@@ -1403,8 +1438,12 @@ button {
       border-bottom: 1px solid #d1d1d1;
       color: #774D34 !important; }
     .ground-block.BIG > .block-content .form_block.fields > div > div:last-child {
-      padding-top: 5px;
+      margin-top: 5px;
+      padding-top: 10px;
       border-top: 1px solid #d1d1d1; }
+      .ground-block.BIG > .block-content .form_block.fields > div > div:last-child > span {
+        font-weight: bold;
+        opacity: .8; }
   .ground-block.BIG > .block-content .form_block.fields:hover {
     background-color: #f8f8f8; }
   .ground-block.BIG > .block-content .form_block {
@@ -1435,7 +1474,6 @@ button {
     .ground-block.BIG > .block-content .form_block .title {
       margin-top: 0;
       padding-bottom: 5px;
-      font-size: 14px;
       color: #774D34;
       text-align: left; }
   .ground-block.BIG > .block-content input[type=text], .ground-block.BIG > .block-content input[type=email], .ground-block.BIG > .block-content input[type=password], .ground-block.BIG > .block-content input[type=number], .ground-block.BIG > .block-content input[type=url], .ground-block.BIG > .block-content select, .ground-block.BIG > .block-content textarea {
@@ -1489,6 +1527,18 @@ button {
     .ground.smaller .ground-block.BIG > .block-content input[type=text], .ground.smaller .ground-block.BIG > .block-content input[type=email], .ground.smaller .ground-block.BIG > .block-content input[type=password], .ground.smaller .ground-block.BIG > .block-content input[type=number], .ground.smaller .ground-block.BIG > .block-content input[type=url], .ground.smaller .ground-block.BIG > .block-content select, .ground.smaller .ground-block.BIG > .block-content textarea {
       min-width: 193.66667px;
       max-width: 193.66667px; } }
+
+.ground-block.BIG > .block-content .form_block.fields.new .form_block-image {
+  display: block;
+  height: 267px;
+  margin: 10px 0;
+  opacity: .6;
+  background-image: url(/_static/img/icons/128/dark/add.png);
+  background-size: 40%;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 3px dashed #d1d1d1;
+    border-color: #aaa; }
 
 .field_shell input[type=file] {
   display: none; }

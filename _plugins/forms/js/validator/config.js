@@ -28,5 +28,5 @@ list_configs.forgot_password = {
 list_configs.email_contact = {
   client:     'proper_name',
   email:      'email',
-  message:    'no_empty'
+  message:    'no_empty',
 };

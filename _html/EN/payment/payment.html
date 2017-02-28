@@ -54,44 +54,79 @@
                 </ul><!-- cart-list -->
 
 
-                {% for item in address %}
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
-                    <div class="form_block fields">
+                <form method="post" action="" id="form_payment_address" data-name="payment_address" data-type="payment_address" class="field_shell">
+
+                    <div class="form-accept">
+                        <div>Please select your address of below list <wbr>for shipment and invoice.</div>
+                        <button type="submit">Next</button>
+                    </div>
+
+                    {% for item in address %}
+
+                        <div class="form_block fields">
+                            <div>
+
+                                <div class="shell_form"></div>
+
+                                <div class="title"> Address {{ forloop.counter0 }} </div>
+
+                                <div class="field">{{ item.full_name }} &nbsp;</div>
+                                <div class="field">{{ item.address_line_1 }} &nbsp;</div>
+                                <div class="field">{{ item.address_line_2 }} &nbsp;</div>
+                                <div class="field">{{ item.city }} &nbsp;</div>
+                                <div class="field">{{ item.region }} &nbsp;</div>
+                                <div class="field">{{ item.postcode }} &nbsp;</div>
+                                <div class="field">{{ item.country }} &nbsp;</div>
+
+                                <div>
+                                    <span>Select address to</span>
+                                    <div class="selecter radio">
+                                        <input type="radio"
+                                               id="id_shipment_{{ forloop.counter0 }}"
+                                               name="shipment"
+                                               value="{{ item.pk }}"
+                                               {% if forloop.counter0 == 0 %}
+                                               checked
+                                               {% endif %}
+                                        />
+                                        <label for="id_shipment_{{ forloop.counter0 }}" class="selecter-field"></label>
+                                        <label for="id_shipment_{{ forloop.counter0 }}" class="selecter-text">shipment</label>
+                                    </div>
+                                    <div class="selecter radio">
+                                        <input type="radio"
+                                               id="id_invoice_{{ forloop.counter0 }}"
+                                               name="invoice"
+                                               value="{{ item.pk }}"
+                                               {% if forloop.counter0 == 0 %}
+                                               checked
+                                               {% endif %}
+                                        />
+                                        <label for="id_invoice_{{ forloop.counter0 }}" class="selecter-field"></label>
+                                        <label for="id_invoice_{{ forloop.counter0 }}" class="selecter-text">invoice</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div><!-- form_block fields -->
+
+                    {% endfor %}
+
+                    <div class="form_block fields new">
                         <div>
 
                             <div class="shell_form"></div>
 
-                            <div class="title"> Address {{ forloop.counter0 }} </div>
+                            <div class="title"> Add new address </div>
 
-                            <div class="field">{{ item.full_name }}</div>
-                            <div class="field">{{ item.address_line_1 }}</div>
-                            <div class="field">{{ item.address_line_2 }}</div>
-                            <div class="field">{{ item.city }}</div>
-                            <div class="field">{{ item.region }}</div>
-                            <div class="field">{{ item.postcode }}</div>
-                            <div class="field">{{ item.country }}</div>
-
-                            <div>
-                                <div class="checkbox">
-                                    <input type="checkbox"
-                                           id="id_shipment_{{ forloop.counter0 }}"
-                                           name="shipment" />
-                                    <label for="id_shipment_{{ forloop.counter0 }}" class="checkbox-field"></label>
-                                    <label for="id_shipment_{{ forloop.counter0 }}" class="checkbox-text">Select address to shipment</label>
-                                </div>
-                                <div class="checkbox">
-                                    <input type="checkbox"
-                                           id="id_invoice_{{ forloop.counter0 }}"
-                                           name="invoice" />
-                                    <label for="id_invoice_{{ forloop.counter0 }}" class="checkbox-field"></label>
-                                    <label for="id_invoice_{{ forloop.counter0 }}" class="checkbox-text">Select address to invoice</label>
-                                </div>
-                            </div>
+                            <a href="/user/account/addresses/" class="form_block-image"></a>
 
                         </div>
-                    </div><!-- form_block -->
+                    </div><!-- form_block fields new -->
 
-                {% endfor %}
+                </form>
 
             {% else %}<!-- form address -->
 
