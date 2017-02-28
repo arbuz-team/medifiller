@@ -31,11 +31,11 @@ class Sender(Dynamic_Base):
         recipient = [recipient]
         self.Send_Email(title, content, recipient, html_file)
 
-    def Send_Payment_Approved(self, content, recipient):
+    def Send_Payment_Approved(self, content, recipient, pdf):
         title = Text(self.request, 34)
         html_file = 'payment_approved.html'
         recipient = [recipient, ROOT_EMAIL]
-        self.Send_Email(title, content, recipient, html_file)
+        self.Send_Email(title, content, recipient, html_file, pdf)
 
     def Send_Contact_Question(self, title, content, recipient):
         html_file = 'contact_question.html'
