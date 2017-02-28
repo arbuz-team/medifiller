@@ -744,12 +744,9 @@ img {
     padding-bottom: 50px; }
   .ground-block.start > .block-content > .block-content-banner {
     width: 100%;
-    position: relative;
-    border-bottom: 2px solid #e8e8e8;
-    -moz-box-shadow: inset 0px -10px 5px 0px rgba(50, 50, 50, 0.3);
-    -webkit-box-shadow: inset 0px -10px 5px 0px rgba(50, 50, 50, 0.3);
-    box-shadow: inset 0px -10px 5px 0px rgba(50, 50, 50, 0.3); }
+    position: relative; }
     .ground-block.start > .block-content > .block-content-banner > img {
+      display: block;
       max-width: 100%;
       width: auto;
       max-height: 500px;
@@ -964,7 +961,8 @@ img {
 
 .products.tiles {
   padding-top: 0;
-  padding-bottom: 0; }
+  padding-bottom: 0;
+  border-top: 2px solid #d1d1d1; }
   .products.tiles > ul {
     width: auto; }
     .products.tiles > ul .product {

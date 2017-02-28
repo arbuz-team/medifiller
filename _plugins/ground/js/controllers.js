@@ -75,6 +75,23 @@ let
   change_height_content = function()
   {
     let
+      $container = $(config_loader.container),
+      height = {
+        window: $('#CONTAINTER').innerHeight(),
+        header: $('#HEADER').outerHeight(),
+        ground_top: $container.position().top,
+      },
+      height_container = height.window - height.header - height.ground_top,
+      height_start_banner = height.window - height.header - height.ground_top;
+
+    $container.height(height_container);
+    $('.ground-block.start', $container).height(height_start_banner);
+  },
+
+
+  change_height_start_banner = function()
+  {
+    let
       height = {
         window: $('#CONTAINTER').innerHeight(),
         header: $('#HEADER').outerHeight(),
@@ -94,6 +111,7 @@ export let
   define = function()
   {
     change_height_content();
+    change_height_start_banner();
 
     $('a').click(go_to_link);
     window.APP.add_own_event('redirect', redirect);
