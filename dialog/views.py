@@ -94,7 +94,7 @@ class Dialog_Confirm(Dialog):
         self.content['title'] = Text(self.request, 100)
         self.content['description'] = Text(self.request, 101)
         self.Generate_Content()
-        return self.Render_Dialog('dialog/confirm.html', only_root=True)
+        return self.Render_Dialog('dialog/confirm.html', authorization=True)
 
     def __init__(self, request, app_name):
         Dialog.__init__(self, request, app_name)
