@@ -176,8 +176,8 @@ class Dialog_Prompt(Dialog):
         self.content['form'] = Form_User_Details(
             self.request, self.Get_POST())
 
-        self.content['form'].Set_Hidden('username')
-        self.content['form'].Set_Hidden('password')
+        self.content['form'].Set_Hidden('new_username')
+        self.content['form'].Set_Hidden('new_password')
 
         return self.Render_Dialog('dialog/prompt.html',
                                   'edit_email', authorization=True)
@@ -187,8 +187,8 @@ class Dialog_Prompt(Dialog):
         self.content['form'] = Form_User_Details(
             self.request, self.Get_POST())
 
-        self.content['form'].Set_Hidden('email')
-        self.content['form'].Set_Hidden('password')
+        self.content['form'].Set_Hidden('new_email')
+        self.content['form'].Set_Hidden('new_password')
 
         return self.Render_Dialog('dialog/prompt.html',
                                   'edit_username', authorization=True)
@@ -198,8 +198,8 @@ class Dialog_Prompt(Dialog):
         self.content['form'] = Form_User_Details(
             self.request, self.Get_POST())
 
-        self.content['form'].Set_Hidden('username')
-        self.content['form'].Set_Hidden('email')
+        self.content['form'].Set_Hidden('new_username')
+        self.content['form'].Set_Hidden('new_email')
 
         return self.Render_Dialog('dialog/prompt.html',
                                   'edit_password', authorization=True)
