@@ -1,4 +1,4 @@
-from arbuz.base import *
+from translator.views import *
 from django import template
 from base64 import b64encode
 
@@ -70,3 +70,7 @@ def sign_in_redirect(context, app, name=None, *args, **kwargs):
 @register.simple_tag
 def dict_value(my_dict, value):
     return my_dict[value]
+
+@register.simple_tag(takes_context=True)
+def text(context, pk, language=None):
+    return Text(context['request'], pk, language)
