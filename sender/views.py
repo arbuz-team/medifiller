@@ -49,7 +49,7 @@ class Sender(Dynamic_Base):
         self.content = content
 
         html = self.Render_HTML('sender/' + html_file)
-        body = MIMEText(html, _subtype='html')
+        body = MIMEText(html.content.decode(), _subtype='html')
         self.email_html.attach(body)
 
         self.Attach_Image('/_static/img/logo.png', 'logo')
