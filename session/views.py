@@ -93,6 +93,9 @@ class Session_Controller:
         if 'main_content_tab' not in self.request.session:
             self.request.session['main_content_tab'] = ''
 
+        if 'main_products_page' not in self.request.session:
+            self.request.session['main_products_page'] = 1
+
     def Check_Session(self):
 
         methods = getmembers(self, predicate=ismethod)

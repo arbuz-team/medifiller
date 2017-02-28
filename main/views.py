@@ -68,7 +68,6 @@ class Editable_Tab(Dynamic_Event_Menager):
 
 
 
-from invoice.views import *
 class Start(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
@@ -85,13 +84,28 @@ class Start(Dynamic_Event_Menager):
 
 class Products(Dynamic_Event_Menager):
 
-    def Manage_Content_Ground(self):
-        self.content['products'] = Filter_Products(
+    def Get_Page(self):
+
+        page = self.request.session['main_products_page']
+        range = {
+            'start':    (page-1) * 15,
+            'end':      page * 15,
+        }
+
+        products = Filter_Products(
             self.request,
             self.request.session['searcher_phrase']
         )
 
+        return products[range['start']:range['end']]
+
+    def Manage_Content_Ground(self):
+        self.content['products'] = self.Get_Page()
         return self.Render_HTML('main/products.html')
+
+    def Manage_Button(self):
+        self.request.session['main_products_page'] = \
+            self.request.POST['page']
 
     @staticmethod
     def Launch(request):
