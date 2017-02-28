@@ -71,6 +71,13 @@ class Payment_Models_Menager:
         return Selected_Product.objects.filter(payment=payment)
 
     @staticmethod
+    def Get_Payment(request):
+        Payment_Models_Menager.Check_Payment(request)
+        unique = request.session['user_unique']
+        user = User.objects.get(unique=unique)
+        Payment.objects.get(user=user, approved=False)
+
+    @staticmethod
     def Append_Selected_Product(request, product, number=1):
         unique = request.session['user_unique']
         user = User.objects.get(unique=unique)
@@ -107,7 +114,4 @@ class Payment_Models_Menager:
         unique = request.session['user_unique']
         user = User.objects.get(unique=unique)
         payment = Payment.objects.get(user=user, approved=False)
-        selected_product = Selected_Product.objects.filter(payment=payment)
-
-        for selected in selected_product:
-            selected.delete()
+        Selected_Product.objects.filter(payment=payment).delete()

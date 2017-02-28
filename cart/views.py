@@ -8,8 +8,10 @@ class Cart_Manager(Dynamic_Event_Menager):
         pass
 
     def Manage_Content_Cart(self):
-        user = User.objects.get(unique=self.request.session['user_unique'])
-        self.content['payment'] = Payment.objects.get(user=user, approved=False)
+
+        self.content['payment'] = Payment_Models_Menager.\
+            Get_Payment(self.request)
+
         self.content['cart'] = Payment_Models_Menager.\
             Get_Selected_Products(self.request)
 
