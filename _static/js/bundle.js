@@ -1750,9 +1750,9 @@
 	var list_configs = exports.list_configs = {};
 	
 	list_configs.register = {
-	  username: 'length_3',
-	  password: 'password',
-	  email: 'email_not_in_db'
+	  new_username: 'length_3',
+	  new_password: 'password',
+	  new_email: 'email_not_in_db'
 	};
 	
 	list_configs.login = {

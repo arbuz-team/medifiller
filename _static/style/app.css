@@ -94,7 +94,8 @@ strong {
   right: 0;
   left: 0;
   height: auto;
-  overflow-y: auto; }
+  overflow-y: auto;
+  z-index: 80; }
   #NAVIGATION > .navigation {
     position: relative;
     height: auto;
@@ -148,7 +149,7 @@ strong {
   height: 52px;
   background-color: transparent;
   overflow: visible;
-  z-index: 37; }
+  z-index: 70; }
   #HEADER > .header {
     position: relative;
     height: inherit;
@@ -298,12 +299,12 @@ strong {
 @media (min-width: 675px) {
   #HEADER > .header > .navigation-secondary {
     position: absolute;
-    left: -10px;
+    left: -2px;
     top: 0;
     right: 0;
     display: block;
     height: 30px;
-    padding-left: 265px;
+    padding-left: 17px;
     padding-right: 15px;
     background-color: #382B1B;
     color: #ffffff;
