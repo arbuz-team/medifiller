@@ -9,15 +9,16 @@
   z-index: 100
 
   background: rgba(0, 0, 0, 0.4)
+  overflow-y: auto
 
 
   >.dialog
     display: block
     position: relative
 
-    width: 500px
+    width: 95%
 
-    margin: 200px auto
+    margin: 100px auto
       bottom: 40px
 
     background: $G-COLOR-4
@@ -26,36 +27,38 @@
       radius: 3px
 
 
-    >.dialog-header
-      padding: 10px 12px
-      line-height: 19px
-      background-color: #f6f7f9
-      border:
-        bottom: 1px solid #e5e5e5
-        radius: 3px 3px 0 0
-      color: #1d2129
-      font-weight: bold
+.dialog-header
+  padding: 10px 12px
+  line-height: 19px
+  background-color: #f6f7f9
+  border:
+    bottom: 1px solid #e5e5e5
+    radius: 3px 3px 0 0
+  color: #1d2129
+  font-weight: bold
 
-    >.dialog-content
-      padding: 12px
-      font-size: 14px
-      line-height: 18px
-
-
-      .dialog-content-part > div
-        padding-bottom: 5px
-
-      .dialog-content-part > input
-        width: 468px
-        box-sizing: border-box
-
-      .dialog-content-part:last-child
-        text-align: right
-
-//
-        input[type=text], input[type=email], input[type=password], input[type=number], select, button, .button, textarea
-          width: auto
+.dialog-content
+  padding: 12px
+  font-size: 14px
+  line-height: 18px
 
 
-      input[type=text], input[type=email], input[type=password], input[type=number], select, button, .button, textarea
-        width: 100%
+  .dialog-content-part > div
+    padding-bottom: 5px
+
+  .dialog-content-part > input
+    width: 95%
+    box-sizing: border-box
+
+  .dialog-content-part:last-child
+    text-align: right
+
+
+@media (min-width: $G-SIZE-1)
+
+  .dialog
+    width: 500px
+    margin-top: 200px
+
+  .dialog-content-part > input
+    width: 468px
