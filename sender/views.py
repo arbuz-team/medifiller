@@ -35,6 +35,12 @@ class Sender(Dynamic_Base):
         title = Text(self.request, 34)
         html_file = 'payment_approved.html'
         recipient = [recipient, ROOT_EMAIL]
+
+        pdf = {
+            'name': Text(self.request, 106),
+            'file': pdf,
+        }
+
         self.Send_Email(title, content, recipient, html_file, pdf)
 
     def Send_Contact_Question(self, title, content, recipient):
@@ -63,7 +69,7 @@ class Sender(Dynamic_Base):
         )
 
         if pdf:
-            email.attach()
+            email.attach(pdf['name'], pdf['file'], 'application/pdf')
 
         email.attach(self.email_html)
         email.send()
