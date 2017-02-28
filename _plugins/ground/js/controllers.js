@@ -81,24 +81,32 @@ let
         header: $('#HEADER').outerHeight(),
         ground_top: $container.position().top,
       },
-      height_container = height.window - height.header - height.ground_top,
-      height_start_banner = height.window - height.header - height.ground_top;
+      height_container = height.window - height.header - height.ground_top;
 
     $container.height(height_container);
-    $('.ground-block.start', $container).height(height_start_banner);
+    change_height_start_banner($container, height_container)
   },
 
 
-  change_height_start_banner = function()
+  change_height_start_banner = function($container, height_container)
   {
     let
-      height = {
-        window: $('#CONTAINTER').innerHeight(),
-        header: $('#HEADER').outerHeight(),
-        ground_top: $(config_loader.container).position().top,
-      };
+      width_website = $('#CONTAINTER').innerWidth(),
+      height_start_banner = 0;
 
-    $(config_loader.container).height(height.window - height.header - height.ground_top);
+    if(height_container > 768)
+      height_start_banner = height_container - 386;
+
+    if(height_start_banner === 0 || width_website < 1000)
+    {
+      $('.ground-block.start .block-content-image', $container).hide();
+      $('.ground-block.start .block-content-recommended-title', $container).show();
+    }
+    else
+    {
+      $('.ground-block.start .block-content-image', $container).show().height(height_start_banner);
+      $('.ground-block.start .block-content-recommended-title', $container).hide();
+    }
   };
 
 
@@ -111,7 +119,6 @@ export let
   define = function()
   {
     change_height_content();
-    change_height_start_banner();
 
     $('a').click(go_to_link);
     window.APP.add_own_event('redirect', redirect);

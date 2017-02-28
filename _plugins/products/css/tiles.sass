@@ -3,7 +3,6 @@
   padding:
     top: 0
     bottom: 0
-  border-top: $G-STYLE-DARK-BORDER-BOLD
 
   >ul
     width: auto
@@ -52,16 +51,17 @@
 
 
 .products.tiles.recommended
-  padding: 15px 0
+  padding:
+    top: 15px
+    bottom: 15px
 
   .product
-    margin: 0 5px
+    margin: 0 auto
       bottom: 10px
     background-color: $G-COLOR-4
     +box-shadow(0px 0px 1px 1px #e8e8e8)
     border: $G-STYLE-BORDER
       radius: 1px
-
 
 
 //-----------------------------------------
@@ -93,6 +93,11 @@
 
         >.product-content-details
           text-align: left
+
+
+  .products.tiles.recommended
+    .product
+      margin-right: 10px
 
 
 @media (min-width: 870px)

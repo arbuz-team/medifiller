@@ -7,19 +7,45 @@
     padding: 0
       bottom: 50px
 
-    >.block-content-banner
-      width: 100%
-      position: relative
-      //+box-shadow( inset 0px -10px 5px 0px rgba(50,50,50,.3))
+    >.block-content-recommended-title
+      padding: 15px 50px
+        bottom: 15px
 
-      >img
+      background-color: #fcfcfc
+      border-bottom: $G-STYLE-BORDER-BOLD
+
+      >span
+        line-height: 40px
+        opacity: .6
+        font:
+          size: 28px
+          weight: bold
+        color: $G-COLOR-0
+
+    >.block-content-image
+      display: none
+
+
+@media (min-width: $G-SIZE-3)
+  .ground-block.start
+    >.block-content
+
+      >.block-content-recommended-title
+        display: none
+
+      >.block-content-image
         display: block
-        max-width: 100%
-        width: auto
-        max-height: 500px
-        min-height: 300px
-        vertical-align: bottom
+        position: relative
+        background-color: $G-COLOR-4
+        border-bottom: $G-STYLE-DARK-BORDER-BOLD
+        overflow: hidden
 
+        >img
+          display: block
+          max-width: none
+          width: auto
+          height: 100%
+          vertical-align: middle
 
 .footer.start
   >.footer-content

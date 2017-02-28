@@ -611,7 +611,7 @@ img {
   position: relative;
   display: inline-block;
   margin: 0;
-  padding-bottom: 100px;
+  padding-bottom: 50px;
   width: 100%;
   min-height: 550px; }
   .ground-block > .block-title {
@@ -665,6 +665,8 @@ img {
     height: 300px; } }
 
 @media (min-width: 675px) {
+  .ground-block {
+    padding-bottom: 100px; }
   .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-left, .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-right {
     display: inline-block; }
   .ground:not(.smaller) > .ground-block > .block-content.contact > .block-content-left {
@@ -742,16 +744,35 @@ img {
 .ground-block.start > .block-content {
   padding: 0;
     padding-bottom: 50px; }
-  .ground-block.start > .block-content > .block-content-banner {
-    width: 100%;
-    position: relative; }
-    .ground-block.start > .block-content > .block-content-banner > img {
+  .ground-block.start > .block-content > .block-content-recommended-title {
+    padding: 15px 50px;
+      padding-bottom: 15px;
+    background-color: #fcfcfc;
+    border-bottom: 2px solid #e8e8e8; }
+    .ground-block.start > .block-content > .block-content-recommended-title > span {
+      line-height: 40px;
+      opacity: .6;
+      font-size: 28px;
+      font-weight: bold;
+      color: #382B1B; }
+  .ground-block.start > .block-content > .block-content-image {
+    display: none; }
+
+@media (min-width: 1000px) {
+  .ground-block.start > .block-content > .block-content-recommended-title {
+    display: none; }
+  .ground-block.start > .block-content > .block-content-image {
+    display: block;
+    position: relative;
+    background-color: #ffffff;
+    border-bottom: 2px solid #d1d1d1;
+    overflow: hidden; }
+    .ground-block.start > .block-content > .block-content-image > img {
       display: block;
-      max-width: 100%;
+      max-width: none;
       width: auto;
-      max-height: 500px;
-      min-height: 300px;
-      vertical-align: bottom; }
+      height: 100%;
+      vertical-align: middle; } }
 
 .footer.start > .footer-content {
   background-color: #ffffff;
@@ -950,19 +971,24 @@ img {
   background-size: 40%;
   background-position: center;
   background-repeat: no-repeat;
-  border: 3px dashed #d1d1d1;
-  opacity: .8; }
+  border: 3px dashed #d1d1d1; }
 
 .products.tiles > ul > .product.new > a > .product-title, .products.tiles > ul > .product.new > div > .product-title {
-  min-height: 60px; }
+  min-height: 20px; }
 
-.products.tiles > ul > .product.new:hover > a > .product-img.mini_image, .products.tiles > ul > .product.new:hover > div > .product-img.mini_image {
-  opacity: .9; }
+@media (min-width: 675px) {
+  .products.tiles > ul > .product.new > a > .product-title, .products.tiles > ul > .product.new > div > .product-title {
+    min-height: 60px; } }
+
+@media (min-width: 1000px) {
+  .products.tiles > ul > .product.new > a > .product-img.mini_image, .products.tiles > ul > .product.new > div > .product-img.mini_image {
+    opacity: .8; }
+  .products.tiles > ul > .product.new:hover > a > .product-img.mini_image, .products.tiles > ul > .product.new:hover > div > .product-img.mini_image {
+    opacity: .9; } }
 
 .products.tiles {
   padding-top: 0;
-  padding-bottom: 0;
-  border-top: 2px solid #d1d1d1; }
+  padding-bottom: 0; }
   .products.tiles > ul {
     width: auto; }
     .products.tiles > ul .product {
@@ -997,9 +1023,10 @@ img {
           line-height: 38px; }
 
 .products.tiles.recommended {
-  padding: 15px 0; }
+  padding-top: 15px;
+  padding-bottom: 15px; }
   .products.tiles.recommended .product {
-    margin: 0 5px;
+    margin: 0 auto;
       margin-bottom: 10px;
     background-color: #ffffff;
     -moz-box-shadow: 0px 0px 1px 1px #e8e8e8;
@@ -1024,7 +1051,9 @@ img {
       .products.tiles > ul .product > a > .product-title {
         text-align: left; }
       .products.tiles > ul .product > .product-content > .product-content-details {
-        text-align: left; } }
+        text-align: left; }
+  .products.tiles.recommended .product {
+    margin-right: 10px; } }
 
 @media (min-width: 870px) {
   .products.tiles .product {

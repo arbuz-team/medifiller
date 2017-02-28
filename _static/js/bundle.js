@@ -3150,13 +3150,30 @@
 	  ground_loader_controllers.load();
 	},
 	    change_height_content = function change_height_content() {
-	  var height = {
+	  var $container = $(config_loader.container),
+	      height = {
 	    window: $('#CONTAINTER').innerHeight(),
 	    header: $('#HEADER').outerHeight(),
-	    ground_top: $(config_loader.container).position().top
-	  };
+	    ground_top: $container.position().top
+	  },
+	      height_container = height.window - height.header - height.ground_top;
 	
-	  $(config_loader.container).height(height.window - height.header - height.ground_top);
+	  $container.height(height_container);
+	  change_height_start_banner($container, height_container);
+	},
+	    change_height_start_banner = function change_height_start_banner($container, height_container) {
+	  var width_website = $('#CONTAINTER').innerWidth(),
+	      height_start_banner = 0;
+	
+	  if (height_container > 768) height_start_banner = height_container - 386;
+	
+	  if (height_start_banner === 0 || width_website < 1000) {
+	    $('.ground-block.start .block-content-image', $container).hide();
+	    $('.ground-block.start .block-content-recommended-title', $container).show();
+	  } else {
+	    $('.ground-block.start .block-content-image', $container).show().height(height_start_banner);
+	    $('.ground-block.start .block-content-recommended-title', $container).hide();
+	  }
 	};
 	
 	/**
