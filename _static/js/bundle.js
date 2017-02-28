@@ -2386,30 +2386,43 @@
 	var Post_Button_Views = exports.Post_Button_Views = function Post_Button_Views(config) {
 	  var models = new _models.Post_Button_Models(config),
 	      set_text = {
-	    sending: function sending() {
-	      clearTimeout(set_text.set_waiting);
-	      clearTimeout(set_text.set_standard);
+	    if_is_text: function if_is_text() {
+	      if ($(models.settings.button).children('i').length > 0) return false;
+	      return true;
+	    },
 	
-	      $(models.settings.button).html(models.settings.text_sending);
+	    sending: function sending() {
+	      if (set_text.if_is_text()) {
+	        clearTimeout(set_text.set_waiting);
+	        clearTimeout(set_text.set_standard);
+	
+	        $(models.settings.button).html(models.settings.text_sending);
+	      }
 	    },
 	
 	    set_waiting: undefined,
 	    waiting: function waiting() {
-	      set_text.set_waiting = setTimeout(function () {
-	        $(models.settings.button).html(models.settings.text_waiting);
-	      }, models.settings.delay_text_waiting);
+	      if (set_text.if_is_text()) {
+	        set_text.set_waiting = setTimeout(function () {
+	          $(models.settings.button).html(models.settings.text_waiting);
+	        }, models.settings.delay_text_waiting);
+	      }
 	    },
 	
 	    done: function done() {
-	      clearTimeout(set_text.set_waiting);
-	      $(models.settings.button).html(models.settings.text_done);
+	      if (set_text.if_is_text()) {
+	        clearTimeout(set_text.set_waiting);
+	        $(models.settings.button).html(models.settings.text_done);
+	      }
 	    },
 	
 	    set_standard: undefined,
 	    standard: function standard() {
-	      set_text.set_standard = setTimeout(function () {
-	        $(models.settings.button).html(models.settings.text_standard);
-	      }, models.settings.delay_text_standard);
+	      if (set_text.if_is_text()) {
+	        set_text.set_standard = setTimeout(function () {
+	          $(models.settings.button).html(models.settings.text_standard);
+	        }, models.settings.delay_text_standard);
+	      }
 	    }
 	  },
 	      start_loading = function start_loading() {

@@ -387,7 +387,7 @@ strong {
   border-left: 1px solid #e8e8e8;
   z-index: 59; }
 
-#CART > .cart > .cart-close, #CART > .payment > .cart-close, #PAYMENT > .cart > .cart-close, #PAYMENT > .payment > .cart-close {
+.cart > .cart-close, .payment > .cart-close {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -395,7 +395,7 @@ strong {
   height: 20px;
   text-align: center;
   cursor: pointer; }
-  #CART > .cart > .cart-close > i, #CART > .payment > .cart-close > i, #PAYMENT > .cart > .cart-close > i, #PAYMENT > .payment > .cart-close > i {
+  .cart > .cart-close > i, .payment > .cart-close > i {
     display: block;
     width: 20px;
     height: 20px;
@@ -404,20 +404,20 @@ strong {
     background-size: 100%;
     background-position: center;
     background-repeat: no-repeat; }
-  #CART > .cart > .cart-close > span, #CART > .payment > .cart-close > span, #PAYMENT > .cart > .cart-close > span, #PAYMENT > .payment > .cart-close > span {
+  .cart > .cart-close > span, .payment > .cart-close > span {
     position: relative;
     left: -2px;
     top: -3px;
     color: #999;
     font-size: 16px; }
 
-#CART > .cart > .cart-close:hover > i, #CART > .payment > .cart-close:hover > i, #PAYMENT > .cart > .cart-close:hover > i, #PAYMENT > .payment > .cart-close:hover > i {
+.cart > .cart-close:hover > i, .payment > .cart-close:hover > i {
   opacity: 1; }
 
-#CART > .cart > .cart-close:hover > span, #CART > .payment > .cart-close:hover > span, #PAYMENT > .cart > .cart-close:hover > span, #PAYMENT > .payment > .cart-close:hover > span {
+.cart > .cart-close:hover > span, .payment > .cart-close:hover > span {
   color: #382B1B; }
 
-#CART > .cart > .cart-title, #CART > .payment > .cart-title, #PAYMENT > .cart > .cart-title, #PAYMENT > .payment > .cart-title {
+.cart > .cart-title, .payment > .cart-title {
   display: block;
   height: 70px;
   line-height: 70px;
@@ -426,33 +426,52 @@ strong {
   font-weight: bold;
   border-bottom: 1px solid #e8e8e8; }
 
-#CART > .cart > .cart-list, #CART > .payment > .cart-list, #PAYMENT > .cart > .cart-list, #PAYMENT > .payment > .cart-list {
+.cart > .cart-list, .payment > .cart-list {
   display: block;
   min-height: 70px;
   margin: 10px 15px; }
-  #CART > .cart > .cart-list > li > *, #CART > .payment > .cart-list > li > *, #PAYMENT > .cart > .cart-list > li > *, #PAYMENT > .payment > .cart-list > li > * {
+  .cart > .cart-list > li.cart-list-product, .payment > .cart-list > li.cart-list-product {
+    margin-top: 5px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid #e8e8e8;
+    overflow: hidden; }
+  .cart > .cart-list > li > *, .payment > .cart-list > li > * {
     display: inline-block; }
-  #CART > .cart > .cart-list > li > .cart-list-name, #CART > .payment > .cart-list > li > .cart-list-name, #PAYMENT > .cart > .cart-list > li > .cart-list-name, #PAYMENT > .payment > .cart-list > li > .cart-list-name {
+  .cart > .cart-list > li > .cart-list-name, .payment > .cart-list > li > .cart-list-name {
     opacity: .8;
     width: 58%; }
-  #CART > .cart > .cart-list > li > .cart-list-name:hover, #CART > .payment > .cart-list > li > .cart-list-name:hover, #PAYMENT > .cart > .cart-list > li > .cart-list-name:hover, #PAYMENT > .payment > .cart-list > li > .cart-list-name:hover {
+  .cart > .cart-list > li > .cart-list-name:hover, .payment > .cart-list > li > .cart-list-name:hover {
     opacity: .95; }
-  #CART > .cart > .cart-list > li > .cart-list-actions, #CART > .payment > .cart-list > li > .cart-list-actions, #PAYMENT > .cart > .cart-list > li > .cart-list-actions, #PAYMENT > .payment > .cart-list > li > .cart-list-actions {
-    opacity: .6;
+  .cart > .cart-list > li > .cart-list-actions, .payment > .cart-list > li > .cart-list-actions {
+    float: right;
     width: 40%;
+    vertical-align: top;
+    opacity: .6;
+    text-align: right;
     color: #382B1B; }
-  #CART > .cart > .cart-list > li > .cart-list-empty, #CART > .payment > .cart-list > li > .cart-list-empty, #PAYMENT > .cart > .cart-list > li > .cart-list-empty, #PAYMENT > .payment > .cart-list > li > .cart-list-empty {
+    .cart > .cart-list > li > .cart-list-actions > button, .payment > .cart-list > li > .cart-list-actions > button {
+      margin-left: 10px; }
+  .cart > .cart-list > li > .cart-list-empty, .payment > .cart-list > li > .cart-list-empty {
     opacity: .6;
     display: block;
     text-align: center;
     color: #774D34;
     font-weight: bold; }
-  #CART > .cart > .cart-list > li > .cart-list-button, #CART > .payment > .cart-list > li > .cart-list-button, #PAYMENT > .cart > .cart-list > li > .cart-list-button, #PAYMENT > .payment > .cart-list > li > .cart-list-button {
-    margin-top: 50px;
+  .cart > .cart-list > li > .cart-list-button, .payment > .cart-list > li > .cart-list-button {
+    margin-top: 30px;
     width: 49%; }
-    #CART > .cart > .cart-list > li > .cart-list-button > button, #CART > .payment > .cart-list > li > .cart-list-button > button, #PAYMENT > .cart > .cart-list > li > .cart-list-button > button, #PAYMENT > .payment > .cart-list > li > .cart-list-button > button {
+    .cart > .cart-list > li > .cart-list-button > button, .payment > .cart-list > li > .cart-list-button > button {
       display: block;
       width: 98%; }
+  .cart > .cart-list > li.cart-list-total_price, .payment > .cart-list > li.cart-list-total_price {
+    padding-top: 10px;
+    font-weight: bold;
+    border-top: 1px solid #e8e8e8; }
+    .cart > .cart-list > li.cart-list-total_price > div, .payment > .cart-list > li.cart-list-total_price > div {
+      display: inline-block;
+      width: 49%; }
+    .cart > .cart-list > li.cart-list-total_price > div:last-child, .payment > .cart-list > li.cart-list-total_price > div:last-child {
+      text-align: right; }
 
 @media (min-width: 675px) {
   #CART {
@@ -1203,6 +1222,26 @@ button {
   margin: 0;
   padding: 0;
     padding-left: 5px; }
+
+.field_shell button.icon {
+  background-color: transparent;
+  background-image: none;
+  border: none;
+  padding: 0;
+  margin: 0 3px;
+  line-height: 25px;
+  height: 20px; }
+  .field_shell button.icon > i {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    opacity: .8;
+    background-image: "";
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat; }
+  .field_shell button.icon > i:hover {
+    opacity: 1; }
 
 .field_shell .checkbox {
   width: 100%;

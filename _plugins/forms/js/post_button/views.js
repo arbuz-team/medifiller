@@ -12,34 +12,53 @@ export let Post_Button_Views = function(config)
 
 
     set_text = {
+      if_is_text: function()
+      {
+        if($(models.settings.button).children('i').length > 0)
+          return false;
+        return true;
+      },
+
       sending: function()
       {
-        clearTimeout(set_text.set_waiting);
-        clearTimeout(set_text.set_standard);
+        if(set_text.if_is_text())
+        {
+          clearTimeout(set_text.set_waiting);
+          clearTimeout(set_text.set_standard);
 
-        $(models.settings.button).html(models.settings.text_sending);
+          $(models.settings.button).html(models.settings.text_sending);
+        }
       },
 
       set_waiting: undefined,
       waiting: function()
       {
-        set_text.set_waiting = setTimeout(function(){
-          $(models.settings.button).html(models.settings.text_waiting);
-        }, models.settings.delay_text_waiting);
+        if(set_text.if_is_text())
+        {
+          set_text.set_waiting = setTimeout(function(){
+            $(models.settings.button).html(models.settings.text_waiting);
+          }, models.settings.delay_text_waiting);
+        }
       },
 
       done: function()
       {
-        clearTimeout(set_text.set_waiting);
-        $(models.settings.button).html(models.settings.text_done);
+        if(set_text.if_is_text())
+        {
+          clearTimeout(set_text.set_waiting);
+          $(models.settings.button).html(models.settings.text_done);
+        }
       },
 
       set_standard: undefined,
       standard: function()
       {
-        set_text.set_standard = setTimeout(function(){
-          $(models.settings.button).html(models.settings.text_standard);
-        }, models.settings.delay_text_standard);
+        if(set_text.if_is_text())
+        {
+          set_text.set_standard = setTimeout(function(){
+            $(models.settings.button).html(models.settings.text_standard);
+          }, models.settings.delay_text_standard);
+        }
       },
     },
 

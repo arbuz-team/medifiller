@@ -23,91 +23,119 @@ $cart--color: $G-COLOR-0
 
   z-index: 59
 
-#CART, #PAYMENT
 
-  >.cart, >.payment
+.cart, .payment
 
-    >.cart-close
-      position: absolute
-      top: 20px
-      right: 20px
+  >.cart-close
+    position: absolute
+    top: 20px
+    right: 20px
 
+    width: 20px
+    height: 20px
+
+    text-align: center
+    cursor: pointer
+
+    >i
+      display: block
       width: 20px
       height: 20px
 
-      text-align: center
-      cursor: pointer
+      opacity: 0.7
+      +background-img(url('/_static/img/icons/32/dark/close.png'), 100%, center)
 
-      >i
-        display: block
-        width: 20px
-        height: 20px
+    >span
+      position: relative
+      left: -2px
+      top: -3px
 
-        opacity: 0.7
-        +background-img(url('/_static/img/icons/32/dark/close.png'), 100%, center)
+      color: #999
+      font-size: 16px
 
-      >span
-        position: relative
-        left: -2px
-        top: -3px
+  >.cart-close:hover
 
-        color: #999
-        font-size: 16px
+    >i
+      opacity: 1
 
-    >.cart-close:hover
-
-      >i
-        opacity: 1
-
-      >span
-        color: $G-COLOR-0
+    >span
+      color: $G-COLOR-0
 
 
-    >.cart-title
-      display: block
-      height: $cart-title--height
-      line-height: $cart-title--height
+  >.cart-title
+    display: block
+    height: $cart-title--height
+    line-height: $cart-title--height
 
-      text-align: center
-      font-size: 18px
-      font-weight: bold
+    text-align: center
+    font-size: 18px
+    font-weight: bold
+    border-bottom: $G-STYLE-BORDER
+
+  >.cart-list
+    display: block
+    min-height: $cart-title--height
+
+    margin: 10px 15px
+
+    >li.cart-list-product
+      margin-top: 5px
+      padding-bottom: 3px
       border-bottom: $G-STYLE-BORDER
 
-    >.cart-list
-      display: block
-      min-height: $cart-title--height
+      overflow: hidden
 
-      margin: 10px 15px
 
-      >li >*
+    >li
+
+      >*
         display: inline-block
 
-      >li >.cart-list-name
+      >.cart-list-name
         opacity: .8
         width: 58%
 
-      >li >.cart-list-name:hover
+      >.cart-list-name:hover
         opacity: .95
 
-      >li >.cart-list-actions
-        opacity: .6
+      >.cart-list-actions
+        float: right
         width: 40%
+        vertical-align: top
+
+        opacity: .6
+        text-align: right
         color: $G-COLOR-0
 
-      >li >.cart-list-empty
+        >button
+          margin-left: 10px
+
+      >.cart-list-empty
         opacity: .6
         display: block
         text-align: center
         color: $G-COLOR-1
         font-weight: bold
 
-      >li >.cart-list-button
-        margin-top: 50px
+      >.cart-list-button
+        margin-top: 30px
         width: 49%
 
         >button
           display: block
           width: 98%
+
+    >li.cart-list-total_price
+      padding-top: 10px
+      font-weight: bold
+      border-top: $G-STYLE-BORDER
+
+      >div
+        display: inline-block
+        width: 49%
+
+      >div:last-child
+        text-align: right
 
 
 @media (min-width: $G-SIZE-2)

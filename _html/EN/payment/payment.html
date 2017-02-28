@@ -18,13 +18,13 @@
 
         {% if cart %}
 
-            {% if payment_address %}
+            {% if not payment_address %}
 
                 <ul class="cart-list">
 
                     {% for selected in cart %}
 
-                        <li>
+                        <li class="cart-list-product">
                             <div class="cart-list-name">
                                 <a href="/product/{{ selected.product.pk }}/{{ selected.product.details_en.name | to_url }}/">
                                     {{ selected.product.details_en.name }}
@@ -32,13 +32,13 @@
                             </div>
                             <div class="cart-list-actions"> {{ selected.number }} x {% price selected.product %}
 
-                                <button class="post_button" type="button"
+                                <button class="post_button icon" type="button"
                                       data-name="Delete_{{ selected.product.pk }}"
                                       data-action="delete"
                                       data-value="{{ selected.product.pk }}"
                                       data-reload="cart ground"
                                       data-url="/cart/">
-                                    X
+                                    <i style="background-image: url(/_static/img/icons/32/dark/waste_bin.png)"> &nbsp; </i>
                                 </button>
 
                             </div><!-- cart-list-name -->
@@ -46,10 +46,13 @@
 
                     {% endfor %}
 
+                    <li class="cart-list-total_price">
+                        <div>Total price:</div>
+                        <div>{{ total_price }} {{ request.session.translator_currency }}</div>
+                    </li>
+
                 </ul><!-- cart-list -->
 
-                <br />
-                Total price: {{ total_price }} {{ request.session.translator_currency }}<br />
 
                 {% for item in address %}
 
