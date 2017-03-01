@@ -78,9 +78,9 @@ class Start(Dynamic_Event_Menager):
 
     @staticmethod
     def Launch(request):
-        Check_Session(request)
-        return Generator_PDF(request).Invoice(1)
-        # return Start(request).HTML
+        # Check_Session(request)
+        # return Generator_PDF(request).Invoice(1)
+        return Start(request).HTML
 
 
 

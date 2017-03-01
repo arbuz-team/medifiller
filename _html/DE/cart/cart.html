@@ -17,8 +17,8 @@
 
             <li>
                 <div class="cart-list-name">
-                    <a href="/product/{{ selected.product.pk }}/{{ selected.product.details_en.name | to_url }}/">
-                        {{ selected.product.details_en.name }}
+                    <a href="/product/{{ selected.product.pk }}/{% product_name_url selected.product %}/">
+                        {% product_name selected.product %}
                     </a>
                 </div>
                 <div class="cart-list-actions field_shell"> {{ selected.number }} x {% price selected.product %}

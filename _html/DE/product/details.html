@@ -20,7 +20,7 @@
 
             <div class="product_details-image">
                 <div class="fill-abs">
-                    <img data-src="{{ product.image }}" src="{% static 'img/pixel.png' %}" alt="{{ product.details_en.name }}">
+                    <img data-src="{{ product.image }}" src="{% static 'img/pixel.png' %}" alt="{% product_name product %}">
                 </div>
             </div>
 
@@ -30,7 +30,7 @@
         <div class="block-content-right">
 
             <div class="product_details-section title">
-                <h1>{{ product.details_en.name }}</h1>
+                <h1>{% product_name product %}</h1>
             </div>
 
 
@@ -92,7 +92,7 @@
             </div>
 
             <div class="product_details-section details">
-                {{ product.details_en.description }}<br>
+                {% product_description product %}<br>
             </div>
 
         </div>

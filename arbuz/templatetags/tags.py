@@ -74,3 +74,34 @@ def dict_value(my_dict, value):
 @register.simple_tag(takes_context=True)
 def text(context, pk, language=None):
     return Text(context['request'], pk, language)
+
+@register.simple_tag(takes_context=True)
+def product_name(context, product):
+
+    name = {
+        'EN': product.details_en.name,
+        'PL': product.details_pl.name,
+        'DE': product.details_de.name,
+    }
+
+    request = context['request']
+    language = request.session['translator_language']
+    return name[language]
+
+@register.simple_tag(takes_context=True)
+def product_name_url(context, product):
+    name = product_name(context, product)
+    return to_url(name)
+
+@register.simple_tag(takes_context=True)
+def product_description(context, product):
+
+    description = {
+        'EN': product.details_en.description,
+        'PL': product.details_pl.description,
+        'DE': product.details_de.description,
+    }
+
+    request = context['request']
+    language = request.session['translator_language']
+    return description[language]
