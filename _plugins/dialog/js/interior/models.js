@@ -58,8 +58,6 @@ export let
   load = function(url, post_data, callback)
   {
     prepare_post_data(post_data);
-    
-    console.log(variables.post_data);
 
     dialog_loader_controllers.load(url, variables.post_data, callback);
   };
