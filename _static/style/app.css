@@ -89,6 +89,12 @@ strong {
 .container-part {
   z-index: 5; }
 
+#DIALOG .ground-block {
+  display: none; }
+
+#GROUND .dialog-header, #GROUND .dialog-content {
+  display: none; }
+
 #NAVIGATION {
   top: 100%;
   right: 0;
@@ -377,13 +383,16 @@ strong {
   padding: 12px;
   font-size: 14px;
   line-height: 18px; }
-  .dialog-content .dialog-content-part > div {
-    padding-bottom: 5px; }
-  .dialog-content .dialog-content-part > input {
-    width: 95%;
-    box-sizing: border-box; }
-  .dialog-content .dialog-content-part:last-child {
-    text-align: right; }
+
+.dialog-content-part > div {
+  padding-bottom: 5px; }
+
+.dialog-content-part > input {
+  width: 95%;
+  box-sizing: border-box; }
+
+.dialog-content-part:last-child {
+  text-align: right; }
 
 @media (min-width: 500px) {
   .dialog {
