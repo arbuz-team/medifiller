@@ -82,6 +82,7 @@ class Dialog_Confirm(Dialog):
             'reload': self.request.POST['post_button_reload'],
             'redirect': self.request.POST['post_button_redirect'],
             'url': self.request.POST['post_button_url'],
+            'event': self.request.POST['post_button_event'],
         }
 
     def Manage_Delete_Product(self):
