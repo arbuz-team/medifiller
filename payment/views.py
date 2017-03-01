@@ -173,27 +173,27 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
 
     def Create_Address(self, pk, model):
 
-        address = User_Address.objects.get(pk=pk)
-        new_address = None
+        user_address = User_Address.objects.get(pk=pk)
+        address = None
 
         unique = self.request.session['user_unique']
         user = User.objects.get(unique=unique)
         payment = Payment.objects.get(user=user, approved=False)
 
         if model == 'payment_address':
-            new_address = Payment_Address(payment=payment)
+            address = Payment_Address.objects.get(payment=payment)
 
         if model == 'invoice_address':
-            new_address = Invoice_Address(payment=payment)
+            address = Invoice_Address.objects.get(payment=payment)
 
-        new_address.full_name = address.full_name
-        new_address.address_line_1 = address.address_line_1
-        new_address.address_line_2 = address.address_line_2
-        new_address.city = address.city
-        new_address.region = address.region
-        new_address.postcode = address.postcode
-        new_address.country = address.country
-        new_address.save()
+        address.full_name = user_address.full_name
+        address.address_line_1 = user_address.address_line_1
+        address.address_line_2 = user_address.address_line_2
+        address.city = user_address.city
+        address.region = user_address.region
+        address.postcode = user_address.postcode
+        address.country = user_address.country
+        address.save()
 
     def Manage_Content_Ground(self):
         self.Load_Payment_Details()
@@ -208,11 +208,12 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
         self.Create_Address(address_invoice_pk, 'invoice_address')
 
         self.Load_Payment_Details()
+        self.content['address_is_validate'] = True
         return self.Render_HTML('payment/payment.html')
 
     def Manage_Form(self):
 
-        if self.request.POST['__form__'] == 'payment_address':
+        if self.request.POST['__form__'] == 'address':
             return self.Manage_Form_Address_Payment()
 
         return Dynamic_Event_Menager.Manage_Form(self)

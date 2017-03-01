@@ -18,7 +18,7 @@
 
         {% if cart %}
 
-            {% if not payment_address %}
+            {% if not address_is_validate %}
 
                 <ul class="cart-list">
 
@@ -57,7 +57,7 @@
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
-                <form method="post" action="" id="form_payment_address" data-name="payment_address" data-type="payment_address" class="field_shell">
+                <form method="post" action="" id="form_address" data-name="address" data-type="address" class="field_shell">
 
                     <div class="form-accept">
                         <div>Please select your address of below list <wbr>for shipment and invoice.</div>

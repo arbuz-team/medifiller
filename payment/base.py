@@ -29,6 +29,48 @@ class Payment_Models_Menager:
         payment.save()
 
     @staticmethod
+    def Check_Payment_Address(user):
+
+        payment = Payment.objects.filter(user=user, approved=False)
+        payments_address = Payment_Address.objects.filter(payment=payment)
+
+        if payments_address.count() > 1:
+            payments_address.delete()
+
+        if not payments_address:
+            Payment_Address(
+                full_name='',
+                address_line_1='',
+                address_line_2='',
+                city='',
+                region='',
+                postcode='',
+                country='',
+                payment=payment[0]
+            ).save()
+
+    @staticmethod
+    def Check_Invoice_Address(user):
+
+        payment = Payment.objects.filter(user=user, approved=False)
+        invoice_address = Invoice_Address.objects.filter(payment=payment)
+
+        if invoice_address.count() > 1:
+            invoice_address.delete()
+
+        if not invoice_address:
+            Invoice_Address(
+                full_name='',
+                address_line_1='',
+                address_line_2='',
+                city='',
+                region='',
+                postcode='',
+                country='',
+                payment=payment[0]
+            ).save()
+
+    @staticmethod
     def Check_Payment(request):
 
         if not request.session['user_unique']:
@@ -41,7 +83,7 @@ class Payment_Models_Menager:
         if payments.count() > 1:
             payments.delete()
 
-        if payments.count() == 0:
+        if not payments:
 
             payment = Payment(
                 user=user,
@@ -52,16 +94,8 @@ class Payment_Models_Menager:
             )
             payment.save()
 
-            Payment_Address(
-                full_name='',
-                address_line_1='',
-                address_line_2='',
-                city='',
-                region='',
-                postcode='',
-                country='',
-                payment=payment
-            ).save()
+        Payment_Models_Menager.Check_Payment_Address(user)
+        Payment_Models_Menager.Check_Invoice_Address(user)
 
     @staticmethod
     def Get_Selected_Products(request):
@@ -75,7 +109,7 @@ class Payment_Models_Menager:
         Payment_Models_Menager.Check_Payment(request)
         unique = request.session['user_unique']
         user = User.objects.get(unique=unique)
-        Payment.objects.get(user=user, approved=False)
+        return Payment.objects.get(user=user, approved=False)
 
     @staticmethod
     def Append_Selected_Product(request, product, number=1):
