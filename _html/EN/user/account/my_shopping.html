@@ -14,12 +14,15 @@
 
     <div class="block-content">
 
-        {% for payment in payments %}
+        {% for item in shopping %}
 
-            {{ payment.user }}
-            {{ payment.total_price }}
-            {{ payment.currency }}
-            {{ payment.service }}
+            {{ item.address }}
+            {{ item.products }}
+
+            {{ item.payment.user }}
+            {{ item.payment.total_price }}
+            {{ item.payment.currency }}
+            {{ item.payment.service }}
             <br>
 
         {% endfor %}

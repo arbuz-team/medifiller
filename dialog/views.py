@@ -90,6 +90,12 @@ class Dialog_Confirm(Dialog):
         self.Generate_Content()
         return self.Render_Dialog('dialog/confirm.html', only_root=True)
 
+    def Manage_Delete_Address(self):
+        self.content['title'] = Text(self.request, 107)
+        self.content['description'] = Text(self.request, 108)
+        self.Generate_Content()
+        return self.Render_Dialog('dialog/confirm.html', authorization=True)
+
     def Manage_Clear_Cart(self):
         self.content['title'] = Text(self.request, 100)
         self.content['description'] = Text(self.request, 101)

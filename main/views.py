@@ -67,7 +67,7 @@ class Editable_Tab(Dynamic_Event_Menager):
         pass
 
 
-
+from invoice.views import *
 class Start(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
@@ -78,7 +78,9 @@ class Start(Dynamic_Event_Menager):
 
     @staticmethod
     def Launch(request):
-        return Start(request).HTML
+        Check_Session(request)
+        return Generator_PDF(request).Invoice(1)
+        # return Start(request).HTML
 
 
 
