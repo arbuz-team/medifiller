@@ -44,6 +44,7 @@ export let Post_Button_Controllers = function(config)
       config.button_value = $(this).data('value');
       config.button_reload = $(this).data('reload');
       config.button_redirect = $(this).data('redirect');
+      config.button_event = $(this).data('event');
       config.button_url = $(this).data('url');
 
       config.button_html = $(this).html();

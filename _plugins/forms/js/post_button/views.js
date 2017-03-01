@@ -125,6 +125,29 @@ export let Post_Button_Views = function(config)
     },
 
 
+    launch_event = function()
+    {
+      let
+        event = models.settings.button_event,
+        split_event,
+        ready_event = window.EVENTS;
+
+      if(!event || typeof event !== 'string')
+        return false;
+
+      split_event = event.split('.');
+
+      for(let i = 0; split_event.length > i; ++i)
+        ready_event = ready_event[split_event[i]];
+
+      if(ready_event.constructor === Event)
+      {
+        window.APP.DATA.delay = 100;
+        window.APP.throw_event(ready_event); // plugins.close_cart
+      }
+    },
+
+
     end_loading = function(JSON_response, status)
     {
       models.state.is_loading = false;
@@ -134,6 +157,7 @@ export let Post_Button_Views = function(config)
 
       set_text.done();
 
+      launch_event();
       reload_plugins();
       redirect_ground();
 

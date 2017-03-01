@@ -8,6 +8,8 @@ window.EVENTS = {
   redirect: new Event('redirect'),
 
   plugins: {
+    open_cart: new Event('cart_open'),
+
     close: new Event('plugins_close'),
     close_cart: new Event('cart_close'),
 

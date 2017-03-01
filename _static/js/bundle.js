@@ -352,6 +352,8 @@
 	  redirect: new Event('redirect'),
 	
 	  plugins: {
+	    open_cart: new Event('cart_open'),
+	
 	    close: new Event('plugins_close'),
 	    close_cart: new Event('cart_close'),
 	
@@ -1586,8 +1588,6 @@
 	_views.checker.create_checker('no_empty', function (value, callback) {
 	  var result = _views.checker.create_result();
 	
-	  console.log(value);
-	
 	  if (_views.checker.check_condition(value !== '')) result = _views.checker.create_error("You can't leave this empty.", value);
 	
 	  callback(result);
@@ -1779,11 +1779,6 @@
 	  client: 'proper_name',
 	  email: 'email',
 	  message: 'no_empty'
-	};
-	
-	list_configs.payment_address = {
-	  shipment: 'no_empty',
-	  invoice: 'no_empty'
 	};
 
 /***/ },
@@ -2301,6 +2296,8 @@
 	
 	var define = exports.define = function define() {
 	  $('.cart-close', $('#CART')).click(cart_motion_controllers.plugin_close);
+	
+	  window.APP.add_own_event('cart_open', cart_motion_controllers.plugin_open);
 	  window.APP.add_own_event('cart_close', cart_motion_controllers.plugin_close);
 	
 	  $('body').keydown(manage_key);
@@ -2359,6 +2356,7 @@
 	    config.button_value = $(this).data('value');
 	    config.button_reload = $(this).data('reload');
 	    config.button_redirect = $(this).data('redirect');
+	    config.button_event = $(this).data('event');
 	    config.button_url = $(this).data('url');
 	
 	    config.button_html = $(this).html();
@@ -2478,6 +2476,22 @@
 	    window.APP.DATA.delay = 100;
 	    window.APP.throw_event(window.EVENTS.redirect);
 	  },
+	      launch_event = function launch_event() {
+	    var event = models.settings.button_event,
+	        split_event = void 0,
+	        ready_event = window.EVENTS;
+	
+	    if (!event || typeof event !== 'string') return false;
+	
+	    split_event = event.split('.');
+	
+	    for (var i = 0; split_event.length > i; ++i) {
+	      ready_event = ready_event[split_event[i]];
+	    }if (ready_event.constructor === Event) {
+	      window.APP.DATA.delay = 100;
+	      window.APP.throw_event(ready_event); // plugins.close_cart
+	    }
+	  },
 	      end_loading = function end_loading(JSON_response, status) {
 	    models.state.is_loading = false;
 	
@@ -2485,6 +2499,7 @@
 	
 	    set_text.done();
 	
+	    launch_event();
 	    reload_plugins();
 	    redirect_ground();
 	
@@ -2529,6 +2544,7 @@
 	    button_value: undefined,
 	    button_reload: undefined,
 	    button_redirect: undefined,
+	    button_event: undefined,
 	    button_url: undefined,
 	
 	    callback: undefined,
@@ -2556,6 +2572,7 @@
 	      window.APP.add_if_isset(config, that.settings, 'button_value');
 	      window.APP.add_if_isset(config, that.settings, 'button_reload');
 	      window.APP.add_if_isset(config, that.settings, 'button_redirect');
+	      window.APP.add_if_isset(config, that.settings, 'button_event');
 	      window.APP.add_if_isset(config, that.settings, 'button_url');
 	
 	      window.APP.add_if_isset(config, that.settings, 'button_html', 'text_standard');
@@ -2815,6 +2832,7 @@
 	    post_button_value: $button.data('dialog-value'),
 	    post_button_reload: $button.data('dialog-reload'),
 	    post_button_redirect: $button.data('dialog-redirect'),
+	    post_button_event: $button.data('dialog-event'),
 	    post_button_url: $button.data('dialog-url')
 	  };
 	
@@ -3093,6 +3111,8 @@
 	},
 	    load = exports.load = function load(url, post_data, callback) {
 	  prepare_post_data(post_data);
+	
+	  console.log(variables.post_data);
 	
 	  dialog_loader_controllers.load(url, variables.post_data, callback);
 	};

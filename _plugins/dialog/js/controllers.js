@@ -82,6 +82,7 @@ export let
         post_button_value:    $button.data('dialog-value'),
         post_button_reload:    $button.data('dialog-reload'),
         post_button_redirect:    $button.data('dialog-redirect'),
+        post_button_event:    $button.data('dialog-event'),
         post_button_url:    $button.data('dialog-url'),
       };
 
