@@ -7,7 +7,7 @@
 <script src='https://www.google.com/recaptcha/api.js'></script>
 
 
-<div class="ground-block block-1 SMALL">
+<div class="ground-block block-1 BIG">
 
     <div class="block-background fill-abs"></div>
     {% include "ground/html/navigation.html" %}
@@ -16,14 +16,33 @@
 
         {% for item in shopping %}
 
-            {{ item.address }}
-            {{ item.products }}
+            <!--{{ item.address }}<br>-->
 
-            {{ item.payment.user }}
-            {{ item.payment.total_price }}
-            {{ item.payment.currency }}
-            {{ item.payment.service }}
-            <br>
+
+            <div class="form_block fields">
+                <div>
+
+                    <div class="shell_form"></div>
+
+                    <div class="title"> Cart {{ forloop.counter0 }} </div>
+
+                    {% for selected in item.products %}
+                        <div class="field">{{ selected.product }} x {{ selected.number }}</div>
+                    {% endfor %}
+
+                    <div>
+                        <div>
+                            {{ item.payment.total_price }}
+                        </div>
+                        <div>
+                            Show addresses
+                            <!--{{ item.payment.currency }}<br>-->
+                            <!--{{ item.payment.service }}<br>-->
+                        </div>
+                    </div>
+
+                </div>
+            </div><!-- form_block fields -->
 
         {% endfor %}
 
