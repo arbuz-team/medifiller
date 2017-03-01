@@ -1,9 +1,9 @@
 
 #DIALOG
   .ground-block, .footer
-    display: none
+    display: none !important
 
 
-#GROUND
-  .dialog-header, .dialog-content
+*:not(#DIALOG) > div
+  >.dialog-header, >.dialog-content
     display: none

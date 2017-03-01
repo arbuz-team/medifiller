@@ -89,10 +89,10 @@ strong {
 .container-part {
   z-index: 5; }
 
-#DIALOG .ground-block {
-  display: none; }
+#DIALOG .ground-block, #DIALOG .footer {
+  display: none !important; }
 
-#GROUND .dialog-header, #GROUND .dialog-content {
+*:not(#DIALOG) > div > .dialog-header, *:not(#DIALOG) > div > .dialog-content {
   display: none; }
 
 #NAVIGATION {
