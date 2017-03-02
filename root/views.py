@@ -163,8 +163,7 @@ class Users_Payments(Dynamic_Event_Menager):
             self.content['shopping'].append(details)
 
     def Manage_Content_Ground(self):
-        self.content['payments_approved'] = Payment.objects.filter(approved=True)
-        self.content['payments_not_approved'] = Payment.objects.filter(approved=False)
+        self.Create_Payment_Structure()
         return self.Render_HTML('root/users_payments.html')
 
     def Manage_Button(self):
