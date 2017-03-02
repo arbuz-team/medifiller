@@ -1642,8 +1642,12 @@ img {
 .users_payments .form_block.fields > div > .field_shell > div:first-child > span:last-child {
   opacity: .9; }
 
-.users_payments .form_block.fields > div > .field_shell > div:last-child > button {
-  width: 100%; }
+.users_payments .form_block.fields > div > .field_shell > div:last-child {
+  margin-top: 5px; }
+  .users_payments .form_block.fields > div > .field_shell > div:last-child > button, .users_payments .form_block.fields > div > .field_shell > div:last-child > .button {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 0; }
 
 @media (min-width: 675px) {
   .ground:not(.smaller) .ground-block.BIG.users_payments > .block-content .form_block.fields {
