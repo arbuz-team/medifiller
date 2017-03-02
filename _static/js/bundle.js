@@ -357,13 +357,13 @@
 	    close: new Event('plugins_close'),
 	    close_cart: new Event('cart_close'),
 	
-	    reload_sign_in: new Event('plugins_reload_sign_in'),
+	    reload_root_sign_in: new Event('reload_root_sign_in'),
+	    reload_user_sign_in: new Event('reload_user_sign_in'),
 	
-	    reload_header: new Event('plugin_header_reload'),
-	    reload_navigation: new Event('plugin_navigation_reload'),
-	    reload_cart: new Event('plugin_cart_reload'),
-	    reload_searcher: new Event('plugin_searcher_reload'),
-	    reload_ground: new Event('plugin_ground_reload')
+	    reload_navigation: new Event('navigation_reload'),
+	    reload_cart: new Event('cart_reload'),
+	    reload_searcher: new Event('searcher_reload'),
+	    reload_ground: new Event('ground_reload')
 	  },
 	
 	  dialog_close: new Event('dialog_close')
@@ -412,14 +412,19 @@
 	 * Created by mrskull on 24.11.16.
 	 */
 	
-	var reload_for_sign_in = function reload_for_sign_in() {
-	  var delay = window.APP.DATA.delay,
-	      reload = function reload() {
-	    window.APP.throw_event(window.EVENTS.plugins.reload_navigation);
-	    window.APP.throw_event(window.EVENTS.plugins.reload_cart);
-	  };
+	var reload_sign_in = function reload_sign_in(permissions) {
+	  return function () {
+	    var delay = window.APP.DATA.delay,
+	        reload = function reload() {
+	      window.APP.throw_event(window.EVENTS.plugins.reload_navigation);
 	
-	  if (delay) setTimeout(reload, delay);else reload();
+	      if (permissions === 'root') window.APP.throw_event(window.EVENTS.plugins.reload_searcher);
+	
+	      if (permissions === 'user') window.APP.throw_event(window.EVENTS.plugins.reload_cart);
+	    };
+	
+	    if (delay) setTimeout(reload, delay);else reload();
+	  };
 	},
 	    define = function define() {
 	  // Usuń wszystkie wydarzenia ze wszystkich elementów
@@ -435,7 +440,8 @@
 	
 	var start = exports.start = function start() {
 	  window.addEventListener('define', define, false);
-	  window.APP.add_own_event('plugins_reload_sign_in', reload_for_sign_in);
+	  window.APP.add_own_event('reload_user_sign_in', reload_sign_in('user'));
+	  window.APP.add_own_event('reload_root_sign_in', reload_sign_in('root'));
 	
 	  searcher_controllers.start();
 	  cart_controllers.start();
@@ -578,7 +584,7 @@
 	    var plugin_name = plugin_loader_views.models.settings.name,
 	        auto_first_loading = plugin_loader_views.models.settings.auto_first_loading;
 	
-	    window.APP.add_own_event('plugin_' + plugin_name + '_reload', this.reload);
+	    window.APP.add_own_event('' + plugin_name + '_reload', this.reload);
 	
 	    if (auto_first_loading) window.APP.add_own_event('load', function () {
 	      plugin_loader_views.change_content();

@@ -13,16 +13,15 @@ window.EVENTS = {
     close: new Event('plugins_close'),
     close_cart: new Event('cart_close'),
 
-    reload_sign_in: new Event('plugins_reload_sign_in'),
+    reload_root_sign_in: new Event('reload_root_sign_in'),
+    reload_user_sign_in: new Event('reload_user_sign_in'),
 
-    reload_header: new Event('plugin_header_reload'),
-    reload_navigation: new Event('plugin_navigation_reload'),
-    reload_cart: new Event('plugin_cart_reload'),
-    reload_searcher: new Event('plugin_searcher_reload'),
-    reload_ground: new Event('plugin_ground_reload'),
+    reload_navigation: new Event('navigation_reload'),
+    reload_cart: new Event('cart_reload'),
+    reload_searcher: new Event('searcher_reload'),
+    reload_ground: new Event('ground_reload'),
   },
 
   dialog_close: new Event('dialog_close'),
 };
-
 

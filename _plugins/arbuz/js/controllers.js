@@ -15,21 +15,29 @@ import * as ground_controllers       from '../../ground/js/controllers'
 
 let
 
-  reload_for_sign_in = function()
+  reload_sign_in = function(permissions)
   {
-    let
-      delay = window.APP.DATA.delay,
+    return function()
+    {
+      let
+        delay = window.APP.DATA.delay,
 
-      reload = function()
-      {
-        window.APP.throw_event(window.EVENTS.plugins.reload_navigation);
-        window.APP.throw_event(window.EVENTS.plugins.reload_cart);
-      };
+        reload = function()
+        {
+          window.APP.throw_event(window.EVENTS.plugins.reload_navigation);
 
-    if(delay)
-      setTimeout(reload, delay);
-    else
-      reload();
+          if(permissions === 'root')
+            window.APP.throw_event(window.EVENTS.plugins.reload_searcher);
+
+          if(permissions === 'user')
+            window.APP.throw_event(window.EVENTS.plugins.reload_cart);
+        };
+
+      if(delay)
+        setTimeout(reload, delay);
+      else
+        reload();
+    };
   },
 
 
@@ -50,7 +58,8 @@ let
 export let start = function()
 {
   window.addEventListener('define', define, false);
-  window.APP.add_own_event('plugins_reload_sign_in', reload_for_sign_in);
+  window.APP.add_own_event('reload_user_sign_in', reload_sign_in('user'));
+  window.APP.add_own_event('reload_root_sign_in', reload_sign_in('root'));
 
   searcher_controllers.start();
   cart_controllers.start();

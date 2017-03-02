@@ -55,6 +55,19 @@
                            name="{{ brand.name }}" />
                     <label for="id_{{ brand.name }}" class="selecter-field"></label>
                     <label for="id_{{ brand.name }}" class="selecter-text">{{ brand.name }}</label>
+
+                    {% if request.session.root_login %}
+                        <button class="dialog_button icon" type="button"
+                                data-type="confirm"
+                                data-name="dialog_delete_brand_{{ brand.pk }}"
+                                data-dialog-name="delete_brand_{{ brand.pk }}"
+                                data-dialog-value="{{ brand.pk }}"
+                                data-dialog-action="delete"
+                                data-dialog-reload="searcher"
+                                data-dialog-url="/product/brand/">
+                            <i style="background-image: url(/_static/img/icons/32/dark/waste_bin.png)"> &nbsp; </i>
+                        </button>
+                    {% endif %}
                 </li>
 
             {% endfor %}
@@ -75,6 +88,19 @@
                            name="{{ purpose.name }}" />
                     <label for="id_{{ purpose.name }}" class="selecter-field"></label>
                     <label for="id_{{ purpose.name }}" class="selecter-text">{{ purpose.name }}</label>
+
+                    {% if request.session.root_login %}
+                        <button class="dialog_button icon" type="button"
+                                data-type="confirm"
+                                data-name="dialog_delete_purpose_{{ purpose.pk }}"
+                                data-dialog-name="delete_purpose_{{ purpose.pk }}"
+                                data-dialog-value="{{ purpose.pk }}"
+                                data-dialog-action="delete"
+                                data-dialog-reload="searcher"
+                                data-dialog-url="/product/purpose/">
+                            <i style="background-image: url(/_static/img/icons/32/dark/waste_bin.png)"> &nbsp; </i>
+                        </button>
+                    {% endif %}
                 </li>
             <!--<li> <input name="{{ purpose.name }}" type="checkbox" class="auto_field" data-name="purpose" /> <label for>{{ purpose.name }}</label> </li>-->
 
