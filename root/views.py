@@ -145,10 +145,35 @@ class Map_References(Dynamic_Event_Menager):
 
 class Users_Payments(Dynamic_Event_Menager):
 
+    def Create_Payment_Structure(self):
+
+        self.content['shopping'] = []
+        approved = self.request.session['root_payments_approved']
+        addresses = Payment_Address.objects.filter(
+            payment__in=Payment.objects.filter(approved=approved).values('pk'))
+
+        for address in addresses:
+
+            details = {
+                'payment':  address.payment,
+                'address':  address,
+                'products': Selected_Product.objects.filter(payment=address.payment)
+            }
+
+            self.content['shopping'].append(details)
+
     def Manage_Content_Ground(self):
         self.content['payments_approved'] = Payment.objects.filter(approved=True)
         self.content['payments_not_approved'] = Payment.objects.filter(approved=False)
         return self.Render_HTML('root/users_payments.html')
+
+    def Manage_Button(self):
+
+        if self.request.POST['value'] == 'approved':
+            self.request.session['root_payments_approved'] = True
+
+        if self.request.POST['value'] == 'not_approved':
+            self.request.session['root_payments_approved'] = False
 
     @staticmethod
     def Launch(request):
