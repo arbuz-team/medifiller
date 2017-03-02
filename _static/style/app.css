@@ -523,7 +523,8 @@ strong {
   color: #382B1B;
   border-right: 2px solid #e8e8e8;
   overflow: visible;
-  overflow-y: auto; }
+  overflow-y: auto;
+  z-index: 75; }
   #SEARCHER > .hide {
     left: 100%;
     top: 0;
@@ -626,7 +627,8 @@ strong {
 
 @media (min-width: 1000px) {
   #SEARCHER {
-    left: 0 !important; }
+    left: 0 !important;
+    z-index: 60; }
   .searcher-logo {
     height: 145px; }
     .searcher-logo img {
