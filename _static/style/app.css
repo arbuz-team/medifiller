@@ -1122,12 +1122,12 @@ button {
       border-radius: 3px; }
     .ground-block.BIG > .block-content .form_block.fields .title {
       padding-top: 10px;
-      margin-bottom: 5px;
+      margin-bottom: 15px;
       border-bottom: 1px solid #d1d1d1;
       color: #774D34 !important; }
     .ground-block.BIG > .block-content .form_block.fields > div > div:last-child {
-      margin-top: 5px;
-      padding-top: 10px;
+      margin-top: 15px;
+      padding-top: 5px;
       border-top: 1px solid #d1d1d1; }
       .ground-block.BIG > .block-content .form_block.fields > div > div:last-child > span {
         font-weight: bold;
@@ -1620,9 +1620,30 @@ img {
   .payment form .form-accept > * {
     vertical-align: top; } }
 
-.form_block.fields .title button {
+.users_payments .form_block.fields div > span {
+  font-size: 15px;
+  font-weight: bold; }
+
+.users_payments .form_block.fields div > span:first-child {
+  opacity: .9; }
+
+.users_payments .form_block.fields div > span:last-child {
+  float: right;
+  margin-left: 5px;
+  opacity: .6; }
+
+.users_payments .form_block.fields .title button {
   float: right;
   vertical-align: top; }
+
+.users_payments .form_block.fields > div > .field_shell > div:first-child > span:first-child {
+  opacity: .6; }
+
+.users_payments .form_block.fields > div > .field_shell > div:first-child > span:last-child {
+  opacity: .9; }
+
+.users_payments .form_block.fields > div > .field_shell > div:last-child > button {
+  width: 100%; }
 
 @media (min-width: 675px) {
   .ground:not(.smaller) .ground-block.BIG.users_payments > .block-content .form_block.fields {
