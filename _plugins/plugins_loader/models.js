@@ -9,6 +9,8 @@ export let Plugins_Loader_Models = function(config)
 {
   let that = this;
 
+  this.data_controller = data_controller;
+
 
 /**
  *    Plugin settings

@@ -2,7 +2,6 @@
  * Created by mrskull on 08.01.17.
  */
 
-import * as ground_views                from './views'
 import {Plugins_Loader_Controllers}     from '../../plugins_loader/controllers'
 import {Form_Controllers}               from '../../forms/js/controllers'
 import {Post_Button_Controllers}        from '../../forms/js/post_button/controllers'
@@ -40,6 +39,12 @@ let
 
 let
 
+  change_url = function(url)
+  {
+    history.pushState('', url, url);
+  },
+
+
   go_to_link = function(event)
   {
     let
@@ -52,7 +57,7 @@ let
         event.preventDefault();
         window.APP.throw_event(window.EVENTS.plugins.close);
 
-        ground_views.change_url(url);
+        change_url(url);
 
         ground_loader_controllers.load(url);
       }
@@ -60,7 +65,7 @@ let
 
   redirect = function(event)
   {
-    ground_views.change_url(window.APP.DATA.redirect);
+    change_url(window.APP.DATA.redirect);
     ground_loader_controllers.redirect(event);
   },
 
