@@ -19,48 +19,7 @@
         {% endif %}
 
 
-        {% for item in shopping %}
-
-            <div class="form_block fields">
-                <div>
-
-                    <div class="shell_form"></div>
-
-                    <div class="title field_shell">
-                        <button class="icon" type="button">
-                            <i style="background-image: url(/_static/img/icons/32/dark/shopping_cart.png)"> &nbsp; </i>
-                        </button>
-                        {{ item.payment.date }}<br>
-                        {{ item.payment.user }}
-                    </div>
-
-                    {% for selected in item.products %}
-                        <div class="field">
-                            <span>{{ selected.product }}</span> <span>x {{ selected.number }}</span>
-                        </div>
-                    {% endfor %}
-
-                    <div class="field_shell">
-                        <div>
-                            <span>{{ item.payment.service }}</span> <span>{{ item.payment.total_price }} {{ item.payment.currency }}</span>
-                        </div>
-                        <div>
-                            <button class="dialog_button" type="button"
-                                    data-type="alert"
-                                    data-name="address"
-                                    data-value="{{ item.payment.pk }}">
-                                Show addresses
-                            </button>
-                            <a class="button" href="{% url 'pdf.invoice' pk=item.payment.pk full=True %}" target="_blank">
-                                Get invoice
-                            </a>
-                        </div>
-                    </div>
-
-                </div>
-            </div><!-- form_block fields -->
-
-        {% endfor %}
+        {% include "cart/html/users_payments.html" %}
 
 
     </div><!-- block-content -->
