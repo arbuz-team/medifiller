@@ -617,7 +617,8 @@
 	
 	var Plugins_Loader_Views = exports.Plugins_Loader_Views = function Plugins_Loader_Views(config) {
 	  var models = new _models.Plugins_Loader_Models(config),
-	      external_callback = void 0;
+	      external_callback = void 0,
+	      data_controller = models.data_controller;
 	
 	  this.models = models;
 	
@@ -625,7 +626,16 @@
 	   *    Defining showing functions
 	   */
 	
-	  var check_for_errors = function check_for_errors(status, code) {
+	  var load_header_page = function load_header_page(object) {
+	    data_controller.change_much({
+	      title: object.title,
+	      description: object.description
+	    });
+	
+	    $('title').html(data_controller.get('title'));
+	    $('meta[ name="description" ]').attr('content', data_controller.get('description'));
+	  },
+	      check_for_errors = function check_for_errors(status, code) {
 	    var container = models.settings.container,
 	        error = models.variables.error;
 	
@@ -668,8 +678,7 @@
 	    $(container).animate({ opacity: opacity }, duration, function () {
 	      if (external_callback) external_callback();
 	
-	      // if(models.settings.load_with_page && window.APP.DATA)
-	      //   load_header_page(window.APP.DATA);
+	      if (models.settings.load_with_page && window.APP.DATA) load_header_page(window.APP.DATA);
 	    });
 	  };
 	
@@ -719,6 +728,8 @@
 	
 	var Plugins_Loader_Models = exports.Plugins_Loader_Models = function Plugins_Loader_Models(config) {
 	  var that = this;
+	
+	  this.data_controller = _structure.data_controller;
 	
 	  /**
 	   *    Plugin settings
@@ -3132,24 +3143,14 @@
 	});
 	exports.change_content = exports.start = exports.define = undefined;
 	
-	var _views = __webpack_require__(47);
-	
-	var ground_views = _interopRequireWildcard(_views);
-	
 	var _controllers = __webpack_require__(13);
 	
 	var _controllers2 = __webpack_require__(20);
 	
 	var _controllers3 = __webpack_require__(35);
 	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
 	/**
 	 *    Defining private variables
-	 */
-	
-	/**
-	 * Created by mrskull on 08.01.17.
 	 */
 	
 	var config_loader = {
@@ -3172,7 +3173,14 @@
 	 *    Defining private functions
 	 */
 	
-	var go_to_link = function go_to_link(event) {
+	/**
+	 * Created by mrskull on 08.01.17.
+	 */
+	
+	var change_url = function change_url(url) {
+	  history.pushState('', url, url);
+	},
+	    go_to_link = function go_to_link(event) {
 	  var url = $(this).attr('href'),
 	      protocol = url.substring(0, 4);
 	
@@ -3180,13 +3188,13 @@
 	    event.preventDefault();
 	    window.APP.throw_event(window.EVENTS.plugins.close);
 	
-	    ground_views.change_url(url);
+	    change_url(url);
 	
 	    ground_loader_controllers.load(url);
 	  }
 	},
 	    redirect = function redirect(event) {
-	  ground_views.change_url(window.APP.DATA.redirect);
+	  change_url(window.APP.DATA.redirect);
 	  ground_loader_controllers.redirect(event);
 	},
 	    back_url = function back_url() {
@@ -3241,34 +3249,6 @@
 	    change_content = exports.change_content = function change_content(url, post_data) {
 	  ground_loader_controllers.load(url, post_data);
 	};
-
-/***/ },
-/* 47 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.load_header_page = exports.change_url = undefined;
-	
-	var _structure = __webpack_require__(9);
-	
-	var change_url = exports.change_url = function change_url(url) {
-	  history.pushState('', url, url);
-	},
-	    load_header_page = exports.load_header_page = function load_header_page(object) {
-	  _structure.data_controller.change_much({
-	    title: object.title,
-	    description: object.description
-	  });
-	
-	  $('title').html(_structure.data_controller.get('title'));
-	  $('meta[ name="description" ]').attr('content', _structure.data_controller.get('description'));
-	}; /**
-	    * Created by mrskull on 09.01.17.
-	    */
 
 /***/ }
 /******/ ]);

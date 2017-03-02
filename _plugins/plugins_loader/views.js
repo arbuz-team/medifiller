@@ -10,7 +10,8 @@ export let Plugins_Loader_Views = function(config)
 {
   let
     models = new Plugins_Loader_Models(config),
-    external_callback;
+    external_callback,
+    data_controller = models.data_controller;
 
   this.models = models;
 
@@ -20,6 +21,18 @@ export let Plugins_Loader_Views = function(config)
    */
 
   let
+
+    load_header_page = function(object)
+    {
+      data_controller.change_much({
+        title: object.title,
+        description: object.description
+      });
+
+      $('title').html(data_controller.get('title'));
+      $('meta[ name="description" ]').attr('content', data_controller.get('description'));
+    },
+
 
     check_for_errors = function(status, code)
     {
@@ -85,8 +98,8 @@ export let Plugins_Loader_Views = function(config)
           if(external_callback)
             external_callback();
 
-          // if(models.settings.load_with_page && window.APP.DATA)
-          //   load_header_page(window.APP.DATA);
+          if(models.settings.load_with_page && window.APP.DATA)
+            load_header_page(window.APP.DATA);
         });
     };
 

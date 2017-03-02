@@ -1,7 +1,7 @@
 <script>
   window.APP.DATA = {
-    title : 'Internal error',
-    description : ''
+    title : '{{ request.session.arbuz_app }}',
+    description : 'This is panel for {{ request.session.arbuz_app }}.'
   };
 </script>
 
@@ -16,7 +16,7 @@
 
       <li>
           <a href="{{ app.url }}">
-              <div class="block-link_tiles-icon"><i style="background-image: url({{ app.icon }});">&nbsp;</i></div>
+              <div class="block-link_tiles-icon"><i style="background-image: url('{{ app.icon }}');">&nbsp;</i></div>
               <div class="block-link_tiles-text">{{ app.name }}</div>
           </a>
       </li>
