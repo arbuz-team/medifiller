@@ -185,6 +185,9 @@ class Dynamic_Base:
         return image_details['path_url']
 
     def __init__(self, request):
+
         self.request = request
         self.content = {}
-        self.app_name = self.__module__.split('.')[0]
+
+        last_dot = self.__module__.rfind('.')
+        self.app_name = self.__module__[:last_dot]

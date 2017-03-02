@@ -105,3 +105,10 @@ def product_description(context, product):
     request = context['request']
     language = request.session['translator_language']
     return description[language]
+
+@register.simple_tag(takes_context=True)
+def get_app_name(context):
+    request = context['request']
+    app_name = request.session['arbuz_app']
+    pk = Language_EN.objects.get(value=app_name).pk
+    return Text(request, pk).replace('.', ' ').title()

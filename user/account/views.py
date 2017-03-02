@@ -219,15 +219,15 @@ class My_Shopping(Dynamic_Event_Menager):
 
         self.content['shopping'] = []
         user = User.objects.get(unique=self.request.session['user_unique'])
-        addresses = Payment_Address.objects.filter(payment__in=Payment.objects.
-                               filter(user=user, approved=True).values('pk'))
+        payments = Payment.objects.filter(user=user, approved=True)
 
-        for address in addresses:
+        for payment in payments:
 
             details = {
-                'payment':  address.payment,
-                'address':  address,
-                'products': Selected_Product.objects.filter(payment=address.payment)
+                'payment': payment,
+                'payment_address': Payment_Address.objects.filter(payment=payment),
+                'invoice_address': Invoice_Address.objects.filter(payment=payment),
+                'products': Selected_Product.objects.filter(payment=payment)
             }
 
             self.content['shopping'].append(details)

@@ -1,7 +1,9 @@
+{% load tags %}
+
 <script>
     window.APP.DATA = {
-        title : '{{ request.session.arbuz_app | title }}',
-        description : 'This is panel for {{ request.session.arbuz_app }}.'
+        title : '{% get_app_name %}',
+        description : 'This is panel for {% get_app_name %}.'
     };
 </script>
 
