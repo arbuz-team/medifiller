@@ -84,7 +84,7 @@ class Start(Dynamic_Event_Menager):
 
 class Products(Dynamic_Event_Menager):
 
-    def Get_Page(self):
+    def Get_Current_Page(self):
 
         page = self.request.session['main_page']
         start = (page-1) * 15
@@ -97,20 +97,40 @@ class Products(Dynamic_Event_Menager):
 
         return products[start:end]
 
+    def Get_List_Pages(self, number_of_pages):
+        return list(range(1, number_of_pages + 1))
+
+    def Get_Split_Pages(self, number_of_pages):
+        page = self.request.session['main_page']
+
+        if number_of_pages < 8:  # 1 2 3 4 5 6 7
+            return [list(range(1, number_of_pages + 1))]
+
+        if page < 5:  # 1 2 3 4 5 6 … 9
+            return [list(range(1, page + 3)), [number_of_pages]]
+
+        if page > number_of_pages - 4:  # 1 … 4 5 6 7 8 9
+            return [[1], list(range(page - 2, number_of_pages + 1))]
+
+        # 1 … 3 4 5 6 7 … 9
+        return [[1], list(range(page - 2, page + 3)), [number_of_pages]]
+
     def Manage_Content_Ground(self):
-        self.content['products'] = self.Get_Page()
+
+        number_of_pages = Product.objects.count() / 15
+        if Product.objects.count() % 15:
+            number_of_pages += 1
+
+        self.content['products'] = self.Get_Current_Page()
+        self.content['list_pages'] = self.Get_List_Pages(number_of_pages)
+        self.content['split_pages'] = self.Get_Split_Pages(number_of_pages)
+
         return self.Render_HTML('main/products.html')
 
     def Manage_Button(self):
 
         self.request.session['main_page'] = \
             self.request.POST['value']
-
-        self.request.session['main_number_pages'] = \
-            Product.objects.count() / 15
-
-        if Product.objects.count() % 15:
-            self.request.session['main_number_pages'] += 1
 
     @staticmethod
     def Launch(request):

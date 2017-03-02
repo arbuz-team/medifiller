@@ -102,12 +102,11 @@ class Session_Controller:
         if 'main_page' not in self.request.session:
             self.request.session['main_page'] = 1
 
-        if 'main_number_pages' not in self.request.session:
-            self.request.session['main_number_pages'] = \
-                Product.objects.count() / 15
+        if 'main_pages' not in self.request.session:
+            self.request.session['main_pages'] = 1
 
-            if Product.objects.count() % 15:
-                self.request.session['main_number_pages'] += 1
+        if 'main_lists_pages' not in self.request.session:
+            self.request.session['main_lists_pages'] = None
 
     def Check_Session(self):
 
