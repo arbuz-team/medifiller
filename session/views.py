@@ -1,6 +1,6 @@
 from inspect import getmembers, ismethod
 from translator.views import *
-from product.models import Where_Display
+from product.models import *
 
 
 class Session_Controller:
@@ -93,8 +93,15 @@ class Session_Controller:
         if 'main_content_tab' not in self.request.session:
             self.request.session['main_content_tab'] = ''
 
-        if 'main_products_page' not in self.request.session:
-            self.request.session['main_products_page'] = 1
+        if 'main_page' not in self.request.session:
+            self.request.session['main_page'] = 1
+
+        if 'main_number_pages' not in self.request.session:
+            self.request.session['main_number_pages'] = \
+                Product.objects.count() / 15
+
+            if Product.objects.count() % 15:
+                self.request.session['main_number_pages'] += 1
 
     def Check_Session(self):
 

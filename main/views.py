@@ -86,26 +86,31 @@ class Products(Dynamic_Event_Menager):
 
     def Get_Page(self):
 
-        page = self.request.session['main_products_page']
-        range = {
-            'start':    (page-1) * 15,
-            'end':      page * 15,
-        }
+        page = self.request.session['main_page']
+        start = (page-1) * 15
+        end = page * 15
 
         products = Filter_Products(
             self.request,
             self.request.session['searcher_phrase']
         )
 
-        return products[range['start']:range['end']]
+        return products[start:end]
 
     def Manage_Content_Ground(self):
         self.content['products'] = self.Get_Page()
         return self.Render_HTML('main/products.html')
 
     def Manage_Button(self):
-        self.request.session['main_products_page'] = \
+
+        self.request.session['main_page'] = \
             self.request.POST['page']
+
+        self.request.session['main_number_pages'] = \
+            Product.objects.count() / 15
+
+        if Product.objects.count() % 15:
+            self.request.session['main_number_pages'] += 1
 
     @staticmethod
     def Launch(request):
