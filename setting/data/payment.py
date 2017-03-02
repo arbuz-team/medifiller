@@ -16,7 +16,7 @@ def Load_Default_Data():
 
     payment.save()
     address = User_Address.objects.filter(user=user)[0]
-    Payment_Address(
+    Delivery_Address(
         payment=payment,
         full_name=address.full_name,
         doctor_number=address.doctor_number,
@@ -65,7 +65,7 @@ def Load_Default_Data():
 
     payment.save()
     address = User_Address.objects.filter(user=user)[0]
-    Payment_Address(
+    Delivery_Address(
         payment=payment,
         full_name=address.full_name,
         doctor_number=address.doctor_number,

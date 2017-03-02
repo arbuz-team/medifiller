@@ -1,5 +1,5 @@
 from django import forms
-from payment.models import Payment_Address
+from payment.models import Delivery_Address
 from user.forms import Form_Abstract_Address
 
 

@@ -29,16 +29,16 @@ class Payment_Models_Menager:
         payment.save()
 
     @staticmethod
-    def Check_Payment_Address(user):
+    def Check_Delivery_Address(user):
 
         payment = Payment.objects.filter(user=user, approved=False)
-        payments_address = Payment_Address.objects.filter(payment=payment)
+        payments_address = Delivery_Address.objects.filter(payment=payment)
 
         if payments_address.count() > 1:
             payments_address.delete()
 
         if not payments_address:
-            Payment_Address(
+            Delivery_Address(
                 full_name='',
                 address_line_1='',
                 address_line_2='',
@@ -94,7 +94,7 @@ class Payment_Models_Menager:
             )
             payment.save()
 
-        Payment_Models_Menager.Check_Payment_Address(user)
+        Payment_Models_Menager.Check_Delivery_Address(user)
         Payment_Models_Menager.Check_Invoice_Address(user)
 
     @staticmethod
