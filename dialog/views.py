@@ -1,6 +1,7 @@
 from product.forms import *
 from user.account.forms import *
 from main.forms import *
+from payment.models import *
 from translator.views import *
 from inspect import getmembers, ismethod
 
@@ -65,6 +66,12 @@ class Dialog_Alert(Dialog):
         self.content['text'] = Text(self.request, 10)
         return self.Render_Dialog('dialog/alert.html', only_root=True)
 
+    def Manage_Address(self):
+        payment = Payment.objects.get(pk=self.request.POST['value'])
+        self.content['invoice'] = Invoice_Address.objects.get(payment=payment)
+        self.content['delivery'] = Delivery_Address.objects.get(payment=payment)
+        return self.Render_Dialog('dialog/address.html', only_root=True)
+
     def __init__(self, request, app_name):
         Dialog.__init__(self, request, app_name)
         self.HTML = self.Manage()
@@ -87,13 +94,13 @@ class Dialog_Confirm(Dialog):
 
     def Manage_Delete_Product(self):
         self.content['title'] = Text(self.request, 98)
-        self.content['description'] = Text(self.request, 99)
+        self.content['text'] = Text(self.request, 99)
         self.Generate_Content()
         return self.Render_Dialog('dialog/confirm.html', only_root=True)
 
     def Manage_Delete_Address(self):
         self.content['title'] = Text(self.request, 107)
-        self.content['description'] = Text(self.request, 108)
+        self.content['text'] = Text(self.request, 108)
         self.Generate_Content()
         return self.Render_Dialog('dialog/confirm.html', authorization=True)
 
@@ -104,7 +111,7 @@ class Dialog_Confirm(Dialog):
 
         brand = Brand.objects.get(pk=self.request.POST['post_button_value'])
         products = Product.objects.filter(brand=brand)
-        self.content['description'] = description.format(len(products))
+        self.content['text'] = description.format(len(products))
 
         return self.Render_Dialog('dialog/confirm.html', only_root=True)
 
@@ -115,13 +122,13 @@ class Dialog_Confirm(Dialog):
 
         purpose = Purpose.objects.get(pk=self.request.POST['post_button_value'])
         products = Product.objects.filter(purpose=purpose)
-        self.content['description'] = description.format(len(products))
+        self.content['text'] = description.format(len(products))
 
         return self.Render_Dialog('dialog/confirm.html', only_root=True)
 
     def Manage_Clear_Cart(self):
         self.content['title'] = Text(self.request, 100)
-        self.content['description'] = Text(self.request, 101)
+        self.content['text'] = Text(self.request, 101)
         self.Generate_Content()
         return self.Render_Dialog('dialog/confirm.html', authorization=True)
 

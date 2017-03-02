@@ -104,7 +104,7 @@ class Products(Dynamic_Event_Menager):
     def Manage_Button(self):
 
         self.request.session['main_page'] = \
-            self.request.POST['page']
+            self.request.POST['value']
 
         self.request.session['main_number_pages'] = \
             Product.objects.count() / 15

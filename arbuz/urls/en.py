@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^navigation/', include('navigation.urls.en'), name='navigation'),
     url(r'^payment/', include('payment.urls.en'), name='payment'),
     url(r'^paypal/', include('paypal.standard.ipn.urls'), name='paypal-ipn'),
+    url(r'^pdf/', include('pdf.urls.en'), name='pdf'),
     url(r'', include('main.urls.en'), name='main'),
 ]
 

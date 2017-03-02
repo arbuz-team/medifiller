@@ -44,17 +44,18 @@ def price_currency(product, currency):
     return '{0} {1}'.format(selected_price, currency)
 
 @register.simple_tag(takes_context=True)
-def url(context, name):
-
-    urls = {
-        'EN': reverse(name, urlconf='arbuz.urls.en'),
-        'PL': reverse(name, urlconf='arbuz.urls.pl'),
-        # 'DE': reverse(name, urlconf='arbuz.urls.de'),
-    }
-
+def url(context, name=None, full=False, *args, **kwargs):
     request = context['request']
-    language = request.session['translator_language']
-    return urls[language]
+
+    if full:
+        return Dynamic_Base(request).\
+            Get_Urls(name, kwargs, current_language=True)
+
+    if not full:
+        return Dynamic_Base(request).\
+            Get_Path(name, kwargs, current_language=True)
+
+    return None
 
 @register.simple_tag(takes_context=True)
 def sign_in_redirect(context, app, name=None, *args, **kwargs):
