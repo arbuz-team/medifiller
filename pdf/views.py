@@ -1,5 +1,5 @@
-from arbuz.base import *
 from payment.models import *
+from translator.views import *
 from weasyprint import HTML
 
 
@@ -11,7 +11,7 @@ class Generator_PDF(Dynamic_Base):
         address = Invoice_Address.objects.get(payment=payment)
         products = Selected_Product.objects.filter(payment=payment)
 
-        generator = Generator_PDF(request)
+        generator = Generator_PDF(request) # target="_blank"
         generator.content['invoice'] = {
             'unique':           payment.pk,
             'date':             payment.date,
@@ -27,9 +27,15 @@ class Generator_PDF(Dynamic_Base):
         return generator.Generate()
 
     def Generate(self):
+
         html = self.Render_HTML('pdf/invoice.html')
         pdf = HTML(string=html.content.decode()).write_png()
-        return HttpResponse(pdf, content_type='application/pdf')
+
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="{0}"'\
+            .format(Text(self.request, 130))
+
+        return response
 
     def __init__(self, request):
         Dynamic_Base.__init__(self, request)

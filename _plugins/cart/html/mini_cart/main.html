@@ -17,7 +17,7 @@
                 data-value="{{ item.payment.pk }}">
             Show addresses
         </button>
-        <a class="button" href="{% url 'pdf.invoice' full=True pk=item.payment.pk %}" target="_blank">
+        <a class="button" href="{% url 'pdf.invoice' full=True pk=item.payment.pk %}">
             Get invoice
         </a>
     </div>

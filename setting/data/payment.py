@@ -77,6 +77,18 @@ def Load_Default_Data():
         country=address.country
     ).save()
 
+    Invoice_Address(
+        payment=payment,
+        full_name=address.full_name,
+        doctor_number=address.doctor_number,
+        address_line_1=address.address_line_1,
+        address_line_2=address.address_line_2,
+        city=address.city,
+        region=address.region,
+        postcode=address.postcode,
+        country=address.country
+    ).save()
+
     Selected_Product(
         payment=payment,
         product=Product.objects.all()[2],
