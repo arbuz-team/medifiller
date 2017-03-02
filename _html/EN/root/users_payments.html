@@ -5,34 +5,55 @@
     };
 </script>
 
-<div class="ground-block block-1">
+<div class="ground-block block-1 BIG users_payments">
 
     <div class="block-background fill-abs"></div>
     {% include "ground/html/navigation.html" %}
 
     <div class="block-content">
 
-        APPROVED <br>
-        {% for payment in payments_approved %}
+        {% if request.session.root_payments_approved %}
+            <div class="title"> Approved </div>
+        {% else %}
+            <div class="title"> Not approved </div>
+        {% endif %}
 
-            {{ payment.user }}
-            {{ payment.total_price }}
-            {{ payment.currency }}
-            {{ payment.service }}
-            <br>
+
+        {% for item in shopping %}
+
+            <div class="form_block fields">
+                <div>
+
+                    <div class="shell_form"></div>
+
+                    <div class="title field_shell">
+                        <button class="icon" type="button">
+                            <i style="background-image: url(/_static/img/icons/32/dark/shopping_cart.png)"> &nbsp; </i>
+                        </button>
+                        {{ item.payment.date }}<br>
+                        {{ item.payment.user }}
+                    </div>
+
+                    {% for selected in item.products %}
+                        <div class="field">{{ selected.product }} x {{ selected.number }}</div>
+                    {% endfor %}
+
+                    <div>
+                        <div>
+                            {{ item.payment.total_price }}
+                        </div>
+                        <div>
+                            Show addresses
+                            <!--{{ item.payment.currency }}<br>-->
+                            <!--{{ item.payment.service }}<br>-->
+                        </div>
+                    </div>
+
+                </div>
+            </div><!-- form_block fields -->
 
         {% endfor %}
 
-        NOT APPROVED <br>
-        {% for payment in payments_not_approved %}
-
-            {{ payment.user }}
-            {{ payment.total_price }}
-            {{ payment.currency }}
-            {{ payment.service }}
-            <br>
-
-        {% endfor %}
 
     </div><!-- block-content -->
 

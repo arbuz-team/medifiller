@@ -1,0 +1,60 @@
+
+@import '../../../forms/css/form_blocks/definitions'
+
+.form_block.fields
+  .title
+    button
+      float: right
+      vertical-align: top
+
+
+
+@media (min-width: $G-SIZE-2)
+
+  .ground:not(.smaller) .ground-block.BIG.users_payments > .block-content
+
+    .form_block.fields
+      max-height: $field_blocks--max-height - 10px
+
+      cursor: pointer
+
+      .shell_form
+        height: 50px
+        background-image: none
+
+      .title
+        font-size: 16px
+        color: $G-COLOR-1
+        cursor: pointer
+
+    .form_block.visible.fields
+      max-height: $ALL_blocks--max-height-visible
+      cursor: auto
+
+      .shell_form
+        height: 0
+
+
+@media (min-width: 1300px)
+
+  .ground.smaller .ground-block.BIG.users_payments > .block-content
+
+    .form_block.fields
+      max-height: $field_blocks--max-height - 10px
+
+      cursor: pointer
+
+      .shell_form
+        height: 50px
+        background-image: none
+
+      .title
+        color: $G-COLOR-1
+        cursor: pointer
+
+    .form_block.visible.fields
+      max-height: $ALL_blocks--max-height-visible
+      cursor: auto
+
+      .shell_form
+        height: 0
