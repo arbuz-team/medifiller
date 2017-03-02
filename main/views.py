@@ -67,7 +67,7 @@ class Editable_Tab(Dynamic_Event_Menager):
         pass
 
 
-from pdf.views import *
+
 class Start(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):

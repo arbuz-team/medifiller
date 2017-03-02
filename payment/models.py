@@ -17,7 +17,7 @@ class Payment(models.Model):
 
 
 
-class Payment_Address(Abstract_Address):
+class Delivery_Address(Abstract_Address):
     payment = models.OneToOneField(Payment)
 
 

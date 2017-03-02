@@ -6,6 +6,63 @@ import pickle
 import time
 import os
 
+class Manager:
+
+    def __init__(self):
+
+            # ustawienia przeglądarki
+        binary = FirefoxBinary('/home/endo93/Firefox 46.0/firefox')
+        self.firefox = webdriver.Firefox(firefox_binary=binary)
+
+        self.Wczytaj_Adresy_URL()
+        self.Zapisz_Adresy_URL()
+
+            # pickler - zapis/odczyt produktów z pliku
+        pickler = None
+        plik = None
+
+        if os.path.exists('sql/deltaplus.prod'):
+            Kierownik.odczyt_produktow = True
+            plik = open('sql/deltaplus.prod', 'rb')
+            pickler = pickle.Unpickler(plik)
+
+        else: # do zapisywania
+            plik = open('sql/deltaplus.prod', 'wb')
+            pickler = pickle.Pickler(plik, pickle.HIGHEST_PROTOCOL)
+
+            # dla każdego adresu url
+        for typ in self.adresy_url:
+            for dziedzina in self.adresy_url[typ]:
+                for rodzaj in self.adresy_url[typ][dziedzina]:
+                    for url in self.adresy_url[typ][dziedzina][rodzaj]:
+                        self.Dodaj_Produkt_Do_Bazy_Danych(url, typ, dziedzina,
+                                                          rodzaj, pickler)
+
+        plik.close()
+        self.firefox.close()
+
+def Start():
+    Manager()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def Wyswietl_Komunikat_O_Wyjatku(e, nazwa_wyjatku, numer_wyjatku=None,
@@ -542,7 +599,6 @@ class Kierownik:
             # ustawienia przeglądarki
         binary = FirefoxBinary('/home/endo93/Firefox 46.0/firefox')
         self.firefox = webdriver.Firefox(firefox_binary=binary)
-        os.system('rm sql/deltaplus.log')
 
         self.Wczytaj_Adresy_URL()
         self.Zapisz_Adresy_URL()

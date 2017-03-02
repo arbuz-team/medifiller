@@ -180,8 +180,8 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
         user = User.objects.get(unique=unique)
         payment = Payment.objects.get(user=user, approved=False)
 
-        if model == 'payment_address':
-            address = Payment_Address.objects.get(payment=payment)
+        if model == 'delivery_address':
+            address = Delivery_Address.objects.get(payment=payment)
 
         if model == 'invoice_address':
             address = Invoice_Address.objects.get(payment=payment)
@@ -202,9 +202,9 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
     def Manage_Form_Address_Payment(self):
 
         address_payment_pk = self.request.POST['shipment']
-        address_invoice_pk = self.request.POST['pdf']
+        address_invoice_pk = self.request.POST['invoice']
 
-        self.Create_Address(address_payment_pk, 'payment_address')
+        self.Create_Address(address_payment_pk, 'delivery_address')
         self.Create_Address(address_invoice_pk, 'invoice_address')
 
         self.Load_Payment_Details()

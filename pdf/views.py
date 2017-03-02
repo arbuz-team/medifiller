@@ -10,7 +10,7 @@ class Generator_PDF(Dynamic_Base):
         address = Invoice_Address.objects.get(payment=payment)
         products = Selected_Product.objects.filter(payment=payment)
 
-        self.content['pdf'] = {
+        self.content['invoice'] = {
             'unique':           payment.pk,
             'date':             payment.date,
             # seller

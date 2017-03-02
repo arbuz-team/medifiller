@@ -155,7 +155,7 @@ class Users_Payments(Dynamic_Event_Menager):
 
             details = {
                 'payment':  payment,
-                'payment_address': Payment_Address.objects.filter(payment=payment),
+                'delivery_address': Delivery_Address.objects.filter(payment=payment),
                 'invoice_address': Invoice_Address.objects.filter(payment=payment),
                 'products': Selected_Product.objects.filter(payment=payment)
             }
