@@ -30,9 +30,9 @@
                     </div>
 
                     {% for selected in item.products %}
-                    <div class="field">
-                        <span>{{ selected.product }}</span> <span>x {{ selected.number }}</span>
-                    </div>
+                        <div class="field">
+                            <span>{{ selected.product }}</span> <span>x {{ selected.number }}</span>
+                        </div>
                     {% endfor %}
 
                     <div class="field_shell">
@@ -43,13 +43,13 @@
                             <button class="dialog_button" type="button"
                                     data-type="alert"
                                     data-name="address"
-                                    data-value="{{ item.address.pk }}">
+                                    data-value="{{ item.payment.pk }}">
                                 Show addresses
                             </button>
                             <button class="dialog_button" type="button"
                                     data-type="alert"
-                                    data-name="address"
-                                    data-value="{{ item.address.pk }}">
+                                    data-name="invoice"
+                                    data-value="{{ item.payment.pk }}">
                                 Get invoice
                             </button>
                         </div>
