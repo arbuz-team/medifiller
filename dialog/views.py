@@ -99,23 +99,23 @@ class Dialog_Confirm(Dialog):
 
     def Manage_Delete_Brand(self):
         self.content['title'] = Text(self.request, 109)
-        self.content['description'] = Text(self.request, 110)
+        description = Text(self.request, 110)
         self.Generate_Content()
 
         brand = Brand.objects.get(pk=self.request.POST['post_button_value'])
         products = Product.objects.filter(brand=brand)
-        self.content['description'].format(len(products))
+        self.content['description'] = description.format(len(products))
 
         return self.Render_Dialog('dialog/confirm.html', only_root=True)
 
     def Manage_Delete_Purpose(self):
         self.content['title'] = Text(self.request, 111)
-        self.content['description'] = Text(self.request, 112)
+        description = Text(self.request, 112)
         self.Generate_Content()
 
         purpose = Purpose.objects.get(pk=self.request.POST['post_button_value'])
         products = Product.objects.filter(purpose=purpose)
-        self.content['description'].format(len(products))
+        self.content['description'] = description.format(len(products))
 
         return self.Render_Dialog('dialog/confirm.html', only_root=True)
 

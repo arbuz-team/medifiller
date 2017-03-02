@@ -4,7 +4,7 @@ from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from translator.views import *
-from invoice.views import *
+from pdf.views import *
 
 
 class Sender(Dynamic_Base):

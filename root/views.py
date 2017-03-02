@@ -40,7 +40,7 @@ class Start_App(Dynamic_Event_Menager):
 
     @staticmethod
     def Launch(request):
-        return Start_App(request).HTML
+        return Start_App(request, only_root=True).HTML
 
 
 

@@ -202,7 +202,7 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
     def Manage_Form_Address_Payment(self):
 
         address_payment_pk = self.request.POST['shipment']
-        address_invoice_pk = self.request.POST['invoice']
+        address_invoice_pk = self.request.POST['pdf']
 
         self.Create_Address(address_payment_pk, 'payment_address')
         self.Create_Address(address_invoice_pk, 'invoice_address')

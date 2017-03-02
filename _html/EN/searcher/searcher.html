@@ -59,7 +59,7 @@
                     {% if request.session.root_login %}
                         <button class="dialog_button icon" type="button"
                                 data-type="confirm"
-                                data-name="dialog_delete_brand_{{ brand.pk }}"
+                                data-name="delete_brand"
                                 data-dialog-name="delete_brand_{{ brand.pk }}"
                                 data-dialog-value="{{ brand.pk }}"
                                 data-dialog-action="delete"
@@ -92,7 +92,7 @@
                     {% if request.session.root_login %}
                         <button class="dialog_button icon" type="button"
                                 data-type="confirm"
-                                data-name="dialog_delete_purpose_{{ purpose.pk }}"
+                                data-name="delete_purpose"
                                 data-dialog-name="delete_purpose_{{ purpose.pk }}"
                                 data-dialog-value="{{ purpose.pk }}"
                                 data-dialog-action="delete"
