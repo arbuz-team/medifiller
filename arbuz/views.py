@@ -163,6 +163,9 @@ class Updater(Dynamic_Base):
             self.content['go_back'] = base64.b64decode(
                 bytes(self.other_value['redirect'], 'utf-8'))
 
+    def Update_App_Name(self):
+        self.request.session['arbuz_app'] = self.app_name
+
     def __init__(self, request):
         Dynamic_Base.__init__(self, request)
         self.length_navigation = None
