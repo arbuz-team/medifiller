@@ -106,3 +106,7 @@ Error / Resend
 invoice.pdf
 Delete address
 Are you sure you want to remove the address?
+Delete brand
+Are you sure you want to remove the brand? Number products pined to the brand: {0}
+Delete purpose
+Are you sure you want to remove the purpose? Number products pined to the purpose: {0}

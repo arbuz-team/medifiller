@@ -106,3 +106,7 @@ Błąd / Ponów
 faktura.pdf
 Usuwanie adresu
 Jesteś pewny, że chcesz usunąć ten adres?
+Usuwanie producenta
+Jesteś pewny, że chcesz usunąć tego producenta? Liczba produktów podpiętych pod tego producenta: {0}
+Usuwanie przeznaczenie produktu
+Jesteś pewny, że chcesz usunąć te przeznaczenie produktu? Liczba produktów podpiętych pod tego przeznaczenia: {0}
