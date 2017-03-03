@@ -7,6 +7,8 @@ from setting.data import products
 from setting.data import users
 from setting.data import payment
 
+from setting.script import cosmetix
+
 
 class Control_Panel(Dynamic_Event_Menager):
 
@@ -17,10 +19,18 @@ class Control_Panel(Dynamic_Event_Menager):
         os.system(BASE_DIR + '/reset.sh')
         return JsonResponse({'__button__': 'true'})
 
+    def Manage_Button_Load_Product(self):
+        self.Manage_Button_Reset_Database()
+        cosmetix.Start()
+        return JsonResponse({'__button__': 'true'})
+
     def Manage_Button(self):
 
         if self.request.POST['__button__'] == 'reset_databases':
             return self.Manage_Button_Reset_Database()
+
+        if self.request.POST['__button__'] == 'load_product':
+            return self.Manage_Button_Load_Product()
 
         return Dynamic_Event_Menager.Manage_Button(self)
 
@@ -30,7 +40,7 @@ class Control_Panel(Dynamic_Event_Menager):
         setting.Load_Default_Data()
         products.Load_Default_Data()
         users.Load_Default_Data()
-        payment.Load_Default_Data()
+        # payment.Load_Default_Data()
         return JsonResponse({})
 
     @staticmethod

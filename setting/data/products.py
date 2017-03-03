@@ -98,8 +98,8 @@ def Load_Default_Recommended_Product():
     ).save()
 
 def Load_Default_Data():
-    Load_Default_Filters()
+    #Load_Default_Filters()
     Load_Where_Display()
-    Load_Default_Product()
-    Load_Default_Recommended_Product()
+    #Load_Default_Product()
+    #Load_Default_Recommended_Product()
 

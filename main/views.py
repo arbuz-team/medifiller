@@ -87,8 +87,9 @@ class Products(Dynamic_Event_Menager):
     def Get_Current_Page(self):
 
         page = self.request.session['main_page']
-        start = (page-1) * 15
-        end = page * 15
+        number_product = self.request.session['main_number_product_page']
+        start = (page-1) * number_product
+        end = page * number_product
 
         products = Filter_Products(
             self.request,
@@ -117,8 +118,9 @@ class Products(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
 
-        number_of_pages = int(Product.objects.count() / 15)
-        if Product.objects.count() % 15:
+        number_product = self.request.session['main_number_product_page']
+        number_of_pages = int(Product.objects.count() / number_product)
+        if Product.objects.count() % number_product:
             number_of_pages += 1
 
         self.content['products'] = self.Get_Current_Page()
@@ -133,7 +135,9 @@ class Products(Dynamic_Event_Menager):
     def Manage_Button(self):
 
         self.request.session['main_page'] = \
-            self.request.POST['value']
+            int(self.request.POST['value'])
+
+        return JsonResponse({'__button__': 'true'})
 
     @staticmethod
     def Launch(request):
