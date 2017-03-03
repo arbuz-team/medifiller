@@ -60,6 +60,17 @@ export let Post_Button_Views = function(config)
           }, models.settings.delay_text_standard);
         }
       },
+
+      error: function()
+      {
+        if(set_text.if_is_text())
+        {
+          clearTimeout(set_text.set_waiting);
+          clearTimeout(set_text.set_standard);
+
+          $(models.settings.button).html(models.settings.text_error);
+        }
+      },
     },
 
 
@@ -75,7 +86,7 @@ export let Post_Button_Views = function(config)
     {
       if(status !== 'success')
       {
-        $(models.settings.button).html(models.settings.text_error);
+        set_text.error();
         return true;
       }
 
@@ -83,12 +94,13 @@ export let Post_Button_Views = function(config)
 
       if (response.__button__ !== 'true')
       {
-        $(models.settings.button).html(models.settings.text_error);
+        set_text.error();
         return true;
       }
 
       return false;
     },
+
 
     reload_plugins = function()
     {
@@ -105,7 +117,7 @@ export let Post_Button_Views = function(config)
       for(let i = 0; i < array_length; ++i)
         if(plugins_array[i])
         {
-          window.APP.DATA.delay = 200;
+          window.APP.DATA.delay = 0;
           window.APP.throw_event(window.EVENTS.plugins['reload_'+ plugins_array[i]]);
         }
     },
@@ -143,7 +155,7 @@ export let Post_Button_Views = function(config)
       if(ready_event.constructor === Event)
       {
         window.APP.DATA.delay = 100;
-        window.APP.throw_event(ready_event); // plugins.close_cart
+        window.APP.throw_event(ready_event); // example plugins.close_cart
       }
     },
 
@@ -157,9 +169,9 @@ export let Post_Button_Views = function(config)
 
       set_text.done();
 
-      launch_event();
       reload_plugins();
       redirect_ground();
+      launch_event();
 
       set_text.standard();
     };

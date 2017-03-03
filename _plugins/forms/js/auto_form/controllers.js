@@ -16,14 +16,22 @@ let
     {
       $field = $(this);
 
+
       if($field.is(':checkbox'))
         $field.change(auto_form_views.send_checkbox);
 
+
       else if($field.is(':text'))
+      {
+        if($field.hasClass('only_number'))
+          $field
+            .keydown(auto_form_views.try_press_number_max_3);
+
         $field
           .change(auto_form_views.send_default)
-          //.keyup(auto_form_views.send_on_key_up)
           .keydown(auto_form_views.send_on_enter);
+      }
+
 
       else if($field.is('select'))
         $field.change(auto_form_views.send_default);
