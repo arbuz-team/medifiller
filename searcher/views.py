@@ -93,7 +93,8 @@ class Search_Engine:
                     get_keywords(product.keywords) +
 
                     product.brand.name +
-                    product.purpose.name
+                    ' '.join([e.purpose.name for e in Purpose_For_Product.
+                             objects.filter(product=product)])
 
                 ).lower()
             )
@@ -159,24 +160,38 @@ class Search_Engine:
 
         self.result = result
 
+    def Sort_Result_Filters_Purpose(self, purposes, product):
+
+        purpose_for_product = Purpose_For_Product. \
+            objects.filter(product=product)
+
+        product_purposes = Purpose.objects.filter(
+            pk__in=purpose_for_product.values_list('purpose__pk'))
+
+        for purpose in purposes:
+            if purpose in str(product_purposes):
+                return True
+
+        return False
+
     def Sort_Result_Filters(self):
 
-        brand = self.request.session['searcher_filter_brand']
-        purpose = self.request.session['searcher_filter_purpose']
+        brands = self.request.session['searcher_filter_brand']
+        purposes = self.request.session['searcher_filter_purpose']
         result = self.result[:]
 
-        if not brand and not purpose:
+        if not brands and not purposes:
             return
 
-        if brand: # user chose filter
+        if brands: # user chose filter
             for product in self.result:
-                if product.brand.name not in brand:
+                if product.brand.name not in brands:
                     result.remove(product)
 
         self.result = result[:]
-        if purpose: # user chose filter
+        if purposes: # user chose filter
             for product in self.result:
-                if product.purpose.name not in purpose:
+                if not self.Sort_Result_Filters_Purpose(purposes, product):
                     result.remove(product)
 
         self.result = result
