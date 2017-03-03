@@ -24,20 +24,20 @@ export let Plugins_Motion_Controllers = function(config)
     },
 
 
-    swipe_close = function()
-    {
-      if(plugin_motion_views.models.check_possibility_of_swipe())
-        plugin_motion_views.plugin_close();
-    },
-
-
-    pre_swipe_open = function(event)
-    {
-      let y = event.gesture.center.y - event.gesture.distance;
-
-      if(y <= 70)
-        swipe_open();
-    },
+    // swipe_close = function()
+    // {
+    //   if(plugin_motion_views.models.check_possibility_of_swipe())
+    //     plugin_motion_views.plugin_close();
+    // },
+    //
+    //
+    // pre_swipe_open = function(event)
+    // {
+    //   let y = event.gesture.center.y - event.gesture.distance;
+    //
+    //   if(y <= 70)
+    //     swipe_open();
+    // },
 
 
     pre_plugin_close = function()

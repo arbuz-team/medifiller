@@ -939,15 +939,25 @@
 	  var swipe_open = function swipe_open() {
 	    if (plugin_motion_views.models.check_possibility_of_swipe()) plugin_motion_views.plugin_open();
 	  },
-	      swipe_close = function swipe_close() {
-	    if (plugin_motion_views.models.check_possibility_of_swipe()) plugin_motion_views.plugin_close();
-	  },
-	      pre_swipe_open = function pre_swipe_open(event) {
-	    var y = event.gesture.center.y - event.gesture.distance;
 	
-	    if (y <= 70) swipe_open();
-	  },
-	      pre_plugin_close = function pre_plugin_close() {
+	
+	  // swipe_close = function()
+	  // {
+	  //   if(plugin_motion_views.models.check_possibility_of_swipe())
+	  //     plugin_motion_views.plugin_close();
+	  // },
+	  //
+	  //
+	  // pre_swipe_open = function(event)
+	  // {
+	  //   let y = event.gesture.center.y - event.gesture.distance;
+	  //
+	  //   if(y <= 70)
+	  //     swipe_open();
+	  // },
+	
+	
+	  pre_plugin_close = function pre_plugin_close() {
 	    var container = settings.container,
 	        $container = $(container),
 	        $window = $(window);
@@ -2463,6 +2473,15 @@
 	          $(models.settings.button).html(models.settings.text_standard);
 	        }, models.settings.delay_text_standard);
 	      }
+	    },
+	
+	    error: function error() {
+	      if (set_text.if_is_text()) {
+	        clearTimeout(set_text.set_waiting);
+	        clearTimeout(set_text.set_standard);
+	
+	        $(models.settings.button).html(models.settings.text_error);
+	      }
 	    }
 	  },
 	      start_loading = function start_loading() {
@@ -2472,14 +2491,14 @@
 	  },
 	      is_error = function is_error(JSON_response, status) {
 	    if (status !== 'success') {
-	      $(models.settings.button).html(models.settings.text_error);
+	      set_text.error();
 	      return true;
 	    }
 	
 	    var response = JSON.parse(JSON_response);
 	
 	    if (response.__button__ !== 'true') {
-	      $(models.settings.button).html(models.settings.text_error);
+	      set_text.error();
 	      return true;
 	    }
 	
@@ -2497,7 +2516,7 @@
 	
 	    for (var i = 0; i < array_length; ++i) {
 	      if (plugins_array[i]) {
-	        window.APP.DATA.delay = 200;
+	        window.APP.DATA.delay = 0;
 	        window.APP.throw_event(window.EVENTS.plugins['reload_' + plugins_array[i]]);
 	      }
 	    }
@@ -2524,7 +2543,7 @@
 	      ready_event = ready_event[split_event[i]];
 	    }if (ready_event.constructor === Event) {
 	      window.APP.DATA.delay = 100;
-	      window.APP.throw_event(ready_event); // plugins.close_cart
+	      window.APP.throw_event(ready_event); // example plugins.close_cart
 	    }
 	  },
 	      end_loading = function end_loading(JSON_response, status) {
@@ -2534,9 +2553,9 @@
 	
 	    set_text.done();
 	
-	    launch_event();
 	    reload_plugins();
 	    redirect_ground();
+	    launch_event();
 	
 	    set_text.standard();
 	  };
