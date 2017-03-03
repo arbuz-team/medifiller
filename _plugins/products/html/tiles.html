@@ -1,4 +1,5 @@
 <div class="block-content products tiles">
+
     <ul>
         {% if request.session.root_login %}
             {% include "products/html/add.html" %}
@@ -10,4 +11,7 @@
 
         {% endfor %}
     </ul>
+
+    {% include "products/html/numbers_pages.html" %}
+
 </div>

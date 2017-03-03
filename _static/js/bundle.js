@@ -1932,9 +1932,11 @@
 	  settings.fields.each(function () {
 	    $field = $(this);
 	
-	    if ($field.is(':checkbox')) $field.change(auto_form_views.send_checkbox);else if ($field.is(':text')) $field.change(auto_form_views.send_default)
-	    //.keyup(auto_form_views.send_on_key_up)
-	    .keydown(auto_form_views.send_on_enter);else if ($field.is('select')) $field.change(auto_form_views.send_default);
+	    if ($field.is(':checkbox')) $field.change(auto_form_views.send_checkbox);else if ($field.is(':text')) {
+	      if ($field.hasClass('only_number')) $field.keydown(auto_form_views.try_press_number_max_3);
+	
+	      $field.change(auto_form_views.send_default).keydown(auto_form_views.send_on_enter);
+	    } else if ($field.is('select')) $field.change(auto_form_views.send_default);
 	  });
 	},
 	    do_nothing = function do_nothing(event) {
@@ -1978,6 +1980,9 @@
 	
 	  this.models = models;
 	
+	  // console.log(models.settings);
+	
+	
 	  /**
 	   *    Defining public functions
 	   */
@@ -2004,38 +2009,51 @@
 	    send(post_data);
 	  };
 	
-	  // let check_is_key_code_printable_or_functional = function(event)
-	  // {
-	  //   let keycode = event.keyCode;
-	  //
-	  //   let valid =
-	  //     (keycode > 47 && keycode < 58)   ||   // number keys
-	  //     keycode === 8 || keycode === 46 ||    // backspace & delete
-	  //     keycode === 32 || keycode === 13   || // spacebar & return key(s) (if you want to allow carriage returns)
-	  //     (keycode > 64 && keycode < 91)   ||   // letter keys
-	  //     (keycode > 95 && keycode < 112)  ||   // numpad keys
-	  //     (keycode > 185 && keycode < 193) ||   // ;=,-./` (in order)
-	  //     (keycode > 218 && keycode < 223);     // [\]' (in order)
-	  //
-	  //   return valid;
-	  // };
+	  var check_is_not_key_code_number = function check_is_not_key_code_number(event) {
+	    var keycode = event.keyCode,
+	        valid =
+	    //(keycode === 8 || keycode === 46)       // backspace & delete
+	    // || keycode > 47 && keycode < 58        // number keys
+	    keycode === 32 || keycode === 13 // spacebar & return key(s) (if you want to allow carriage returns)
+	    || keycode > 64 && keycode < 91 // letter keys
+	    // || (keycode > 95 && keycode < 112)     // numpad keys
+	    || keycode > 185 && keycode < 193 // ;=,-./` (in order)
+	    || keycode > 218 && keycode < 223 // [\]' (in order)
+	    || keycode == 16 // shift
+	    || event.ctrlKey || event.shiftKey || keycode > 105 && keycode < 110 // "*-+,"
+	    || keycode == 111 // "/"
+	    ;
 	
+	    return valid;
+	  };
 	
-	  // this.send_on_key_up = function(event)
-	  // {
-	  //   if(check_is_key_code_printable_or_functional(event))
-	  //   {
-	  //     let
-	  //       $field = $(this),
-	  //       post_data = {};
-	  //
-	  //     post_data['__'+ models.settings.origin +'__'] = $field.data('name');
-	  //     post_data['value'] = $field.val();
-	  //
-	  //     send(post_data);
-	  //   }
-	  // };
+	  var check_is_not_functionaly = function check_is_not_functionaly(event) {
+	    var keycode = event.keyCode,
+	        valid =
+	    //(keycode === 8 || keycode === 46)       // backspace & delete
+	    keycode > 47 && keycode < 58 // number keys
+	    || keycode === 32 || keycode === 13 // spacebar & return key(s) (if you want to allow carriage returns)
+	    || keycode > 64 && keycode < 91 // letter keys
+	    || keycode > 95 && keycode < 112 // numpad keys
+	    || keycode > 185 && keycode < 193 // ;=,-./` (in order)
+	    || keycode > 218 && keycode < 223 // [\]' (in order)
+	    || keycode == 16 // shift
+	    || event.ctrlKey || event.shiftKey || keycode > 105 && keycode < 110 // "*-+,"
+	    || keycode == 111 // "/"
+	    ;
 	
+	    return valid;
+	  };
+	
+	  this.try_press_number_max_3 = function (event) {
+	
+	    if (check_is_not_key_code_number(event)) {
+	      event.preventDefault();
+	    } else {
+	      var length = $(this).val().length;
+	      if (length > 2 && check_is_not_functionaly(event)) event.preventDefault();
+	    }
+	  };
 	
 	  var check_is_key_code_enter = function check_is_key_code_enter(event) {
 	    return event.keyCode === 13;

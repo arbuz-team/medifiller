@@ -875,6 +875,19 @@ strong {
     height: auto;
     padding-top: 100%; } }
 
+.numbers_pages-filters, .numbers_pages-one_step {
+  display: inline-block;
+  width: auto; }
+
+.numbers_pages-change_page {
+  display: none; }
+
+@media (min-width: 1000px) {
+  .numbers_pages-filters, .numbers_pages-one_step {
+    display: none; }
+  .numbers_pages-change_page {
+    display: inline-block; } }
+
 button {
   cursor: pointer; }
 

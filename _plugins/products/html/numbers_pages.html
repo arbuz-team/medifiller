@@ -1,0 +1,68 @@
+
+<div class="block-content-numbers_pages field_shell">
+
+    <form class="numbers_pages-filters auto_form" action="" data-origin="filter" data-target="ground">
+
+        <div class="numbers_pages-one_step">
+            <button class="post_button" type="button"
+                    data-name="prev_page"
+                    data-action="change"
+                    data-value="1"
+                    data-reload="ground">
+                Prev
+            </button>
+        </div><!-- numbers_pages-one_step -->
+
+
+        <input name="number_input" placeholder="Number" type="text" class="auto_field only_number" data-name="number" value="{{ request.session.main_page }}" />
+
+
+        <select name="number_select" class="auto_field" data-name="number">
+            <option value="1" selected> 1 </option>
+            <option value="2"> 2 </option>
+            <option value="3"> 3 </option>
+        </select>
+
+
+        <div class="numbers_pages-one_step">
+            <button class="post_button" type="button"
+                    data-name="next_page"
+                    data-action="change"
+                    data-value="3"
+                    data-reload="ground">
+                Next
+            </button>
+        </div><!-- numbers_pages-one_step -->
+
+
+
+
+
+        <div class="numbers_pages-change_page">
+            <button class="post_button" type="button"
+                    data-name="change_page_1"
+                    data-action="change"
+                    data-value="1"
+                    data-reload="ground">
+                1
+            </button>
+            <button class="post_button" type="button"
+                    data-name="change_page_2"
+                    data-action="change"
+                    data-value="2"
+                    data-reload="ground">
+                2
+            </button>
+            <button class="post_button" type="button"
+                    data-name="change_page_3"
+                    data-action="change"
+                    data-value="3"
+                    data-reload="ground">
+                3
+            </button>
+        </div><!-- numbers_pages-change_page -->
+
+
+    </form><!-- searcher-filters -->
+
+</div><!-- block-content-numbers_pages -->
