@@ -102,8 +102,11 @@ class Session_Controller:
         if 'main_page' not in self.request.session:
             self.request.session['main_page'] = 1
 
-        if 'main_number_product_page' not in self.request.session:
-            self.request.session['main_number_product_page'] = 10
+        if 'main_number_product_on_page' not in self.request.session:
+            self.request.session['main_number_product_on_page'] = 10
+
+        if 'main_searched_products' not in self.request.session:
+            self.request.session['main_searched_products'] = Product.objects.all()
 
     def Check_Session(self):
 

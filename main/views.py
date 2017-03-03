@@ -84,18 +84,13 @@ class Start(Dynamic_Event_Menager):
 
 class Products(Dynamic_Event_Menager):
 
-    def Get_Current_Page(self):
+    def Get_Current_Page(self, number_product_on_page):
 
         page = self.request.session['main_page']
-        number_product = self.request.session['main_number_product_page']
-        start = (page-1) * number_product
-        end = page * number_product
+        start = (page-1) * number_product_on_page
+        end = page * number_product_on_page
 
-        products = Filter_Products(
-            self.request,
-            self.request.session['searcher_phrase']
-        )
-
+        products = self.request.session['main_searched_products']
         return products[start:end]
 
     def Get_List_Pages(self, number_of_pages):
@@ -108,22 +103,23 @@ class Products(Dynamic_Event_Menager):
             return [list(range(1, number_of_pages + 1))]
 
         if page < 5:  # 1 2 3 4 5 6 … 9
-            return [list(range(1, page + 3)), [number_of_pages]]
+            return [list(range(1, 6)), [number_of_pages]]
 
         if page > number_of_pages - 4:  # 1 … 4 5 6 7 8 9
-            return [[1], list(range(page - 2, number_of_pages + 1))]
+            return [[1], list(range(number_of_pages - 4, number_of_pages + 1))]
 
         # 1 … 3 4 5 6 7 … 9
         return [[1], list(range(page - 2, page + 3)), [number_of_pages]]
 
     def Manage_Content_Ground(self):
 
-        number_product = self.request.session['main_number_product_page']
-        number_of_pages = int(Product.objects.count() / number_product)
-        if Product.objects.count() % number_product:
+        products = self.request.session['main_searched_products']
+        number_product_on_page = self.request.session['main_number_product_on_page']
+        number_of_pages = int(len(products) / number_product_on_page)
+        if len(products) % number_product_on_page:
             number_of_pages += 1
 
-        self.content['products'] = self.Get_Current_Page()
+        self.content['products'] = self.Get_Current_Page(number_product_on_page)
         self.content['number_of_pages'] = number_of_pages
         self.content['list_pages'] = self.Get_List_Pages(number_of_pages)
         self.content['split_pages'] = self.Get_Split_Pages(number_of_pages)

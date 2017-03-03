@@ -223,6 +223,13 @@ class Search_Engine:
             if word in line:
                 return line
 
+    @staticmethod
+    def Filter_Products(request):
+        phrase = request.session['searcher_phrase']
+        searcher = Search_Engine(request, phrase)
+        request.session['main_searched_products'] = \
+            searcher.Search_Products()
+
     def __init__(self, request, phrase):
         self.result = []
         self.request = request
@@ -326,10 +333,6 @@ class Searcher(Dynamic_Event_Menager):
 
     @staticmethod
     def Launch(request):
-        return Searcher(request, clear_session=True).HTML
-
-
-
-def Filter_Products(request, phrase):
-    searcher = Search_Engine(request, phrase)
-    return searcher.Search_Products()
+        searcher = Searcher(request, clear_session=True)
+        Search_Engine.Filter_Products(request)
+        return searcher.HTML
