@@ -976,6 +976,11 @@ button {
 .field_shell textarea {
   max-width: 100%; }
 
+.field_shell input[type=date] {
+  min-width: 145px;
+  width: 145px;
+  padding-right: 0; }
+
 .field_shell .status {
   display: none;
   margin: 2px 3px;
@@ -1363,9 +1368,8 @@ img {
   .ground-block > .block-background {
     z-index: 10;
     background-color: #ffffff; }
-
-> .block-2 > .block-background {
-  background-color: #ffffff; }
+  .ground-block > .block-2 > .block-background {
+    background-color: #ffffff; }
 
 .block-content .title {
   margin-top: 15px;
@@ -1658,6 +1662,11 @@ img {
   .payment form .form-accept > * {
     vertical-align: top; } }
 
+.users_payments-filters {
+  text-align: center; }
+  .users_payments-filters button {
+    width: 145px; }
+
 .users_payments .form_block.fields div > span {
   font-size: 15px;
   font-weight: bold; }
@@ -1688,36 +1697,36 @@ img {
     margin-bottom: 0; }
 
 @media (min-width: 675px) {
-  .ground:not(.smaller) .ground-block.BIG.users_payments > .block-content .form_block.fields {
+  .ground:not(.smaller) .ground-block.BIG.users_payments .form_block.fields {
     max-height: 70px;
     cursor: pointer; }
-    .ground:not(.smaller) .ground-block.BIG.users_payments > .block-content .form_block.fields .shell_form {
+    .ground:not(.smaller) .ground-block.BIG.users_payments .form_block.fields .shell_form {
       height: 50px;
       background-image: none; }
-    .ground:not(.smaller) .ground-block.BIG.users_payments > .block-content .form_block.fields .title {
+    .ground:not(.smaller) .ground-block.BIG.users_payments .form_block.fields .title {
       font-size: 16px;
       color: #774D34;
       cursor: pointer; }
-  .ground:not(.smaller) .ground-block.BIG.users_payments > .block-content .form_block.visible.fields {
+  .ground:not(.smaller) .ground-block.BIG.users_payments .form_block.visible.fields {
     max-height: 700px;
     cursor: auto; }
-    .ground:not(.smaller) .ground-block.BIG.users_payments > .block-content .form_block.visible.fields .shell_form {
+    .ground:not(.smaller) .ground-block.BIG.users_payments .form_block.visible.fields .shell_form {
       height: 0; } }
 
 @media (min-width: 1300px) {
-  .ground.smaller .ground-block.BIG.users_payments > .block-content .form_block.fields {
+  .ground.smaller .ground-block.BIG.users_payments .form_block.fields {
     max-height: 70px;
     cursor: pointer; }
-    .ground.smaller .ground-block.BIG.users_payments > .block-content .form_block.fields .shell_form {
+    .ground.smaller .ground-block.BIG.users_payments .form_block.fields .shell_form {
       height: 50px;
       background-image: none; }
-    .ground.smaller .ground-block.BIG.users_payments > .block-content .form_block.fields .title {
+    .ground.smaller .ground-block.BIG.users_payments .form_block.fields .title {
       color: #774D34;
       cursor: pointer; }
-  .ground.smaller .ground-block.BIG.users_payments > .block-content .form_block.visible.fields {
+  .ground.smaller .ground-block.BIG.users_payments .form_block.visible.fields {
     max-height: 700px;
     cursor: auto; }
-    .ground.smaller .ground-block.BIG.users_payments > .block-content .form_block.visible.fields .shell_form {
+    .ground.smaller .ground-block.BIG.users_payments .form_block.visible.fields .shell_form {
       height: 0; } }
 
 /*# sourceMappingURL=app.css.map*/

@@ -1,10 +1,9 @@
 <script>
   window.APP.DATA = {
-    title : 'Register',
+    title : 'My shopping',
     description : 'Here you can register.'
   };
 </script>
-<script src='https://www.google.com/recaptcha/api.js'></script>
 
 
 <div class="ground-block block-1 BIG users_payments">
@@ -13,6 +12,17 @@
     {% include "ground/html/navigation.html" %}
 
     <div class="block-content">
+
+        <div class="title">My shopping</div>
+
+
+        <form class="users_payments-filters auto_form field_shell" action="" data-origin="filters" data-target="ground">
+
+            <input name="date_from" type="date" class="auto_field" data-name="date_from" />
+
+            <input name="date_to" type="date" class="auto_field" data-name="date_to" />
+
+        </form>
 
         {% include "cart/html/my_shopping.html" %}
 

@@ -1,6 +1,6 @@
 <script>
     window.APP.DATA = {
-        title : 'About us',
+        title : 'Users payments',
         description : 'This page is about us. ;)'
     };
 </script>
@@ -17,9 +17,10 @@
 
         <form class="users_payments-filters auto_form field_shell" action="" data-origin="filters" data-target="ground">
 
-            <input name="date_from" placeholder="Number" type="date" class="auto_field" data-name="date_from" />
+            <input name="date_from" type="date" class="auto_field" data-name="date_from" />
 
-            <input name="date_from" placeholder="Number" type="date" class="auto_field" data-name="date_from" />
+            <input name="date_to" type="date" class="auto_field" data-name="date_to" />
+
 
             {% if request.session.root_payments_approved %}
                 <button class="post_button submit" type="button"
@@ -29,7 +30,7 @@
                         data-reload="ground">
                     Approved
                 </button>
-
+                &nbsp;
                 <button class="post_button" type="button"
                         data-name="not_approved"
                         data-action="change"
@@ -45,7 +46,7 @@
                         data-reload="ground">
                     Approved
                 </button>
-
+                &nbsp;
                 <button class="post_button submit" type="button"
                         data-name="not_approved"
                         data-action="change"
