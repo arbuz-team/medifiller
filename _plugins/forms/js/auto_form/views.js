@@ -146,6 +146,8 @@ export let Auto_Form_Views = function(config)
 
   let send = function(post_data)
   {
+    console.log(post_data);
+
     window.APP.http_request(models.settings.action, post_data, function()
     {
       APP.DATA = {
