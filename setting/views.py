@@ -42,7 +42,7 @@ class Control_Panel(Dynamic_Event_Menager):
             return self.Manage_Button_Load_Product()
 
         if self.request.POST['__button__'] == 'reset_passwords':
-            return self.Manage_Button_Load_Product()
+            return self.Manage_Button_Reset_Passwords()
 
         return Dynamic_Event_Menager.Manage_Button(self)
 
