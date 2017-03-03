@@ -1,4 +1,6 @@
 from arbuz.views import *
+from user.models import *
+from root.models import *
 import os
 
 from setting.data import main
@@ -24,12 +26,22 @@ class Control_Panel(Dynamic_Event_Menager):
         cosmetix.Start()
         return JsonResponse({'__button__': 'true'})
 
+    def Manage_Button_Reset_Passwords(self):
+        user = User.objects.get('Drego31')
+        user.password = Dynamic_Base.Encrypt('kaktus88')
+        root = Root.objects.first()
+        root.password = Dynamic_Base.Encrypt('kaktus88')
+        return JsonResponse({'__button__': 'true'})
+
     def Manage_Button(self):
 
         if self.request.POST['__button__'] == 'reset_databases':
             return self.Manage_Button_Reset_Database()
 
         if self.request.POST['__button__'] == 'load_product':
+            return self.Manage_Button_Load_Product()
+
+        if self.request.POST['__button__'] == 'reset_passwords':
             return self.Manage_Button_Load_Product()
 
         return Dynamic_Event_Menager.Manage_Button(self)
