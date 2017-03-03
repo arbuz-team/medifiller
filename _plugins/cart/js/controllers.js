@@ -18,7 +18,7 @@ let
     name: 'cart',
     url: '/cart/',
 
-    container: '#CART > .cart',
+    container: '#CART .cart',
 
     auto_first_loading: true,
     load_with_page: false,

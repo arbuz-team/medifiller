@@ -146,8 +146,6 @@ export let Auto_Form_Views = function(config)
 
   let send = function(post_data)
   {
-    console.log(post_data);
-
     window.APP.http_request(models.settings.action, post_data, function()
     {
       APP.DATA = {
@@ -157,7 +155,7 @@ export let Auto_Form_Views = function(config)
       if(typeof models.settings.delay !== 'undefined')
         APP.DATA.delay = models.settings.delay;
       else
-        APP.DATA.delay = 1000;
+        APP.DATA.delay = 100;
 
       APP.throw_event(window.EVENTS.redirect);
     });

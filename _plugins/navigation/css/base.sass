@@ -12,72 +12,71 @@ $navigation-focus--background-color: $G-COLOR-1
 //--------------------------------------
 
 #NAVIGATION
-  top: $navigation--height
-  right: 0
   left: 0
+  top: -$navigation--height
+  right: 0
 
-  height: auto
-  overflow-y: auto
+  height: $navigation--height
 
   z-index: 80
 
-  >.navigation
-    position: relative
-    height: auto
+  >.hide
+    display: none
+    //top: 100%
+      left: 0
+      right: 0
 
-    color: $navigation--color
-    background-color: $navigation--background-color
+      height: 200px
+      +linear-gradient(bottom, transparent, $G-GRAY-SHADOW-1)
+
+.navigation
+  margin-bottom: 100px
+
+  color: $navigation--color
+  background-color: $navigation--background-color
 
 
-    >.navigation-mobile
+  >.navigation-mobile
+    display: none
+
+
+  >.navigation-primary, >.navigation-secondary
+
+    .navigation-secondary-space
       display: none
 
+    li
+      position: relative
+      height: $navigation-primery_secondery--height
 
-    >.navigation-primary, >.navigation-secondary
+      border-bottom: solid #666 1px
+      background-color: $navigation-focus--background-color
 
-      .navigation-secondary-space
-        display: none
+      >.link
+        padding: 0 15px
+        line-height: $navigation-primery_secondery--height
 
-      li
-        position: relative
-        height: $navigation-primery_secondery--height
-
-        border-bottom: solid #666 1px
-        background-color: $navigation-focus--background-color
-
-        >.link
-          padding: 0 15px
-          line-height: $navigation-primery_secondery--height
-
-          background-color: $navigation--background-color
+        background-color: $navigation--background-color
 
 
-      li.navigation-primary-language
-        display: none
+    li.navigation-primary-language
+      display: none
 
-        button
-          background: transparent
-          border: none
-          margin: 0
-          padding: 0
+      button
+        background: transparent
+        border: none
+        margin: 0
+        padding: 0
 
-          color: $navigation--color
-          font-size: 19px
-          font-weight: bold
-
-      li.navigation-secondary-cart
+        color: $navigation--color
+        font-size: 19px
         font-weight: bold
 
-      li.navigation-secondary-searcher
-        display: none
+    li.navigation-secondary-cart
+      font-weight: bold
 
-  >.hide
-    top: 100%
-    left: 0
-    right: 0
-
-    height: 200px
-    +linear-gradient(bottom, transparent, $G-GRAY-SHADOW-1)
+    li.navigation-secondary-searcher
+      display: none
 
 
 //--------------------------------------

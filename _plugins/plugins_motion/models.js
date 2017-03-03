@@ -39,7 +39,7 @@ export let Plugins_Motion_Models = function(config)
 
     // -- Children container
       if(typeof config.content !== 'undefined')
-        that.settings.content = config.container +' > '+ config.content;
+        that.settings.content = config.container +' '+ config.content;
 
 
     // -- Witdh & height
@@ -174,10 +174,10 @@ export let Plugins_Motion_Models = function(config)
   };
 
 
-  this.check_possibility_of_swipe = function()
-  {
-    return check_mobile_by_sizes();
-  };
+  // this.check_possibility_of_swipe = function()
+  // {
+  //   return check_mobile_by_sizes();
+  // };
 
 
   this.check_possibility_of_opening = function()

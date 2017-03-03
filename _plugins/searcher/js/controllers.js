@@ -16,7 +16,7 @@ let
     name: 'searcher',
     url: '/searcher/',
 
-    container: '#SEARCHER > .searcher',
+    container: '#SEARCHER .searcher',
 
     auto_first_loading: true,
   },

@@ -25,9 +25,6 @@ $searcher--color: $G-COLOR-0
   color: $searcher--color
   border-right: $G-STYLE-BORDER-BOLD
 
-  overflow: visible
-  overflow-y: auto
-
   z-index: 75
 
 
@@ -36,18 +33,19 @@ $searcher--color: $G-COLOR-0
     top: 0
     bottom: 0
 
-    width: 500px
+    width: 1000px
 
     >div
       left: 0
       top: 0
       bottom: 0
 
-      width: 125px
-      +linear-gradient(right, transparent, $G-GRAY-SHADOW-1)
+      width: 500px
+      +linear-gradient(right, transparent, $G-GRAY-SHADOW-2)
 
 
 .searcher
+  width: $searcher--width
 
   >.logo_text
     opacity: 1 !important

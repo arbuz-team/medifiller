@@ -17,7 +17,7 @@ let
     name: 'navigation',
     url: '/navigation/',
 
-    container: '#NAVIGATION > .navigation',
+    container: '#NAVIGATION .navigation',
 
     auto_first_loading: true,
   },

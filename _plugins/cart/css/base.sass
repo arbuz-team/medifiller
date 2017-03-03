@@ -16,7 +16,6 @@ $cart--color: $G-COLOR-0
   bottom: 0
 
   width: 100%
-  overflow-y: auto
 
   background-color: $cart--background-color
   color: $cart--color
@@ -24,6 +23,10 @@ $cart--color: $G-COLOR-0
   font-size: 16px
 
   z-index: 59
+
+
+.cart
+  margin-right: 15px
 
 
 .cart, .payment
@@ -150,8 +153,9 @@ $cart--color: $G-COLOR-0
 
 @media (min-width: 750px)
 
-  #CART
+  #CART, .cart
     width: $cart--width
+    margin-right: 0
 
 
 @media (min-width: $G-SIZE-3)

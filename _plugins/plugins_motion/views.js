@@ -41,7 +41,7 @@ export let Plugins_Motion_Views = function(config)
       let width = $(container).outerWidth();
 
       if(container === '#CART')
-        $('#GROUND > .ground')
+        $('#GROUND .ground')
           .addClass('smaller')
           .stop()
           .animate({'margin-right': width}, duration_open);
@@ -63,10 +63,12 @@ export let Plugins_Motion_Views = function(config)
         height = models.settings.height;
 
       if(direction_open === 'top' || direction_open === 'bottom' )
-        css[direction_close] = -height;
+        css[direction_close] = '-'+ height;
 
       else if(direction_open === 'right' || direction_open === 'left' )
         css[direction_close] = -width;
+
+      console.log(height);
 
 
       $(container)
@@ -79,7 +81,7 @@ export let Plugins_Motion_Views = function(config)
 
 
       if(container === '#CART')
-        $('#GROUND > .ground')
+        $('#GROUND .ground')
           .removeClass('smaller')
           .stop()
           .animate({'margin-right': 0}, duration_close);

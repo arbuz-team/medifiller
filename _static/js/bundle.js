@@ -477,7 +477,7 @@
 	  name: 'searcher',
 	  url: '/searcher/',
 	
-	  container: '#SEARCHER > .searcher',
+	  container: '#SEARCHER .searcher',
 	
 	  auto_first_loading: true
 	},
@@ -936,9 +936,13 @@
 	
 	  ///////////////////////////////
 	
-	  var swipe_open = function swipe_open() {
-	    if (plugin_motion_views.models.check_possibility_of_swipe()) plugin_motion_views.plugin_open();
-	  },
+	  var
+	
+	  // swipe_open = function()
+	  // {
+	  //   if(plugin_motion_views.models.check_possibility_of_swipe())
+	  //     plugin_motion_views.plugin_open();
+	  // },
 	
 	
 	  // swipe_close = function()
@@ -966,17 +970,18 @@
 	  },
 	      set_start_position = function set_start_position() {
 	    var $container = $(settings.container),
-	        $content = $container.children(settings.content),
+	        $content = $(settings.content),
 	        position = void 0,
-	        height = $content.outerHeight(),
-	        width = $content.outerWidth(),
+	
+	    //height = $content.outerHeight(),
+	    width = $content.outerWidth(),
 	        direction_open = settings.direction_open,
 	        direction_close = settings.direction_close;
 	
-	    settings.height = height;
+	    settings.height = '100%';
 	    settings.width = width;
 	
-	    if (direction_open === 'top' || direction_open === 'bottom') position = -height;else if (direction_open === 'left' || direction_open === 'right') position = -width;
+	    if (direction_open === 'top' || direction_open === 'bottom') position = -settings.height;else if (direction_open === 'left' || direction_open === 'right') position = -width;
 	
 	    if (position) $($container).css(direction_close, position);
 	  },
@@ -990,27 +995,27 @@
 	    var $window = $(window),
 	        $body = $('body'),
 	        $container = $(settings.container),
+	        $content = $(settings.content),
 	        $hide = $(settings.container + ' > ' + settings.hide);
 	
 	    // -- Swipe events
-	
 	    // if(settings.direction_open === 'top' || settings.direction_open === 'bottom')
 	    //   $body.hammer().on(settings.swipe_open, pre_swipe_open);
 	    // else
 	    //   $body.hammer().on(settings.swipe_open, swipe_open);
 	    //
 	    // $body.hammer().on(settings.swipe_close, swipe_close);
-	
 	    // $body.data('hammer').get('swipe').set({ direction: Hammer.DIRECTION_ALL });
 	
 	
-	    if (settings.container !== '#CART') {
-	      // -- Other events
-	
+	    if (settings.container !== '#CART' && settings.container !== '#NAVIGATION') {
 	      $body.click(plugin_motion_views.plugin_close);
 	      $hide.click(plugin_motion_views.plugin_close);
 	      $container.click(stop_propagation);
-	
+	      set_start_position();
+	    } else if (settings.container === '#NAVIGATION') {
+	      $container.click(plugin_motion_views.plugin_close);
+	      $content.click(stop_propagation);
 	      set_start_position();
 	    } else if ($container.outerWidth() === $window.width()) set_start_position();
 	
@@ -1069,7 +1074,7 @@
 	
 	      var width = $(container).outerWidth();
 	
-	      if (container === '#CART') $('#GROUND > .ground').addClass('smaller').stop().animate({ 'margin-right': width }, duration_open);
+	      if (container === '#CART') $('#GROUND .ground').addClass('smaller').stop().animate({ 'margin-right': width }, duration_open);
 	    }
 	  };
 	
@@ -1083,13 +1088,15 @@
 	          width = models.settings.width,
 	          height = models.settings.height;
 	
-	      if (direction_open === 'top' || direction_open === 'bottom') css[direction_close] = -height;else if (direction_open === 'right' || direction_open === 'left') css[direction_close] = -width;
+	      if (direction_open === 'top' || direction_open === 'bottom') css[direction_close] = '-' + height;else if (direction_open === 'right' || direction_open === 'left') css[direction_close] = -width;
+	
+	      console.log(height);
 	
 	      $(container).stop().animate(css, duration_close, function () {
 	        models.change_possibility_of_opening(true);
 	      }).children(hide).fadeOut(duration_close);
 	
-	      if (container === '#CART') $('#GROUND > .ground').removeClass('smaller').stop().animate({ 'margin-right': 0 }, duration_close);
+	      if (container === '#CART') $('#GROUND .ground').removeClass('smaller').stop().animate({ 'margin-right': 0 }, duration_close);
 	    }
 	  };
 	}; /**
@@ -1137,7 +1144,7 @@
 	      if (typeof config.container !== 'undefined') that.settings.container = config.container;
 	
 	      // -- Children container
-	      if (typeof config.content !== 'undefined') that.settings.content = config.container + ' > ' + config.content;
+	      if (typeof config.content !== 'undefined') that.settings.content = config.container + ' ' + config.content;
 	
 	      // -- Witdh & height
 	      var $container = $(that.settings.container);
@@ -1233,9 +1240,11 @@
 	    return !this.state.is_open;
 	  };
 	
-	  this.check_possibility_of_swipe = function () {
-	    return check_mobile_by_sizes();
-	  };
+	  // this.check_possibility_of_swipe = function()
+	  // {
+	  //   return check_mobile_by_sizes();
+	  // };
+	
 	
 	  this.check_possibility_of_opening = function () {
 	    if (check_by_sizes()) if (_structure.data_controller.get('can_do_open_plugin')) return this.check_is_close();else if (this.settings.container === '#CART') return this.check_is_close();
@@ -2089,14 +2098,12 @@
 	   */
 	
 	  var send = function send(post_data) {
-	    console.log(post_data);
-	
 	    window.APP.http_request(models.settings.action, post_data, function () {
 	      APP.DATA = {
 	        redirect: '/products/'
 	      };
 	
-	      if (typeof models.settings.delay !== 'undefined') APP.DATA.delay = models.settings.delay;else APP.DATA.delay = 1000;
+	      if (typeof models.settings.delay !== 'undefined') APP.DATA.delay = models.settings.delay;else APP.DATA.delay = 100;
 	
 	      APP.throw_event(window.EVENTS.redirect);
 	    });
@@ -2310,7 +2317,7 @@
 	  name: 'cart',
 	  url: '/cart/',
 	
-	  container: '#CART > .cart',
+	  container: '#CART .cart',
 	
 	  auto_first_loading: true,
 	  load_with_page: false
@@ -2699,7 +2706,7 @@
 	  name: 'navigation',
 	  url: '/navigation/',
 	
-	  container: '#NAVIGATION > .navigation',
+	  container: '#NAVIGATION .navigation',
 	
 	  auto_first_loading: true
 	},

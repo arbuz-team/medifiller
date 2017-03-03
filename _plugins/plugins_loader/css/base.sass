@@ -3,6 +3,24 @@
   padding: 10px 15px
 
 
+.container-part
+  overflow: visible
+
+
+.container-part-scroll
+  +fill(absolute)
+  overflow: hidden
+
+.container-part-scroll-content
+  +fill(absolute)
+  right: -15px // trick - hidden scroll
+  overflow: visible
+  overflow-y: scroll
+
+  >div
+    position: relative
+
+
 @media (min-width: $G-SIZE-3)
 
   .container-part
