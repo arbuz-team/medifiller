@@ -12,11 +12,50 @@
 
     <div class="block-content">
 
-        {% if request.session.root_payments_approved %}
-            <div class="title"> Approved </div>
-        {% else %}
-            <div class="title"> Not approved </div>
-        {% endif %}
+        <div class="title">Users payments</div>
+
+
+        <form class="users_payments-filters auto_form field_shell" action="" data-origin="filters" data-target="ground">
+
+            <input name="date_from" placeholder="Number" type="date" class="auto_field" data-name="date_from" />
+
+            <input name="date_from" placeholder="Number" type="date" class="auto_field" data-name="date_from" />
+
+            {% if request.session.root_payments_approved %}
+                <button class="post_button submit" type="button"
+                        data-name="approved"
+                        data-action="change"
+                        data-value="approved"
+                        data-reload="ground">
+                    Approved
+                </button>
+
+                <button class="post_button" type="button"
+                        data-name="not_approved"
+                        data-action="change"
+                        data-value="not_approved"
+                        data-reload="ground">
+                    Not approved
+                </button>
+            {% else %}
+                <button class="post_button" type="button"
+                        data-name="approved"
+                        data-action="change"
+                        data-value="approved"
+                        data-reload="ground">
+                    Approved
+                </button>
+
+                <button class="post_button submit" type="button"
+                        data-name="not_approved"
+                        data-action="change"
+                        data-value="not_approved"
+                        data-reload="ground">
+                    Not approved
+                </button>
+            {% endif %}
+
+        </form>
 
 
         {% include "cart/html/users_payments.html" %}

@@ -917,7 +917,7 @@ button {
   display: inline-block;
   text-align: center; }
 
-.field_shell input[type=text], .field_shell input[type=email], .field_shell input[type=password], .field_shell input[type=number], .field_shell input[type=url],
+.field_shell input[type=text], .field_shell input[type=email], .field_shell input[type=password], .field_shell input[type=number], .field_shell input[type=url], .field_shell input[type=date],
 .field_shell select, .field_shell button, .field_shell .button, .field_shell .field, .field_shell textarea {
   margin: 2px 3px;
     margin-bottom: 8px;
@@ -930,12 +930,12 @@ button {
   font-size: 14px;
   font-family: 'OS_Regular', sans-serif; }
 
-.field_shell input[type=text]:disabled, .field_shell input[type=email]:disabled, .field_shell input[type=password]:disabled, .field_shell input[type=number]:disabled, .field_shell input[type=url]:disabled,
+.field_shell input[type=text]:disabled, .field_shell input[type=email]:disabled, .field_shell input[type=password]:disabled, .field_shell input[type=number]:disabled, .field_shell input[type=url]:disabled, .field_shell input[type=date]:disabled,
 .field_shell select:disabled, .field_shell button:disabled, .field_shell .button.disabled, .field_shell textarea:disabled {
   background-color: #efefef;
   border: 1px solid #d9d9d9; }
 
-.field_shell input[type=text]:focus, .field_shell input[type=email]:focus, .field_shell input[type=password]:focus, .field_shell input[type=number]:focus, .field_shell input[type=url]:focus,
+.field_shell input[type=text]:focus, .field_shell input[type=email]:focus, .field_shell input[type=password]:focus, .field_shell input[type=number]:focus, .field_shell input[type=url]:focus, .field_shell input[type=date]:focus,
 .field_shell select:focus, .field_shell button:focus, .field_shell .button:focus, .field_shell textarea:focus {
   border: 1px solid #b9b9b9;
     border-top: 1px solid #a0a0a0;
