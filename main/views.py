@@ -122,8 +122,11 @@ class Products(Dynamic_Event_Menager):
             number_of_pages += 1
 
         self.content['products'] = self.Get_Current_Page()
+        self.content['number_of_pages'] = number_of_pages
         self.content['list_pages'] = self.Get_List_Pages(number_of_pages)
         self.content['split_pages'] = self.Get_Split_Pages(number_of_pages)
+        self.content['next_page'] = self.request.session['main_page'] + 1
+        self.content['prev_page'] = self.request.session['main_page'] - 1
 
         return self.Render_HTML('main/products.html')
 
