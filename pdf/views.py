@@ -11,7 +11,7 @@ class Generator_PDF(Dynamic_Base):
         address = Invoice_Address.objects.get(payment=payment)
         products = Selected_Product.objects.filter(payment=payment)
 
-        generator = Generator_PDF(request) # target="_blank"
+        generator = Generator_PDF(request)
         generator.content['invoice'] = {
             'unique':           payment.pk,
             'date':             payment.date,

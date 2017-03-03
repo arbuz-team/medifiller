@@ -117,7 +117,7 @@ class Products(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
 
-        number_of_pages = Product.objects.count() / 15
+        number_of_pages = int(Product.objects.count() / 15)
         if Product.objects.count() % 15:
             number_of_pages += 1
 

@@ -56,7 +56,7 @@ class Purpose(Filter):
 
 class Product(Abstract_Model):
 
-    details_en = models.ForeignKey(Details_EN)
+    details_en = models.ForeignKey(Details_EN, null=True)
     details_pl = models.ForeignKey(Details_PL, null=True)
     details_de = models.ForeignKey(Details_DE, null=True)
 
