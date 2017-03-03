@@ -29,8 +29,10 @@ class Control_Panel(Dynamic_Event_Menager):
     def Manage_Button_Reset_Passwords(self):
         user = User.objects.get(username='Drego31')
         user.password = Dynamic_Base.Encrypt('kaktus88')
+        user.save()
         root = Root.objects.first()
         root.password = Dynamic_Base.Encrypt('kaktus88')
+        root.save()
         return JsonResponse({'__button__': 'true'})
 
     def Manage_Button(self):
