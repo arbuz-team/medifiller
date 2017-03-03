@@ -7,3 +7,4 @@ update_settings.sh
 *migrations*
 db.sqlite3
 node_modules/*
+*.directory

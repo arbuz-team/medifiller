@@ -84,13 +84,18 @@ class Manager:
             price = self.firefox.find_element_by_id('our_price_display')
 
             self.firefox.find_element_by_id('more_info_tab_data_sheet').click()
-            purpose = self.firefox.find_elements_by_css_selector('#idTab2 li')
+            features = self.firefox.find_elements_by_css_selector('#idTab2 li')
+
+            purposes = ''
+            for element in features:
+                if 'Zastosowanie' in element.text:
+                    purposes = element.text.replace('Zastosowanie : ', '').split(', ')
 
             product['title'] = title.text
             product['description'] = description.text
             product['image'] = image.get_attribute('src')
             product['price'] = int(float(price.text[:-3].replace(',', '.').replace(' ', '')) * 100)
-            product['purpose'] = purpose[0].text.replace('Zastosowanie : ', '')
+            product['purposes'] = purposes
 
         except NoSuchElementException as e:
             self.number_exception += 1
@@ -126,26 +131,30 @@ class Manager:
 
         return details
 
+    def Create_Brand(self, name):
+        brand = Brand.objects.filter(name=name).first()
+
+        if not brand:
+            brand = Brand(name=name)
+            brand.save()
+
+        return brand
+
+    def Create_Purpose(self, name):
+        purpose = Purpose.objects.filter(name=name).first()
+
+        if not purpose:
+            purpose = Purpose(name=name)
+            purpose.save()
+
+        return purpose
+
     def Create_Filters(self, product):
 
         filters = {
-            'brand': Brand.objects.filter(name=product['brand']).first(),
-            'purpose': Purpose.objects.filter(name=product['purpose']).first()
+            'brand': self.Create_Brand(product['brand']),
+            'purposes': [self.Create_Purpose(name) for name in product['purposes']]
         }
-
-        if not filters['brand']:
-
-            filters['brand'] = Brand(
-                name=product['brand']
-            )
-            filters['brand'].save()
-
-        if not filters['purpose']:
-
-            filters['purpose'] = Purpose(
-                name=product['purpose']
-            )
-            filters['purpose'].save()
 
         return filters
 
@@ -156,7 +165,6 @@ class Manager:
             details = self.Create_Details(product)
             filters = self.Create_Filters(product)
 
-
             new_product = Product(
                 details_en=details['details_en'],
                 details_pl=details['details_pl'],
@@ -166,13 +174,20 @@ class Manager:
                 keywords='',
                 stock=0,
                 where_display=Where_Display.objects.get(display_en=True, display_pl=True, display_de=True),
-                brand=filters['brand'],
-                purpose=filters['purpose']
+                brand=filters['brand']
             )
             new_product.save()
 
+            for purpose in filters['purposes']:
+                Purpose_For_Product(purpose=purpose, product=new_product).save()
+
             image = Dynamic_Base.Save_Image_From_URL(product['image'])
             new_product.Save_Image(image)
+
+    def Delete_Problematic_Data(self):
+        product = Product.objects.get(details_en__name='NEAUVIA ORGANIC STIMULATE')
+        model = Purpose_For_Product.objects.filter(product=product).values_list('purpose__pk')
+        Purpose.objects.filter(pk__in=model).delete()
 
     def Launch(self):
 
@@ -207,6 +222,9 @@ class Manager:
 
         self.Launch()
         self.Insert_Product_To_Database()
+        self.Delete_Problematic_Data()
+
+
 
 def Start():
     Manager()
