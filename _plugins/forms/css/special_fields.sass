@@ -119,20 +119,22 @@
   //////////////////////////////////////////////////////////////
 
   select
-    +background-img(url('/_static/img/icons/32/dark/sort_down.png'), 15px, right)
+    +background-img(url('/_static/img/icons/32/dark/sort_down.png'), 15px, right 10px center)
     min-width: 150px
-    height: 34px
-    padding: 5px 35px 5px 5px
+    padding-right: 35px
 
-    border: 1px solid #999
-      bottom: #aaa
-    font-size: 16px
+    min-height: 37px
+
+    background-color: transparent
     cursor: pointer
     opacity: .8
 
     -webkit-appearance: none
     -moz-appearance: none
     appearance: none
+
+    >option
+      line-height: inherit
 
   select:hover, select:focus
     opacity: .9

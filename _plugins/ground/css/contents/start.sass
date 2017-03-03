@@ -7,45 +7,44 @@
     padding: 0
       bottom: 50px
 
-    >.block-content-recommended-title
-      padding: 15px 50px
-        bottom: 15px
+  .block-content-recommended-title
+    padding: 15px 50px
+      bottom: 15px
 
-      background-color: #fcfcfc
-      border-bottom: $G-STYLE-BORDER-BOLD
+    background-color: #fcfcfc
+    border-bottom: $G-STYLE-BORDER-BOLD
 
-      >span
-        line-height: 30px
-        opacity: .4
-        font:
-          size: 25px
-          weight: bold
-        color: $G-COLOR-0
+    >span
+      line-height: 30px
+      opacity: .4
+      font:
+        size: 25px
+        weight: bold
+      color: $G-COLOR-0
 
-    >.block-content-image
-      display: none
+  .block-content-image
+    display: none
 
 
 @media (min-width: $G-SIZE-3)
   .ground-block.start
-    >.block-content
 
-      >.block-content-recommended-title
-        display: none
+    .block-content-recommended-title
+      display: none
 
-      >.block-content-image
+    .block-content-image
+      display: block
+      position: relative
+      background-color: $G-COLOR-4
+      border-bottom: $G-STYLE-DARK-BORDER-BOLD
+      overflow: hidden
+
+      >img
         display: block
-        position: relative
-        background-color: $G-COLOR-4
-        border-bottom: $G-STYLE-DARK-BORDER-BOLD
-        overflow: hidden
-
-        >img
-          display: block
-          max-width: none
-          width: auto
-          height: 100%
-          vertical-align: middle
+        max-width: none
+        width: auto
+        height: 100%
+        vertical-align: middle
 
 .footer.start
   >.footer-content

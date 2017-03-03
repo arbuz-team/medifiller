@@ -1,8 +1,7 @@
 
-.ground-block.about >.block-content
-  //text-align: justify
+.ground-block.about
 
-  >.block-content-paragraph
+  .block-content-paragraph
     position: relative
 
     line-height: 30px
@@ -43,7 +42,7 @@
         vertical-align: bottom
 
 
-  >.block-content-paragraph.new
+  .block-content-paragraph.new
     margin:
       left: 10%
       right: 10%
@@ -58,7 +57,7 @@
       >.block-content-paragraph-new-title
         min-height: 30px
 
-  >.block-content-paragraph.new:hover
+  .block-content-paragraph.new:hover
     >div
       >.block-content-paragraph-new-image
         opacity: .9
@@ -66,29 +65,29 @@
 
 @media (min-width: $G-SIZE-3)
 
-  .ground-block.about >.block-content
+  .ground-block.about
 
-    >.block-content-paragraph
+    .block-content-paragraph
 
-      >.block-content-paragraph-actions
+      .block-content-paragraph-actions
         top: -20px
         display: none
 
-    >.block-content-paragraph:hover
+    .block-content-paragraph:hover
 
-      >.block-content-paragraph-actions
+      .block-content-paragraph-actions
         display: block
 
 
 @media (min-width: $G-SIZE-4)
 
-  .ground-block.about >.block-content
+  .ground-block.about
     max-width: 1200px
     margin:
       left: auto
       right: auto
 
-    >.block-content-paragraph
+    .block-content-paragraph
 
       >.block-content-paragraph-text.with_image, >.block-content-paragraph-image
         display: inline-block
@@ -101,8 +100,9 @@
 
 @media (min-width: 1300px)
 
-  .ground-block.about >.block-content
-    >.block-content-paragraph.new
+  .ground-block.about
+
+    .block-content-paragraph.new
       max-width: 800px
       margin:
         left: auto
