@@ -19,9 +19,6 @@ def to_url(text):
     text = Dynamic_Base.Convert_Polish_To_Ascii(text)
     return text
 
-@register.filter('html')
-def to_html(text):
-    return text.replace('\n', '<br>')
 
 @register.simple_tag(takes_context=True)
 def price(context, product):
@@ -109,7 +106,7 @@ def product_description(context, product):
 
     request = context['request']
     language = request.session['translator_language']
-    return to_html(description[language])
+    return to_html(context, description[language])
 
 @register.simple_tag(takes_context=True)
 def get_app_name(context):
@@ -117,3 +114,9 @@ def get_app_name(context):
     app_name = request.session['arbuz_app']
     pk = Language_EN.objects.get(value=app_name).pk
     return Text(request, pk).replace('.', ' ').title()
+
+@register.simple_tag(takes_context=True)
+def to_html(context, text):
+    text = text.replace('\n', '<br>')
+    return template.Template(text).render(context)
+
