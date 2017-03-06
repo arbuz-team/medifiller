@@ -225,9 +225,10 @@ class Search_Engine:
 
     @staticmethod
     def Filter_Products(request):
+        request.session['main_page'] = 1
         phrase = request.session['searcher_phrase']
         searcher = Search_Engine(request, phrase)
-        request.session['main_searched_products'] = \
+        request.session['searcher_result'] = \
             searcher.Search_Products()
 
     def __init__(self, request, phrase):
@@ -252,7 +253,6 @@ class Searcher(Dynamic_Event_Menager):
         return self.Render_HTML('searcher/searcher.html')
 
     def Manage_Content(self):
-        self.Manage_Clear_Session('searcher')
 
         if self.request.POST['__content__'] == 'searcher':
             return self.Manage_Content_Searcher()

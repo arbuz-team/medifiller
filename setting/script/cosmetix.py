@@ -4,7 +4,7 @@ from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 from selenium.common.exceptions import NoSuchElementException
 from searcher.views import *
 from arbuz.base import *
-import os, pickle
+import os, pickle, re
 
 SCRIPT_DIR = BASE_DIR + '/setting/script/'
 
@@ -73,6 +73,13 @@ class Manager:
 
             self.products.append(product)
 
+    @staticmethod
+    def Clean_HTML(html):
+        html.replace('<br>', '||br||')
+        cleanr = re.compile('<.*?>')
+        clean_html = re.sub(cleanr, '', html)
+        return clean_html.replace('||br||', '<br>')
+
     def Load_Product_Data(self, product):
 
         try:
@@ -92,7 +99,7 @@ class Manager:
                     purposes = element.text.replace('Zastosowanie : ', '').split(', ')
 
             product['title'] = title.text
-            product['description'] = description.text
+            product['description'] = self.Clean_HTML(description.get_attribute('innerHTML'))
             product['image'] = image.get_attribute('src')
             product['price'] = int(float(price.text[:-3].replace(',', '.').replace(' ', '')) * 100)
             product['purposes'] = purposes
@@ -106,21 +113,22 @@ class Manager:
             pickle.dump(self.products, plik, pickle.HIGHEST_PROTOCOL)
 
     def Create_Details(self, product):
+        title = product['title'].title().replace('Ml', 'ml')
 
         details = {
 
             'details_en': Details_EN(
-                name=product['title'],
+                name=title,
                 description='',
             ),
 
             'details_pl': Details_PL(
-                name=product['title'],
+                name=title,
                 description=product['description'],
             ),
 
             'details_de': Details_DE(
-                name=product['title'],
+                name=title,
                 description='',
             ),
         }
@@ -132,6 +140,7 @@ class Manager:
         return details
 
     def Create_Brand(self, name):
+        name = name.title()
         brand = Brand.objects.filter(name=name).first()
 
         if not brand:
@@ -141,6 +150,7 @@ class Manager:
         return brand
 
     def Create_Purpose(self, name):
+        name = name.title()
         purpose = Purpose.objects.filter(name=name).first()
 
         if not purpose:
@@ -185,7 +195,7 @@ class Manager:
             new_product.Save_Image(image)
 
     def Delete_Problematic_Data(self):
-        product = Product.objects.get(details_en__name='NEAUVIA ORGANIC STIMULATE')
+        product = Product.objects.get(details_en__name='NEAUVIA ORGANIC STIMULATE'.title())
         model = Purpose_For_Product.objects.filter(product=product).values_list('purpose__pk')
         Purpose.objects.filter(pk__in=model).delete()
 

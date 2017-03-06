@@ -90,7 +90,7 @@ class Products(Dynamic_Event_Menager):
         start = (page-1) * number_product_on_page
         end = page * number_product_on_page
 
-        products = self.request.session['main_searched_products']
+        products = self.request.session['searcher_result']
         return products[start:end]
 
     def Get_List_Pages(self, number_of_pages):
@@ -102,10 +102,10 @@ class Products(Dynamic_Event_Menager):
         if number_of_pages < 8:  # 1 2 3 4 5 6 7
             return [list(range(1, number_of_pages + 1))]
 
-        if page < 5:  # 1 2 3 4 5 6 … 9
+        if page < 5:  # 1 2 3 4 5 … 9
             return [list(range(1, 6)), [number_of_pages]]
 
-        if page > number_of_pages - 4:  # 1 … 4 5 6 7 8 9
+        if page > number_of_pages - 4:  # 1 … 5 6 7 8 9
             return [[1], list(range(number_of_pages - 4, number_of_pages + 1))]
 
         # 1 … 3 4 5 6 7 … 9
@@ -113,7 +113,7 @@ class Products(Dynamic_Event_Menager):
 
     def Manage_Content_Ground(self):
 
-        products = self.request.session['main_searched_products']
+        products = self.request.session['searcher_result']
         number_product_on_page = self.request.session['main_number_product_on_page']
         number_of_pages = int(len(products) / number_product_on_page)
         if len(products) % number_product_on_page:

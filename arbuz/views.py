@@ -64,6 +64,8 @@ class Manager(Dynamic_Base):
         return JsonResponse({'__button__': 'false'})
 
     def Manage_Index(self):
+
+        self.Manage_Clear_Session('searcher')
         Check_Session(self.request)
 
         # change website to other language

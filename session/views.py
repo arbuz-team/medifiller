@@ -94,6 +94,9 @@ class Session_Controller:
         if 'searcher_order_direction' not in self.request.session:
             self.request.session['searcher_order_direction'] = 'descending'
 
+        if 'searcher_result' not in self.request.session:
+            self.request.session['searcher_result'] = Product.objects.all()
+
     def Check_Session_Main(self):
 
         if 'main_content_tab' not in self.request.session:
@@ -104,9 +107,6 @@ class Session_Controller:
 
         if 'main_number_product_on_page' not in self.request.session:
             self.request.session['main_number_product_on_page'] = 10
-
-        if 'main_searched_products' not in self.request.session:
-            self.request.session['main_searched_products'] = Product.objects.all()
 
     def Check_Session(self):
 
