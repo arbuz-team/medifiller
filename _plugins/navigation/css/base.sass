@@ -17,23 +17,33 @@ $navigation-focus--background-color: $G-COLOR-1
   right: 0
 
   height: $navigation--height
+  background-color: $navigation--background-color
 
   z-index: 80
 
   >.hide
-    display: none
-    //top: 100%
-      left: 0
-      right: 0
+    bottom: 0
+    left: 0
+    right: 0
+    height: 50px
 
-      height: 200px
-      +linear-gradient(bottom, transparent, $G-GRAY-SHADOW-1)
+    background-color: inherit
+    text-align: center
+    cursor: pointer
+    +box-shadow(0px -5px 5px 0px rgba(85,85,85,0.4))
+
+    opacity: .8
+
+    >span
+      line-height: 50px
+      color: $G-COLOR-4
+
 
 .navigation
   margin-bottom: 100px
 
   color: $navigation--color
-  background-color: $navigation--background-color
+  background-color: inherit
 
 
   >.navigation-mobile
@@ -77,7 +87,6 @@ $navigation-focus--background-color: $G-COLOR-1
 
     li.navigation-secondary-searcher
       display: none
-
 
 //--------------------------------------
 //            EKRAN KOMPUTERA

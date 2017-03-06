@@ -32,7 +32,7 @@ let
     can_open_to: 650,
 
     duration_open: 300,
-    duration_close: 100,
+    duration_close: 150,
   };
 
 
@@ -43,9 +43,11 @@ let
 export let
   define = function()
   {
+    let $navigation = $('#NAVIGATION');
     navigation_motion_controllers.define();
 
-    $('#NAVIGATION .navigation-secondary-cart > *').click(cart_controllers.open_or_close);
+    $('.navigation-secondary-cart > *', $navigation).click(cart_controllers.open_or_close);
+    $('.navigation-close_navigation', $navigation).click(navigation_motion_controllers.plugin_close);
   },
 
 
