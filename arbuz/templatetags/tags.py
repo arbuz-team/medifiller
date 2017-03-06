@@ -19,6 +19,10 @@ def to_url(text):
     text = Dynamic_Base.Convert_Polish_To_Ascii(text)
     return text
 
+@register.filter('html')
+def to_html(text):
+    return text.replace('\n', '<br>')
+
 @register.simple_tag(takes_context=True)
 def price(context, product):
 
@@ -105,7 +109,7 @@ def product_description(context, product):
 
     request = context['request']
     language = request.session['translator_language']
-    return description[language]
+    return to_html(description[language])
 
 @register.simple_tag(takes_context=True)
 def get_app_name(context):

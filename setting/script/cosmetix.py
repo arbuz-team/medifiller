@@ -75,10 +75,9 @@ class Manager:
 
     @staticmethod
     def Clean_HTML(html):
-        html = html.replace('<br>', '||br||')
+        html = html.replace('<br>', '\n')
         cleanr = re.compile('<.*?>')
-        clean_html = re.sub(cleanr, '', html)
-        return clean_html.replace('||br||', '<br>')
+        return re.sub(cleanr, '', html)
 
     def Load_Product_Data(self, product):
 
