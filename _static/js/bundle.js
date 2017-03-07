@@ -1396,6 +1396,8 @@
 	  this.send = function (form_name, url, post_data) {
 	    post_data = prepare_post_data(form_name, post_data);
 	
+	    console.log(post_data);
+	
 	    if (typeof this.loader_controllers !== 'undefined') this.loader_controllers.load(url, post_data);else console.error('Valid config object.');
 	  };
 	};
@@ -3178,6 +3180,7 @@
 	  prepare_post_data(post_data);
 	
 	  dialog_loader_controllers.load(url, variables.post_data, callback);
+	  exports.variables = variables = {};
 	};
 
 /***/ },

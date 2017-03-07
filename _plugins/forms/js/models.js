@@ -40,6 +40,8 @@ export let Form_Models = function(content_loader_controllers)
   {
     post_data = prepare_post_data(form_name, post_data);
 
+    console.log(post_data);
+
     if(typeof this.loader_controllers !== 'undefined')
       this.loader_controllers.load(url, post_data);
     else
