@@ -117,9 +117,9 @@ class Payment_Models_Manager:
     def Clear_Selected_Product(self):
         Selected_Product.objects.filter(payment=self.payment).delete()
 
-    def Edit_Number_Of_Products(self, product, number):
+    def Edit_Number_Of_Products(self, selected_pk, number):
         selected_product = Selected_Product.objects.get(
-            payment=self.payment, product=product)
+            pk=selected_pk)
 
         selected_product.number = number
         selected_product.save()

@@ -55,11 +55,12 @@ class Cart_Manager(Dynamic_Event_Manager):
 
     def Manage_Edit(self):
 
-        pk = self.request.POST['__edit__']
+        selected_pk = self.request.POST['__edit__']
         number = self.request.POST['value']
 
-        product = Product.objects.get(pk=pk)
-        self.payment_models_manager.Edit_Number_Of_Products(product, number)
+        self.payment_models_manager.Edit_Number_Of_Products(
+            selected_pk, number)
+        
         return JsonResponse({'__button__': 'true'})
 
     @staticmethod
