@@ -330,3 +330,14 @@ class Change_Password(Dynamic_Event_Manager):
     @staticmethod
     def Launch(request):
         return Change_Password(request).HTML
+
+
+
+class User_Agreement(Dynamic_Event_Manager):
+
+    def Manage_Content_Ground(self):
+        return self.Render_HTML('user/agreement.html')
+
+    @staticmethod
+    def Launch(request):
+        return User_Agreement(request).HTML

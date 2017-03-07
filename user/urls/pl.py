@@ -16,4 +16,6 @@ urlpatterns = [
 
     url(r'^zaloguj/przekierowanie/(?P<url>.+)/$',
         views.Sign_In.Redirect, name='user.sign_in.redirect'),
+
+    url(r'^regulamin/$', views.User_Agreement.Launch, name='user.agreement'),
 ]
