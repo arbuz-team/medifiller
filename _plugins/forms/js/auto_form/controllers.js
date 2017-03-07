@@ -25,7 +25,7 @@ let
       {
         if($field.hasClass('always'))
           $field
-            .keyup(auto_form_views.send_default);
+            .keyup(auto_form_views.send_if_number_only);
 
         if($field.hasClass('only_number_3'))
           $field

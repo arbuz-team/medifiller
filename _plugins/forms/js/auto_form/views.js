@@ -11,7 +11,8 @@ import {Auto_Form_Models} from './models'
 export let Auto_Form_Views = function(config)
 {
   let
-    models = new Auto_Form_Models(config);
+    models = new Auto_Form_Models(config),
+    that = this;
 
   this.models = models;
 
@@ -40,20 +41,43 @@ export let Auto_Form_Views = function(config)
   };
 
 
-  this.send_default = function()
+  this.send_default = function(name, value)
   {
-    let
-      $field = $(this),
-      post_data = {};
+    let $field, post_data = {};
 
-    post_data['__'+ models.settings.origin +'__'] = $field.data('name');
-    post_data['value'] = $field.val();
+    if(name && value)
+    {
+      post_data['__'+ models.settings.origin +'__'] = name;
+      post_data['value'] = value;
+    }
+    else
+    {
+      $field = $(this);
+
+      post_data['__'+ models.settings.origin +'__'] = $field.data('name');
+      post_data['value'] = $field.val();
+    }
 
     send(post_data);
   };
 
 
-  let check_is_not_key_code_number = function(event)
+  let check_is_number = function(event)
+  {
+    let
+      keycode = event.keyCode,
+
+      valid =
+        (keycode === 8 || keycode === 46)       // backspace & delete
+        || keycode > 47 && keycode < 58        // number keys
+        || (keycode > 95 && keycode < 112)     // numpad keys
+      ;
+
+    return valid;
+  };
+
+
+  let check_is_not_number_or_functionaly = function(event)
   {
     let
       keycode = event.keyCode,
@@ -102,7 +126,7 @@ export let Auto_Form_Views = function(config)
   this.try_press_number_max_3 = function(event)
   {
 
-    if(check_is_not_key_code_number(event))
+    if(check_is_not_number_or_functionaly(event))
     {
       event.preventDefault();
     }
@@ -111,6 +135,21 @@ export let Auto_Form_Views = function(config)
       let length = $(this).val().length;
       if(length > 2 && check_is_not_functionaly(event))
         event.preventDefault();
+    }
+  };
+
+
+  this.send_if_number_only = function(event)
+  {
+    if(check_is_number(event))
+    {
+      let
+        $field = $(this),
+
+        name = $field.data('name'),
+        value = $field.val();
+
+      that.send_default(name, value);
     }
   };
 
@@ -146,8 +185,6 @@ export let Auto_Form_Views = function(config)
 
   let send = function(post_data)
   {
-    console.log(post_data);
-
     window.APP.http_request(models.settings.action, post_data, function()
     {
       if(models.settings.target)
