@@ -112,25 +112,20 @@ class Payment_Models_Menager:
         return Payment.objects.get(user=user, approved=False)
 
     @staticmethod
-    def Append_Selected_Product(request, product, number=1):
+    def Append_Selected_Product(request, product):
         unique = request.session['user_unique']
         user = User.objects.get(unique=unique)
         payment = Payment.objects.get(user=user, approved=False)
         selected_product = Selected_Product.objects.filter(
             payment=payment, product=product)
 
-        # increment number of product
-        if selected_product:
-            selected_product = selected_product[0]
-            selected_product.number += number
-            selected_product.save()
-
-        else: # append new product
+        # append new product
+        if not selected_product:
 
             Selected_Product(
                 payment=payment,
                 product=product,
-                number=number
+                number=1
             ).save()
 
     @staticmethod
@@ -149,3 +144,14 @@ class Payment_Models_Menager:
         user = User.objects.get(unique=unique)
         payment = Payment.objects.get(user=user, approved=False)
         Selected_Product.objects.filter(payment=payment).delete()
+
+    @staticmethod
+    def Edit_Number_Of_Products(request, product, number):
+        unique = request.session['user_unique']
+        user = User.objects.get(unique=unique)
+        payment = Payment.objects.get(user=user, approved=False)
+        selected_product = Selected_Product.objects.get(
+            payment=payment, product=product)
+
+        selected_product.number = number
+        selected_product.save()

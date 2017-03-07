@@ -1,3 +1,4 @@
+from django.utils.safestring import mark_safe
 from translator.views import *
 from django import template
 from base64 import b64encode
@@ -77,7 +78,7 @@ def dict_value(my_dict, value):
 def text(context, pk, language=None):
     return Text(context['request'], pk, language)
 
-@register.simple_tag(takes_context=True)
+@register.simple_tag(takes_context=True, name='product_name')
 def product_name(context, product):
 
     name = {
@@ -106,7 +107,7 @@ def product_description(context, product):
 
     request = context['request']
     language = request.session['translator_language']
-    return to_html(context, description[language])
+    return mark_safe(to_html(description[language]))
 
 @register.simple_tag(takes_context=True)
 def get_app_name(context):
@@ -115,8 +116,6 @@ def get_app_name(context):
     pk = Language_EN.objects.get(value=app_name).pk
     return Text(request, pk).replace('.', ' ').title()
 
-@register.simple_tag(takes_context=True)
-def to_html(context, text):
-    text = text.replace('\n', '<br>')
-    return template.Template(text).render(context)
+def to_html(text):
+    return text.replace('\n', '<br>')
 

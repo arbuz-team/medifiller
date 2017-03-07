@@ -118,7 +118,7 @@ class Manager:
 
             'details_en': Details_EN(
                 name=title,
-                description='',
+                description=product['description'],
             ),
 
             'details_pl': Details_PL(

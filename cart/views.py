@@ -53,6 +53,24 @@ class Cart_Manager(Dynamic_Event_Menager):
         Payment_Models_Menager.Update_Total_Price(self.request)
         return return_value
 
+    def Manage_Edit(self):
+
+        pk = self.request.POST['__edit__']
+        number = self.request.POST['value']
+
+        product = Product.objects.get(pk=pk)
+        Payment_Models_Menager.Edit_Number_Of_Products(
+            self.request, product, number)
+
+        return JsonResponse({'__button__': 'true'})
+
+    def Manage(self):
+
+        if '__edit__' in self.request.POST:
+            return self.Manage_Edit()
+
+        return Dynamic_Event_Menager.Manage(self)
+
     @staticmethod
     def Launch(request):
         return Cart_Manager(request, authorization=True).HTML

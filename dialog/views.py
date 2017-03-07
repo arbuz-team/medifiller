@@ -278,10 +278,10 @@ class Dialog_Prompt(Dialog):
 
     def Get_Dialog_Name(self):
 
-        if 'dialog_name' in self.request.POST:
-            return self.request.POST['dialog_name']
+        if '__form__' in self.request.POST:
+            return self.request.POST['__form__']
 
-        return self.request.POST['__form__']
+        return self.request.POST['dialog_name']
 
     def __init__(self, request, app_name, apply=False, not_valid=False):
         Dialog.__init__(self, request, app_name, apply)
