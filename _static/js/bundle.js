@@ -1396,8 +1396,6 @@
 	  this.send = function (form_name, url, post_data) {
 	    post_data = prepare_post_data(form_name, post_data);
 	
-	    console.log(post_data);
-	
 	    if (typeof this.loader_controllers !== 'undefined') this.loader_controllers.load(url, post_data);else console.error('Valid config object.');
 	  };
 	};
@@ -1954,7 +1952,9 @@
 	    $field = $(this);
 	
 	    if ($field.is(':checkbox')) $field.change(auto_form_views.send_checkbox);else if ($field.is(':text')) {
-	      if ($field.hasClass('only_number')) $field.keydown(auto_form_views.try_press_number_max_3);
+	      if ($field.hasClass('always')) $field.keyup(auto_form_views.send_default);
+	
+	      if ($field.hasClass('only_number_3')) $field.keydown(auto_form_views.try_press_number_max_3);
 	
 	      $field.change(auto_form_views.send_default).keydown(auto_form_views.send_on_enter);
 	    } else if ($field.is('select')) $field.change(auto_form_views.send_default);
@@ -2100,14 +2100,18 @@
 	   */
 	
 	  var send = function send(post_data) {
+	    console.log(post_data);
+	
 	    window.APP.http_request(models.settings.action, post_data, function () {
-	      APP.DATA = {
-	        redirect: '/products/'
-	      };
+	      if (models.settings.target) {
+	        APP.DATA = {
+	          redirect: '/products/'
+	        };
 	
-	      if (typeof models.settings.delay !== 'undefined') APP.DATA.delay = models.settings.delay;else APP.DATA.delay = 100;
+	        if (typeof models.settings.delay !== 'undefined') APP.DATA.delay = models.settings.delay;else APP.DATA.delay = 100;
 	
-	      APP.throw_event(window.EVENTS.redirect);
+	        APP.throw_event(window.EVENTS.redirect);
+	      }
 	    });
 	  };
 	}; /**
@@ -2719,7 +2723,7 @@
 	  open: 'down',
 	
 	  can_open_by: 'width',
-	  can_open_to: 650,
+	  can_open_to: 675,
 	
 	  duration_open: 300,
 	  duration_close: 150

@@ -23,7 +23,11 @@ let
 
       else if($field.is(':text'))
       {
-        if($field.hasClass('only_number'))
+        if($field.hasClass('always'))
+          $field
+            .keyup(auto_form_views.send_default);
+
+        if($field.hasClass('only_number_3'))
           $field
             .keydown(auto_form_views.try_press_number_max_3);
 

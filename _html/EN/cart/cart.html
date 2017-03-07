@@ -22,15 +22,18 @@
                     </a>
                 </div>
                 <div class="cart-list-actions field_shell">
-                    <span>{{ selected.number }} x {% price selected.product %}</span>
-                    <button class="post_button icon" type="button"
-                            data-name="Delete_{{ selected.product.pk }}"
-                            data-action="delete"
-                            data-value="{{ selected.product.pk }}"
-                            data-reload="cart ground"
-                            data-url="/cart/">
-                        <i style="background-image: url(/_static/img/icons/32/dark/waste_bin.png)"> &nbsp; </i>
-                    </button>
+                    <form class="auto_form" action="/cart/" data-origin="edit">
+                        <input class="auto_field only_number_3 always" type="text" value="{{ selected.number }}" data-name="{{ selected.pk }}">
+                        <span> x {% price selected.product %}</span>
+                        <button class="post_button icon" type="button"
+                                data-name="Delete_{{ selected.product.pk }}"
+                                data-action="delete"
+                                data-value="{{ selected.product.pk }}"
+                                data-reload="cart ground"
+                                data-url="/cart/">
+                            <i style="background-image: url(/_static/img/icons/32/dark/waste_bin.png)"> &nbsp; </i>
+                        </button>
+                    </form>
                 </div>
             </li>
 

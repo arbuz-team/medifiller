@@ -29,7 +29,7 @@ let
     open: 'down',
 
     can_open_by: 'width',
-    can_open_to: 650,
+    can_open_to: 675,
 
     duration_open: 300,
     duration_close: 150,
