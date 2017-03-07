@@ -1,7 +1,7 @@
 from arbuz.views import *
 
 
-class Navigation(Dynamic_Event_Menager):
+class Navigation(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         pass

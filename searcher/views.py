@@ -242,7 +242,7 @@ class Search_Engine:
 
 
 
-class Searcher(Dynamic_Event_Menager):
+class Searcher(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         pass
@@ -257,7 +257,7 @@ class Searcher(Dynamic_Event_Menager):
         if self.request.POST['__content__'] == 'searcher':
             return self.Manage_Content_Searcher()
 
-        return Dynamic_Event_Menager.Manage_Content(self)
+        return Dynamic_Event_Manager.Manage_Content(self)
 
     def Manage_Filter_Brand(self):
         filters = self.request.session['searcher_filter_brand']
@@ -329,7 +329,7 @@ class Searcher(Dynamic_Event_Menager):
         if '__filter__' in self.request.POST:
             return self.Manage_Filter()
 
-        return Dynamic_Event_Menager.Manage(self)
+        return Dynamic_Event_Manager.Manage(self)
 
     @staticmethod
     def Launch(request):

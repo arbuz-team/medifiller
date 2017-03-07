@@ -3,7 +3,7 @@ from searcher.views import Search_Engine
 from product.forms import *
 
 
-class Start_App(Dynamic_Event_Menager):
+class Start_App(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         return self.Render_HTML('product/start.html')
@@ -14,7 +14,7 @@ class Start_App(Dynamic_Event_Menager):
 
 
 
-class Product_Details(Dynamic_Event_Menager):
+class Product_Details(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         product = Product.objects.get(pk=self.other_value)
@@ -43,7 +43,7 @@ class Product_Details(Dynamic_Event_Menager):
 
 
 
-class Product_Elements(Dynamic_Event_Menager):
+class Product_Elements(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         pass
@@ -149,7 +149,7 @@ class Product_Elements(Dynamic_Event_Menager):
             return self.Manage_Form_Details\
                     (self.request.POST['__form__'][-2:].upper())
 
-        return Dynamic_Event_Menager.Manage_Form(self)
+        return Dynamic_Event_Manager.Manage_Form(self)
 
     @staticmethod
     def Launch(request):
@@ -215,7 +215,7 @@ class New_Product(Product_Elements):
         if self.request.POST['__get__'] == 'keywords':
             return self.Manage_Get_Keywords()
 
-        return Dynamic_Event_Menager.Manage_Get(self)
+        return Dynamic_Event_Manager.Manage_Get(self)
 
     @staticmethod
     def Launch(request):
@@ -279,7 +279,7 @@ class Edit_Product(Product_Elements):
 
 
 
-class Recommended_Product_Manager(Dynamic_Event_Menager):
+class Recommended_Product_Manager(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         pass
@@ -315,7 +315,7 @@ class Recommended_Product_Manager(Dynamic_Event_Menager):
 
 
 
-class Favorite_Product_Manager(Dynamic_Event_Menager):
+class Favorite_Product_Manager(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         pass
@@ -352,7 +352,7 @@ class Favorite_Product_Manager(Dynamic_Event_Menager):
 
 
 
-class Delete(Dynamic_Event_Menager):
+class Delete(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         pass

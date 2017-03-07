@@ -4,7 +4,7 @@ from user.account.forms import *
 from payment.models import *
 
 
-class Start_App(Dynamic_Event_Menager):
+class Start_App(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
 
@@ -44,7 +44,7 @@ class Start_App(Dynamic_Event_Menager):
 
 
 
-class Account_Details(Dynamic_Event_Menager):
+class Account_Details(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         unique = self.request.session['user_unique']
@@ -104,7 +104,7 @@ class Account_Details(Dynamic_Event_Menager):
         if self.request.POST['__form__'] == 'edit_password':
             return self.Manage_Form_Edit_Password()
 
-        return Dynamic_Event_Menager.Manage_Form(self)
+        return Dynamic_Event_Manager.Manage_Form(self)
 
     @staticmethod
     def Launch(request):
@@ -112,7 +112,7 @@ class Account_Details(Dynamic_Event_Menager):
 
 
 
-class User_Addresses(Dynamic_Event_Menager):
+class User_Addresses(Dynamic_Event_Manager):
 
     def Get_User_Details(self):
         unique = self.request.session['user_unique']
@@ -187,7 +187,7 @@ class User_Addresses(Dynamic_Event_Menager):
         if 'edit_user_address' in self.request.POST['__form__']:
             return self.Manage_Form_Edit_User_Address()
 
-        return Dynamic_Event_Menager.Manage_Form(self)
+        return Dynamic_Event_Manager.Manage_Form(self)
 
     def Manage_Button(self):
 
@@ -213,7 +213,7 @@ class User_Addresses(Dynamic_Event_Menager):
 
 
 
-class My_Shopping(Dynamic_Event_Menager):
+class My_Shopping(Dynamic_Event_Manager):
 
     def Create_Payment_Structure(self):
 
@@ -241,7 +241,7 @@ class My_Shopping(Dynamic_Event_Menager):
 
 
 
-class Favorite(Dynamic_Event_Menager):
+class Favorite(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         user = User.objects.get(unique=self.request.session['user_unique'])

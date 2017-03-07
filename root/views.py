@@ -4,7 +4,7 @@ from payment.models import *
 import string, random
 
 
-class Start_App(Dynamic_Event_Menager):
+class Start_App(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
 
@@ -44,7 +44,7 @@ class Start_App(Dynamic_Event_Menager):
 
 
 
-class Sign_In(Dynamic_Event_Menager):
+class Sign_In(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         self.content['form'] = Form_Root_Login(self.request)
@@ -68,7 +68,7 @@ class Sign_In(Dynamic_Event_Menager):
         if self.request.POST['__form__'] == 'login':
             return self.Manage_Form_Login()
 
-        return Dynamic_Event_Menager.Manage_Form(self)
+        return Dynamic_Event_Manager.Manage_Form(self)
 
     @staticmethod
     def Redirect(request, url):
@@ -82,7 +82,7 @@ class Sign_In(Dynamic_Event_Menager):
 
 
 
-class Sign_Out(Dynamic_Event_Menager):
+class Sign_Out(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         self.request.session['root_login'] = False
@@ -103,7 +103,7 @@ class Sign_Out(Dynamic_Event_Menager):
 
 
 
-class Create(Dynamic_Event_Menager):
+class Create(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         self.content['password'] = ''
@@ -132,7 +132,7 @@ class Create(Dynamic_Event_Menager):
 
 
 
-class Map_References(Dynamic_Event_Menager):
+class Map_References(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         return self.Render_HTML('root/map_references.html')
@@ -143,7 +143,7 @@ class Map_References(Dynamic_Event_Menager):
 
 
 
-class Users_Payments(Dynamic_Event_Menager):
+class Users_Payments(Dynamic_Event_Manager):
 
     def Create_Payment_Structure(self):
 

@@ -146,7 +146,7 @@ class DotPay(Payment_System):
 
 
 
-class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
+class Payment_Manager(Dynamic_Event_Manager, PayPal, DotPay):
 
     def Update_Payment(self):
 
@@ -162,9 +162,10 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
     def Load_Payment_Details(self):
 
         unique = self.request.session['user_unique']
+        model_manager = Payment_Models_Manager(self.request)
         self.content['user'] = User.objects.get(unique=unique)
-        self.content['cart'] = Payment_Models_Menager.Get_Selected_Products(self.request)
-        self.content['total_price'] = Payment_Models_Menager.Count_Total_Price(self.request)
+        self.content['cart'] = model_manager.Get_Selected_Products()
+        self.content['total_price'] = model_manager.Count_Total_Price()
         self.content['address'] = User_Address.objects.filter(user=self.content['user'])
         self.Update_Payment()
 
@@ -216,7 +217,7 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
         if self.request.POST['__form__'] == 'address':
             return self.Manage_Form_Address_Payment()
 
-        return Dynamic_Event_Menager.Manage_Form(self)
+        return Dynamic_Event_Manager.Manage_Form(self)
 
     @staticmethod
     def Launch(request):
@@ -224,7 +225,7 @@ class Payment_Manager(Dynamic_Event_Menager, PayPal, DotPay):
 
 
 
-class Apply_Payment(Dynamic_Event_Menager):
+class Apply_Payment(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         return self.Render_HTML('payment/apply.html')
@@ -239,7 +240,7 @@ class Apply_Payment(Dynamic_Event_Menager):
 
 
 
-class Cancel_Payment(Dynamic_Event_Menager):
+class Cancel_Payment(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         return self.Render_HTML('payment/cancel.html')
@@ -254,11 +255,11 @@ class Cancel_Payment(Dynamic_Event_Menager):
 
 
 
-class Buy(Dynamic_Event_Menager):
+class Buy(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         product = Product.objects.get(pk=self.other_value)
-        Payment_Models_Menager.Append_Selected_Product(self.request, product)
+        self.payment_models_manager.Append_Selected_Product(product)
         return self.Render_HTML('payment/buy.html')
 
     @staticmethod

@@ -3,36 +3,29 @@ from user.models import *
 from arbuz.base import *
 
 
-class Payment_Models_Menager:
+class Payment_Models_Manager:
 
-    @staticmethod
-    def Count_Total_Price(request):
-        selected_products = Payment_Models_Menager.\
-            Get_Selected_Products(request)
+    def Count_Total_Price(self):
 
+        selected_products = self.Get_Selected_Products()
         total = 0
+
         for selected in selected_products:
             product_price = Dynamic_Base.Get_Price(
-                request, selected.product, current_currency=True)
+                self.request, selected.product, current_currency=True)
 
             total += product_price * selected.number
 
         return format(total / 100, '.2f')
 
-    @staticmethod
-    def Update_Total_Price(request):
-        unique = request.session['user_unique']
-        user = User.objects.get(unique=unique)
+    def Update_Total_Price(self):
+        self.payment.total_price = self.Count_Total_Price()
+        self.payment.save()
 
-        payment = Payment.objects.get(user=user, approved=False)
-        payment.total_price = Payment_Models_Menager.Count_Total_Price(request)
-        payment.save()
+    def Check_Delivery_Address(self):
 
-    @staticmethod
-    def Check_Delivery_Address(user):
-
-        payment = Payment.objects.filter(user=user, approved=False)
-        payments_address = Delivery_Address.objects.filter(payment=payment)
+        payments_address = Delivery_Address.objects.filter(
+            payment=self.payment)
 
         if payments_address.count() > 1:
             payments_address.delete()
@@ -46,14 +39,13 @@ class Payment_Models_Menager:
                 region='',
                 postcode='',
                 country='',
-                payment=payment[0]
+                payment=self.payment
             ).save()
 
-    @staticmethod
-    def Check_Invoice_Address(user):
+    def Check_Invoice_Address(self):
 
-        payment = Payment.objects.filter(user=user, approved=False)
-        invoice_address = Invoice_Address.objects.filter(payment=payment)
+        invoice_address = Invoice_Address.objects.filter(
+            payment=self.payment)
 
         if invoice_address.count() > 1:
             invoice_address.delete()
@@ -67,91 +59,73 @@ class Payment_Models_Menager:
                 region='',
                 postcode='',
                 country='',
-                payment=payment[0]
+                payment=self.payment
             ).save()
 
-    @staticmethod
-    def Check_Payment(request):
+    def Check_Payment(self):
 
-        if not request.session['user_unique']:
+        if not self.request.session['user_unique']:
             return
 
-        unique = request.session['user_unique']
-        user = User.objects.get(unique=unique)
+        unique = self.request.session['user_unique']
+        self.user = User.objects.get(unique=unique)
 
-        payments = Payment.objects.filter(user=user, approved=False)
+        payments = Payment.objects.filter(user=self.user, approved=False)
         if payments.count() > 1:
             payments.delete()
 
         if not payments:
 
             payment = Payment(
-                user=user,
+                user=self.user,
                 date=date.today(),
                 total_price=0,
                 service='None',
-                currency=request.session['translator_currency']
+                currency=self.request.session['translator_currency']
             )
             payment.save()
 
-        Payment_Models_Menager.Check_Delivery_Address(user)
-        Payment_Models_Menager.Check_Invoice_Address(user)
+        self.payment = Payment.objects.get(user=self.user, approved=False)
+        self.Check_Delivery_Address()
+        self.Check_Invoice_Address()
 
-    @staticmethod
-    def Get_Selected_Products(request):
-        unique = request.session['user_unique']
-        user = User.objects.get(unique=unique)
-        payment = Payment.objects.get(user=user, approved=False)
-        return Selected_Product.objects.filter(payment=payment)
+    def Get_Selected_Products(self):
+        return Selected_Product.objects.filter(payment=self.payment)
 
-    @staticmethod
-    def Get_Payment(request):
-        Payment_Models_Menager.Check_Payment(request)
-        unique = request.session['user_unique']
-        user = User.objects.get(unique=unique)
-        return Payment.objects.get(user=user, approved=False)
+    def Get_Payment(self):
+        return Payment.objects.get(user=self.user, approved=False)
 
-    @staticmethod
-    def Append_Selected_Product(request, product):
-        unique = request.session['user_unique']
-        user = User.objects.get(unique=unique)
-        payment = Payment.objects.get(user=user, approved=False)
+    def Append_Selected_Product(self, product):
         selected_product = Selected_Product.objects.filter(
-            payment=payment, product=product)
+            payment=self.payment, product=product)
 
         # append new product
         if not selected_product:
 
             Selected_Product(
-                payment=payment,
+                payment=self.payment,
                 product=product,
                 number=1
             ).save()
 
-    @staticmethod
-    def Delete_Selected_Product(request, product):
-        unique = request.session['user_unique']
-        user = User.objects.get(unique=unique)
-        payment = Payment.objects.get(user=user, approved=False)
+    def Delete_Selected_Product(self, product):
         selected_product = Selected_Product.objects.get(
-            payment=payment, product=product)
+            payment=self.payment, product=product)
 
         selected_product.delete()
 
-    @staticmethod
-    def Clear_Selected_Product(request):
-        unique = request.session['user_unique']
-        user = User.objects.get(unique=unique)
-        payment = Payment.objects.get(user=user, approved=False)
-        Selected_Product.objects.filter(payment=payment).delete()
+    def Clear_Selected_Product(self):
+        Selected_Product.objects.filter(payment=self.payment).delete()
 
-    @staticmethod
-    def Edit_Number_Of_Products(request, product, number):
-        unique = request.session['user_unique']
-        user = User.objects.get(unique=unique)
-        payment = Payment.objects.get(user=user, approved=False)
+    def Edit_Number_Of_Products(self, product, number):
         selected_product = Selected_Product.objects.get(
-            payment=payment, product=product)
+            payment=self.payment, product=product)
 
         selected_product.number = number
         selected_product.save()
+
+    def __init__(self, request):
+        self.request = request
+        self.user = None
+        self.payment = None
+        self.Check_Payment()

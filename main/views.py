@@ -5,7 +5,7 @@ from main.models import *
 from main.forms import *
 
 
-class Editable_Tab(Dynamic_Event_Menager):
+class Editable_Tab(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         pass
@@ -38,7 +38,7 @@ class Editable_Tab(Dynamic_Event_Menager):
         if self.request.POST['__form__'] == 'content_tab':
             return self.Manage_Form_Edit_Password()
 
-        return Dynamic_Event_Menager.Manage_Form(self)
+        return Dynamic_Event_Manager.Manage_Form(self)
 
     def Manage_Button(self):
 
@@ -68,7 +68,7 @@ class Editable_Tab(Dynamic_Event_Menager):
 
 
 
-class Start(Dynamic_Event_Menager):
+class Start(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         self.content['recommended'] = Product.objects.filter(
@@ -82,7 +82,7 @@ class Start(Dynamic_Event_Menager):
 
 
 
-class Products(Dynamic_Event_Menager):
+class Products(Dynamic_Event_Manager):
 
     def Get_Current_Page(self, number_product_on_page):
 

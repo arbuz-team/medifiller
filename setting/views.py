@@ -12,7 +12,7 @@ from setting.data import payment
 from setting.script import cosmetix
 
 
-class Control_Panel(Dynamic_Event_Menager):
+class Control_Panel(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         return self.Render_HTML('setting/control_panel.html')
@@ -46,7 +46,7 @@ class Control_Panel(Dynamic_Event_Menager):
         if self.request.POST['__button__'] == 'reset_passwords':
             return self.Manage_Button_Reset_Passwords()
 
-        return Dynamic_Event_Menager.Manage_Button(self)
+        return Dynamic_Event_Manager.Manage_Button(self)
 
     @staticmethod
     def Load_Default_Data(request):

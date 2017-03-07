@@ -60,6 +60,9 @@ class Manager(Dynamic_Base):
         self.content['error'] = 'no_event'
         return self.Render_HTML('arbuz/error.html')
 
+    def Manage_Edit(self):
+        return JsonResponse({'__edit__': 'false'})
+
     def Manage_Button(self):
         return JsonResponse({'__button__': 'false'})
 
@@ -111,7 +114,9 @@ class Checker(Dynamic_Base):
         return True
 
     def Check_Payment(self):
-        Payment_Models_Menager.Check_Payment(self.request)
+        self.payment_models_manager = \
+            Payment_Models_Manager(self.request)
+
         return True
 
     def __init__(self, request):
@@ -120,6 +125,7 @@ class Checker(Dynamic_Base):
         self.ERROR_HTML = None
         self.authorization = False
         self.only_root = False
+        self.payment_models_manager = None
 
 
 
@@ -177,7 +183,7 @@ class Updater(Dynamic_Base):
 
 
 
-class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
+class Dynamic_Event_Manager(Manager, Checker, Updater, metaclass=ABCMeta):
 
     def Check(self):
 
@@ -193,11 +199,11 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
             if 'Check_' in method:
 
                 # Check_* returned False
-                if not getattr(Dynamic_Event_Menager, method)(self):
+                if not getattr(Dynamic_Event_Manager, method)(self):
 
                     # render error HTML
                     method = method.replace('Check', 'Error')
-                    self.ERROR_HTML = getattr(Dynamic_Event_Menager, method)(self)
+                    self.ERROR_HTML = getattr(Dynamic_Event_Manager, method)(self)
 
                     return False
 
@@ -210,10 +216,10 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
 
         for method in methods:
             if 'Update_' in method:
-                getattr(Dynamic_Event_Menager, method)(self)
+                getattr(Dynamic_Event_Manager, method)(self)
 
     def Error(self):
-        return getattr(Dynamic_Event_Menager, self.error_method)(self)
+        return getattr(Dynamic_Event_Manager, self.error_method)(self)
 
     def Manage(self):
 
@@ -236,6 +242,10 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
         # session
         if '__clear__' in self.request.POST:
             return self.Manage_Clear()
+
+        # auto/dynamic form
+        if '__edit__' in self.request.POST:
+            return self.Manage_Edit()
 
         # options
         if '__button__' in self.request.POST:
@@ -282,4 +292,4 @@ class Dynamic_Event_Menager(Manager, Checker, Updater, metaclass=ABCMeta):
     @staticmethod
     @abstractmethod
     def Launch(request):
-        return Dynamic_Event_Menager(request)
+        return Dynamic_Event_Manager(request)

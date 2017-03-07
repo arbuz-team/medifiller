@@ -4,7 +4,7 @@ from user.forms import *
 import os, binascii
 
 
-class Start_App(Dynamic_Event_Menager):
+class Start_App(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
 
@@ -39,7 +39,7 @@ class Start_App(Dynamic_Event_Menager):
 
 
 
-class Sign_In(Dynamic_Event_Menager):
+class Sign_In(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         self.content['form'] = Form_Login(self.request)
@@ -69,7 +69,7 @@ class Sign_In(Dynamic_Event_Menager):
         if self.request.POST['__form__'] == 'login':
             return self.Manage_Form_Login()
 
-        return Dynamic_Event_Menager.Manage_Form(self)
+        return Dynamic_Event_Manager.Manage_Form(self)
 
     @staticmethod
     def Redirect(request, url):
@@ -83,7 +83,7 @@ class Sign_In(Dynamic_Event_Menager):
 
 
 
-class Sign_Up(Dynamic_Event_Menager):
+class Sign_Up(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         self.content['form'] = Form_Register(self.request)
@@ -132,7 +132,7 @@ class Sign_Up(Dynamic_Event_Menager):
         if self.request.POST['__form__'] == 'user_address':
             return self.Manage_Form_User_Address()
 
-        return Dynamic_Event_Menager.Manage_Form(self)
+        return Dynamic_Event_Manager.Manage_Form(self)
 
     def Manage_Exist(self):
 
@@ -176,7 +176,7 @@ class Sign_Up(Dynamic_Event_Menager):
 
 
 
-class Sign_Out(Dynamic_Event_Menager):
+class Sign_Out(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         self.request.session['user_login'] = False
@@ -190,7 +190,7 @@ class Sign_Out(Dynamic_Event_Menager):
 
 
 
-class Approved_Register(Dynamic_Event_Menager):
+class Approved_Register(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         return self.Render_HTML('user/approved.html')
@@ -213,7 +213,7 @@ class Approved_Register(Dynamic_Event_Menager):
 
 
 
-class Forgot_Password(Dynamic_Event_Menager):
+class Forgot_Password(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         self.content['form'] = Form_Forgot_Password(self.request)
@@ -242,7 +242,7 @@ class Forgot_Password(Dynamic_Event_Menager):
         if self.request.POST['__form__'] == 'forgot_password':
             return self.Manage_Form_Forgot_Password()
 
-        return Dynamic_Event_Menager.Manage_Form(self)
+        return Dynamic_Event_Manager.Manage_Form(self)
 
     def Create_Forgot_Password_User(self):
         self.content['key'] = binascii.hexlify(os.urandom(20))
@@ -285,7 +285,7 @@ class Forgot_Password(Dynamic_Event_Menager):
 
 
 
-class Change_Password(Dynamic_Event_Menager):
+class Change_Password(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         self.content['form'] = Form_Change_Password(self.request)
@@ -315,7 +315,7 @@ class Change_Password(Dynamic_Event_Menager):
         if self.request.POST['__form__'] == 'change_password':
             return self.Manage_Form_Change_Password()
 
-        return Dynamic_Event_Menager.Manage_Form(self)
+        return Dynamic_Event_Manager.Manage_Form(self)
 
     @staticmethod
     def Secure(request, key):
