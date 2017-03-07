@@ -37,7 +37,7 @@ let
       }
 
 
-      else if($field.is('select'))
+      else
         $field.change(auto_form_views.send_default);
     });
   },

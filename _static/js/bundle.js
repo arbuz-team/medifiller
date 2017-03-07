@@ -1957,7 +1957,7 @@
 	      if ($field.hasClass('only_number_3')) $field.keydown(auto_form_views.try_press_number_max_3);
 	
 	      $field.change(auto_form_views.send_default).keydown(auto_form_views.send_on_enter);
-	    } else if ($field.is('select')) $field.change(auto_form_views.send_default);
+	    } else $field.change(auto_form_views.send_default);
 	  });
 	},
 	    do_nothing = function do_nothing(event) {
@@ -2129,14 +2129,16 @@
 	
 	  var send = function send(post_data) {
 	    window.APP.http_request(models.settings.action, post_data, function () {
-	      if (models.settings.target) {
-	        APP.DATA = {
-	          redirect: '/products/'
-	        };
+	      APP.DATA = {};
 	
-	        if (typeof models.settings.delay !== 'undefined') APP.DATA.delay = models.settings.delay;else APP.DATA.delay = 100;
+	      if (typeof models.settings.delay !== 'undefined') APP.DATA.delay = models.settings.delay;else APP.DATA.delay = 1000;
+	
+	      if (models.settings.url) {
+	        APP.DATA.redirect = models.settings.url;
 	
 	        APP.throw_event(window.EVENTS.redirect);
+	      } else if (models.settings.reload) {
+	        APP.throw_event(window.EVENTS.plugins['reload_' + models.settings.reload]);
 	      }
 	    });
 	  };
@@ -2170,8 +2172,8 @@
 	
 	    action: undefined,
 	    origin: undefined,
-	    target: undefined,
-	
+	    url: undefined,
+	    reload: undefined,
 	    delay: undefined
 	  };
 	
@@ -2184,7 +2186,9 @@
 	        var $form = that.settings.form;
 	        that.settings.action = $form.attr('action');
 	        that.settings.origin = $form.data('origin');
-	        that.settings.target = $form.data('target');
+	        that.settings.url = $form.data('url');
+	        that.settings.reload = $form.data('reload');
+	        that.settings.delay = $form.data('delay');
 	      }
 	
 	      // -- Fields

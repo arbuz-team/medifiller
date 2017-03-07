@@ -13,8 +13,8 @@ export let Auto_Form_Models = function(config)
 
     action: undefined,
     origin: undefined,
-    target: undefined,
-
+    url: undefined,
+    reload: undefined,
     delay: undefined,
   };
 
@@ -30,7 +30,9 @@ export let Auto_Form_Models = function(config)
         let $form = that.settings.form;
         that.settings.action = $form.attr('action');
         that.settings.origin = $form.data('origin');
-        that.settings.target = $form.data('target');
+        that.settings.url = $form.data('url');
+        that.settings.reload = $form.data('reload');
+        that.settings.delay = $form.data('delay');
       }
 
 

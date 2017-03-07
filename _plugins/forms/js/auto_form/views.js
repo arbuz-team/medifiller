@@ -187,18 +187,23 @@ export let Auto_Form_Views = function(config)
   {
     window.APP.http_request(models.settings.action, post_data, function()
     {
-      if(models.settings.target)
-      {
-        APP.DATA = {
-          redirect: '/products/',
-        };
+      APP.DATA = {};
 
-        if(typeof models.settings.delay !== 'undefined')
-          APP.DATA.delay = models.settings.delay;
-        else
-          APP.DATA.delay = 100;
+      if(typeof models.settings.delay !== 'undefined')
+        APP.DATA.delay = models.settings.delay;
+      else
+        APP.DATA.delay = 1000;
+
+
+      if(models.settings.url)
+      {
+        APP.DATA.redirect = models.settings.url;
 
         APP.throw_event(window.EVENTS.redirect);
+      }
+      else if(models.settings.reload)
+      {
+        APP.throw_event(window.EVENTS.plugins['reload_'+ models.settings.reload]);
       }
     });
   };
