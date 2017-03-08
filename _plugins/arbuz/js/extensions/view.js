@@ -22,6 +22,5 @@ export let define = function()
 let
   change_language = function()
   {
-    console.log('change');
     window.location = $(this).val();
   };

@@ -64,7 +64,7 @@ export let Content_Editable_Controllers = function(config)
       }
       else if(type === 'insert')
       {
-        console.log('where is cursor?');
+        //con so le.log('where is cursor?');
       }
     };
 

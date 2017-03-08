@@ -147,16 +147,16 @@ export let Content_Editable_Views = function(config)
 
   this.text_bold = function()
   {
-    console.log('bold');
+    //co nsole.log('bold');
     if(if_the_same_node())
     {
       let parent_obj = which_parent_is_the_same('start', 'strong');
 
-      if(parent_obj.isset)
-        console.log('opositive');
-        // insert_to_html({selector: 'strong', oposite: true});
-      else
-        console.log('default');
+      // if(parent_obj.isset)
+      //   //co nsole.log('opositive');
+      //   // insert_to_html({selector: 'strong', oposite: true});
+      // else
+        //co nsole.log('default');
         // insert_to_html({selector: 'strong'});
     }
     else

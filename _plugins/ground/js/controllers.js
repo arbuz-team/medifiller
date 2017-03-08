@@ -25,8 +25,7 @@ let
   ground_loader_controllers = new Plugins_Loader_Controllers(config_loader),
 
   config_post_button = {
-    container: '#GROUND > .ground',
-    callback: ground_loader_controllers.reload, ///////////////////////////////////////////////// popraw
+    container: '#GROUND .ground'
   },
   post_button_controllers = new Post_Button_Controllers(config_post_button),
 

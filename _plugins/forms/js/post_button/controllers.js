@@ -47,7 +47,10 @@ export let Post_Button_Controllers = function(config)
       config.button_event = $(this).data('event');
       config.button_url = $(this).data('url');
 
-      config.button_html = $(this).html();
+      if($(this).find('span, i').length)
+        config.button_html = $(this).find('span').html();
+      else
+        config.button_html = $(this).html();
 
       buttons_views[button_name] = new Post_Button_Views(config);
     };

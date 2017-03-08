@@ -12,64 +12,81 @@ export let Post_Button_Views = function(config)
 
 
     set_text = {
-      if_is_text: function()
+
+      insert: function(text)
       {
-        if($(models.settings.button).children('i').length > 0)
+        if(set_text.if_is_not_text())
           return false;
-        return true;
+
+        if($(models.settings.button).children('span').length > 0)
+          $(models.settings.button).children('span').html(text);
+        else
+          $(models.settings.button).html(text);
       },
+
+      if_is_not_text: function()
+      {
+        return $(models.settings.button).children('i').length > 0;
+      },
+
+
 
       sending: function()
       {
-        if(set_text.if_is_text())
-        {
-          clearTimeout(set_text.set_waiting);
-          clearTimeout(set_text.set_standard);
+        if(set_text.if_is_not_text())
+          return false;
 
-          $(models.settings.button).html(models.settings.text_sending);
-        }
+        clearTimeout(set_text.set_waiting);
+        clearTimeout(set_text.set_standard);
+
+        set_text.insert(models.settings.text_sending);
       },
+
 
       set_waiting: undefined,
       waiting: function()
       {
-        if(set_text.if_is_text())
-        {
-          set_text.set_waiting = setTimeout(function(){
-            $(models.settings.button).html(models.settings.text_waiting);
-          }, models.settings.delay_text_waiting);
-        }
+        if(set_text.if_is_not_text())
+          return false;
+
+        set_text.set_waiting = setTimeout(function(){
+          set_text.insert(models.settings.text_waiting);
+        }, models.settings.delay_text_waiting);
       },
+
 
       done: function()
       {
-        if(set_text.if_is_text())
-        {
-          clearTimeout(set_text.set_waiting);
-          $(models.settings.button).html(models.settings.text_done);
-        }
+        if(set_text.if_is_not_text())
+          return false;
+
+        clearTimeout(set_text.set_waiting);
+        set_text.insert(models.settings.text_done);
       },
+
 
       set_standard: undefined,
       standard: function()
       {
-        if(set_text.if_is_text())
-        {
-          set_text.set_standard = setTimeout(function(){
-            $(models.settings.button).html(models.settings.text_standard);
-          }, models.settings.delay_text_standard);
-        }
+        console.log('standard');
+        if(set_text.if_is_not_text())
+          return false;
+
+        set_text.set_standard = setTimeout(function(){
+          set_text.insert(models.settings.text_standard);
+        }, models.settings.delay_text_standard);
       },
+
 
       error: function()
       {
-        if(set_text.if_is_text())
-        {
-          clearTimeout(set_text.set_waiting);
-          clearTimeout(set_text.set_standard);
+        if(set_text.if_is_not_text())
+          return false;
 
-          $(models.settings.button).html(models.settings.text_error);
-        }
+        clearTimeout(set_text.set_waiting);
+        clearTimeout(set_text.set_standard);
+
+        set_text.insert(models.settings.text_error);
       },
     },
 

@@ -44,8 +44,34 @@ $searcher--color: $G-COLOR-0
       +linear-gradient(right, transparent, $G-GRAY-SHADOW-2)
 
 
+.searcher-clear
+  position: absolute
+  left: 0
+  right: 0
+  bottom: 0
+  height: 50px
+
+  background-color: $G-COLOR-4
+  border-top: $G-STYLE-BORDER-BOLD
+  cursor: pointer
+  font:
+    size: 16px
+    weight: bold
+  text-align: center
+
+  span
+    line-height: 50px
+    opacity: .7
+
+
+.searcher-clear:hover
+  span
+    opacity: .9
+
+
 .searcher
   width: $searcher--width - 2px
+  padding-bottom: 70px
 
   >.logo_text
     opacity: 1 !important
@@ -151,6 +177,10 @@ $searcher--color: $G-COLOR-0
   
   button.icon
     float: right
+    opacity: .6
+
+  button.icon:hover
+    opacity: .8
 
 //-----------------------------------------
 //			  EKRAN KOMPUTERA

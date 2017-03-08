@@ -5,6 +5,7 @@
 import {Plugins_Loader_Controllers} from '../../plugins_loader/controllers'
 import {Plugins_Motion_Controllers} from '../../plugins_motion/controllers'
 import {Form_Controllers}  from '../../forms/js/controllers'
+import {Post_Button_Controllers}        from '../../forms/js/post_button/controllers'
 
 
 /**
@@ -33,6 +34,11 @@ let
   },
   searcher_motion_controllers = new Plugins_Motion_Controllers(config_motion),
 
+  config_post_button = {
+    container: '#SEARCHER'
+  },
+  post_button_controllers = new Post_Button_Controllers(config_post_button),
+
   searcher_form_controllers = new Form_Controllers(searcher_loader_controllers);
 
 
@@ -46,6 +52,7 @@ export let
   {
     searcher_motion_controllers.define();
     searcher_form_controllers.define();
+    post_button_controllers.define();
   },
 
 

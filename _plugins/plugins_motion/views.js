@@ -68,8 +68,6 @@ export let Plugins_Motion_Views = function(config)
       else if(direction_open === 'right' || direction_open === 'left' )
         css[direction_close] = -width;
 
-      console.log(height);
-
 
       $(container)
         .stop()
