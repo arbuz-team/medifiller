@@ -323,14 +323,6 @@ class Searcher(Dynamic_Event_Manager):
 
         return JsonResponse({'__filter__': 'false'})
 
-    def Manage(self):
-
-        # filters
-        if '__filter__' in self.request.POST:
-            return self.Manage_Filter()
-
-        return Dynamic_Event_Manager.Manage(self)
-
     @staticmethod
     def Launch(request):
         searcher = Searcher(request, clear_session=True)

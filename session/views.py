@@ -38,6 +38,14 @@ class Session_Controller:
         if 'root_payments_approved' not in self.request.session:
             self.request.session['root_payments_approved'] = True
 
+        if 'root_users_payments_date_from' not in self.request.session:
+            self.request.session['root_users_payments_date_from'] = \
+                (datetime.today() - timedelta(days=7)).strftime('%d.%m.%Y')
+
+        if 'root_users_payments_date_to' not in self.request.session:
+            self.request.session['root_users_payments_date_to'] = \
+                datetime.today().strftime('%d.%m.%Y')
+
     def Check_Session_Translator(self):
 
         if 'translator_language' not in self.request.session:

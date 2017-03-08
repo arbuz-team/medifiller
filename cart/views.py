@@ -60,7 +60,7 @@ class Cart_Manager(Dynamic_Event_Manager):
 
         self.payment_models_manager.Edit_Number_Of_Products(
             selected_pk, number)
-        
+
         return JsonResponse({'__button__': 'true'})
 
     @staticmethod

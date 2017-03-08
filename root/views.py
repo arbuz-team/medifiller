@@ -145,11 +145,45 @@ class Map_References(Dynamic_Event_Manager):
 
 class Users_Payments(Dynamic_Event_Manager):
 
+    def Validate_Period(self):
+
+        date_from = self.request.session['root_users_payments_date_from']
+        date_to = self.request.session['root_users_payments_date_to']
+
+        # valid if string convert to date
+        try: datetime.strptime(date_from, '%d.%m.%Y')
+        except ValueError:
+            self.request.session['root_users_payments_date_from'] = \
+                (datetime.today() - timedelta(days=7)).strftime('%d.%m.%Y')
+
+        # valid if string convert to date
+        try: datetime.strptime(date_to, '%d.%m.%Y')
+        except ValueError:
+            self.request.session['root_users_payments_date_to'] = \
+                datetime.today().strftime('%d.%m.%Y')
+
+        # valid period
+        if date_from > date_to:
+            self.request.session['root_users_payments_date_from'] = \
+                self.request.session['root_users_payments_date_to']
+
+    def Get_Date(self):
+
+        date_from = self.request.session['root_users_payments_date_from']
+        date_from = datetime.strptime(date_from, '%d.%m.%Y')
+        date_to = self.request.session['root_users_payments_date_to']
+        date_to = datetime.strptime(date_to, '%d.%m.%Y')
+
+        return date_from, date_to
+
     def Create_Payment_Structure(self):
 
         self.content['shopping'] = []
+
+        date_from, date_to = self.Get_Date()
         approved = self.request.session['root_payments_approved']
-        payments = Payment.objects.filter(approved=approved)
+        payments = Payment.objects.filter(approved=approved,
+                      date__gte=date_from, date__lte=date_to)
 
         for payment in payments:
 
@@ -162,6 +196,8 @@ class Users_Payments(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         self.Create_Payment_Structure()
+        self.content['date_from'] = self.request.session['root_users_payments_date_from']
+        self.content['date_to'] = self.request.session['root_users_payments_date_to']
         return self.Render_HTML('root/users_payments.html')
 
     def Manage_Button(self):
@@ -171,6 +207,21 @@ class Users_Payments(Dynamic_Event_Manager):
 
         if self.request.POST['value'] == 'not_approved':
             self.request.session['root_payments_approved'] = False
+
+        return JsonResponse({'__button__': 'true'})
+
+    def Manage_Filter(self):
+
+        if self.request.POST['__filter__'] == 'date_to':
+            self.request.session['root_users_payments_date_to'] = \
+                self.request.POST['value']
+
+        if self.request.POST['__filter__'] == 'date_from':
+            self.request.session['root_users_payments_date_from'] = \
+                self.request.POST['value']
+
+        self.Validate_Period()
+        return JsonResponse({'__filter__': 'true'})
 
     @staticmethod
     def Launch(request):

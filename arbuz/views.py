@@ -63,6 +63,9 @@ class Manager(Dynamic_Base):
     def Manage_Edit(self):
         return JsonResponse({'__edit__': 'false'})
 
+    def Manage_Filter(self):
+        return JsonResponse({'__filter__': 'false'})
+
     def Manage_Button(self):
         return JsonResponse({'__button__': 'false'})
 
@@ -246,6 +249,10 @@ class Dynamic_Event_Manager(Manager, Checker, Updater, metaclass=ABCMeta):
         # auto/dynamic form
         if '__edit__' in self.request.POST:
             return self.Manage_Edit()
+
+        # filters
+        if '__filter__' in self.request.POST:
+            return self.Manage_Filter()
 
         # options
         if '__button__' in self.request.POST:
