@@ -39,11 +39,11 @@
     width: $SMALL--width
     margin: $ALL_blocks--margin
 
-  form
+  .form_block form
     >div:not(.short), >div.long
       >input[type=text], >input[type=email], >input[type=password], >input[type=number], >input[type=url], >select, >button, >textarea,
       >a >button
-        display: block
+        display: inline-block
         min-width: $SMALL-input--width
         max-width: $SMALL-input--width
         margin:
@@ -129,11 +129,12 @@
       color: $G-COLOR-1
       text-align: left
 
-  input[type=text], input[type=email], input[type=password], input[type=number], input[type=url], select, textarea
-    display: block
-    min-width: $SMALL-input--width
-    max-width: $SMALL-input--width
-    margin-left: 5px
+  .form_block
+    input[type=text], input[type=email], input[type=password], input[type=number], input[type=url], select, textarea
+      display: inline-block
+      min-width: $SMALL-input--width
+      max-width: $SMALL-input--width
+      margin-left: 5px
 
 
 @media (min-width: $G-SIZE-2)
@@ -165,9 +166,10 @@
       width: $BIG-form_block--width-normal - 2px
       background-color: #fafafa
 
-    input[type=text], input[type=email], input[type=password], input[type=number], input[type=url], select, textarea
-      min-width: $BIG-input--width-normal
-      max-width: $BIG-input--width-normal
+    .form_block
+      input[type=text], input[type=email], input[type=password], input[type=number], input[type=url], select, textarea
+        min-width: $BIG-input--width-normal
+        max-width: $BIG-input--width-normal
 
 
 @media (min-width: 1300px)
@@ -199,6 +201,7 @@
       width: $BIG-form_block--width-normal - 2px
       background-color: #fafafa
 
-    input[type=text], input[type=email], input[type=password], input[type=number], input[type=url], select, textarea
-      min-width: $BIG-input--width-normal
-      max-width: $BIG-input--width-normal
+    .form_block
+      input[type=text], input[type=email], input[type=password], input[type=number], input[type=url], select, textarea
+        min-width: $BIG-input--width-normal
+        max-width: $BIG-input--width-normal

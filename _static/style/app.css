@@ -1191,10 +1191,10 @@ button {
   width: 340px;
   margin: 30px auto; }
 
-.ground-block.SMALL form > div:not(.short) > input[type=text], .ground-block.SMALL form > div:not(.short) > input[type=email], .ground-block.SMALL form > div:not(.short) > input[type=password], .ground-block.SMALL form > div:not(.short) > input[type=number], .ground-block.SMALL form > div:not(.short) > input[type=url], .ground-block.SMALL form > div:not(.short) > select, .ground-block.SMALL form > div:not(.short) > button, .ground-block.SMALL form > div:not(.short) > textarea,
-.ground-block.SMALL form > div:not(.short) > a > button, .ground-block.SMALL form > div.long > input[type=text], .ground-block.SMALL form > div.long > input[type=email], .ground-block.SMALL form > div.long > input[type=password], .ground-block.SMALL form > div.long > input[type=number], .ground-block.SMALL form > div.long > input[type=url], .ground-block.SMALL form > div.long > select, .ground-block.SMALL form > div.long > button, .ground-block.SMALL form > div.long > textarea,
-.ground-block.SMALL form > div.long > a > button {
-  display: block;
+.ground-block.SMALL .form_block form > div:not(.short) > input[type=text], .ground-block.SMALL .form_block form > div:not(.short) > input[type=email], .ground-block.SMALL .form_block form > div:not(.short) > input[type=password], .ground-block.SMALL .form_block form > div:not(.short) > input[type=number], .ground-block.SMALL .form_block form > div:not(.short) > input[type=url], .ground-block.SMALL .form_block form > div:not(.short) > select, .ground-block.SMALL .form_block form > div:not(.short) > button, .ground-block.SMALL .form_block form > div:not(.short) > textarea,
+.ground-block.SMALL .form_block form > div:not(.short) > a > button, .ground-block.SMALL .form_block form > div.long > input[type=text], .ground-block.SMALL .form_block form > div.long > input[type=email], .ground-block.SMALL .form_block form > div.long > input[type=password], .ground-block.SMALL .form_block form > div.long > input[type=number], .ground-block.SMALL .form_block form > div.long > input[type=url], .ground-block.SMALL .form_block form > div.long > select, .ground-block.SMALL .form_block form > div.long > button, .ground-block.SMALL .form_block form > div.long > textarea,
+.ground-block.SMALL .form_block form > div.long > a > button {
+  display: inline-block;
   min-width: 300px;
   max-width: 300px;
   margin-left: auto;
@@ -1266,8 +1266,8 @@ button {
     color: #774D34;
     text-align: left; }
 
-.ground-block.BIG input[type=text], .ground-block.BIG input[type=email], .ground-block.BIG input[type=password], .ground-block.BIG input[type=number], .ground-block.BIG input[type=url], .ground-block.BIG select, .ground-block.BIG textarea {
-  display: block;
+.ground-block.BIG .form_block input[type=text], .ground-block.BIG .form_block input[type=email], .ground-block.BIG .form_block input[type=password], .ground-block.BIG .form_block input[type=number], .ground-block.BIG .form_block input[type=url], .ground-block.BIG .form_block select, .ground-block.BIG .form_block textarea {
+  display: inline-block;
   min-width: 300px;
   max-width: 300px;
   margin-left: 5px; }
@@ -1291,7 +1291,7 @@ button {
   .ground:not(.smaller) .ground-block.BIG .form_block.fields {
     width: 201.66667px;
     background-color: #fafafa; }
-  .ground:not(.smaller) .ground-block.BIG input[type=text], .ground:not(.smaller) .ground-block.BIG input[type=email], .ground:not(.smaller) .ground-block.BIG input[type=password], .ground:not(.smaller) .ground-block.BIG input[type=number], .ground:not(.smaller) .ground-block.BIG input[type=url], .ground:not(.smaller) .ground-block.BIG select, .ground:not(.smaller) .ground-block.BIG textarea {
+  .ground:not(.smaller) .ground-block.BIG .form_block input[type=text], .ground:not(.smaller) .ground-block.BIG .form_block input[type=email], .ground:not(.smaller) .ground-block.BIG .form_block input[type=password], .ground:not(.smaller) .ground-block.BIG .form_block input[type=number], .ground:not(.smaller) .ground-block.BIG .form_block input[type=url], .ground:not(.smaller) .ground-block.BIG .form_block select, .ground:not(.smaller) .ground-block.BIG .form_block textarea {
     min-width: 193.66667px;
     max-width: 193.66667px; } }
 
@@ -1314,7 +1314,7 @@ button {
   .ground.smaller .ground-block.BIG .form_block.fields {
     width: 201.66667px;
     background-color: #fafafa; }
-  .ground.smaller .ground-block.BIG input[type=text], .ground.smaller .ground-block.BIG input[type=email], .ground.smaller .ground-block.BIG input[type=password], .ground.smaller .ground-block.BIG input[type=number], .ground.smaller .ground-block.BIG input[type=url], .ground.smaller .ground-block.BIG select, .ground.smaller .ground-block.BIG textarea {
+  .ground.smaller .ground-block.BIG .form_block input[type=text], .ground.smaller .ground-block.BIG .form_block input[type=email], .ground.smaller .ground-block.BIG .form_block input[type=password], .ground.smaller .ground-block.BIG .form_block input[type=number], .ground.smaller .ground-block.BIG .form_block input[type=url], .ground.smaller .ground-block.BIG .form_block select, .ground.smaller .ground-block.BIG .form_block textarea {
     min-width: 193.66667px;
     max-width: 193.66667px; } }
 
@@ -1370,6 +1370,20 @@ button {
     opacity: 1; }
     .field_shell .edit_field:hover .edit_field-content > button {
       display: block; } }
+
+.fields_with_label label {
+  display: inline-block;
+  width: 100%; }
+
+.fields_with_label input {
+  width: 100%; }
+
+@media (min-width: 675px) {
+  .fields_with_label label {
+    width: 25%;
+    text-align: right; }
+  .fields_with_label input {
+    width: 60%; } }
 
 img {
   display: inline-block;
