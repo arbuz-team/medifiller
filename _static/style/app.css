@@ -1181,15 +1181,6 @@ button {
 .field_shell select:hover, .field_shell select:focus {
   opacity: .9; }
 
-.ground-block > .block-content > .title, .ground-block > .block-content form > .title {
-  padding: 10px 0;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #eee;
-  color: #666;
-  font-weight: bold;
-  font-size: 16px;
-  text-align: center; }
-
 .ground-block > .block-content .field_shell, .ground-block > .block-content form > div {
   position: relative; }
   .ground-block > .block-content .field_shell input[type=text], .ground-block > .block-content .field_shell input[type=email], .ground-block > .block-content .field_shell input[type=password], .ground-block > .block-content .field_shell input[type=number], .ground-block > .block-content .field_shell input[type=url], .ground-block > .block-content .field_shell select, .ground-block > .block-content .field_shell button, .ground-block > .block-content .field_shell textarea, .ground-block > .block-content form > div input[type=text], .ground-block > .block-content form > div input[type=email], .ground-block > .block-content form > div input[type=password], .ground-block > .block-content form > div input[type=number], .ground-block > .block-content form > div input[type=url], .ground-block > .block-content form > div select, .ground-block > .block-content form > div button, .ground-block > .block-content form > div textarea {
@@ -1455,11 +1446,23 @@ img {
   .ground-block > .block-2 > .block-background {
     background-color: #ffffff; }
 
+.block-content .title, .block-content .subtitle {
+  padding: 10px 0;
+  font-weight: bold;
+  opacity: .92; }
+
 .block-content .title {
   margin-top: 15px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   font-size: 18px;
-  font-weight: bold; }
+  text-align: center;
+  border-bottom: 1px solid #eee; }
+
+.block-content .subtitle {
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px 0;
+  font-size: 15px; }
 
 .block-content .paragraph {
   margin-bottom: 15px;
