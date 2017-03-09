@@ -1,0 +1,62 @@
+{% load staticfiles %}
+{% load tags %}
+
+<div class="footer-content">
+
+    <div class="footer-cookies">
+        <span>Ta strona używa cookies. Korzystając ze strony wyrażasz zgodę na używanie plików cookies.</span>
+    </div>
+
+
+    <div class="footer-social">
+        <div>
+            <div class="social-dot"><div></div></div>
+            <!--<span>&nbsp;</span>-->
+        </div>
+
+
+        <a href="http://facebook.com/" target="_blank">
+            <div class="social-facebook"></div>
+            <!--<span>&nbsp;</span>-->
+        </a>
+
+        <a href="http://plus.google.com/" target="_blank">
+            <div class="social-google_plus"></div>
+            <!--<span>&nbsp;</span>-->
+        </a>
+
+
+        <div>
+            <div class="social-dot"><div></div></div>
+            <!--<span>&nbsp;</span>-->
+        </div>
+    </div><!-- footer-social -->
+
+
+    <div class="footer-navigation">
+        <a href="{% url main.contact %}"> Contact </a>
+        <span>&nbsp;|&nbsp;</span>
+        <a href="{% url user.agreement %}"> User Agreement </a>
+        <span>&nbsp;|&nbsp;</span>
+        <div class="dialog_button" data-type="alert" data-name="who_made_icons"> Who made icons </div>
+        <span>&nbsp;|&nbsp;</span>
+        <a href="{% url user.sign_up %}"> Sign up </a>
+    </div><!-- footer-social -->
+
+
+    <div class="footer-contact">
+        <div><i class="icon email">&nbsp;</i> info@spasungate.pl </div>
+        <div><i class="icon number">&nbsp;</i> +48 517 012 880 </div>
+        <div><i class="icon address">&nbsp;</i> <span>Pl. Powstańców Warszawy 2 <br> 00-030 Warszawa</span> </div>
+    </div><!-- footer-social -->
+
+
+    <div class="footer-author">
+        <span>© 2016 ArbuzTeam. All Rights Reserved</span>
+        <span>&nbsp;|&nbsp;</span>
+        <a href="{% url root.sign_in %}">Login</a>
+        <span>&nbsp;|&nbsp;</span>
+        <a href="https://www.arbuz.team/">ArbuzTeam</a>
+    </div><!-- footer-social -->
+
+</div>
