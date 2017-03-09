@@ -2437,7 +2437,6 @@
 	
 	    set_standard: undefined,
 	    standard: function standard() {
-	      console.log('standard');
 	      if (set_text.if_is_not_text()) return false;
 	
 	      set_text.set_standard = setTimeout(function () {

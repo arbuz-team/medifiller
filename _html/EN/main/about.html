@@ -2,8 +2,8 @@
 
 <script>
   window.APP.DATA = {
-    title : 'About'
-    , description : 'This page is about us. ;)'
+    title : 'About us'
+    , description : 'Our mission is customer satisfaction due to the quality of our services and products.'
   };
 </script>
 
@@ -19,7 +19,7 @@
             <div class="block-content-paragraph field_shell">
 
                 {% if request.session.root_login %}
-                    <div class="block-content-paragraph-actions">
+                    <div class="buttons_to_action">
                         <button type="button" class="post_button submit"
                                 data-name="About_{{ element.pk }}"
                                 data-action="delete"

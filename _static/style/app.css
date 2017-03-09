@@ -87,11 +87,15 @@ strong {
   z-index: 3;
   background-color: #ffffff; }
 
-.buttons_to_action {
+div > .buttons_to_action {
+  display: none;
   position: absolute;
-  top: -30px;
-  right: 0;
+  top: -20px;
+  right: 10px;
   text-align: right; }
+
+div:hover > .buttons_to_action {
+  display: block; }
 
 .container-part {
   z-index: 5;
@@ -1542,6 +1546,7 @@ img {
   border-top: 1px solid #e8e8e8;
   font-size: 15px; }
   .footer .footer-content > div {
+    position: relative;
     padding: 0 15px; }
 
 .footer-cookies {
@@ -1562,14 +1567,14 @@ img {
 
 .footer-social {
   padding-top: 10px; }
-  .footer-social > a, .footer-social > div {
+  .footer-social > .social-element {
     display: inline-block;
     opacity: .9;
     text-align: center; }
-    .footer-social > a > div, .footer-social > div > div {
+    .footer-social > .social-element > div {
       width: 100px;
       height: 40px; }
-    .footer-social > a > span, .footer-social > div > span {
+    .footer-social > .social-element > span {
       font-size: 12px;
       font-weight: bold; }
   .footer-social > a {
@@ -1614,7 +1619,7 @@ img {
 
 .footer-contact {
   margin-top: 20px; }
-  .footer-contact > div {
+  .footer-contact > .contact-element {
     display: inline-block;
     margin: 0 5px;
     vertical-align: top;

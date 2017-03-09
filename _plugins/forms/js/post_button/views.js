@@ -68,7 +68,6 @@ export let Post_Button_Views = function(config)
       set_standard: undefined,
       standard: function()
       {
-        console.log('standard');
         if(set_text.if_is_not_text())
           return false;
 
