@@ -87,14 +87,18 @@ strong {
   z-index: 3;
   background-color: #ffffff; }
 
+.buttons_to_action {
+  position: absolute;
+  top: -30px;
+  right: 0;
+  text-align: right; }
+
 .container-part {
-  z-index: 5; }
+  z-index: 5;
+  overflow: visible; }
 
-#DIALOG .ground-block, #DIALOG .footer {
-  display: none !important; }
-
-*:not(#DIALOG) > div > .dialog-header, *:not(#DIALOG) > div > .dialog-content {
-  display: none; }
+.container-part-loading {
+  padding: 10px 15px; }
 
 .container-motion {
   position: absolute;
@@ -106,12 +110,6 @@ strong {
     display: none; }
     .container-motion > .hide > div {
       position: absolute; }
-
-.container-part-loading {
-  padding: 10px 15px; }
-
-.container-part {
-  overflow: visible; }
 
 .container-part-scroll {
   position: absolute;
@@ -135,37 +133,16 @@ strong {
     position: relative; }
 
 @media (min-width: 1000px) {
-  .container-part > .translucent > * {
-    opacity: .85; }
-  .container-part:hover > .translucent > * {
+  .container-part .translucent > * {
+    opacity: 0.85; }
+  .container-part:hover .translucent > * {
     opacity: 1; } }
 
-.content_editable {
-  position: relative;
-  -webkit-user-select: text; }
-  .content_editable > .content_editable-tools {
-    position: absolute;
-    left: 0;
-    top: -40px;
-    right: 0;
-    display: inline-block;
-    height: 36px;
-    margin: 0;
-    padding: 4px 2px;
-    background: #f5f5f5;
-    border: 1px solid #cfcfcf;
-    -moz-box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
-    -webkit-box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
-    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1); }
-    .content_editable > .content_editable-tools > ul > li {
-      display: inline-block;
-      min-width: 25px;
-      height: 25px;
-      opacity: .55; }
-      .content_editable > .content_editable-tools > ul > li > button {
-        min-width: 25px;
-        height: 25px;
-        padding: 0; }
+#DIALOG .ground-block, #DIALOG .footer {
+  display: none !important; }
+
+*:not(#DIALOG) > div > .dialog-header, *:not(#DIALOG) > div > .dialog-content {
+  display: none; }
 
 #NAVIGATION {
   left: 0;
@@ -1181,155 +1158,161 @@ button {
 .field_shell select:hover, .field_shell select:focus {
   opacity: .9; }
 
-.ground-block > .block-content .field_shell, .ground-block > .block-content form > div {
+.ground-block .field_shell, .ground-block form > div {
   position: relative; }
-  .ground-block > .block-content .field_shell input[type=text], .ground-block > .block-content .field_shell input[type=email], .ground-block > .block-content .field_shell input[type=password], .ground-block > .block-content .field_shell input[type=number], .ground-block > .block-content .field_shell input[type=url], .ground-block > .block-content .field_shell select, .ground-block > .block-content .field_shell button, .ground-block > .block-content .field_shell textarea, .ground-block > .block-content form > div input[type=text], .ground-block > .block-content form > div input[type=email], .ground-block > .block-content form > div input[type=password], .ground-block > .block-content form > div input[type=number], .ground-block > .block-content form > div input[type=url], .ground-block > .block-content form > div select, .ground-block > .block-content form > div button, .ground-block > .block-content form > div textarea {
+  .ground-block .field_shell input[type=text], .ground-block .field_shell input[type=email], .ground-block .field_shell input[type=password], .ground-block .field_shell input[type=number], .ground-block .field_shell input[type=url], .ground-block .field_shell select, .ground-block .field_shell button, .ground-block .field_shell textarea, .ground-block form > div input[type=text], .ground-block form > div input[type=email], .ground-block form > div input[type=password], .ground-block form > div input[type=number], .ground-block form > div input[type=url], .ground-block form > div select, .ground-block form > div button, .ground-block form > div textarea {
     margin-left: 0;
     margin-right: 0;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box; }
-  .ground-block > .block-content .field_shell input[type=checkbox], .ground-block > .block-content form > div input[type=checkbox] {
+  .ground-block .field_shell input[type=checkbox], .ground-block form > div input[type=checkbox] {
     position: absolute;
     right: 8px;
     top: 9px;
     width: 18px;
     height: 18px; }
-  .ground-block > .block-content .field_shell .g-recaptcha, .ground-block > .block-content form > div .g-recaptcha {
+  .ground-block .field_shell .g-recaptcha, .ground-block form > div .g-recaptcha {
     margin-left: 5px; }
 
-.ground-block > .block-content form > .form_buttons:not(.long) {
+.ground-block form > .form_buttons:not(.long) {
   padding-left: 5px; }
 
-.ground-block > .block-content form > .form_buttons:first-child {
+.ground-block form > .form_buttons:first-child {
   margin-top: 10px;
   padding-top: 10px;
   border-top: 1px solid #eee; }
 
-.ground-block.SMALL > .block-content {
+.ground-block.SMALL .block-content {
   width: 340px;
   margin: 30px auto; }
-  .ground-block.SMALL > .block-content form > div:not(.short) > input[type=text], .ground-block.SMALL > .block-content form > div:not(.short) > input[type=email], .ground-block.SMALL > .block-content form > div:not(.short) > input[type=password], .ground-block.SMALL > .block-content form > div:not(.short) > input[type=number], .ground-block.SMALL > .block-content form > div:not(.short) > input[type=url], .ground-block.SMALL > .block-content form > div:not(.short) > select, .ground-block.SMALL > .block-content form > div:not(.short) > button, .ground-block.SMALL > .block-content form > div:not(.short) > textarea,
-  .ground-block.SMALL > .block-content form > div:not(.short) > a > button, .ground-block.SMALL > .block-content form > div.long > input[type=text], .ground-block.SMALL > .block-content form > div.long > input[type=email], .ground-block.SMALL > .block-content form > div.long > input[type=password], .ground-block.SMALL > .block-content form > div.long > input[type=number], .ground-block.SMALL > .block-content form > div.long > input[type=url], .ground-block.SMALL > .block-content form > div.long > select, .ground-block.SMALL > .block-content form > div.long > button, .ground-block.SMALL > .block-content form > div.long > textarea,
-  .ground-block.SMALL > .block-content form > div.long > a > button {
-    display: block;
-    min-width: 300px;
-    max-width: 300px;
-    margin-left: auto;
-    margin-right: auto; }
 
-.ground-block.BIG > .block-content {
+.ground-block.SMALL form > div:not(.short) > input[type=text], .ground-block.SMALL form > div:not(.short) > input[type=email], .ground-block.SMALL form > div:not(.short) > input[type=password], .ground-block.SMALL form > div:not(.short) > input[type=number], .ground-block.SMALL form > div:not(.short) > input[type=url], .ground-block.SMALL form > div:not(.short) > select, .ground-block.SMALL form > div:not(.short) > button, .ground-block.SMALL form > div:not(.short) > textarea,
+.ground-block.SMALL form > div:not(.short) > a > button, .ground-block.SMALL form > div.long > input[type=text], .ground-block.SMALL form > div.long > input[type=email], .ground-block.SMALL form > div.long > input[type=password], .ground-block.SMALL form > div.long > input[type=number], .ground-block.SMALL form > div.long > input[type=url], .ground-block.SMALL form > div.long > select, .ground-block.SMALL form > div.long > button, .ground-block.SMALL form > div.long > textarea,
+.ground-block.SMALL form > div.long > a > button {
+  display: block;
+  min-width: 300px;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto; }
+
+.ground-block.BIG .block-content {
   width: 340px;
   margin: 30px auto; }
-  .ground-block.BIG > .block-content .form_block.visible, .ground-block.BIG > .block-content .form_block.visible.fields {
-    max-height: 700px;
-    cursor: auto; }
-    .ground-block.BIG > .block-content .form_block.visible .shell_form, .ground-block.BIG > .block-content .form_block.visible.fields .shell_form {
-      height: 0; }
-    .ground-block.BIG > .block-content .form_block.visible .title, .ground-block.BIG > .block-content .form_block.visible.fields .title {
-      color: #999;
-      cursor: pointer; }
-  .ground-block.BIG > .block-content .form_block.fields {
-    max-height: 80px;
-    padding: 5px 10px;
-    background-color: #f8f8f8;
-    border: 1px solid #e8e8e8;
-      border-radius: 3px; }
-    .ground-block.BIG > .block-content .form_block.fields .title {
-      padding-top: 10px;
-      margin-bottom: 15px;
-      border-bottom: 1px solid #d1d1d1;
-      color: #774D34 !important; }
-    .ground-block.BIG > .block-content .form_block.fields > div > div:last-child {
-      margin-top: 15px;
-      padding-top: 5px;
-      border-top: 1px solid #d1d1d1; }
-      .ground-block.BIG > .block-content .form_block.fields > div > div:last-child > span {
-        font-weight: bold;
-        opacity: .8; }
-  .ground-block.BIG > .block-content .form_block.fields:hover {
-    background-color: #f8f8f8; }
-  .ground-block.BIG > .block-content .form_block {
+
+.ground-block.BIG .form_block.visible, .ground-block.BIG .form_block.visible.fields {
+  max-height: 700px;
+  cursor: auto; }
+  .ground-block.BIG .form_block.visible .shell_form, .ground-block.BIG .form_block.visible.fields .shell_form {
+    height: 0; }
+  .ground-block.BIG .form_block.visible .title, .ground-block.BIG .form_block.visible.fields .title {
+    color: #999;
+    cursor: pointer; }
+
+.ground-block.BIG .form_block.fields {
+  max-height: 80px;
+  padding: 5px 10px;
+  background-color: #f8f8f8;
+  border: 1px solid #e8e8e8;
+    border-radius: 3px; }
+  .ground-block.BIG .form_block.fields .title {
+    padding-top: 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #d1d1d1;
+    color: #774D34 !important; }
+  .ground-block.BIG .form_block.fields > div > div:last-child {
     margin-top: 15px;
-    position: relative;
-    display: block;
-    max-height: 100px;
-    overflow: hidden;
-    -webkit-transition: max-height 500ms ease;
-    -moz-transition: max-height 500ms ease;
-    -ms-transition: max-height 500ms ease;
-    -o-transition: max-height 500ms ease;
-    transition: max-height 500ms ease;
-    cursor: pointer;
-    vertical-align: top; }
-    .ground-block.BIG > .block-content .form_block .shell_form {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 50px;
-      background-image: linear-gradient(transparent, white);
-      -webkit-transition: height 500ms ease;
-      -moz-transition: height 500ms ease;
-      -ms-transition: height 500ms ease;
-      -o-transition: height 500ms ease;
-      transition: height 500ms ease; }
-    .ground-block.BIG > .block-content .form_block .title {
-      margin-top: 0;
-      padding-bottom: 5px;
-      color: #774D34;
-      text-align: left; }
-  .ground-block.BIG > .block-content input[type=text], .ground-block.BIG > .block-content input[type=email], .ground-block.BIG > .block-content input[type=password], .ground-block.BIG > .block-content input[type=number], .ground-block.BIG > .block-content input[type=url], .ground-block.BIG > .block-content select, .ground-block.BIG > .block-content textarea {
-    display: block;
-    min-width: 300px;
-    max-width: 300px;
-    margin-left: 5px; }
+    padding-top: 5px;
+    border-top: 1px solid #d1d1d1; }
+    .ground-block.BIG .form_block.fields > div > div:last-child > span {
+      font-weight: bold;
+      opacity: .8; }
+
+.ground-block.BIG .form_block.fields:hover {
+  background-color: #f8f8f8; }
+
+.ground-block.BIG .form_block {
+  margin-top: 15px;
+  position: relative;
+  display: block;
+  max-height: 100px;
+  overflow: hidden;
+  -webkit-transition: max-height 500ms ease;
+  -moz-transition: max-height 500ms ease;
+  -ms-transition: max-height 500ms ease;
+  -o-transition: max-height 500ms ease;
+  transition: max-height 500ms ease;
+  cursor: pointer;
+  vertical-align: top; }
+  .ground-block.BIG .form_block .shell_form {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 50px;
+    background-image: linear-gradient(transparent, white);
+    -webkit-transition: height 500ms ease;
+    -moz-transition: height 500ms ease;
+    -ms-transition: height 500ms ease;
+    -o-transition: height 500ms ease;
+    transition: height 500ms ease; }
+  .ground-block.BIG .form_block .title {
+    margin-top: 0;
+    padding-bottom: 5px;
+    color: #774D34;
+    text-align: left; }
+
+.ground-block.BIG input[type=text], .ground-block.BIG input[type=email], .ground-block.BIG input[type=password], .ground-block.BIG input[type=number], .ground-block.BIG input[type=url], .ground-block.BIG select, .ground-block.BIG textarea {
+  display: block;
+  min-width: 300px;
+  max-width: 300px;
+  margin-left: 5px; }
 
 @media (min-width: 675px) {
-  .ground:not(.smaller) .ground-block.BIG > .block-content {
+  .ground:not(.smaller) .ground-block.BIG .block-content {
     width: 670px; }
-    .ground:not(.smaller) .ground-block.BIG > .block-content .form_block {
-      display: inline-block;
-      width: 203.66667px;
-      max-height: 700px;
-      margin-right: 10px;
+  .ground:not(.smaller) .ground-block.BIG .form_block {
+    display: inline-block;
+    width: 203.66667px;
+    max-height: 700px;
+    margin-right: 10px;
+    cursor: auto; }
+    .ground:not(.smaller) .ground-block.BIG .form_block .shell_form {
+      height: 0; }
+    .ground:not(.smaller) .ground-block.BIG .form_block .title {
+      color: #999;
       cursor: auto; }
-      .ground:not(.smaller) .ground-block.BIG > .block-content .form_block .shell_form {
-        height: 0; }
-      .ground:not(.smaller) .ground-block.BIG > .block-content .form_block .title {
-        color: #999;
-        cursor: auto; }
-    .ground:not(.smaller) .ground-block.BIG > .block-content .form_block:nth-child(3n + 4) {
-      margin-right: 0; }
-    .ground:not(.smaller) .ground-block.BIG > .block-content .form_block.fields {
-      width: 201.66667px;
-      background-color: #fafafa; }
-    .ground:not(.smaller) .ground-block.BIG > .block-content input[type=text], .ground:not(.smaller) .ground-block.BIG > .block-content input[type=email], .ground:not(.smaller) .ground-block.BIG > .block-content input[type=password], .ground:not(.smaller) .ground-block.BIG > .block-content input[type=number], .ground:not(.smaller) .ground-block.BIG > .block-content input[type=url], .ground:not(.smaller) .ground-block.BIG > .block-content select, .ground:not(.smaller) .ground-block.BIG > .block-content textarea {
-      min-width: 193.66667px;
-      max-width: 193.66667px; } }
+  .ground:not(.smaller) .ground-block.BIG .form_block:nth-child(3n + 4) {
+    margin-right: 0; }
+  .ground:not(.smaller) .ground-block.BIG .form_block.fields {
+    width: 201.66667px;
+    background-color: #fafafa; }
+  .ground:not(.smaller) .ground-block.BIG input[type=text], .ground:not(.smaller) .ground-block.BIG input[type=email], .ground:not(.smaller) .ground-block.BIG input[type=password], .ground:not(.smaller) .ground-block.BIG input[type=number], .ground:not(.smaller) .ground-block.BIG input[type=url], .ground:not(.smaller) .ground-block.BIG select, .ground:not(.smaller) .ground-block.BIG textarea {
+    min-width: 193.66667px;
+    max-width: 193.66667px; } }
 
 @media (min-width: 1300px) {
-  .ground.smaller .ground-block.BIG > .block-content {
+  .ground.smaller .ground-block.BIG .block-content {
     width: 670px; }
-    .ground.smaller .ground-block.BIG > .block-content .form_block {
-      display: inline-block;
-      width: 203.66667px;
-      max-height: 700px;
-      margin-right: 10px;
+  .ground.smaller .ground-block.BIG .form_block {
+    display: inline-block;
+    width: 203.66667px;
+    max-height: 700px;
+    margin-right: 10px;
+    cursor: auto; }
+    .ground.smaller .ground-block.BIG .form_block .shell_form {
+      height: 0; }
+    .ground.smaller .ground-block.BIG .form_block .title {
+      color: #999;
       cursor: auto; }
-      .ground.smaller .ground-block.BIG > .block-content .form_block .shell_form {
-        height: 0; }
-      .ground.smaller .ground-block.BIG > .block-content .form_block .title {
-        color: #999;
-        cursor: auto; }
-    .ground.smaller .ground-block.BIG > .block-content .form_block:nth-child(3n + 4) {
-      margin-right: 0; }
-    .ground.smaller .ground-block.BIG > .block-content .form_block.fields {
-      width: 201.66667px;
-      background-color: #fafafa; }
-    .ground.smaller .ground-block.BIG > .block-content input[type=text], .ground.smaller .ground-block.BIG > .block-content input[type=email], .ground.smaller .ground-block.BIG > .block-content input[type=password], .ground.smaller .ground-block.BIG > .block-content input[type=number], .ground.smaller .ground-block.BIG > .block-content input[type=url], .ground.smaller .ground-block.BIG > .block-content select, .ground.smaller .ground-block.BIG > .block-content textarea {
-      min-width: 193.66667px;
-      max-width: 193.66667px; } }
+  .ground.smaller .ground-block.BIG .form_block:nth-child(3n + 4) {
+    margin-right: 0; }
+  .ground.smaller .ground-block.BIG .form_block.fields {
+    width: 201.66667px;
+    background-color: #fafafa; }
+  .ground.smaller .ground-block.BIG input[type=text], .ground.smaller .ground-block.BIG input[type=email], .ground.smaller .ground-block.BIG input[type=password], .ground.smaller .ground-block.BIG input[type=number], .ground.smaller .ground-block.BIG input[type=url], .ground.smaller .ground-block.BIG select, .ground.smaller .ground-block.BIG textarea {
+    min-width: 193.66667px;
+    max-width: 193.66667px; } }
 
 .ground-block.BIG .form_block.fields.new .form_block-image {
   display: block;
@@ -1346,23 +1329,23 @@ button {
 .field_shell input[type=file] {
   display: none; }
 
-.field_shell .edit_field > .edit_field-label {
+.field_shell .edit_field-label {
   opacity: .6;
   font-size: 15px;
   font-weight: bold; }
 
-.field_shell .edit_field > .edit_field-content {
+.field_shell .edit_field-content {
   position: relative;
   padding: 5px 10px;
   opacity: .85;
   font-weight: bold; }
-  .field_shell .edit_field > .edit_field-content > button {
+  .field_shell .edit_field-content > button {
     position: absolute;
     top: -5px;
     right: 5px;
     padding: 5px;
     line-height: 17px; }
-    .field_shell .edit_field > .edit_field-content > button > i {
+    .field_shell .edit_field-content > button > i {
       display: inline-block;
       width: 17px;
       height: 17px;
@@ -1371,17 +1354,17 @@ button {
       background-size: 100%;
       background-position: center;
       background-repeat: no-repeat; }
-    .field_shell .edit_field > .edit_field-content > button > i:hover {
+    .field_shell .edit_field-content > button > i:hover {
       opacity: 1; }
 
 @media (min-width: 1000px) {
-  .field_shell .edit_field > .edit_field-label {
+  .field_shell .edit_field-label {
     display: block; }
-  .field_shell .edit_field > .edit_field-content > button {
+  .field_shell .edit_field-content > button {
     display: none; }
-  .field_shell .edit_field:hover > .edit_field-content {
+  .field_shell .edit_field:hover .edit_field-content {
     opacity: 1; }
-    .field_shell .edit_field:hover > .edit_field-content > button {
+    .field_shell .edit_field:hover .edit_field-content > button {
       display: block; } }
 
 img {
@@ -1774,9 +1757,7 @@ img {
 
 .ground-block.about .block-content-paragraph {
   position: relative;
-  line-height: 30px;
-  margin-top: 20px;
-  margin-bottom: 60px; }
+  line-height: 30px; }
   .ground-block.about .block-content-paragraph > .block-content-paragraph-actions {
     position: absolute;
     top: -30px;
@@ -1785,10 +1766,6 @@ img {
     .ground-block.about .block-content-paragraph > .block-content-paragraph-actions > button {
       padding-top: 2px;
       padding-bottom: 2px; }
-  .ground-block.about .block-content-paragraph > .block-content-paragraph-header {
-    font-size: 36px;
-    margin-top: 20px;
-    margin-bottom: 40px; }
   .ground-block.about .block-content-paragraph > .block-content-paragraph-image {
     max-width: 650px;
     margin: 20px auto;
@@ -1830,7 +1807,7 @@ img {
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto; }
-  .ground-block.about .block-content-paragraph > .block-content-paragraph-text.with_image, .ground-block.about .block-content-paragraph > .block-content-paragraph-image {
+  .ground-block.about .block-content-paragraph > .paragraph.with_image, .ground-block.about .block-content-paragraph > .block-content-paragraph-image {
     display: inline-block;
     width: 48%;
     vertical-align: top; }

@@ -25,12 +25,9 @@
                                 data-action="delete"
                                 data-value="{{ element.pk }}"
                                 data-reload="ground"
-                                data-url="/about/delete/">Delete</button>
-                        <!--<button type="button" class="post_button submit"-->
-                                <!--data-type="confirm"-->
-                                <!--data-name="delete_about">-->
-                            <!--Delete-->
-                        <!--</button>-->
+                                data-url="/about/delete/">
+                            Delete
+                        </button>
 
                         <button type="button" class="dialog_button submit"
                                 data-type="prompt"
@@ -43,18 +40,18 @@
 
 
                 {% if element.header %}
-                <div class="block-content-paragraph-header">
+                <div class="title">
                     {{ element.header | safe }}
                 </div>
                 {% endif %}
 
 
                 {% if element.image %}
-                    <div class="block-content-paragraph-text with_image">
+                    <div class="paragraph with_image">
                         {{ element.paragraph | safe }}
                     </div>
                 {% else %}
-                    <div class="block-content-paragraph-text">
+                    <div class="paragraph">
                         {{ element.paragraph | safe }}
                     </div>
                 {% endif %}

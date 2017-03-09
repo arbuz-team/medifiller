@@ -3,41 +3,41 @@
 
 .ground-block
 
-  >.block-content
+  .field_shell, form > div
+    position: relative
 
-    .field_shell, form > div
-      position: relative
-
-      input[type=text], input[type=email], input[type=password], input[type=number], input[type=url], select, button, textarea
-        margin:
-          left: 0
-          right: 0
-        +box-sizing(border-box)
-
-      input[type=checkbox]
-        position: absolute
-        right: 8px
-        top: 9px
-        width: 18px
-        height: 18px
-
-      .g-recaptcha
-        margin-left: 5px
-
-
-    form > .form_buttons:not(.long)
-      padding-left: 5px
-
-    form > .form_buttons:first-child
+    input[type=text], input[type=email], input[type=password], input[type=number], input[type=url], select, button, textarea
       margin:
-        top: 10px
-      padding-top: 10px
-      border-top: 1px solid #eee
+        left: 0
+        right: 0
+      +box-sizing(border-box)
+
+    input[type=checkbox]
+      position: absolute
+      right: 8px
+      top: 9px
+      width: 18px
+      height: 18px
+
+    .g-recaptcha
+      margin-left: 5px
 
 
-.ground-block.SMALL > .block-content
-  width: $SMALL--width
-  margin: $ALL_blocks--margin
+  form > .form_buttons:not(.long)
+    padding-left: 5px
+
+  form > .form_buttons:first-child
+    margin:
+      top: 10px
+    padding-top: 10px
+    border-top: 1px solid #eee
+
+
+.ground-block.SMALL
+
+  .block-content
+    width: $SMALL--width
+    margin: $ALL_blocks--margin
 
   form
     >div:not(.short), >div.long
@@ -53,9 +53,11 @@
 
 /////////////////////////////////////////////////
 
-.ground-block.BIG > .block-content
-  width: $SMALL--width
-  margin: $ALL_blocks--margin
+.ground-block.BIG
+
+  .block-content
+    width: $SMALL--width
+    margin: $ALL_blocks--margin
 
 
   .form_block.visible, .form_block.visible.fields
@@ -136,8 +138,10 @@
 
 @media (min-width: $G-SIZE-2)
 
-  .ground:not(.smaller) .ground-block.BIG > .block-content
-    width: $BIG--width
+  .ground:not(.smaller) .ground-block.BIG
+
+    .block-content
+      width: $BIG--width
 
     .form_block
       display: inline-block
@@ -168,8 +172,10 @@
 
 @media (min-width: 1300px)
 
-  .ground.smaller .ground-block.BIG > .block-content
-    width: $BIG--width
+  .ground.smaller .ground-block.BIG
+
+    .block-content
+      width: $BIG--width
 
     .form_block
       display: inline-block
