@@ -1,7 +1,6 @@
 from arbuz.views import *
 from root.forms import *
 from payment.models import *
-import string, random
 
 
 class Start_App(Dynamic_Event_Manager):
@@ -21,7 +20,7 @@ class Start_App(Dynamic_Event_Manager):
             },
             {
                 'name': Text(self.request, 25),
-                'url': self.Get_Path('root.create', current_language=True),
+                'url': self.Get_Path('root.company_details', current_language=True),
                 'icon': '/_static/img/icons/128/dark/moustache.png',
             },
             {
@@ -33,6 +32,11 @@ class Start_App(Dynamic_Event_Manager):
                 'name': Text(self.request, 27),
                 'url': self.Get_Path('root.users_payments', current_language=True),
                 'icon': '/_static/img/icons/128/dark/money.png',
+            },
+            {
+                'name': Text(self.request, 135),
+                'url': self.Get_Path('root.social_media', current_language=True),
+                'icon': '/_static/img/icons/128/dark/social_group.png',
             },
         ]
 
@@ -103,32 +107,14 @@ class Sign_Out(Dynamic_Event_Manager):
 
 
 
-class Create(Dynamic_Event_Manager):
+class Company_Details(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
-        self.content['password'] = ''
-
-        if not Root.objects.all():
-            self.content['password'] = Create.Generate_Passwrod(8)
-            Root(password=User.Encrypt(self.content['password'])).save()
-
-        return self.Render_HTML('root/create.html')
-
-    @staticmethod
-    def Generate_Passwrod(length):
-        password = ''
-        permitted_chars = string.ascii_letters + \
-                          string.digits + \
-                          string.punctuation
-
-        for char_number in range(0, length):
-            password += random.choice(permitted_chars)
-
-        return password
+        return self.Render_HTML('root/company_details.html')
 
     @staticmethod
     def Launch(request):
-        return Create(request).HTML
+        return Company_Details(request).HTML
 
 
 
@@ -204,3 +190,14 @@ class Users_Payments(Dynamic_Event_Manager):
     @staticmethod
     def Launch(request):
         return Users_Payments(request, only_root=True).HTML
+
+
+
+class Social_Media(Dynamic_Event_Manager):
+
+    def Manage_Content_Ground(self):
+        return self.Render_HTML('root/social_media.html')
+
+    @staticmethod
+    def Launch(request):
+        return Social_Media(request).HTML

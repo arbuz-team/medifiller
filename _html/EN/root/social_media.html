@@ -1,12 +1,9 @@
 <script>
-    window.APP.throw_event(window.EVENTS.plugins.reload_user_sign_in);
-    window.APP.throw_event(window.EVENTS.plugins.close_cart);
-
-    window.APP.DATA.redirect = '/';
-    window.APP.DATA.delay = 1500;
-    window.APP.throw_event(window.EVENTS.redirect);
+  window.APP.DATA = {
+    title : 'Create root',
+    description : 'Description'
+  };
 </script>
-
 
 <div class="ground-block block-1 SMALL">
 
@@ -16,7 +13,13 @@
     <div class="block-content">
 
         <div class="block-content-message">
-            You have been logged out.
+
+            {% if password %}
+                Hi, nice to meet you! This is your password {{ password }}. Write down or remeber this password! ;)
+            {% else %}
+                Sorry... Root already exists.
+            {% endif %}
+
         </div>
 
     </div><!-- block-content -->

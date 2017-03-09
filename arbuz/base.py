@@ -9,7 +9,7 @@ from PIL import Image
 from io import BytesIO
 from urllib.request import urlopen
 from datetime import date
-import base64, imghdr, os, random
+import base64, imghdr, os, string, random
 
 
 class Dynamic_Base:
@@ -106,6 +106,18 @@ class Dynamic_Base:
         for key in keys:
             if key_contain in key:
                 del self.request.session[key]
+
+    @staticmethod
+    def Generate_Passwrod(length):
+        password = ''
+        permitted_chars = string.ascii_letters + \
+                          string.digits + \
+                          string.punctuation
+
+        for char_number in range(0, length):
+            password += random.choice(permitted_chars)
+
+        return password
 
     @staticmethod
     def Get_Price(request, product, currency=None,
