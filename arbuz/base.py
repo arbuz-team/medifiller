@@ -100,6 +100,13 @@ class Dynamic_Base:
             self.request.session[session_name_date_from] = \
                 self.request.session[session_name_date_to]
 
+    def Clear_Session(self, key_contain=''):
+
+        keys = list(self.request.session.keys())
+        for key in keys:
+            if key_contain in key:
+                del self.request.session[key]
+
     @staticmethod
     def Get_Price(request, product, currency=None,
                   current_currency=False):
