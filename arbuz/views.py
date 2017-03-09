@@ -42,24 +42,6 @@ class Manager(Dynamic_Base):
     def Manage_Get(self):
         return JsonResponse({'__get__': 'false'})
 
-    def Manage_Clear_Session(self, key_contain=''):
-
-        keys = list(self.request.session.keys())
-        for key in keys:
-            if key_contain in key:
-                del self.request.session[key]
-
-        Check_Session(self.request)
-
-    def Manage_Clear(self):
-
-        if self.request.POST['__clear__'] == 'session':
-            if self.clear_session:
-                return self.Manage_Clear_Session(self.app_name)
-
-        self.content['error'] = 'no_event'
-        return self.Render_HTML('arbuz/error.html')
-
     def Manage_Edit(self):
         return JsonResponse({'__edit__': 'false'})
 
@@ -67,11 +49,19 @@ class Manager(Dynamic_Base):
         return JsonResponse({'__filter__': 'false'})
 
     def Manage_Button(self):
+
+        if self.request.POST['__button__'] == 'clear_session':
+            if self.clear_session:
+
+                self.Clear_Session(self.app_name)
+                Check_Session(self.request)
+                return JsonResponse({'__button__': 'true'})
+
         return JsonResponse({'__button__': 'false'})
 
     def Manage_Index(self):
 
-        self.Manage_Clear_Session('searcher')
+        self.Clear_Session('searcher')
         Check_Session(self.request)
 
         # change website to other language
@@ -241,10 +231,6 @@ class Dynamic_Event_Manager(Manager, Checker, Updater, metaclass=ABCMeta):
         # getters
         if '__get__' in self.request.POST:
             return self.Manage_Get()
-
-        # session
-        if '__clear__' in self.request.POST:
-            return self.Manage_Clear()
 
         # auto/dynamic form
         if '__edit__' in self.request.POST:

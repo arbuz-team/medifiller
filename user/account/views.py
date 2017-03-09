@@ -215,11 +215,23 @@ class User_Addresses(Dynamic_Event_Manager):
 
 class My_Shopping(Dynamic_Event_Manager):
 
+    def Get_Date(self):
+
+        date_from = self.request.session['user_my_shopping_date_from']
+        date_from = datetime.strptime(date_from, '%d.%m.%Y')
+        date_to = self.request.session['user_my_shopping_date_to']
+        date_to = datetime.strptime(date_to, '%d.%m.%Y')
+
+        return date_from, date_to
+
     def Create_Payment_Structure(self):
 
         self.content['shopping'] = []
+
+        date_from, date_to = self.Get_Date()
         user = User.objects.get(unique=self.request.session['user_unique'])
-        payments = Payment.objects.filter(user=user, approved=True)
+        payments = Payment.objects.filter(user=user, approved=True,
+                              date__gte=date_from, date__lte=date_to)
 
         for payment in payments:
 
@@ -233,7 +245,22 @@ class My_Shopping(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         self.Create_Payment_Structure()
+        self.content['date_from'] = self.request.session['user_my_shopping_date_from']
+        self.content['date_to'] = self.request.session['user_my_shopping_date_to']
         return self.Render_HTML('user/account/my_shopping.html')
+
+    def Manage_Filter(self):
+
+        if self.request.POST['__filter__'] == 'date_to':
+            self.request.session['user_my_shopping_date_to'] = \
+                self.request.POST['value']
+
+        if self.request.POST['__filter__'] == 'date_from':
+            self.request.session['user_my_shopping_date_from'] = \
+                self.request.POST['value']
+
+        self.Validate_Period('user_my_shopping_date_from', 'user_my_shopping_date_to')
+        return JsonResponse({'__filter__': 'true'})
 
     @staticmethod
     def Launch(request):

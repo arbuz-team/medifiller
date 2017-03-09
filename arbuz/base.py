@@ -78,6 +78,35 @@ class Dynamic_Base:
 
         return urls
 
+    def Validate_Period(self, session_name_date_from, session_name_date_to):
+
+        date_from = self.request.session[session_name_date_from]
+        date_to = self.request.session[session_name_date_to]
+
+        # valid if string convert to date
+        try: datetime.strptime(date_from, '%d.%m.%Y')
+        except ValueError:
+            self.request.session[session_name_date_from] = \
+                (datetime.today() - timedelta(days=7)).strftime('%d.%m.%Y')
+
+        # valid if string convert to date
+        try: datetime.strptime(date_to, '%d.%m.%Y')
+        except ValueError:
+            self.request.session[session_name_date_to] = \
+                datetime.today().strftime('%d.%m.%Y')
+
+        # valid period
+        if date_from > date_to:
+            self.request.session[session_name_date_from] = \
+                self.request.session[session_name_date_to]
+
+    def Clear_Session(self, key_contain=''):
+
+        keys = list(self.request.session.keys())
+        for key in keys:
+            if key_contain in key:
+                del self.request.session[key]
+
     @staticmethod
     def Get_Price(request, product, currency=None,
                   current_currency=False):
