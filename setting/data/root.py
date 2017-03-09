@@ -53,3 +53,23 @@ def Load_Default_Data():
         telefon='+48 22 58 29 474',
         email='info@spasungate.pl'
     ).save()
+
+    Transport(
+        country='Poland',
+        price_eur=int(20000 / 4.31259388),
+        price_pln=20000
+    ).save()
+
+
+    Transport(
+        country='Germany',
+        price_eur=int(20000 / 4.31259388),
+        price_pln=20000
+    ).save()
+
+
+    Transport(
+        country='United Kingdom',
+        price_eur=int(20000 / 4.31259388),
+        price_pln=20000
+    ).save()

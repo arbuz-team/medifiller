@@ -10,6 +10,13 @@ class Root(Abstract_Model):
 
 
 
+class Root_Address(Abstract_Address):
+
+    telefon = models.CharField(max_length=20)
+    email = models.EmailField(max_length=50)
+
+
+
 class Social_Media(Abstract_Model):
 
     name = models.CharField(max_length=20)
@@ -20,7 +27,8 @@ class Social_Media(Abstract_Model):
 
 
 
-class Root_Address(Abstract_Address):
+class Transport(Abstract_Model):
 
-    telefon = models.CharField(max_length=20)
-    email = models.EmailField(max_length=50)
+    country = models.CharField(max_length=20)
+    price_eur = models.IntegerField()
+    price_pln = models.IntegerField()

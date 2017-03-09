@@ -12,10 +12,11 @@
 
     <div class="block-content">
 
-        {% for item in social_media %}
+        {% for item in options %}
 
-            {{ item.name }}
-            {{ item.url }}
+            {{ item.country }}
+            {{ item.price_eur }}
+            {{ item.price_pln }}
 
         {% endfor %}
 

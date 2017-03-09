@@ -227,12 +227,14 @@ class Social_Media_Manager(Dynamic_Event_Manager):
 
     def Manage_Form(self):
 
-        name = self.request.POST['__form__']
+        pk = self.request.POST['__form__']
         url = self.request.POST['value']
 
-        social = Social_Media.objects.get(name=name)
+        social = Social_Media.objects.get(pk=pk)
         social.url = url
         social.save()
+
+        return JsonResponse({'__form__': 'true'})
 
     @staticmethod
     def Launch(request):
@@ -243,7 +245,24 @@ class Social_Media_Manager(Dynamic_Event_Manager):
 class Transport_Settings(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
+        self.content['options'] = Transport.objects.all()
         return self.Render_HTML('root/transport_settings.html')
+
+    def Manage_Form(self):
+
+        currency, pk = self.request.POST['__form__'].split(' ')
+        price = self.request.POST['value']
+        transport = Transport.objects.get(pk=pk)
+
+        if currency == 'PLN':
+            transport.price_pln = price
+
+        if currency == 'EUR':
+            transport.price_eur = price
+
+        transport.save()
+
+        return JsonResponse({'__form__': 'true'})
 
     @staticmethod
     def Launch(request):
