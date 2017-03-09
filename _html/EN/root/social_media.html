@@ -12,15 +12,12 @@
 
     <div class="block-content">
 
-        <div class="block-content-message">
+        {% for item in social_media %}
 
-            {% if password %}
-                Hi, nice to meet you! This is your password {{ password }}. Write down or remeber this password! ;)
-            {% else %}
-                Sorry... Root already exists.
-            {% endif %}
+            {{ item.name }}
+            {{ item.url }}
 
-        </div>
+        {% endfor %}
 
     </div><!-- block-content -->
 

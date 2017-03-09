@@ -8,6 +8,7 @@ from setting.data import setting
 from setting.data import products
 from setting.data import users
 from setting.data import payment
+from setting.data import root
 
 from setting.script import cosmetix
 
@@ -54,6 +55,7 @@ class Control_Panel(Dynamic_Event_Manager):
         setting.Load_Default_Data()
         products.Load_Default_Data()
         users.Load_Default_Data()
+        root.Load_Default_Data()
         # payment.Load_Default_Data()
         return JsonResponse({})
 

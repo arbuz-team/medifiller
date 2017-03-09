@@ -107,14 +107,14 @@ class Sign_Out(Dynamic_Event_Manager):
 
 
 
-class Company_Details(Dynamic_Event_Manager):
+class Company_Details_Manager(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         return self.Render_HTML('root/company_details.html')
 
     @staticmethod
     def Launch(request):
-        return Company_Details(request).HTML
+        return Company_Details_Manager(request).HTML
 
 
 
@@ -193,11 +193,21 @@ class Users_Payments(Dynamic_Event_Manager):
 
 
 
-class Social_Media(Dynamic_Event_Manager):
+class Social_Media_Manager(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
+        self.content['social_media'] = Social_Media.objects.all()
         return self.Render_HTML('root/social_media.html')
+
+    def Manage_Form(self):
+
+        name = self.request.POST['__form__']
+        url = self.request.POST['value']
+
+        social = Social_Media.objects.get(name=name)
+        social.url = url
+        social.save()
 
     @staticmethod
     def Launch(request):
-        return Social_Media(request).HTML
+        return Social_Media_Manager(request).HTML
