@@ -62,6 +62,7 @@ class Manager(Dynamic_Base):
     def Manage_Index(self):
 
         self.Clear_Session('searcher')
+        self.Clear_Session('root_social_media')
         Check_Session(self.request)
 
         # change website to other language
