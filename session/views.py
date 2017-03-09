@@ -30,6 +30,14 @@ class Session_Controller:
         if 'user_username' not in self.request.session:
             self.request.session['user_username'] = ''
 
+        if 'user_my_shopping_date_from' not in self.request.session:
+            self.request.session['user_my_shopping_date_from'] = \
+                (datetime.today() - timedelta(days=7)).strftime('%d.%m.%Y')
+
+        if 'user_my_shopping_date_to' not in self.request.session:
+            self.request.session['user_my_shopping_date_to'] = \
+                datetime.today().strftime('%d.%m.%Y')
+
     def Check_Session_Root(self):
 
         if 'root_login' not in self.request.session:

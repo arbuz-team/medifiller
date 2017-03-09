@@ -145,28 +145,6 @@ class Map_References(Dynamic_Event_Manager):
 
 class Users_Payments(Dynamic_Event_Manager):
 
-    def Validate_Period(self):
-
-        date_from = self.request.session['root_users_payments_date_from']
-        date_to = self.request.session['root_users_payments_date_to']
-
-        # valid if string convert to date
-        try: datetime.strptime(date_from, '%d.%m.%Y')
-        except ValueError:
-            self.request.session['root_users_payments_date_from'] = \
-                (datetime.today() - timedelta(days=7)).strftime('%d.%m.%Y')
-
-        # valid if string convert to date
-        try: datetime.strptime(date_to, '%d.%m.%Y')
-        except ValueError:
-            self.request.session['root_users_payments_date_to'] = \
-                datetime.today().strftime('%d.%m.%Y')
-
-        # valid period
-        if date_from > date_to:
-            self.request.session['root_users_payments_date_from'] = \
-                self.request.session['root_users_payments_date_to']
-
     def Get_Date(self):
 
         date_from = self.request.session['root_users_payments_date_from']
@@ -220,7 +198,7 @@ class Users_Payments(Dynamic_Event_Manager):
             self.request.session['root_users_payments_date_from'] = \
                 self.request.POST['value']
 
-        self.Validate_Period()
+        self.Validate_Period('root_users_payments_date_from', 'root_users_payments_date_to')
         return JsonResponse({'__filter__': 'true'})
 
     @staticmethod
