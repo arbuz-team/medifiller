@@ -1191,9 +1191,9 @@ button {
   width: 340px;
   margin: 30px auto; }
 
-.ground-block.SMALL .form_block form > div:not(.short) > input[type=text], .ground-block.SMALL .form_block form > div:not(.short) > input[type=email], .ground-block.SMALL .form_block form > div:not(.short) > input[type=password], .ground-block.SMALL .form_block form > div:not(.short) > input[type=number], .ground-block.SMALL .form_block form > div:not(.short) > input[type=url], .ground-block.SMALL .form_block form > div:not(.short) > select, .ground-block.SMALL .form_block form > div:not(.short) > button, .ground-block.SMALL .form_block form > div:not(.short) > textarea,
-.ground-block.SMALL .form_block form > div:not(.short) > a > button, .ground-block.SMALL .form_block form > div.long > input[type=text], .ground-block.SMALL .form_block form > div.long > input[type=email], .ground-block.SMALL .form_block form > div.long > input[type=password], .ground-block.SMALL .form_block form > div.long > input[type=number], .ground-block.SMALL .form_block form > div.long > input[type=url], .ground-block.SMALL .form_block form > div.long > select, .ground-block.SMALL .form_block form > div.long > button, .ground-block.SMALL .form_block form > div.long > textarea,
-.ground-block.SMALL .form_block form > div.long > a > button {
+.ground-block.SMALL form > div:not(.short) > input[type=text], .ground-block.SMALL form > div:not(.short) > input[type=email], .ground-block.SMALL form > div:not(.short) > input[type=password], .ground-block.SMALL form > div:not(.short) > input[type=number], .ground-block.SMALL form > div:not(.short) > input[type=url], .ground-block.SMALL form > div:not(.short) > select, .ground-block.SMALL form > div:not(.short) > button, .ground-block.SMALL form > div:not(.short) > textarea,
+.ground-block.SMALL form > div:not(.short) > a > button, .ground-block.SMALL form > div.long > input[type=text], .ground-block.SMALL form > div.long > input[type=email], .ground-block.SMALL form > div.long > input[type=password], .ground-block.SMALL form > div.long > input[type=number], .ground-block.SMALL form > div.long > input[type=url], .ground-block.SMALL form > div.long > select, .ground-block.SMALL form > div.long > button, .ground-block.SMALL form > div.long > textarea,
+.ground-block.SMALL form > div.long > a > button {
   display: inline-block;
   min-width: 300px;
   max-width: 300px;
