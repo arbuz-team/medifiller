@@ -20,17 +20,16 @@
             <!--<span>&nbsp;</span>-->
         </div>
 
+        {% for element in request.session.root_social_media %}
 
-        <a class="social-element" href="http://facebook.com/" target="_blank">
-            <div class="social-facebook"></div>
-            <!--<span>&nbsp;</span>-->
-        </a>
+            {% if element.url %}
+                <a class="social-element" href="{{ element.url }}" target="_blank">
+                    <div class="social-{{ element.name }}"></div>
+                    <!--<span>&nbsp;</span>-->
+                </a>
+            {% endif %}
 
-        <a class="social-element" href="http://plus.google.com/" target="_blank">
-            <div class="social-google_plus"></div>
-            <!--<span>&nbsp;</span>-->
-        </a>
-
+        {% endfor %}
 
         <div class="social-element">
             <div class="social-dot"><div></div></div>
