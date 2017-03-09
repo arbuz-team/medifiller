@@ -1,6 +1,4 @@
 from django import forms
-from payment.models import Delivery_Address
-from user.forms import Form_Abstract_Address
 
 
 class Form_Dotpay(forms.Form):

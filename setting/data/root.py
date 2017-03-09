@@ -40,3 +40,16 @@ def Load_Social_Media():
 
 def Load_Default_Data():
     Load_Social_Media()
+
+    Root_Address(
+        full_name='',
+        doctor_number='',
+        address_line_1='Pl. Powstańców Warszawy 2',
+        address_line_2='',
+        city='Warszawa',
+        region='Mazowieckie',
+        postcode='00-030',
+        country='Polska',
+        telefon='+48 22 58 29 474',
+        email='info@spasungate.pl'
+    ).save()

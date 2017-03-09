@@ -1,6 +1,7 @@
 from inspect import getmembers, ismethod
 from translator.views import *
 from product.models import *
+from root.models import *
 
 
 class Session_Controller:
@@ -53,6 +54,14 @@ class Session_Controller:
         if 'root_users_payments_date_to' not in self.request.session:
             self.request.session['root_users_payments_date_to'] = \
                 datetime.today().strftime('%d.%m.%Y')
+
+        if 'root_address' not in self.request.session:
+            self.request.session['root_address'] = \
+                Root_Address.objects.first()
+
+        if 'root_social_media' not in self.request.session:
+            self.request.session['root_social_media'] = \
+                Social_Media.objects.all()
 
     def Check_Session_Translator(self):
 

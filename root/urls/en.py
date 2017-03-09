@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^map_references/$', views.Map_References.Launch, name='root.map_references'),
     url(r'^users_payments/$', views.Users_Payments.Launch, name='root.users_payments'),
     url(r'^social_media/$', views.Social_Media_Manager.Launch, name='root.social_media'),
+    url(r'^transport_settings/$', views.Transport_Settings.Launch, name='root.transport_settings'),
 
     url(r'^sign_in/redirect/(?P<url>.+)/$',
         views.Sign_In.Redirect, name='root.sign_in.redirect'),

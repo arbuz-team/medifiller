@@ -5,22 +5,33 @@
   };
 </script>
 
-<div class="ground-block block-1 SMALL">
+<div class="ground-block block-1 BIG">
 
     <div class="block-background fill-abs"></div>
     {% include "ground/html/navigation.html" %}
 
     <div class="block-content">
 
-        <div class="block-content-message">
+        <div class="form_block field_shell">
+            <form method="post" action="" data-name="{{ form_name }}" data-type="{{ form_name }}" data-test="yes">
 
-            {% if password %}
-                Hi, nice to meet you! This is your password {{ password }}. Write down or remeber this password! ;)
-            {% else %}
-                Sorry... Root already exists.
-            {% endif %}
+                <div class="shell_form"></div>
 
-        </div>
+                <div class="title"> Edit your address </div>
+
+                {% for i in form %}
+
+                    <div>
+                        {{ i }}
+                        {{ i.errors }}
+                    </div>
+
+                {% endfor %}
+
+                <div class="form_buttons short"><button disabled type="submit"> Done </button></div>
+
+            </form>
+        </div><!-- form_block -->
 
     </div><!-- block-content -->
 

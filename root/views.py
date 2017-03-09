@@ -38,6 +38,11 @@ class Start_App(Dynamic_Event_Manager):
                 'url': self.Get_Path('root.social_media', current_language=True),
                 'icon': '/_static/img/icons/128/dark/social_group.png',
             },
+            {
+                'name': Text(self.request, 136),
+                'url': self.Get_Path('root.transport_settings', current_language=True),
+                'icon': '/_static/img/icons/128/dark/transport.png',
+            },
         ]
 
         return self.Render_HTML('arbuz/start_app.html')
@@ -110,11 +115,32 @@ class Sign_Out(Dynamic_Event_Manager):
 class Company_Details_Manager(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
+        address = Root_Address.objects.first()
+        self.content['form'] = Form_Root_Address(self.request, instance=address)
+        return self.Render_HTML('root/company_details.html', 'root_address')
+
+    def Manage_Form_Root_Address(self):
+
+        address = Root_Address.objects.first()
+        self.content['form'] = Form_Root_Address(self.request,
+             self.request.POST, instance=address)
+
+        if self.content['form'].is_valid():
+            self.content['form'].save() # save change of address_user
+
+            return self.Render_HTML('root/company_details.html', 'root_address')
         return self.Render_HTML('root/company_details.html')
+
+    def Manage_Form(self):
+
+        if self.request.POST['__form__'] == 'root_address':
+            return self.Manage_Form_Root_Address()
+
+        return Dynamic_Event_Manager.Manage_Form(self)
 
     @staticmethod
     def Launch(request):
-        return Company_Details_Manager(request).HTML
+        return Company_Details_Manager(request, only_root=True).HTML
 
 
 
@@ -210,4 +236,15 @@ class Social_Media_Manager(Dynamic_Event_Manager):
 
     @staticmethod
     def Launch(request):
-        return Social_Media_Manager(request).HTML
+        return Social_Media_Manager(request, only_root=True).HTML
+
+
+
+class Transport_Settings(Dynamic_Event_Manager):
+
+    def Manage_Content_Ground(self):
+        return self.Render_HTML('root/transport_settings.html')
+
+    @staticmethod
+    def Launch(request):
+        return Transport_Settings(request, only_root=True).HTML

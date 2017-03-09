@@ -125,3 +125,68 @@ class Abstract_Image_Form(Abstract_Form):
         self.fields['image_base64'].widget = forms.TextInput(attrs=image_base64_attr)
         self.fields['url'].widget = forms.TextInput(attrs=url_attrs)
 
+
+
+class Abstract_Address_Form(Abstract_Model_Form):
+
+    def Create_Fields(self):
+        self.fields['address_line_2'].required = False
+
+    def Set_Widgets(self):
+
+        full_name_attr = {
+            'placeholder': Text(self.request, 47),
+            'class': 'test',
+            'autofocus': 'true',
+        }
+
+        doctor_number_attr = {
+            'placeholder': Text(self.request, 63),
+            'class': 'test',
+        }
+
+        address_line_1_attr = {
+            'placeholder': Text(self.request, 48),
+            'class': 'test',
+        }
+
+        address_line_2_attr = {
+            'placeholder': Text(self.request, 49),
+        }
+
+        city_attr = {
+            'placeholder': Text(self.request, 50),
+            'class': 'test',
+        }
+
+        region_attr = {
+            'placeholder': Text(self.request, 51),
+            'class': 'test',
+        }
+
+        postcode_attr = {
+            'placeholder': Text(self.request, 52),
+            'class': 'test',
+        }
+
+        country_attr = {
+            'placeholder': Text(self.request, 53),
+            'class': 'test',
+        }
+
+        self.fields['full_name'].widget = forms.TextInput(attrs=full_name_attr)
+        self.fields['doctor_number'].widget = forms.TextInput(attrs=doctor_number_attr)
+        self.fields['address_line_1'].widget = forms.TextInput(attrs=address_line_1_attr)
+        self.fields['address_line_2'].widget = forms.TextInput(attrs=address_line_2_attr)
+        self.fields['city'].widget = forms.TextInput(attrs=city_attr)
+        self.fields['region'].widget = forms.TextInput(attrs=region_attr)
+        self.fields['postcode'].widget = forms.TextInput(attrs=postcode_attr)
+        self.fields['country'].widget = forms.TextInput(attrs=country_attr)
+
+    def Exclude_Fields(self):
+        if self.request.session['translator_language'] != 'PL':
+            del self.fields['doctor_number']
+
+    class Meta:
+        exclude = '__all__'
+        # fields = '__all__'

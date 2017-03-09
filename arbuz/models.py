@@ -39,3 +39,22 @@ class Abstract_Model(Base_Model, models.Model):
     def __init__(self, *args, **kwargs):
         models.Model.__init__(self, *args, **kwargs)
         Base_Model.__init__(self)
+
+
+
+class Abstract_Address(Abstract_Model):
+
+    full_name = models.CharField(max_length=50)
+    doctor_number = models.CharField(max_length=7) # for polish users
+    address_line_1 = models.CharField(max_length=50)
+    address_line_2 = models.CharField(max_length=50, default='')
+    city = models.CharField(max_length=50)
+    region = models.CharField(max_length=50)  # state/province/region
+    postcode = models.CharField(max_length=10)  # zip/postal code
+    country = models.CharField(max_length=20)
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return self.full_name

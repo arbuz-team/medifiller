@@ -1,6 +1,7 @@
 from arbuz.forms import *
 from root.models import *
 
+
 class Form_Root_Login(Abstract_Form):
 
     def clean_password(self):
@@ -30,3 +31,10 @@ class Form_Root_Login(Abstract_Form):
         }
 
         self.fields['password'].widget = forms.PasswordInput(attrs=password_attr)
+
+
+
+class Form_Root_Address(Abstract_Address_Form):
+
+    class Meta(Abstract_Address_Form.Meta):
+        model = Root_Address
