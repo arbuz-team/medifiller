@@ -72,6 +72,11 @@ class Dialog_Alert(Dialog):
         self.content['delivery'] = Delivery_Address.objects.get(payment=payment)
         return self.Render_Dialog('dialog/address.html', only_root=True)
 
+    def Manage_Icons(self):
+        self.content['title'] = Text(self.request, 137)
+        self.content['text'] = Text(self.request, 138)
+        return self.Render_Dialog('dialog/alert.html')
+
     def __init__(self, request, app_name):
         Dialog.__init__(self, request, app_name)
         self.HTML = self.Manage()

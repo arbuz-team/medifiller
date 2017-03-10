@@ -250,8 +250,8 @@ class Transport_Settings(Dynamic_Event_Manager):
 
     def Manage_Form(self):
 
-        currency, pk = self.request.POST['__form__'].split(' ')
-        price = self.request.POST['value']
+        pk = self.request.POST['__form__']
+        price, currency = self.request.POST['value'].split(' ')
         transport = Transport.objects.get(pk=pk)
 
         if currency == 'PLN':
