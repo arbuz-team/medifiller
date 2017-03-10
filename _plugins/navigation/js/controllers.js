@@ -2,9 +2,9 @@
  * Created by mrskull on 24.11.16.
  */
 
-import {Plugins_Loader_Controllers} from '../../plugins_loader/controllers'
-import {Plugins_Motion_Controllers} from '../../plugins_motion/controllers'
-import * as cart_controllers from '../../cart/js/controllers'
+import {Plugins_Loader_Controllers}     from '../../plugins_loader/controllers'
+import {Plugins_Motion_Controllers}     from '../../plugins_motion/controllers'
+import {Event_Button_Controllers}       from '../../forms/js/event_button/controllers'
 
 
 /**
@@ -33,7 +33,11 @@ let
 
     duration_open: 300,
     duration_close: 150,
-  };
+  },
+
+  event_button_controllers = new Event_Button_Controllers({
+    container: '#NAVIGATION'
+  });
 
 
 /**
@@ -43,11 +47,11 @@ let
 export let
   define = function()
   {
-    let $navigation = $('#NAVIGATION');
-    navigation_motion_controllers.define();
+    window.APP.add_own_event('navigation_close', navigation_motion_controllers.plugin_close);
+    window.APP.add_own_event('navigation_open', navigation_motion_controllers.plugin_open);
 
-    $('.navigation-secondary-cart > *', $navigation).click(cart_controllers.open_or_close);
-    $('.navigation-close_navigation', $navigation).click(navigation_motion_controllers.plugin_close);
+    navigation_motion_controllers.define();
+    event_button_controllers.define();
   },
 
 

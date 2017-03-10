@@ -5,16 +5,25 @@
 <ul class="navigation-mobile">
 
     <li class="navigation-mobile-filter">
-        <button></button>
+        <button class="event_button" type="button"
+                data-name="mobile-open_searcher"
+                data-event="plugins.open_searcher">
+        </button>
     </li>
 
     <li class="navigation-mobile-navigation">
-        <button></button>
+        <button class="event_button" type="button"
+                data-name="mobile-open_navigation"
+                data-event="plugins.open_navigation">
+        </button>
     </li>
 
     {% if request.session.user_login %}
     <li class="navigation-mobile-cart">
-        <button></button>
+        <button class="event_button" type="button"
+                data-name="mobile-open_or_close_cart"
+                data-event="plugins.open_or_close_cart">
+        </button>
     </li>
     {% else %}
     <li class="navigation-mobile-cart">
@@ -80,7 +89,7 @@
     <ul class="navigation-secondary-left">
 
         <li class="navigation-secondary-searcher" title="CTRL+SHIFT+S">
-            <div class="link fill-abs">
+            <div class="link fill-abs event_button" data-name="secondary-open_searcher" data-event="plugins.open_searcher">
                 <i> &nbsp; </i> Search
             </div>
         </li>
@@ -134,7 +143,7 @@
 
         {% if request.session.user_login %}
             <li class="navigation-secondary-cart" title="CTRL+SHIFT+X">
-                <div class="link fill-abs">
+                <div class="link fill-abs event_button" data-name="navigation-open_or_close_cart" data-event="plugins.open_or_close_cart">
                     Cart
                 </div>
             </li>

@@ -1,24 +1,44 @@
 <script>
   window.APP.DATA = {
-    title : 'Create root',
-    description : 'Description'
+    title : 'Price for delivery',
+    description : ''
   };
 </script>
 
-<div class="ground-block block-1 SMALL">
+<div class="ground-block block-1 BIG">
 
     <div class="block-background fill-abs"></div>
     {% include "ground/html/navigation.html" %}
 
     <div class="block-content">
 
-        {% for item in options %}
+        <form class="auto_form field_shell" action="" data-origin="form">
 
-            {{ item.country }}
-            {{ item.price_eur }}
-            {{ item.price_pln }}
+            <div class="title">Price for delivery</div>
 
-        {% endfor %}
+            {% for item in options %}
+
+                <div class="fields_with_label price">
+                    <label for="{{ item.country }}_EUR">{{ item.country }}:&nbsp;</label>
+
+                    <input name="{{ item.name }}_EUR" type="url"
+                           placeholder="EUR"
+                           id="{{ item.country }}_EUR"
+                           class="auto_field"
+                           data-name="{{ item.pk }}"
+                           value="{{ item.price_eur }}" />&nbsp;EUR
+                    &nbsp;
+                    <input name="{{ item.name }}_PLN" type="url"
+                           placeholder="PLN"
+                           id="{{ item.country }}_PLN"
+                           class="auto_field"
+                           data-name="{{ item.pk }}"
+                           value="{{ item.price_pln }}" />&nbsp;PLN
+                </div>
+
+            {% endfor %}
+
+        </form>
 
     </div><!-- block-content -->
 

@@ -5,6 +5,7 @@
 import {Plugins_Loader_Controllers}     from '../../plugins_loader/controllers'
 import {Form_Controllers}               from '../../forms/js/controllers'
 import {Post_Button_Controllers}        from '../../forms/js/post_button/controllers'
+import {Event_Button_Controllers}        from '../../forms/js/event_button/controllers'
 
 
 /**
@@ -24,10 +25,13 @@ let
   },
   ground_loader_controllers = new Plugins_Loader_Controllers(config_loader),
 
-  config_post_button = {
+  post_button_controllers = new Post_Button_Controllers({
     container: '#GROUND .ground'
-  },
-  post_button_controllers = new Post_Button_Controllers(config_post_button),
+  }),
+
+  event_button_controllers = new Event_Button_Controllers({
+    container: '#GROUND .ground'
+  }),
 
   ground_form_controllers = new Form_Controllers(ground_loader_controllers);
 
@@ -131,6 +135,7 @@ export let
 
     ground_form_controllers.define();
     post_button_controllers.define();
+    event_button_controllers.define();
   },
 
 

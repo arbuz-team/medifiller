@@ -18,7 +18,7 @@
 
             {% for item in social_media %}
 
-                <div class="fields_with_label">
+                <div class="fields_with_label full">
                     <label for="edit_{{ item.name }}">{{ item.name }}:&nbsp;</label>
                     <input name="{{ item.name }}" type="url"
                            placeholder="{{ item.name }} account..."
@@ -29,6 +29,17 @@
                 </div>
 
             {% endfor %}
+
+            <div class="fields_with_label full">
+                <label for="button_refresh">&nbsp;</label>
+                <button type="button"
+                        class="event_button submit"
+                        id="button_refresh"
+                        data-name="button_refresh"
+                        data-event="reload_website">
+                    Show changes
+                </button>
+            </div>
 
     </div><!-- block-content -->
 

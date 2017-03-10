@@ -58,10 +58,8 @@ export let Plugins_Motion_Controllers = function(config)
     {
       let
         $container = $(settings.container),
-        $content = $(settings.content),
         position,
-        //height = $content.outerHeight(),
-        width = $content.outerWidth(),
+        width = $container.outerWidth(),
         direction_open = settings.direction_open,
         direction_close = settings.direction_close;
 

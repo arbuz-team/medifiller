@@ -6,12 +6,18 @@
 window.EVENTS = {
   define: new Event('define'),
   redirect: new Event('redirect'),
+  reload_website: new Event('reload_website'),
 
   plugins: {
     open_cart: new Event('cart_open'),
+    open_navigation: new Event('navigation_open'),
+    open_searcher: new Event('searcher_open'),
+
+    open_or_close_cart: new Event('cart_open_or_close'),
 
     close: new Event('plugins_close'),
     close_cart: new Event('cart_close'),
+    close_navigation: new Event('navigation_close'),
 
     reload_root_sign_in: new Event('reload_root_sign_in'),
     reload_user_sign_in: new Event('reload_user_sign_in'),
@@ -24,4 +30,3 @@ window.EVENTS = {
 
   dialog_close: new Event('dialog_close'),
 };
-

@@ -40,6 +40,11 @@ let
     };
   },
 
+  reload_website = function()
+  {
+    window.location.reload();
+  },
+
 
   define = function()
   {
@@ -58,6 +63,7 @@ let
 export let start = function()
 {
   window.addEventListener('define', define, false);
+  window.APP.add_own_event('reload_website', reload_website);
   window.APP.add_own_event('reload_user_sign_in', reload_sign_in('user'));
   window.APP.add_own_event('reload_root_sign_in', reload_sign_in('root'));
 

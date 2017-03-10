@@ -350,12 +350,18 @@
 	window.EVENTS = {
 	  define: new Event('define'),
 	  redirect: new Event('redirect'),
+	  reload_website: new Event('reload_website'),
 	
 	  plugins: {
 	    open_cart: new Event('cart_open'),
+	    open_navigation: new Event('navigation_open'),
+	    open_searcher: new Event('searcher_open'),
+	
+	    open_or_close_cart: new Event('cart_open_or_close'),
 	
 	    close: new Event('plugins_close'),
 	    close_cart: new Event('cart_close'),
+	    close_navigation: new Event('navigation_close'),
 	
 	    reload_root_sign_in: new Event('reload_root_sign_in'),
 	    reload_user_sign_in: new Event('reload_user_sign_in'),
@@ -388,19 +394,19 @@
 	
 	var cart_controllers = _interopRequireWildcard(_controllers2);
 	
-	var _controllers3 = __webpack_require__(38);
+	var _controllers3 = __webpack_require__(41);
 	
 	var navigation_controllers = _interopRequireWildcard(_controllers3);
 	
-	var _controllers4 = __webpack_require__(39);
+	var _controllers4 = __webpack_require__(42);
 	
 	var header_controllers = _interopRequireWildcard(_controllers4);
 	
-	var _controllers5 = __webpack_require__(40);
+	var _controllers5 = __webpack_require__(43);
 	
 	var dialog_controllers = _interopRequireWildcard(_controllers5);
 	
-	var _controllers6 = __webpack_require__(46);
+	var _controllers6 = __webpack_require__(49);
 	
 	var ground_controllers = _interopRequireWildcard(_controllers6);
 	
@@ -426,6 +432,9 @@
 	    if (delay) setTimeout(reload, delay);else reload();
 	  };
 	},
+	    reload_website = function reload_website() {
+	  window.location.reload();
+	},
 	    define = function define() {
 	  // Usuń wszystkie wydarzenia ze wszystkich elementów
 	  $('*').off();
@@ -440,6 +449,7 @@
 	
 	var start = exports.start = function start() {
 	  window.addEventListener('define', define, false);
+	  window.APP.add_own_event('reload_website', reload_website);
 	  window.APP.add_own_event('reload_user_sign_in', reload_sign_in('user'));
 	  window.APP.add_own_event('reload_root_sign_in', reload_sign_in('root'));
 	
@@ -461,7 +471,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.plugin_open = exports.start = exports.define = undefined;
+	exports.start = exports.define = undefined;
 	
 	var _controllers = __webpack_require__(13);
 	
@@ -479,16 +489,15 @@
 	 * Created by mrskull on 07.01.17.
 	 */
 	
-	var config_loader = {
+	var searcher_loader_controllers = new _controllers.Plugins_Loader_Controllers({
 	  name: 'searcher',
 	  url: '/searcher/',
 	
 	  container: '#SEARCHER .searcher',
 	
 	  auto_first_loading: true
-	},
-	    searcher_loader_controllers = new _controllers.Plugins_Loader_Controllers(config_loader),
-	    config_motion = {
+	}),
+	    searcher_motion_controllers = new _controllers2.Plugins_Motion_Controllers({
 	  container: '#SEARCHER',
 	  content: '.searcher',
 	  open: 'right',
@@ -496,12 +505,10 @@
 	  can_open_to: 1000,
 	  duration_open: 200,
 	  duration_close: 200
-	},
-	    searcher_motion_controllers = new _controllers2.Plugins_Motion_Controllers(config_motion),
-	    config_post_button = {
+	}),
+	    post_button_controllers = new _controllers4.Post_Button_Controllers({
 	  container: '#SEARCHER'
-	},
-	    post_button_controllers = new _controllers4.Post_Button_Controllers(config_post_button),
+	}),
 	    searcher_form_controllers = new _controllers3.Form_Controllers(searcher_loader_controllers);
 	
 	/**
@@ -509,6 +516,8 @@
 	 */
 	
 	var define = exports.define = function define() {
+	  window.APP.add_own_event('searcher_open', searcher_motion_controllers.plugin_open);
+	
 	  searcher_motion_controllers.define();
 	  searcher_form_controllers.define();
 	  post_button_controllers.define();
@@ -516,9 +525,6 @@
 	    start = exports.start = function start() {
 	  searcher_loader_controllers.define();
 	  searcher_motion_controllers.start();
-	},
-	    plugin_open = exports.plugin_open = function plugin_open() {
-	  searcher_motion_controllers.plugin_open();
 	};
 
 /***/ },
@@ -977,11 +983,8 @@
 	  },
 	      set_start_position = function set_start_position() {
 	    var $container = $(settings.container),
-	        $content = $(settings.content),
 	        position = void 0,
-	
-	    //height = $content.outerHeight(),
-	    width = $content.outerWidth(),
+	        width = $container.outerWidth(),
 	        direction_open = settings.direction_open,
 	        direction_close = settings.direction_close;
 	
@@ -1297,8 +1300,6 @@
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
-	// import * as post_button from './post_button/controllers'
-	
 	var Form_Controllers = exports.Form_Controllers = function Form_Controllers(content_loader_controllers) {
 	  var form_models = new _models.Form_Models(content_loader_controllers);
 	
@@ -1351,7 +1352,6 @@
 	    hide_form.define($container);
 	    auto_form.define($container);
 	    file_converter.define($container);
-	    //post_button.define($container);
 	  };
 	}; /**
 	    * Created by mrskull on 24.11.16.
@@ -2655,12 +2655,10 @@
 	
 	var _controllers4 = __webpack_require__(34);
 	
-	/**
-	 *    Defining private variables
-	 */
+	var _controllers5 = __webpack_require__(38);
 	
 	/**
-	 * Created by mrskull on 07.01.17.
+	 *    Defining private variables
 	 */
 	
 	var cart_loader_controllers = new _controllers.Plugins_Loader_Controllers({
@@ -2684,6 +2682,9 @@
 	    post_button_controllers = new _controllers4.Post_Button_Controllers({
 	  container: '#CART > .cart',
 	  callback: cart_loader_controllers.reload }),
+	    event_button_controllers = new _controllers5.Event_Button_Controllers({
+	  container: '#CART'
+	}),
 	    cart_form_controllers = new _controllers3.Form_Controllers(cart_loader_controllers),
 	    manage_key = function manage_key(event) {
 	  if (event.keyCode === 27) cart_motion_controllers.plugin_close();
@@ -2698,17 +2699,21 @@
 	 *    Defining public functions
 	 */
 	
-	var define = exports.define = function define() {
-	  $('.cart-close', $('#CART')).click(cart_motion_controllers.plugin_close);
+	/**
+	 * Created by mrskull on 07.01.17.
+	 */
 	
+	var define = exports.define = function define() {
 	  window.APP.add_own_event('cart_open', cart_motion_controllers.plugin_open);
 	  window.APP.add_own_event('cart_close', cart_motion_controllers.plugin_close);
+	  window.APP.add_own_event('cart_open_or_close', open_or_close);
 	
 	  $('body').keydown(manage_key);
 	
 	  cart_form_controllers.define();
 	  cart_motion_controllers.define();
 	  post_button_controllers.define();
+	  event_button_controllers.define();
 	},
 	    start = exports.start = function start() {
 	  cart_loader_controllers.define();
@@ -2717,6 +2722,8 @@
 	    plugin_open = exports.plugin_open = cart_motion_controllers.plugin_open,
 	    plugin_close = exports.plugin_close = cart_motion_controllers.plugin_close,
 	    open_or_close = exports.open_or_close = function open_or_close() {
+	  window.APP.throw_event(window.EVENTS.plugins.close_navigation);
+	
 	  if (cart_motion_controllers.is_open()) plugin_close();else plugin_open();
 	},
 	    reload = exports.reload = function reload() {
@@ -2732,17 +2739,182 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.Event_Button_Controllers = undefined;
+	
+	var _views = __webpack_require__(39);
+	
+	var Event_Button_Controllers = exports.Event_Button_Controllers = function Event_Button_Controllers(config) {
+	  if (typeof config === 'undefined' && typeof config.container === 'undefined') {
+	    console.error('Exeption error: invalid container.');
+	    return {};
+	  }
+	
+	  var buttons_views = {},
+	      manage_buttons = function manage_buttons(event) {
+	    event.preventDefault();
+	    event.stopPropagation();
+	
+	    var button_name = $(this).data('name');
+	
+	    if (buttons_views[button_name]) buttons_views[button_name].start();else console.error('Button "' + button_name + '" doesn\'t exsist');
+	  },
+	      create_button_views = function create_button_views() {
+	    var button_name = $(this).data('name');
+	    config.button = this;
+	
+	    config.button_name = button_name;
+	    config.button_reload = $(this).data('reload');
+	    config.button_redirect = $(this).data('redirect');
+	    config.button_event = $(this).data('event');
+	
+	    buttons_views[button_name] = new _views.Event_Button_Views(config);
+	  };
+	
+	  this.define = function () {
+	    var $buttons = $('.event_button', config.container);
+	
+	    $buttons.each(create_button_views);
+	
+	    $buttons.click(manage_buttons);
+	  };
+	}; /**
+	    * Created by mrskull on 17.12.16.
+	    */
+
+/***/ },
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Event_Button_Views = undefined;
+	
+	var _models = __webpack_require__(40);
+	
+	var Event_Button_Views = exports.Event_Button_Views = function Event_Button_Views(config) {
+	
+	  var models = new _models.Event_Button_Models(config);
+	
+	  this.models = models;
+	
+	  var reload_plugins = function reload_plugins() {
+	    var plugins = models.settings.button_reload,
+	        plugins_array = void 0,
+	        array_length = void 0;
+	
+	    if (!plugins || typeof plugins !== 'string') return false;
+	
+	    plugins_array = plugins.split(' ');
+	    array_length = plugins_array.length;
+	
+	    for (var i = 0; i < array_length; ++i) {
+	      if (plugins_array[i]) {
+	        window.APP.DATA.delay = 0;
+	        window.APP.throw_event(window.EVENTS.plugins['reload_' + plugins_array[i]]);
+	      }
+	    }
+	  },
+	      redirect_ground = function redirect_ground() {
+	    var url = models.settings.button_redirect;
+	
+	    if (!url || typeof url !== 'string') return false;
+	
+	    window.APP.DATA.redirect = url;
+	    window.APP.DATA.delay = 100;
+	    window.APP.throw_event(window.EVENTS.redirect);
+	  },
+	      launch_event = function launch_event() {
+	    var event = models.settings.button_event,
+	        split_event = void 0,
+	        ready_event = window.EVENTS;
+	
+	    if (!event || typeof event !== 'string') return false;
+	
+	    split_event = event.split('.');
+	
+	    for (var i = 0; split_event.length > i; ++i) {
+	      ready_event = ready_event[split_event[i]];
+	    }if (ready_event.constructor === Event) {
+	      window.APP.DATA.delay = 100;
+	      window.APP.throw_event(ready_event); // example plugins.close_cart
+	    } else console.error('Event error: This event doesn\' exist');
+	  };
+	
+	  this.start = function () {
+	    reload_plugins();
+	    redirect_ground();
+	    launch_event();
+	  };
+	}; /**
+	    * Created by mrskull on 18.12.16.
+	    */
+
+/***/ },
+/* 40 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	 * Created by mrskull on 31.01.17.
+	 */
+	
+	var Event_Button_Models = exports.Event_Button_Models = function Event_Button_Models(config) {
+	  var that = this;
+	
+	  this.settings = {
+	    container: undefined,
+	    button: undefined,
+	
+	    button_name: undefined,
+	    button_action: undefined,
+	    button_value: undefined,
+	    button_reload: undefined,
+	    button_redirect: undefined,
+	    button_event: undefined,
+	    button_url: undefined
+	  };
+	
+	  (function load_settings() {
+	    if (typeof config !== 'undefined') {
+	      window.APP.add_if_isset(config, that.settings, 'container');
+	
+	      window.APP.add_if_isset(config, that.settings, 'callback');
+	
+	      window.APP.add_if_isset(config, that.settings, 'button');
+	
+	      window.APP.add_if_isset(config, that.settings, 'button_name');
+	      window.APP.add_if_isset(config, that.settings, 'button_reload');
+	      window.APP.add_if_isset(config, that.settings, 'button_redirect');
+	      window.APP.add_if_isset(config, that.settings, 'button_event');
+	
+	      window.APP.add_if_isset(config, that.settings, 'button_html', 'text_standard');
+	    }
+	  })();
+	};
+
+/***/ },
+/* 41 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	exports.plugin_open = exports.start = exports.define = undefined;
 	
 	var _controllers = __webpack_require__(13);
 	
 	var _controllers2 = __webpack_require__(17);
 	
-	var _controllers3 = __webpack_require__(37);
-	
-	var cart_controllers = _interopRequireWildcard(_controllers3);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	var _controllers3 = __webpack_require__(38);
 	
 	/**
 	 *    Defining private variables
@@ -2768,7 +2940,10 @@
 	
 	  duration_open: 300,
 	  duration_close: 150
-	};
+	},
+	    event_button_controllers = new _controllers3.Event_Button_Controllers({
+	  container: '#NAVIGATION'
+	});
 	
 	/**
 	 *    Defining public functions
@@ -2779,11 +2954,11 @@
 	 */
 	
 	var define = exports.define = function define() {
-	  var $navigation = $('#NAVIGATION');
-	  navigation_motion_controllers.define();
+	  window.APP.add_own_event('navigation_close', navigation_motion_controllers.plugin_close);
+	  window.APP.add_own_event('navigation_open', navigation_motion_controllers.plugin_open);
 	
-	  $('.navigation-secondary-cart > *', $navigation).click(cart_controllers.open_or_close);
-	  $('.navigation-close_navigation', $navigation).click(navigation_motion_controllers.plugin_close);
+	  navigation_motion_controllers.define();
+	  event_button_controllers.define();
 	},
 	    start = exports.start = function start() {
 	  // -- Loader configuration
@@ -2799,7 +2974,7 @@
 	};
 
 /***/ },
-/* 39 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2811,19 +2986,7 @@
 	
 	var _controllers = __webpack_require__(13);
 	
-	var _controllers2 = __webpack_require__(12);
-	
-	var searcher_controllers = _interopRequireWildcard(_controllers2);
-	
-	var _controllers3 = __webpack_require__(38);
-	
-	var navigation_controllers = _interopRequireWildcard(_controllers3);
-	
-	var _controllers4 = __webpack_require__(37);
-	
-	var cart_controllers = _interopRequireWildcard(_controllers4);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	var _controllers2 = __webpack_require__(38);
 	
 	/**
 	 *    Defining private variables
@@ -2841,24 +3004,17 @@
 	  container: '#HEADER > .header',
 	
 	  auto_first_loading: true
-	};
+	},
+	    event_button_controllers = new _controllers2.Event_Button_Controllers({
+	  container: '#HEADER'
+	});
 	
 	/**
 	 *    Defining public functions
 	 */
 	
 	var define = exports.define = function define() {
-	  var $header = $('#HEADER');
-	
-	  $('.navigation-mobile-filter button', $header).click(searcher_controllers.plugin_open);
-	
-	  $('.navigation-mobile-navigation button', $header).click(navigation_controllers.plugin_open);
-	
-	  $('.navigation-mobile-cart button', $header).click(cart_controllers.open_or_close);
-	
-	  $('.navigation-secondary-searcher > *', $header).click(searcher_controllers.plugin_open);
-	
-	  $('.navigation-secondary-cart > *', $header).click(cart_controllers.open_or_close);
+	  event_button_controllers.define();
 	},
 	    start = exports.start = function start() {
 	  header_loader_events = new _controllers.Plugins_Loader_Controllers(config_loader);
@@ -2866,7 +3022,7 @@
 	};
 
 /***/ },
-/* 40 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2876,11 +3032,11 @@
 	});
 	exports.close = exports.open = exports.define = undefined;
 	
-	var _views = __webpack_require__(41);
+	var _views = __webpack_require__(44);
 	
 	var dialog_views = _interopRequireWildcard(_views);
 	
-	var _controllers = __webpack_require__(43);
+	var _controllers = __webpack_require__(46);
 	
 	var interior_dialog_controllers = _interopRequireWildcard(_controllers);
 	
@@ -2953,7 +3109,7 @@
 	    close = exports.close = dialog_views.close;
 
 /***/ },
-/* 41 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2963,15 +3119,15 @@
 	});
 	exports.close = exports.open = exports.selectors = undefined;
 	
-	var _models = __webpack_require__(42);
+	var _models = __webpack_require__(45);
 	
 	var dialog_models = _interopRequireWildcard(_models);
 	
-	var _controllers = __webpack_require__(43);
+	var _controllers = __webpack_require__(46);
 	
 	var interior_dialog_controllers = _interopRequireWildcard(_controllers);
 	
-	var _models2 = __webpack_require__(45);
+	var _models2 = __webpack_require__(48);
 	
 	var interior_dialog_models = _interopRequireWildcard(_models2);
 	
@@ -3052,7 +3208,7 @@
 	};
 
 /***/ },
-/* 42 */
+/* 45 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -3083,7 +3239,7 @@
 	selectors.external_buttons = '.dialog_button';
 
 /***/ },
-/* 43 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3093,11 +3249,11 @@
 	});
 	exports.define = exports.recognize_button = exports.load = undefined;
 	
-	var _views = __webpack_require__(44);
+	var _views = __webpack_require__(47);
 	
 	var interior_dialog_views = _interopRequireWildcard(_views);
 	
-	var _controllers = __webpack_require__(40);
+	var _controllers = __webpack_require__(43);
 	
 	var _controllers2 = __webpack_require__(20);
 	
@@ -3146,7 +3302,7 @@
 	};
 
 /***/ },
-/* 44 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3156,7 +3312,7 @@
 	});
 	exports.load = exports.container = exports.variables = exports.selectors = undefined;
 	
-	var _models = __webpack_require__(45);
+	var _models = __webpack_require__(48);
 	
 	var interior_dialog_models = _interopRequireWildcard(_models);
 	
@@ -3170,7 +3326,7 @@
 	                                                        */
 
 /***/ },
-/* 45 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3182,7 +3338,7 @@
 	
 	var _controllers = __webpack_require__(13);
 	
-	var _models = __webpack_require__(42);
+	var _models = __webpack_require__(45);
 	
 	/**
 	 * Created by mrskull on 21.01.17.
@@ -3229,7 +3385,7 @@
 	};
 
 /***/ },
-/* 46 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3245,8 +3401,14 @@
 	
 	var _controllers3 = __webpack_require__(34);
 	
+	var _controllers4 = __webpack_require__(38);
+	
 	/**
 	 *    Defining private variables
+	 */
+	
+	/**
+	 * Created by mrskull on 08.01.17.
 	 */
 	
 	var config_loader = {
@@ -3259,18 +3421,16 @@
 	  load_with_page: true
 	},
 	    ground_loader_controllers = new _controllers.Plugins_Loader_Controllers(config_loader),
-	    config_post_button = {
+	    post_button_controllers = new _controllers3.Post_Button_Controllers({
 	  container: '#GROUND .ground'
-	},
-	    post_button_controllers = new _controllers3.Post_Button_Controllers(config_post_button),
+	}),
+	    event_button_controllers = new _controllers4.Event_Button_Controllers({
+	  container: '#GROUND .ground'
+	}),
 	    ground_form_controllers = new _controllers2.Form_Controllers(ground_loader_controllers);
 	
 	/**
 	 *    Defining private functions
-	 */
-	
-	/**
-	 * Created by mrskull on 08.01.17.
 	 */
 	
 	var change_url = function change_url(url) {
@@ -3338,6 +3498,7 @@
 	
 	  ground_form_controllers.define();
 	  post_button_controllers.define();
+	  event_button_controllers.define();
 	},
 	    start = exports.start = function start() {
 	  ground_loader_controllers.define();

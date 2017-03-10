@@ -6,6 +6,7 @@ import {Plugins_Loader_Controllers}     from '../../plugins_loader/controllers'
 import {Plugins_Motion_Controllers}     from '../../plugins_motion/controllers'
 import {Form_Controllers}               from '../../forms/js/controllers'
 import {Post_Button_Controllers}        from '../../forms/js/post_button/controllers'
+import {Event_Button_Controllers}       from '../../forms/js/event_button/controllers'
 
 
 /**
@@ -39,6 +40,10 @@ let
     callback: cart_loader_controllers.reload, ///////////////////////////////////////////////// popraw
   }),
 
+  event_button_controllers = new Event_Button_Controllers({
+    container: '#CART'
+  }),
+
   cart_form_controllers = new Form_Controllers(cart_loader_controllers),
 
 
@@ -66,16 +71,16 @@ export let
 
   define = function()
   {
-    $('.cart-close', $('#CART')).click(cart_motion_controllers.plugin_close);
-
     window.APP.add_own_event('cart_open', cart_motion_controllers.plugin_open);
     window.APP.add_own_event('cart_close', cart_motion_controllers.plugin_close);
+    window.APP.add_own_event('cart_open_or_close', open_or_close);
 
     $('body').keydown(manage_key);
 
     cart_form_controllers.define();
     cart_motion_controllers.define();
     post_button_controllers.define();
+    event_button_controllers.define();
   },
 
 
@@ -94,6 +99,8 @@ export let
 
   open_or_close = function()
   {
+    window.APP.throw_event(window.EVENTS.plugins.close_navigation);
+
     if(cart_motion_controllers.is_open())
       plugin_close();
     else
