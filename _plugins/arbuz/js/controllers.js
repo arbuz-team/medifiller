@@ -42,7 +42,10 @@ let
 
   reload_website = function()
   {
-    window.location.reload();
+    if(!window.APP.DATA.delay)
+      window.APP.DATA.delay = 0;
+
+    setTimeout(window.location.reload, window.APP.DATA.delay);
   },
 
 

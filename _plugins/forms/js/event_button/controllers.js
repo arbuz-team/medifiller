@@ -20,11 +20,14 @@ export let Event_Button_Controllers = function(config)
 
     manage_buttons = function(event)
     {
-      event.preventDefault();
-      event.stopPropagation();
-
       let
-        button_name = $(this).data('name');
+        button_name = $(this).data('name'),
+        button_prevent = $(this).data('prevent');
+
+      if(button_prevent !== 'false')
+        event.preventDefault();
+
+      console.log('weszło: '+ button_prevent);
 
       if(buttons_views[button_name])
         buttons_views[button_name].start();
@@ -43,6 +46,7 @@ export let Event_Button_Controllers = function(config)
       config.button_reload = $(this).data('reload');
       config.button_redirect = $(this).data('redirect');
       config.button_event = $(this).data('event');
+      config.button_delay = $(this).data('delay');
 
       buttons_views[button_name] = new Event_Button_Views(config);
     };

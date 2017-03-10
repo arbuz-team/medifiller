@@ -433,7 +433,9 @@
 	  };
 	},
 	    reload_website = function reload_website() {
-	  window.location.reload();
+	  if (!window.APP.DATA.delay) window.APP.DATA.delay = 0;
+	
+	  setTimeout(window.location.reload, window.APP.DATA.delay);
 	},
 	    define = function define() {
 	  // Usuń wszystkie wydarzenia ze wszystkich elementów
@@ -1812,6 +1814,16 @@
 	  country: 'proper_name'
 	};
 	
+	list_configs.root_address = {
+	  full_name: 'full_name',
+	  address_line_1: 'no_empty',
+	  city: 'proper_name',
+	  region: 'proper_name',
+	  postcode: 'no_empty',
+	  country: 'proper_name',
+	  email: 'email'
+	};
+	
 	list_configs.forgot_password = {
 	  email: 'email'
 	};
@@ -2762,10 +2774,12 @@
 	
 	  var buttons_views = {},
 	      manage_buttons = function manage_buttons(event) {
-	    event.preventDefault();
-	    event.stopPropagation();
+	    var button_name = $(this).data('name'),
+	        button_prevent = $(this).data('prevent');
 	
-	    var button_name = $(this).data('name');
+	    if (button_prevent !== 'false') event.preventDefault();
+	
+	    console.log('weszło: ' + button_prevent);
 	
 	    if (buttons_views[button_name]) buttons_views[button_name].start();else console.error('Button "' + button_name + '" doesn\'t exsist');
 	  },
@@ -2777,6 +2791,7 @@
 	    config.button_reload = $(this).data('reload');
 	    config.button_redirect = $(this).data('redirect');
 	    config.button_event = $(this).data('event');
+	    config.button_delay = $(this).data('delay');
 	
 	    buttons_views[button_name] = new _views.Event_Button_Views(config);
 	  };
@@ -2849,7 +2864,8 @@
 	    for (var i = 0; split_event.length > i; ++i) {
 	      ready_event = ready_event[split_event[i]];
 	    }if (ready_event.constructor === Event) {
-	      window.APP.DATA.delay = 100;
+	      if (models.settings.button_delay) window.APP.DATA.delay = models.settings.button_delay;
+	
 	      window.APP.throw_event(ready_event); // example plugins.close_cart
 	    } else console.error('Event error: This event doesn\' exist');
 	  };
@@ -2884,19 +2900,15 @@
 	    button: undefined,
 	
 	    button_name: undefined,
-	    button_action: undefined,
-	    button_value: undefined,
 	    button_reload: undefined,
 	    button_redirect: undefined,
 	    button_event: undefined,
-	    button_url: undefined
+	    button_delay: undefined
 	  };
 	
 	  (function load_settings() {
 	    if (typeof config !== 'undefined') {
 	      window.APP.add_if_isset(config, that.settings, 'container');
-	
-	      window.APP.add_if_isset(config, that.settings, 'callback');
 	
 	      window.APP.add_if_isset(config, that.settings, 'button');
 	
@@ -2904,8 +2916,6 @@
 	      window.APP.add_if_isset(config, that.settings, 'button_reload');
 	      window.APP.add_if_isset(config, that.settings, 'button_redirect');
 	      window.APP.add_if_isset(config, that.settings, 'button_event');
-	
-	      window.APP.add_if_isset(config, that.settings, 'button_html', 'text_standard');
 	    }
 	  })();
 	};

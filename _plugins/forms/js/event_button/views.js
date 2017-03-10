@@ -68,7 +68,9 @@ export let Event_Button_Views = function(config)
 
       if(ready_event.constructor === Event)
       {
-        window.APP.DATA.delay = 100;
+        if(models.settings.button_delay)
+          window.APP.DATA.delay = models.settings.button_delay;
+
         window.APP.throw_event(ready_event); // example plugins.close_cart
       }
       else

@@ -21,6 +21,16 @@ list_configs.user_address = {
   country:          'proper_name',
 };
 
+list_configs.root_address = {
+  full_name:        'full_name',
+  address_line_1:   'no_empty',
+  city:             'proper_name',
+  region:           'proper_name',
+  postcode:         'no_empty',
+  country:          'proper_name',
+  email:            'email',
+};
+
 list_configs.forgot_password = {
   email:      'email',
 };

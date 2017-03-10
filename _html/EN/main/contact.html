@@ -2,8 +2,8 @@
 
 <script>
     window.APP.DATA = {
-        title : 'Contact with us'
-        , description : 'Ways to contact us.'
+        title : 'Contact with us',
+        description : 'Ways to contact us.',
     };
 </script>
 <script src='https://www.google.com/recaptcha/api.js'></script>
@@ -18,19 +18,27 @@
 
         <div class="block-content-left">
 
-            {% for element in content %}
-
-            {% if element.header %}
-                <div class="title">
-                    {{ element.header | safe }}
-                </div>
-            {% endif %}
-
-            <div class="paragraph">
-                {{ element.paragraph | safe }}
+            <div class="title">
+                {{ request.session.root_address.full_name }}
             </div>
 
-            {% endfor %}
+            <div class="paragraph">
+                {{ request.session.root_address.address_line_1 }}<br>
+
+                {% if request.session.root_address.address_line_2 %}
+                    {{ request.session.root_address.address_line_2 }}<br>
+                {% endif %}
+
+                {{ request.session.root_address.postcode }} {{ request.session.root_address.city }}<br>
+                {{ request.session.root_address.region }} {{ request.session.root_address.country }}<br>
+
+                {% if request.session.root_address.phone %}
+                    {{ request.session.root_address.phone }}<br>
+                {% endif %}
+
+                {{ request.session.root_address.email }}<br>
+            </div>
+
 
             <form method="post" action="" id="form_{{ form_name }}" data-name="{{ form_name }}" data-type="{{ form_name }}" data-test="yes" class="field_shell">
 

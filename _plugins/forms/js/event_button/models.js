@@ -12,12 +12,10 @@ export let Event_Button_Models = function(config)
     button:             undefined,
 
     button_name:        undefined,
-    button_action:      undefined,
-    button_value:       undefined,
     button_reload:      undefined,
     button_redirect:    undefined,
     button_event:       undefined,
-    button_url:         undefined,
+    button_delay:       undefined,
   };
 
 
@@ -27,16 +25,12 @@ export let Event_Button_Models = function(config)
     {
       window.APP.add_if_isset(config, that.settings, 'container');
 
-      window.APP.add_if_isset(config, that.settings, 'callback');
-
       window.APP.add_if_isset(config, that.settings, 'button');
 
       window.APP.add_if_isset(config, that.settings, 'button_name');
       window.APP.add_if_isset(config, that.settings, 'button_reload');
       window.APP.add_if_isset(config, that.settings, 'button_redirect');
       window.APP.add_if_isset(config, that.settings, 'button_event');
-
-      window.APP.add_if_isset(config, that.settings, 'button_html', 'text_standard');
     }
   })();
 
