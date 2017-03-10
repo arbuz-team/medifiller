@@ -2132,8 +2132,13 @@
 	   *    Defining private functions
 	   */
 	
-	  var send = function send(post_data) {
-	    window.APP.http_request(models.settings.action, post_data, function () {
+	  var is_error = function is_error(JSON_response, status) {
+	    if (status !== 'success') return true;
+	
+	    return false;
+	  },
+	      send = function send(post_data) {
+	    window.APP.http_request(models.settings.action, post_data, function (JSON_response, status) {
 	      APP.DATA = {};
 	
 	      if (typeof models.settings.delay !== 'undefined') APP.DATA.delay = models.settings.delay;else APP.DATA.delay = 1000;
@@ -2144,6 +2149,12 @@
 	        APP.throw_event(window.EVENTS.redirect);
 	      } else if (models.settings.reload) {
 	        APP.throw_event(window.EVENTS.plugins['reload_' + models.settings.reload]);
+	      }
+	
+	      if (is_error(JSON_response, status)) {
+	        APP.DATA.delay = 0;
+	
+	        APP.throw_event(window.EVENTS.plugins.reload_ground);
 	      }
 	    });
 	  };

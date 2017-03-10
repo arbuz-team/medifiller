@@ -183,30 +183,46 @@ export let Auto_Form_Views = function(config)
    *    Defining private functions
    */
 
-  let send = function(post_data)
-  {
-    window.APP.http_request(models.settings.action, post_data, function()
+  let
+    is_error = function(JSON_response, status)
     {
-      APP.DATA = {};
+      if(status !== 'success')
+        return true;
 
-      if(typeof models.settings.delay !== 'undefined')
-        APP.DATA.delay = models.settings.delay;
-      else
-        APP.DATA.delay = 1000;
+      return false;
+    },
 
-
-      if(models.settings.url)
+    send = function(post_data)
+    {
+      window.APP.http_request(models.settings.action, post_data, function(JSON_response, status)
       {
-        APP.DATA.redirect = models.settings.url;
+        APP.DATA = {};
 
-        APP.throw_event(window.EVENTS.redirect);
-      }
-      else if(models.settings.reload)
-      {
-        APP.throw_event(window.EVENTS.plugins['reload_'+ models.settings.reload]);
-      }
-    });
-  };
+        if(typeof models.settings.delay !== 'undefined')
+          APP.DATA.delay = models.settings.delay;
+        else
+          APP.DATA.delay = 1000;
+
+
+        if(models.settings.url)
+        {
+          APP.DATA.redirect = models.settings.url;
+
+          APP.throw_event(window.EVENTS.redirect);
+        }
+        else if(models.settings.reload)
+        {
+          APP.throw_event(window.EVENTS.plugins['reload_'+ models.settings.reload]);
+        }
+
+        if(is_error(JSON_response, status))
+        {
+          APP.DATA.delay = 0;
+
+          APP.throw_event(window.EVENTS.plugins.reload_ground);
+        }
+      });
+    };
 
 };
 
