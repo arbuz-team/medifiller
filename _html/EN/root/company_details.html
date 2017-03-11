@@ -5,37 +5,33 @@
   };
 </script>
 
-<div class="ground-block block-1 BIG">
+<div class="ground-block block-1 SMALL">
 
     <div class="block-background fill-abs"></div>
     {% include "ground/html/navigation.html" %}
 
     <div class="block-content">
 
-        <div class="form_block field_shell">
-            <form method="post" action="" data-name="{{ form_name }}" data-type="{{ form_name }}" data-test="yes">
+        <form class="field_shell" method="post" action="" data-name="{{ form_name }}" data-type="{{ form_name }}" data-test="yes">
 
-                <div class="shell_form"></div>
+            <div class="title"> Edit your address </div>
 
-                <div class="title"> Edit your address </div>
+            {% for i in form %}
 
-                {% for i in form %}
-
-                    <div>
-                        {{ i }}
-                        {{ i.errors }}
-                    </div>
-
-                {% endfor %}
-
-                <div class="form_buttons short">
-                    <button disabled type="submit">
-                        Done
-                    </button>
+                <div>
+                    {{ i }}
+                    {{ i.errors }}
                 </div>
 
-            </form>
-        </div><!-- form_block -->
+            {% endfor %}
+
+            <div class="form_buttons short">
+                <button disabled type="submit">
+                    Done
+                </button>
+            </div>
+
+        </form>
 
     </div><!-- block-content -->
 
