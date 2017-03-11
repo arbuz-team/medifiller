@@ -160,9 +160,9 @@ class Users_Payments(Dynamic_Event_Manager):
     def Get_Date(self):
 
         date_from = self.request.session['root_users_payments_date_from']
-        date_from = datetime.strptime(date_from, '%d.%m.%Y')
+        date_from = datetime.strptime(date_from, '%Y-%m-%d')
         date_to = self.request.session['root_users_payments_date_to']
-        date_to = datetime.strptime(date_to, '%d.%m.%Y')
+        date_to = datetime.strptime(date_to, '%Y-%m-%d')
 
         return date_from, date_to
 
@@ -250,8 +250,8 @@ class Transport_Settings(Dynamic_Event_Manager):
 
     def Manage_Form(self):
 
-        pk = self.request.POST['__form__']
-        price, currency = self.request.POST['value'].split(' ')
+        pk, currency = self.request.POST['__form__'].split(' ')
+        price = self.request.POST['value']
         transport = Transport.objects.get(pk=pk)
 
         if currency == 'PLN':

@@ -1,3 +1,4 @@
+{% load tags %}
 <!DOCTYPE html>
 <html lang="pl">
 
@@ -97,26 +98,20 @@
 
 			<div id="content">
 
-                {{ invoice.unique }}<br>
-                {{ invoice.date }}<br>
-                {{ invoice.seller }}<br>
-                {{ invoice.client }}<br><br><br>
+                Number invoice:     {{ invoice.unique }}<br>
+                Date of issue:      {{ invoice.date }}<br>
+                Details seller:     {{ invoice.seller }}<br>
+                Details client:     {{ invoice.client }}<br><br><br>
 
                 {% for selected in invoice.products %}
-                    {{ selected.product }} <br>
-                    {{ selected.number }} <br>
-                    cena netto <br>
-                    vat <br>
-                    rabaty <br>
+                    Product name:           {{ selected.product }} <br>
+                    Number of products:     {{ selected.number }} <br>
+                    Netto price:            {% netto product=selected.product %}<br>
+                    Brutto price:           {% get_price selected.product %}<br>
+                    VAT:                    8%
                 {% endfor %}<br><br>
 
-                {% for total in invoice.total_vats %}
-                    {{ total.netto }} <br>
-                    {{ total.vat }} <br>
-                    {{ total.brutto }} <br>
-                {% endfor %}<br><br>
-
-                {{ invoice.netto_price }}<br>
+                {% netto invoice.brutto_price %}<br>
                 {{ invoice.brutto_price  }}<br>
 
 			</div><!-- content -->

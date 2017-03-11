@@ -22,7 +22,7 @@
                     </a>
                 </div>
                 <div class="cart-list-actions field_shell">
-                    <span>{{ selected.number }} x {% price selected.product %}</span>
+                    <span>{{ selected.number }} x {% get_price selected.product %}</span>
                     <button class="post_button icon" type="button"
                             data-name="Delete_{{ selected.product.pk }}"
                             data-action="delete"

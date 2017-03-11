@@ -24,7 +24,7 @@
                 <div class="cart-list-actions field_shell">
                     <form class="auto_form" action="/cart/" data-origin="edit">
                         <input class="auto_field only_number_3 always" type="text" value="{{ selected.number }}" data-name="{{ selected.pk }}">
-                        <span> x {% price selected.product %}</span>
+                        <span> x {% get_price selected.product %}</span>
                         <button class="post_button icon" type="button"
                                 data-name="Delete_{{ selected.product.pk }}"
                                 data-action="delete"

@@ -59,7 +59,7 @@ class Account_Details(Dynamic_Event_Manager):
         if details.is_valid():
             unique = self.request.session['user_unique']
             user = User.objects.get(unique=unique)
-            user.email = details.cleaned_data['email']
+            user.email = details.cleaned_data['new_email']
             user.save()
 
             return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
@@ -73,7 +73,7 @@ class Account_Details(Dynamic_Event_Manager):
         if details.is_valid():
             unique = self.request.session['user_unique']
             user = User.objects.get(unique=unique)
-            user.username = details.cleaned_data['username']
+            user.username = details.cleaned_data['new_username']
             user.save()
 
             return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
@@ -87,7 +87,7 @@ class Account_Details(Dynamic_Event_Manager):
         if details.is_valid():
             unique = self.request.session['user_unique']
             user = User.objects.get(unique=unique)
-            user.password = details.cleaned_data['password']
+            user.password = details.cleaned_data['new_password']
             user.save()
 
             return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
@@ -218,9 +218,9 @@ class My_Shopping(Dynamic_Event_Manager):
     def Get_Date(self):
 
         date_from = self.request.session['user_my_shopping_date_from']
-        date_from = datetime.strptime(date_from, '%d.%m.%Y')
+        date_from = datetime.strptime(date_from, '%Y-%m-%d')
         date_to = self.request.session['user_my_shopping_date_to']
-        date_to = datetime.strptime(date_to, '%d.%m.%Y')
+        date_to = datetime.strptime(date_to, '%Y-%m-%d')
 
         return date_from, date_to
 

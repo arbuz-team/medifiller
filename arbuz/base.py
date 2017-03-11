@@ -125,8 +125,8 @@ class Dynamic_Base:
 
         prices = \
         {
-            'EUR': product.price_eur,
-            'PLN': product.price_pln
+            'EUR': product.price_eur / 100,
+            'PLN': product.price_pln / 100
         }
 
         if currency:
