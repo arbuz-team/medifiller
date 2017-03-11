@@ -1423,7 +1423,7 @@ img {
 .ground {
   top: 8px;
   opacity: 0.4;
-  overflow-y: auto;
+  overflow-y: scroll;
   background-color: #f2f2f2; }
   .ground > .block-1 {
     border-bottom: 1px solid transparent; }
