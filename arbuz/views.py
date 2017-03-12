@@ -294,11 +294,11 @@ class Dynamic_Event_Manager(Manager, Checker, Updater, metaclass=ABCMeta):
 
                 self.Timer_Start()
                 self.HTML = self.Initialize()
-                self.Timer_Stop()
+                self.Display_Status()
 
             except Exception as exception:
 
-                self.Timer_Stop(error=True)
+                self.Display_Status(error=True)
                 raise exception
 
     @staticmethod

@@ -237,7 +237,7 @@ class Dynamic_Base:
         if DEBUG:
             self.start_time = time.time()
 
-    def Timer_Stop(self, error=False):
+    def Display_Status(self, error=False):
 
         if DEBUG:
 
