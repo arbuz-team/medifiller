@@ -16,26 +16,51 @@
             <!--fields of form-->
             {% for field in form %}
 
-                <div class="file_shell">
-                    {% if field|fieldtype == 'ClearableFileInput'%}
 
+                {% if field|fieldtype == 'CheckboxInput' %}
+
+                    <div class="selecter checkbox">
                         {{ field }}
-                        <button type="button">Select file</button>
-                        {{ field.errors }}
+                        <label for="id_{{ field.name }}" class="selecter-field"></label>
+                        <label for="id_{{ field.name }}" class="selecter-text">{{ field.label }}</label>
+                    </div>
 
-                    {% else %}
 
+                {% elif field|fieldtype == 'RadioInput' %}
+
+                    <div class="selecter radio">
                         {{ field }}
-                        {{ field.errors }}
+                        <label for="id_{{ field.name }}" class="selecter-field"></label>
+                        <label for="id_{{ field.name }}" class="selecter-text">{{ field.label }}</label>
+                    </div>
 
-                    {% endif %}
-                    <div class="status"></div>
-                </div>
+                {% else %}
+
+                    <div>
+
+                        {% if field|fieldtype == 'ClearableFileInput' %}
+
+                            {{ field }}
+                            <button type="button">Select file</button>
+                            {{ field.errors }}
+
+                        {% else %}
+
+                            {{ field }}
+                            {{ field.errors }}
+
+                        {% endif %}
+
+                        <div class="status"></div>
+                    </div>
+
+                {% endif %}
+
 
             {% endfor %}
 
             {% if image %}
-                <img data-src="{{ image }}" alt="image">
+                <img data-src="{{ image }}" src="/_static/img/pixel.png" alt="image">
             {% endif %}
 
         </div><!-- dialog-content-part -->

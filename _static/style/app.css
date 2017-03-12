@@ -1085,7 +1085,9 @@ button {
 .field_shell .selecter {
   width: 100%;
   position: relative;
-  min-height: 27px; }
+  min-height: 27px;
+  line-height: 27px;
+  padding: 0; }
   .field_shell .selecter label {
     cursor: pointer; }
   .field_shell .selecter label.selecter-field {
