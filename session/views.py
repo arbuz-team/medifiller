@@ -33,11 +33,11 @@ class Session_Controller:
 
         if 'user_my_shopping_date_from' not in self.request.session:
             self.request.session['user_my_shopping_date_from'] = \
-                (datetime.today() - timedelta(days=7)).strftime('%d.%m.%Y')
+                (datetime.today() - timedelta(days=7)).strftime('%Y-%m-%d')
 
         if 'user_my_shopping_date_to' not in self.request.session:
             self.request.session['user_my_shopping_date_to'] = \
-                datetime.today().strftime('%d.%m.%Y')
+                datetime.today().strftime('%Y-%m-%d')
 
     def Check_Session_Root(self):
 
@@ -49,11 +49,11 @@ class Session_Controller:
 
         if 'root_users_payments_date_from' not in self.request.session:
             self.request.session['root_users_payments_date_from'] = \
-                (datetime.today() - timedelta(days=7)).strftime('%d.%m.%Y')
+                (datetime.today() - timedelta(days=7)).strftime('%Y-%m-%d')
 
         if 'root_users_payments_date_to' not in self.request.session:
             self.request.session['root_users_payments_date_to'] = \
-                datetime.today().strftime('%d.%m.%Y')
+                datetime.today().strftime('%Y-%m-%d')
 
         if 'root_address' not in self.request.session:
             self.request.session['root_address'] = \

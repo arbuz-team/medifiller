@@ -40,7 +40,7 @@
 
                         <div class="product_details-action_panel-prices">
                             {% if request.session.user_login %}
-                                {% price product %}
+                                {% get_price product %}
                             {% else %}
                                 If you want buy a product you must login.
                                 <a href="{% sign_in_redirect 'product.details' pk=product.pk %}">Sign in!</a>

@@ -36,5 +36,19 @@ class Form_Root_Login(Abstract_Form):
 
 class Form_Root_Address(Abstract_Address_Form):
 
+    def Set_Widgets(self):
+
+        phone_attr = {
+            'placeholder': Text(self.request, 139),
+        }
+
+        email_attr = {
+            'placeholder': Text(self.request, 140),
+            'class': 'test',
+        }
+
+        self.fields['phone'].widget = forms.TextInput(attrs=phone_attr)
+        self.fields['email'].widget = forms.TextInput(attrs=email_attr)
+
     class Meta(Abstract_Address_Form.Meta):
         model = Root_Address

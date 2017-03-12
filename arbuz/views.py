@@ -59,11 +59,15 @@ class Manager(Dynamic_Base):
 
         return JsonResponse({'__button__': 'false'})
 
-    def Manage_Index(self):
-
+    def Index_Clear_Session(self):
         self.Clear_Session('searcher')
         self.Clear_Session('root_social_media')
+        self.Clear_Session('root_address')
         Check_Session(self.request)
+
+    def Manage_Index(self):
+
+        self.Index_Clear_Session()
 
         # change website to other language
         lang_redirect = Translator.Get_Language_Redirect(self.request)

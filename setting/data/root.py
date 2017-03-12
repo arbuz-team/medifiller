@@ -50,7 +50,7 @@ def Load_Default_Data():
         region='Mazowieckie',
         postcode='00-030',
         country='Polska',
-        telefon='+48 22 58 29 474',
+        phone='+48 22 58 29 474',
         email='info@spasungate.pl'
     ).save()
 

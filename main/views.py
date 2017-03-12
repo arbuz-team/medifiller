@@ -10,7 +10,7 @@ class Editable_Tab(Dynamic_Event_Manager):
     def Manage_Content_Ground(self):
         pass
 
-    def Manage_Form_Edit_Password(self):
+    def Manage_Form_Content_Tab(self):
 
         content_tab = Form_Content_Tab(
             self.request, self.request.POST)
@@ -36,7 +36,7 @@ class Editable_Tab(Dynamic_Event_Manager):
     def Manage_Form(self):
 
         if self.request.POST['__form__'] == 'content_tab':
-            return self.Manage_Form_Edit_Password()
+            return self.Manage_Form_Content_Tab()
 
         return Dynamic_Event_Manager.Manage_Form(self)
 
