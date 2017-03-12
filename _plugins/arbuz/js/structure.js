@@ -42,7 +42,7 @@ export let data_controller = new function Data_Controler()
         return public_data[ name ];
       else
       {
-        console.error('Data structure error: Wrong call! Veriable with this name doesn\'t exist.');
+        console.error('Data structure error: Wrong call! Veriable with this name doesn\'t exist: "'+ name +'".');
       }
   };
 
@@ -63,7 +63,7 @@ export let data_controller = new function Data_Controler()
     if( typeof public_data[ name ] !== 'undefined' )
       public_data[ name ] = wartosc;
     else
-      console.error('Data structure error: Wrong call! Veriable with this name doesn\'t exist. '+ name);
+      console.error('Data structure error: Wrong call! Veriable with this name doesn\'t exist: "'+ name +'".');
   };
 
 

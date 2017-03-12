@@ -312,7 +312,7 @@
 	
 	  this.get = function (name) {
 	    if (typeof private_data[name] !== 'undefined') return private_data[name];else if (typeof public_data[name] !== 'undefined') return public_data[name];else {
-	      console.error('Data structure error: Wrong call! Veriable with this name doesn\'t exist.');
+	      console.error('Data structure error: Wrong call! Veriable with this name doesn\'t exist: "' + name + '".');
 	    }
 	  };
 	
@@ -321,7 +321,7 @@
 	  };
 	
 	  this.change = function (name, wartosc) {
-	    if (typeof public_data[name] !== 'undefined') public_data[name] = wartosc;else console.error('Data structure error: Wrong call! Veriable with this name doesn\'t exist. ' + name);
+	    if (typeof public_data[name] !== 'undefined') public_data[name] = wartosc;else console.error('Data structure error: Wrong call! Veriable with this name doesn\'t exist: "' + name + '".');
 	  };
 	
 	  this.change_much = function (object) {
@@ -2015,45 +2015,14 @@
 	
 	var Auto_Form_Views = exports.Auto_Form_Views = function Auto_Form_Views(config) {
 	  var models = new _models.Auto_Form_Models(config),
-	      that = this;
+	      that = this,
+	      sent_http_request = setTimeout(function () {}, 0);
 	
 	  this.models = models;
-	
-	  // console.log(models.settings);
-	
 	
 	  /**
 	   *    Defining public functions
 	   */
-	
-	  this.send_checkbox = function () {
-	    var $field = $(this),
-	        post_data = {};
-	
-	    post_data['__' + models.settings.origin + '__'] = $field.data('name');
-	    post_data['name'] = $field.attr('name');
-	
-	    if ($field.is(':checked')) post_data['action'] = 'append';else post_data['action'] = 'delete';
-	
-	    send(post_data);
-	  };
-	
-	  this.send_default = function (name, value) {
-	    var $field = void 0,
-	        post_data = {};
-	
-	    if (name && value) {
-	      post_data['__' + models.settings.origin + '__'] = name;
-	      post_data['value'] = value;
-	    } else {
-	      $field = $(this);
-	
-	      post_data['__' + models.settings.origin + '__'] = $field.data('name');
-	      post_data['value'] = $field.val();
-	    }
-	
-	    send(post_data);
-	  };
 	
 	  var check_is_number = function check_is_number(event) {
 	    var keycode = event.keyCode,
@@ -2125,6 +2094,35 @@
 	    return event.keyCode === 13;
 	  };
 	
+	  this.send_checkbox = function () {
+	    var $field = $(this),
+	        post_data = {};
+	
+	    post_data['__' + models.settings.origin + '__'] = $field.data('name');
+	    post_data['name'] = $field.attr('name');
+	
+	    if ($field.is(':checked')) post_data['action'] = 'append';else post_data['action'] = 'delete';
+	
+	    send(post_data);
+	  };
+	
+	  this.send_default = function (name, value) {
+	    var $field = void 0,
+	        post_data = {};
+	
+	    if (name && value) {
+	      post_data['__' + models.settings.origin + '__'] = name;
+	      post_data['value'] = value;
+	    } else {
+	      $field = $(this);
+	
+	      post_data['__' + models.settings.origin + '__'] = $field.data('name');
+	      post_data['value'] = $field.val();
+	    }
+	
+	    send(post_data);
+	  };
+	
 	  this.send_on_enter = function (event) {
 	    if (check_is_key_code_enter(event)) {
 	      event.preventDefault();
@@ -2149,26 +2147,28 @@
 	
 	    return false;
 	  },
-	      send = function send(post_data) {
-	    window.APP.http_request(models.settings.action, post_data, function (JSON_response, status) {
-	      APP.DATA = {};
+	      show_changes = function show_changes() {
+	    var delay = void 0,
+	        function_for_setTimeout = function function_for_setTimeout() {
+	      APP.DATA.delay = delay;
 	
-	      if (typeof models.settings.delay !== 'undefined') APP.DATA.delay = models.settings.delay;else APP.DATA.delay = 1000;
-	
-	      if (models.settings.url) {
-	        APP.DATA.redirect = models.settings.url;
+	      if (models.settings.redirect) {
+	        APP.DATA.redirect = models.settings.redirect;
 	
 	        APP.throw_event(window.EVENTS.redirect);
 	      } else if (models.settings.reload) {
 	        APP.throw_event(window.EVENTS.plugins['reload_' + models.settings.reload]);
 	      }
+	    };
 	
-	      if (is_error(JSON_response, status)) {
-	        APP.DATA.delay = 0;
+	    if (typeof models.settings.delay !== 'undefined') delay = models.settings.delay;else delay = 0;
 	
-	        APP.throw_event(window.EVENTS.plugins.reload_ground);
-	      }
-	    });
+	    clearTimeout(sent_http_request);
+	    sent_http_request = setTimeout(function_for_setTimeout, delay);
+	  },
+	      send = function send(post_data) {
+	    window.APP.http_request(models.settings.action, post_data, function () {});
+	    show_changes();
 	  };
 	}; /**
 	    * Created by mrskull on 17.01.17.
@@ -2200,7 +2200,7 @@
 	
 	    action: undefined,
 	    origin: undefined,
-	    url: undefined,
+	    redirect: undefined,
 	    reload: undefined,
 	    delay: undefined
 	  };
@@ -2214,7 +2214,7 @@
 	        var $form = that.settings.form;
 	        that.settings.action = $form.attr('action');
 	        that.settings.origin = $form.data('origin');
-	        that.settings.url = $form.data('url');
+	        that.settings.redirect = $form.data('redirect');
 	        that.settings.reload = $form.data('reload');
 	        that.settings.delay = $form.data('delay');
 	      }
