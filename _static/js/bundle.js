@@ -390,23 +390,23 @@
 	
 	var searcher_controllers = _interopRequireWildcard(_controllers);
 	
-	var _controllers2 = __webpack_require__(37);
+	var _controllers2 = __webpack_require__(38);
 	
 	var cart_controllers = _interopRequireWildcard(_controllers2);
 	
-	var _controllers3 = __webpack_require__(41);
+	var _controllers3 = __webpack_require__(42);
 	
 	var navigation_controllers = _interopRequireWildcard(_controllers3);
 	
-	var _controllers4 = __webpack_require__(42);
+	var _controllers4 = __webpack_require__(43);
 	
 	var header_controllers = _interopRequireWildcard(_controllers4);
 	
-	var _controllers5 = __webpack_require__(43);
+	var _controllers5 = __webpack_require__(44);
 	
 	var dialog_controllers = _interopRequireWildcard(_controllers5);
 	
-	var _controllers6 = __webpack_require__(49);
+	var _controllers6 = __webpack_require__(50);
 	
 	var ground_controllers = _interopRequireWildcard(_controllers6);
 	
@@ -481,7 +481,7 @@
 	
 	var _controllers3 = __webpack_require__(20);
 	
-	var _controllers4 = __webpack_require__(34);
+	var _controllers4 = __webpack_require__(35);
 	
 	/**
 	 *    Defining private variables
@@ -1298,9 +1298,17 @@
 	
 	var _controllers4 = __webpack_require__(31);
 	
-	var file_converter = _interopRequireWildcard(_controllers4);
+	var selected_form = _interopRequireWildcard(_controllers4);
+	
+	var _controllers5 = __webpack_require__(32);
+	
+	var file_converter = _interopRequireWildcard(_controllers5);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	/**
+	 * Created by mrskull on 24.11.16.
+	 */
 	
 	var Form_Controllers = exports.Form_Controllers = function Form_Controllers(content_loader_controllers) {
 	  var form_models = new _models.Form_Models(content_loader_controllers);
@@ -1353,11 +1361,10 @@
 	    validator.define($container);
 	    hide_form.define($container);
 	    auto_form.define($container);
+	    selected_form.define($container);
 	    file_converter.define($container);
 	  };
-	}; /**
-	    * Created by mrskull on 24.11.16.
-	    */
+	};
 
 /***/ },
 /* 21 */
@@ -2231,6 +2238,62 @@
 
 /***/ },
 /* 31 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	 * Created by mrskull on 17.12.16.
+	 */
+	
+	var change_fields = function change_fields(select_choice) {
+	  var important_fields = $(select_choice).data('important_fields'),
+	      fields_to_hide = $(select_choice).val();
+	
+	  var hidden_fields = function hidden_fields(list, type) {
+	    var array = void 0,
+	        array_length = void 0;
+	
+	    if (!list || typeof list !== 'string') return false;
+	
+	    array = list.split(' ');
+	    array_length = array.length;
+	
+	    for (var i = 0; i < array_length; ++i) {
+	      if (array[i]) if ($('#id_' + array[i]).length) $('#id_' + array[i]).attr('hidden', type);
+	    }
+	  };
+	
+	  hidden_fields(important_fields, false);
+	  hidden_fields(fields_to_hide, true);
+	},
+	    change_form = function change_form(event) {
+	  event.preventDefault();
+	  event.stopPropagation();
+	
+	  var $select_choice = $(this),
+	      $title_field = $('#id_title'),
+	      $options = $select_choice.children('option'),
+	      form_title = $title_field.val();
+	
+	  $options.each(function () {
+	    if ($(this).is(':selected')) form_title = $(this).text();
+	  });
+	
+	  $title_field.attr('value', form_title);
+	
+	  change_fields($select_choice);
+	};
+	
+	var define = exports.define = function define($container) {
+	  $('.selected_form-choice', $container).change(change_form);
+	};
+
+/***/ },
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2240,7 +2303,7 @@
 	});
 	exports.define = undefined;
 	
-	var _views = __webpack_require__(32);
+	var _views = __webpack_require__(33);
 	
 	var image_convert_views = _interopRequireWildcard(_views);
 	
@@ -2268,7 +2331,7 @@
 	    */
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2278,7 +2341,7 @@
 	});
 	exports.Callback_Functions = exports.get_base64 = exports.settings = exports.models = undefined;
 	
-	var _models = __webpack_require__(33);
+	var _models = __webpack_require__(34);
 	
 	var image_convert_models = _interopRequireWildcard(_models);
 	
@@ -2328,7 +2391,7 @@
 	    */
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2351,7 +2414,7 @@
 	};
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2361,7 +2424,7 @@
 	});
 	exports.Post_Button_Controllers = undefined;
 	
-	var _views = __webpack_require__(35);
+	var _views = __webpack_require__(36);
 	
 	var Post_Button_Controllers = exports.Post_Button_Controllers = function Post_Button_Controllers(config) {
 	  if (typeof config === 'undefined' && typeof config.container === 'undefined') {
@@ -2407,7 +2470,7 @@
 	    */
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2417,7 +2480,7 @@
 	});
 	exports.Post_Button_Views = undefined;
 	
-	var _models = __webpack_require__(36);
+	var _models = __webpack_require__(37);
 	
 	var Post_Button_Views = exports.Post_Button_Views = function Post_Button_Views(config) {
 	  var models = new _models.Post_Button_Models(config),
@@ -2565,7 +2628,7 @@
 	    */
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2660,7 +2723,7 @@
 	};
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2676,9 +2739,9 @@
 	
 	var _controllers3 = __webpack_require__(20);
 	
-	var _controllers4 = __webpack_require__(34);
+	var _controllers4 = __webpack_require__(35);
 	
-	var _controllers5 = __webpack_require__(38);
+	var _controllers5 = __webpack_require__(39);
 	
 	/**
 	 *    Defining private variables
@@ -2754,7 +2817,7 @@
 	};
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2764,7 +2827,7 @@
 	});
 	exports.Event_Button_Controllers = undefined;
 	
-	var _views = __webpack_require__(39);
+	var _views = __webpack_require__(40);
 	
 	var Event_Button_Controllers = exports.Event_Button_Controllers = function Event_Button_Controllers(config) {
 	  if (typeof config === 'undefined' && typeof config.container === 'undefined') {
@@ -2808,7 +2871,7 @@
 	    */
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2818,7 +2881,7 @@
 	});
 	exports.Event_Button_Views = undefined;
 	
-	var _models = __webpack_require__(40);
+	var _models = __webpack_require__(41);
 	
 	var Event_Button_Views = exports.Event_Button_Views = function Event_Button_Views(config) {
 	
@@ -2880,7 +2943,7 @@
 	    */
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2921,7 +2984,7 @@
 	};
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2935,7 +2998,7 @@
 	
 	var _controllers2 = __webpack_require__(17);
 	
-	var _controllers3 = __webpack_require__(38);
+	var _controllers3 = __webpack_require__(39);
 	
 	/**
 	 *    Defining private variables
@@ -2995,7 +3058,7 @@
 	};
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3007,7 +3070,7 @@
 	
 	var _controllers = __webpack_require__(13);
 	
-	var _controllers2 = __webpack_require__(38);
+	var _controllers2 = __webpack_require__(39);
 	
 	/**
 	 *    Defining private variables
@@ -3043,7 +3106,7 @@
 	};
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3053,11 +3116,11 @@
 	});
 	exports.close = exports.open = exports.define = undefined;
 	
-	var _views = __webpack_require__(44);
+	var _views = __webpack_require__(45);
 	
 	var dialog_views = _interopRequireWildcard(_views);
 	
-	var _controllers = __webpack_require__(46);
+	var _controllers = __webpack_require__(47);
 	
 	var interior_dialog_controllers = _interopRequireWildcard(_controllers);
 	
@@ -3130,7 +3193,7 @@
 	    close = exports.close = dialog_views.close;
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3140,15 +3203,15 @@
 	});
 	exports.close = exports.open = exports.selectors = undefined;
 	
-	var _models = __webpack_require__(45);
+	var _models = __webpack_require__(46);
 	
 	var dialog_models = _interopRequireWildcard(_models);
 	
-	var _controllers = __webpack_require__(46);
+	var _controllers = __webpack_require__(47);
 	
 	var interior_dialog_controllers = _interopRequireWildcard(_controllers);
 	
-	var _models2 = __webpack_require__(48);
+	var _models2 = __webpack_require__(49);
 	
 	var interior_dialog_models = _interopRequireWildcard(_models2);
 	
@@ -3229,7 +3292,7 @@
 	};
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -3260,7 +3323,7 @@
 	selectors.external_buttons = '.dialog_button';
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3270,15 +3333,15 @@
 	});
 	exports.define = exports.recognize_button = exports.load = undefined;
 	
-	var _views = __webpack_require__(47);
+	var _views = __webpack_require__(48);
 	
 	var interior_dialog_views = _interopRequireWildcard(_views);
 	
-	var _controllers = __webpack_require__(43);
+	var _controllers = __webpack_require__(44);
 	
 	var _controllers2 = __webpack_require__(20);
 	
-	var _controllers3 = __webpack_require__(34);
+	var _controllers3 = __webpack_require__(35);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -3323,7 +3386,7 @@
 	};
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3333,7 +3396,7 @@
 	});
 	exports.load = exports.container = exports.variables = exports.selectors = undefined;
 	
-	var _models = __webpack_require__(48);
+	var _models = __webpack_require__(49);
 	
 	var interior_dialog_models = _interopRequireWildcard(_models);
 	
@@ -3347,7 +3410,7 @@
 	                                                        */
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3359,7 +3422,7 @@
 	
 	var _controllers = __webpack_require__(13);
 	
-	var _models = __webpack_require__(45);
+	var _models = __webpack_require__(46);
 	
 	/**
 	 * Created by mrskull on 21.01.17.
@@ -3406,7 +3469,7 @@
 	};
 
 /***/ },
-/* 49 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3420,9 +3483,9 @@
 	
 	var _controllers2 = __webpack_require__(20);
 	
-	var _controllers3 = __webpack_require__(34);
+	var _controllers3 = __webpack_require__(35);
 	
-	var _controllers4 = __webpack_require__(38);
+	var _controllers4 = __webpack_require__(39);
 	
 	/**
 	 *    Defining private variables
