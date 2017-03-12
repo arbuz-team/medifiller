@@ -9,7 +9,7 @@ class Form_Product(Abstract_Model_Form):
         if not price:
             return 0
 
-        if int(price) < 0:
+        if float(price) < 0:
             raise forms.ValidationError(
                 Text(self.request, 11)
                     .format(currency))
@@ -49,13 +49,13 @@ class Form_Product(Abstract_Model_Form):
             raise forms.ValidationError(
                 Text(self.request, 15))
 
-        if not self.request.session['product_purpose']:
-            raise forms.ValidationError(
-                Text(self.request, 16))
-
         if not self.request.session['product_image']:
             raise forms.ValidationError(
                 Text(self.request, 17))
+
+    def Create_Fields(self):
+        self.fields['price_eur'] = forms.FloatField(required=False)
+        self.fields['price_pln'] = forms.FloatField(required=False)
 
     def Set_Widgets(self):
 
@@ -64,13 +64,26 @@ class Form_Product(Abstract_Model_Form):
             'class': 'test',
         }
 
-        price_attr = {
-            'step': '0.01'
+        price_eur_attr = {
+            'placeholder': Text(self.request, 141),
+        }
+
+        price_pln_attr = {
+            'placeholder': Text(self.request, 142),
+        }
+
+        stock_attr = {
+            'placeholder': Text(self.request, 143),
         }
 
         self.fields['keywords'].widget = forms.Textarea(attrs=keywords_attr)
-        self.fields['price_eur'].widget = forms.NumberInput(attrs=price_attr)
-        self.fields['price_pln'].widget = forms.NumberInput(attrs=price_attr)
+        self.fields['price_eur'].widget = forms.TextInput(attrs=price_eur_attr)
+        self.fields['price_pln'].widget = forms.TextInput(attrs=price_pln_attr)
+        self.fields['stock'].widget = forms.TextInput(attrs=stock_attr)
+
+    def Edit_Instance(self):
+        self.instance.price_eur /= 100
+        self.instance.price_pln /= 100
 
     class Meta:
 
@@ -216,13 +229,11 @@ class Form_Brand(Form_Filter):
 
 
 
-class Form_Purpose(Form_Filter):
+class Form_Purpose(Abstract_Form):
 
     def Create_Fields(self):
-        self.fields['exists'] = forms.ModelChoiceField(
-            required=False, queryset=Purpose.objects.all())
+        purposes = Purpose.objects.all()
 
-    class Meta:
-
-        model = Purpose
-        fields = '__all__'
+        for purpose in purposes:
+            self.fields['purpose_{0}'.format(purpose.pk)] = \
+                forms.BooleanField(required=False)

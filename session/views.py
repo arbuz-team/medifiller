@@ -77,13 +77,19 @@ class Session_Controller:
     def Check_Session_Product(self):
 
         if 'product_details_en' not in self.request.session:
-            self.request.session['product_details_en'] = None
+            details = Details_EN(name='', description='')
+            self.request.session['product_details_en'] = details
+            self.request.session['product_details_en'].save()
 
         if 'product_details_pl' not in self.request.session:
-            self.request.session['product_details_pl'] = None
+            details = Details_PL(name='', description='')
+            self.request.session['product_details_pl'] = details
+            self.request.session['product_details_pl'].save()
 
         if 'product_details_de' not in self.request.session:
-            self.request.session['product_details_de'] = None
+            details = Details_DE(name='', description='')
+            self.request.session['product_details_de'] = details
+            self.request.session['product_details_de'].save()
 
         if 'product_where_display' not in self.request.session:
             self.request.session['product_where_display'] = \
@@ -94,7 +100,7 @@ class Session_Controller:
             self.request.session['product_brand'] = None
 
         if 'product_purpose' not in self.request.session:
-            self.request.session['product_purpose'] = None
+            self.request.session['product_purpose'] = {}
 
         if 'product_image' not in self.request.session:
             self.request.session['product_image'] = None
@@ -117,7 +123,7 @@ class Session_Controller:
             self.request.session['searcher_order_name'] = 'search_accuracy'
 
         if 'searcher_order_direction' not in self.request.session:
-            self.request.session['searcher_order_direction'] = 'descending'
+            self.request.session['searcher_order_direction'] = 'ascending'
 
         if 'searcher_result' not in self.request.session:
             self.request.session['searcher_result'] = Product.objects.all()

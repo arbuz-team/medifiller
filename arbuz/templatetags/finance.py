@@ -1,7 +1,7 @@
 from arbuz.templatetags.base import *
 
 
-class Money_Manager(Base_Tag_Manager):
+class Finance_Manager(Base_Tag_Manager):
 
     def Get_Product_Price(self):
         product = self.values['product']
@@ -18,7 +18,7 @@ class Money_Manager(Base_Tag_Manager):
             selected_price = self.Get_Price(
                 self.request, product, currency=currency)
 
-        selected_price = str(selected_price)
+        selected_price = '{0:.2f}'.format(selected_price)
         return '{0} {1}'.format(selected_price, currency)
 
     def Get_Netto_Value(self):
@@ -61,7 +61,7 @@ def get_price(context, product, currency=None):
         'currency': currency
     }
 
-    return Money_Manager(task, values, request).OUT
+    return Finance_Manager(task, values, request).OUT
 
 @register.simple_tag(takes_context=True)
 def netto(context, price=None, product=None, rate=8):
@@ -74,7 +74,7 @@ def netto(context, price=None, product=None, rate=8):
         'rate': rate
     }
 
-    return Money_Manager(task, values, request).OUT
+    return Finance_Manager(task, values, request).OUT
 
 @register.simple_tag
 def brutto(price, rate):
@@ -85,7 +85,7 @@ def brutto(price, rate):
         'rate': rate
     }
 
-    return Money_Manager(task, values).OUT
+    return Finance_Manager(task, values).OUT
 
 @register.simple_tag
 def vat(price, rate, variant='netto'):
@@ -97,4 +97,4 @@ def vat(price, rate, variant='netto'):
         'variant': variant
     }
 
-    return Money_Manager(task, values).OUT
+    return Finance_Manager(task, values).OUT

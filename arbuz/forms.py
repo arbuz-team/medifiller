@@ -49,7 +49,15 @@ class Base_Form:
 
 class Abstract_Model_Form(Base_Form, forms.ModelForm):
 
+    def Edit_Instance(self):
+        pass
+
     def __init__(self, request, *args, **kwargs):
+
+        if 'instance' in kwargs:
+            self.instance = kwargs['instance']
+            self.Edit_Instance()
+
         forms.ModelForm.__init__(self, *args, **kwargs)
         Base_Form.__init__(self, request)
 

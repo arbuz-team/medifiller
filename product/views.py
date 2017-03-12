@@ -45,9 +45,6 @@ class Product_Details(Dynamic_Event_Manager):
 
 class Product_Elements(Dynamic_Event_Manager):
 
-    def Manage_Content_Ground(self):
-        pass
-
     def Manage_Form_Where_Display(self):
 
         where_display = Form_Where_Display(
@@ -77,12 +74,26 @@ class Product_Elements(Dynamic_Event_Manager):
             return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
         return Dialog_Prompt(self.request, self.app_name, not_valid=True).HTML
 
-    def Manage_Form_Purpose(self):
-        purpose = Form_Purpose(self.request, self.request.POST)
+    def Save_Purposes(self, product):
+        purposes = self.request.session['product_purpose']
+        Purpose_For_Product.objects.filter(product=product).delete()
 
-        if purpose.is_valid():
-            purpose = purpose.Get_Filter()
-            self.request.session['product_purpose'] = purpose
+        for name in purposes:
+
+            if purposes[name]:
+                pk = int(name.replace('purpose_', ''))
+
+                Purpose_For_Product(
+                    purpose=Purpose.objects.get(pk=pk),
+                    product=product
+                ).save()
+
+    def Manage_Form_Purpose(self):
+        purposes = Form_Purpose(self.request, self.request.POST)
+
+        if purposes.is_valid():
+            self.request.session['product_purpose'] = \
+                purposes.cleaned_data
 
             return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
         return Dialog_Prompt(self.request, self.app_name, not_valid=True).HTML
@@ -104,9 +115,9 @@ class Product_Elements(Dynamic_Event_Manager):
                 self.request, self.request.POST)
 
             if details.is_valid():
-                details = details.save(commit=False)
-                details.save()
-                self.request.session['product_details_en'] = details
+                self.request.session['product_details_en'].name = details.cleaned_data['name']
+                self.request.session['product_details_en'].description = details.cleaned_data['description']
+                self.request.session['product_details_en'].save()
                 return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
 
         if language == 'PL':
@@ -114,9 +125,9 @@ class Product_Elements(Dynamic_Event_Manager):
                 self.request, self.request.POST)
 
             if details.is_valid():
-                details = details.save(commit=False)
-                details.save()
-                self.request.session['product_details_pl'] = details
+                self.request.session['product_details_pl'].name = details.cleaned_data['name']
+                self.request.session['product_details_pl'].description = details.cleaned_data['description']
+                self.request.session['product_details_pl'].save()
                 return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
 
         if language == 'DE':
@@ -124,9 +135,9 @@ class Product_Elements(Dynamic_Event_Manager):
                 self.request, self.request.POST)
 
             if details.is_valid():
-                details = details.save(commit=False)
-                details.save()
-                self.request.session['product_details_de'] = details
+                self.request.session['product_details_de'].name = details.cleaned_data['name']
+                self.request.session['product_details_de'].description = details.cleaned_data['description']
+                self.request.session['product_details_de'].save()
                 return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
 
         return Dialog_Prompt(self.request, self.app_name, not_valid=True).HTML
@@ -160,6 +171,7 @@ class Product_Elements(Dynamic_Event_Manager):
 class New_Product(Product_Elements):
 
     def Manage_Content_Ground(self):
+        self.Clear_Session('product')
         self.content['form'] = Form_Product(self.request)
         return self.Render_HTML('product/new.html', 'product')
 
@@ -175,13 +187,15 @@ class New_Product(Product_Elements):
             product.details_de = self.request.session['product_details_de']
             product.where_display = self.request.session['product_where_display']
             product.brand = self.request.session['product_brand']
-            product.purpose = self.request.session['product_purpose']
             product.save()
+
+            # save product purposes
+            self.Save_Purposes(product)
 
             # save image to /_static/img/product/<id>.<format>
             product.Save_Image(self.request.session['product_image'])
 
-            self.Manage_Clear_Session('product')
+            self.Clear_Session('product')
             self.content['form'] = None  # message of correct
             return self.Render_HTML('product/new.html')
 
@@ -225,6 +239,23 @@ class New_Product(Product_Elements):
 
 class Edit_Product(Product_Elements):
 
+    @staticmethod
+    def Load_Product_Purpose(product):
+        purposes = Purpose.objects.all()
+        session_value = {}
+
+        for purpose in purposes:
+            session_value['purpose_{0}'.format(purpose.pk)] = False
+
+        product_purposes = Purpose_For_Product.\
+            objects.filter(product=product)
+
+        # set selected box
+        for item in product_purposes:
+            session_value['purpose_{0}'.format(item.purpose.pk)] = True
+
+        return session_value
+
     def Manage_Content_Ground(self):
 
         product = Product.objects.get(pk=self.other_value['pk'])
@@ -233,7 +264,7 @@ class Edit_Product(Product_Elements):
         self.request.session['product_details_de'] = product.details_de
         self.request.session['product_where_display'] = product.where_display
         self.request.session['product_brand'] = product.brand
-        self.request.session['product_purpose'] = product.purpose
+        self.request.session['product_purpose'] = self.Load_Product_Purpose(product)
         self.request.session['product_image'] = product.image
 
         self.content['form'] = Form_Product(self.request, instance=product)
@@ -251,16 +282,18 @@ class Edit_Product(Product_Elements):
             product.details_de = self.request.session['product_details_de']
             product.where_display = self.request.session['product_where_display']
             product.brand = self.request.session['product_brand']
-            product.purpose = self.request.session['product_purpose']
             product.price_eur = self.content['form'].cleaned_data['price_eur']
             product.price_pln = self.content['form'].cleaned_data['price_pln']
             product.keywords = self.content['form'].cleaned_data['keywords']
             product.save()
 
+            # save product purposes
+            self.Save_Purposes(product)
+
             # save image to /_static/img/product/<id>.<format>
             product.Save_Image(self.request.session['product_image'])
 
-            self.Manage_Clear_Session('product')
+            self.Clear_Session('product')
             self.content['form'] = None  # message of correct
             return self.Render_HTML('product/edit.html')
 

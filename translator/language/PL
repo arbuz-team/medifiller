@@ -13,7 +13,7 @@ Liczba produktów dostępnych w magazynie musi być większa niż zero.
 Szczegóły produktu po angielsku są wymagane.
 Szczegóły wyświetlania produktu są wymagane.
 Producent produktu jest wymagany.
-Przeznaczenie produktu jest wymagane.
+
 Zdjęcie produktu jest wymagane.
 Słowa kluczowe
 Nazwa
@@ -138,3 +138,7 @@ Kto stworzył ikony
 Ikony zostały stworzone przez <a href="http://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a>, <a href="http://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> i <a href="http://www.flaticon.com/authors/bogdan-rosu" title="Bogdan Rosu">Bogdan Rosu</a> <a href="http://www.freepik.com" title="Freepik">Freepik</a> z <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> na licencji <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
 Telefon
 Email
+Cena w EUR
+Cena w PLN
+Magazyn
+Nazwa jest wymagana

@@ -158,11 +158,9 @@ class Dialog_Prompt(Dialog):
 
     def Manage_Purpose(self):
         initial = self.Get_Session_Variable()
-        initial = initial.pk if initial else None
-
         self.content['title'] = Text(self.request, 2)
         self.content['form'] = Form_Purpose(self.request,
-            self.Get_POST(), initial={'exists': initial})
+            self.Get_POST(), initial=initial)
 
         return self.Render_Dialog('dialog/prompt.html',
                                   'purpose', only_root=True)

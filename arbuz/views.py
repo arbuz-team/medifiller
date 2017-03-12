@@ -59,10 +59,14 @@ class Manager(Dynamic_Base):
 
         return JsonResponse({'__button__': 'false'})
 
+    def Clear_Session(self, key_contain=''):
+        Dynamic_Base.Clear_Session(self, key_contain)
+        Check_Session(self.request)
+
     def Index_Clear_Session(self):
-        self.Clear_Session('searcher')
-        self.Clear_Session('root_social_media')
-        self.Clear_Session('root_address')
+        Dynamic_Base.Clear_Session(self, 'searcher')
+        Dynamic_Base.Clear_Session(self, 'root_social_media')
+        Dynamic_Base.Clear_Session(self, 'root_address')
         Check_Session(self.request)
 
     def Manage_Index(self):
