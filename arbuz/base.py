@@ -237,18 +237,24 @@ class Dynamic_Base:
         if DEBUG:
             self.start_time = time.time()
 
-    def Timer_Stop(self):
+    def Timer_Stop(self, error=False):
 
         if DEBUG:
 
             message = '-' * 125 + '\n\n'
             message += self.Get_Text_Cell('Application: ')
-            message += self.app_name + '\n\n'
+            message += self.app_name
+
+            if error: message += ' (ERROR) \n\n'
+            else: message += '\n\n'
 
             duration = time.time() - self.start_time
             duration = str(int(duration * 1000))
             message += self.Get_Text_Cell('Duration: ', margin=2)
             message += duration + ' ms\n'
+
+            message += self.Get_Text_Cell('URL: ', margin=2)
+            message += self.Get_Path(current_language=True) + '\n'
 
             if self.request.POST:
 
@@ -282,7 +288,7 @@ class Dynamic_Base:
                 separator = '\n' + self.Get_Text_Cell('')
                 message += separator.join(variables) + '\n'
 
-            message += '\n' + '-' * 125
+            message += '\n' + '-' * 125 + '\n'
             print(message)
 
     def __init__(self, request):

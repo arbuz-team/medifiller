@@ -290,9 +290,16 @@ class Dynamic_Event_Manager(Manager, Checker, Updater, metaclass=ABCMeta):
 
         if autostart:
 
-            self.Timer_Start()
-            self.HTML = self.Initialize()
-            self.Timer_Stop()
+            try:
+
+                self.Timer_Start()
+                self.HTML = self.Initialize()
+                self.Timer_Stop()
+
+            except Exception as exception:
+
+                self.Timer_Stop(error=True)
+                raise exception
 
     @staticmethod
     @abstractmethod
