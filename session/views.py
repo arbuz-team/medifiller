@@ -123,7 +123,7 @@ class Session_Controller:
             self.request.session['searcher_order_name'] = 'search_accuracy'
 
         if 'searcher_order_direction' not in self.request.session:
-            self.request.session['searcher_order_direction'] = 'ascending'
+            self.request.session['searcher_order_direction'] = 'descending'
 
         if 'searcher_result' not in self.request.session:
             self.request.session['searcher_result'] = Product.objects.all()

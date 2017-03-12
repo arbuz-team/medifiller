@@ -13,7 +13,7 @@
 
 
 <div class="searcher-searcher auto_form">
-    <form class="field_shell" action="/searcher/" data-origin="filter" data-target="ground">
+    <form class="field_shell" action="/searcher/" data-origin="filter" data-redirect="/products/" data-delay="1000">
         <input name="search" placeholder="Search" type="text" class="auto_field" data-name="phrase" />
     </form>
 </div>
@@ -35,8 +35,8 @@
     <div class="searcher-order">
         <div class="field_shell">
             <select name="order_by" class="auto_field" data-name="order_direction">
-                <option value="ascending" selected> ascending </option>
-                <option value="descending"> descending </option>
+                <option value="descending" selected> descending </option>
+                <option value="ascending"> ascending </option>
             </select>
         </div>
     </div><!-- searcher-order -->

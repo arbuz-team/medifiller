@@ -13,8 +13,7 @@ class Search_Engine:
             reduce(operator.or_, (Q(details_en__name__icontains=s) for s in self.phrase))           |
             reduce(operator.or_, (Q(details_en__description__icontains=s) for s in self.phrase))    |
             reduce(operator.or_, (Q(keywords__icontains=s) for s in self.phrase))                   |
-            reduce(operator.or_, (Q(brand__name__icontains=s) for s in self.phrase))                |
-            reduce(operator.or_, (Q(purpose__name__icontains=s) for s in self.phrase))              &
+            reduce(operator.or_, (Q(brand__name__icontains=s) for s in self.phrase))                &
             Q(where_display__display_en=True)
         )
 
@@ -24,8 +23,7 @@ class Search_Engine:
             reduce(operator.or_, (Q(details_pl__name__icontains=s) for s in self.phrase))           |
             reduce(operator.or_, (Q(details_pl__description__icontains=s) for s in self.phrase))    |
             reduce(operator.or_, (Q(keywords__icontains=s) for s in self.phrase))                   |
-            reduce(operator.or_, (Q(brand__name__icontains=s) for s in self.phrase))                |
-            reduce(operator.or_, (Q(purpose__name__icontains=s) for s in self.phrase))              &
+            reduce(operator.or_, (Q(brand__name__icontains=s) for s in self.phrase))                &
             Q(where_display__display_pl=True)
         )
 
@@ -35,8 +33,7 @@ class Search_Engine:
             reduce(operator.or_, (Q(details_de__name__icontains=s) for s in self.phrase))           |
             reduce(operator.or_, (Q(details_de__description__icontains=s) for s in self.phrase))    |
             reduce(operator.or_, (Q(keywords__icontains=s) for s in self.phrase))                   |
-            reduce(operator.or_, (Q(brand__name__icontains=s) for s in self.phrase))                |
-            reduce(operator.or_, (Q(purpose__name__icontains=s) for s in self.phrase))              &
+            reduce(operator.or_, (Q(brand__name__icontains=s) for s in self.phrase))                &
             Q(where_display__display_de=True)
         )
 
