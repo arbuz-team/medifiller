@@ -9,7 +9,7 @@ from PIL import Image
 from io import BytesIO
 from urllib.request import urlopen
 from datetime import date
-import base64, imghdr, os, string, random
+import base64, imghdr, os, string, random, time
 
 
 class Dynamic_Base:
@@ -226,9 +226,69 @@ class Dynamic_Base:
 
         return image_details['path_url']
 
+    @staticmethod
+    def Get_Text_Cell(text, spaces=20, margin=0):
+        spaces = ' ' * (spaces - len(text) - margin)
+        margin = ' ' * margin
+        return margin + text + spaces
+
+    def Timer_Start(self):
+
+        if DEBUG:
+            self.start_time = time.time()
+
+    def Timer_Stop(self):
+
+        if DEBUG:
+
+            message = '-' * 125 + '\n\n'
+            message += self.Get_Text_Cell('Application: ')
+            message += self.app_name + '\n\n'
+
+            duration = time.time() - self.start_time
+            duration = str(int(duration * 1000))
+            message += self.Get_Text_Cell('Duration: ', margin=2)
+            message += duration + ' ms\n'
+
+            if self.request.POST:
+
+                variables = []
+                message += self.Get_Text_Cell('POST: ', margin=2)
+
+                for key in self.request.POST:
+
+                    variables.append(
+                        self.Get_Text_Cell(key, 30) +
+                        str(self.request.POST[key])
+                    )
+
+                separator = '\n' + self.Get_Text_Cell('')
+                message += separator.join(variables) + '\n'
+
+            keys = self.request.session.keys()
+            if any(key.startswith(self.app_name) for key in keys):
+
+                variables = []
+                message += self.Get_Text_Cell('Session: ', margin=2)
+
+                for key in keys:
+                    if key.startswith(self.app_name):
+
+                        variables.append(
+                            self.Get_Text_Cell(key, 30) +
+                            str(self.request.session[key])
+                        )
+
+                separator = '\n' + self.Get_Text_Cell('')
+                message += separator.join(variables) + '\n'
+
+            message += '\n' + '-' * 125
+            print(message)
+
     def __init__(self, request):
 
         self.request = request
+        self.start_time = 0
         self.content = {}
 
         last_dot = self.__module__.rfind('.')

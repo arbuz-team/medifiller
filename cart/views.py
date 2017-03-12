@@ -53,9 +53,9 @@ class Cart_Manager(Dynamic_Event_Manager):
         self.payment_models_manager.Update_Total_Price()
         return return_value
 
-    def Manage_Edit(self):
+    def Manage_Little_Form(self):
 
-        selected_pk = self.request.POST['__edit__']
+        selected_pk = self.request.POST['__little__']
         number = self.request.POST['value']
 
         self.payment_models_manager.Edit_Number_Of_Products(

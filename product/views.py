@@ -158,6 +158,24 @@ class Product_Elements(Dynamic_Event_Manager):
 
         return Dynamic_Event_Manager.Manage_Form(self)
 
+    def Manage_Little_Form_Brand(self):
+        Brand(name=self.request.POST['value']).save()
+        return JsonResponse({'__little__': 'true'})
+
+    def Manage_Little_Form_Purpose(self):
+        Purpose(name=self.request.POST['value']).save()
+        return JsonResponse({'__little__': 'true'})
+
+    def Manage_Little_Form(self):
+
+        if self.request.POST['__little__'] == 'brand':
+            return self.Manage_Little_Form_Brand()
+
+        if self.request.POST['__little__'] == 'purpose':
+            return self.Manage_Little_Form_Purpose()
+
+        return Dynamic_Event_Manager.Manage_Little_Form(self)
+
     @staticmethod
     def Launch(request):
         return Product_Elements(request, only_root=True).HTML

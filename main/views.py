@@ -93,7 +93,8 @@ class Products(Dynamic_Event_Manager):
         products = self.request.session['searcher_result']
         return products[start:end]
 
-    def Get_List_Pages(self, number_of_pages):
+    @staticmethod
+    def Get_List_Pages(number_of_pages):
         return list(range(1, number_of_pages + 1))
 
     def Get_Split_Pages(self, number_of_pages):

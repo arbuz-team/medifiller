@@ -42,8 +42,8 @@ class Manager(Dynamic_Base):
     def Manage_Get(self):
         return JsonResponse({'__get__': 'false'})
 
-    def Manage_Edit(self):
-        return JsonResponse({'__edit__': 'false'})
+    def Manage_Little_Form(self):
+        return JsonResponse({'__little__': 'false'})
 
     def Manage_Filter(self):
         return JsonResponse({'__filter__': 'false'})
@@ -241,9 +241,9 @@ class Dynamic_Event_Manager(Manager, Checker, Updater, metaclass=ABCMeta):
         if '__get__' in self.request.POST:
             return self.Manage_Get()
 
-        # auto/dynamic form
-        if '__edit__' in self.request.POST:
-            return self.Manage_Edit()
+        # auto/mini form
+        if '__little__' in self.request.POST:
+            return self.Manage_Little_Form()
 
         # filters
         if '__filter__' in self.request.POST:
@@ -289,7 +289,10 @@ class Dynamic_Event_Manager(Manager, Checker, Updater, metaclass=ABCMeta):
         self.length_navigation = length_navigation
 
         if autostart:
+
+            self.Timer_Start()
             self.HTML = self.Initialize()
+            self.Timer_Stop()
 
     @staticmethod
     @abstractmethod
