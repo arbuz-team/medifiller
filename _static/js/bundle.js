@@ -2842,8 +2842,6 @@
 	
 	    if (button_prevent !== 'false') event.preventDefault();
 	
-	    console.log('weszło: ' + button_prevent);
-	
 	    if (buttons_views[button_name]) buttons_views[button_name].start();else console.error('Button "' + button_name + '" doesn\'t exsist');
 	  },
 	      create_button_views = function create_button_views() {

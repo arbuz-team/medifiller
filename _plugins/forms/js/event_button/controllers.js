@@ -27,8 +27,6 @@ export let Event_Button_Controllers = function(config)
       if(button_prevent !== 'false')
         event.preventDefault();
 
-      console.log('weszło: '+ button_prevent);
-
       if(buttons_views[button_name])
         buttons_views[button_name].start();
       else
