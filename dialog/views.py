@@ -153,7 +153,7 @@ class Dialog_Prompt(Dialog):
         self.content['form'] = Form_Brand(self.request,
             self.Get_POST(), initial={'exists': initial})
 
-        return self.Render_Dialog('dialog/prompt.html',
+        return self.Render_Dialog('dialog/create_or_select.html',
                                   'brand', only_root=True)
 
     def Manage_Purpose(self):
@@ -162,7 +162,7 @@ class Dialog_Prompt(Dialog):
         self.content['form'] = Form_Purpose(self.request,
             self.Get_POST(), initial=initial)
 
-        return self.Render_Dialog('dialog/prompt.html',
+        return self.Render_Dialog('dialog/create_or_select.html',
                                   'purpose', only_root=True)
 
     def Manage_Details_EN(self):
