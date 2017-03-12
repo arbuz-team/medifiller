@@ -1976,11 +1976,13 @@
 	    $field = $(this);
 	
 	    if ($field.is(':checkbox')) $field.change(auto_form_views.send_checkbox);else if ($field.is(':text')) {
-	      if ($field.hasClass('always')) $field.keyup(auto_form_views.send_if_number_only);
+	      if ($field.hasClass('only_enter')) $field.keydown(auto_form_views.send_on_enter);else {
+	        if ($field.hasClass('always')) $field.keyup(auto_form_views.send_if_number_only);
 	
-	      if ($field.hasClass('only_number_3')) $field.keydown(auto_form_views.try_press_number_max_3);
+	        if ($field.hasClass('only_number_3')) $field.keydown(auto_form_views.try_press_number_max_3);
 	
-	      $field.change(auto_form_views.send_default).keydown(auto_form_views.send_on_enter);
+	        $field.change(auto_form_views.send_default).keydown(auto_form_views.send_on_enter);
+	      }
 	    } else $field.change(auto_form_views.send_default);
 	  });
 	},
@@ -2139,8 +2141,6 @@
 	      post_data['__' + models.settings.origin + '__'] = $field.data('name');
 	      post_data['value'] = $field.val();
 	
-	      models.settings.delay = 0;
-	
 	      send(post_data);
 	    }
 	  };
@@ -2149,23 +2149,20 @@
 	   *    Defining private functions
 	   */
 	
-	  var is_error = function is_error(JSON_response, status) {
-	    if (status !== 'success') return true;
-	
-	    return false;
-	  },
-	      show_changes = function show_changes() {
+	  var show_changes = function show_changes() {
 	    var delay = void 0,
 	        function_for_setTimeout = function function_for_setTimeout() {
-	      APP.DATA.delay = delay;
+	      if (models.get_state_response() && models.get_state_error() === false) {
+	        APP.DATA.delay = delay;
 	
-	      if (models.settings.redirect) {
-	        APP.DATA.redirect = models.settings.redirect;
+	        if (models.settings.redirect) {
+	          APP.DATA.redirect = models.settings.redirect;
 	
-	        APP.throw_event(window.EVENTS.redirect);
-	      } else if (models.settings.reload) {
-	        APP.throw_event(window.EVENTS.plugins['reload_' + models.settings.reload]);
-	      }
+	          APP.throw_event(window.EVENTS.redirect);
+	        } else if (models.settings.reload) {
+	          APP.throw_event(window.EVENTS.plugins['reload_' + models.settings.reload]);
+	        }
+	      } else if (models.get_state_error()) return false;else sent_http_request = setTimeout(function_for_setTimeout, 100);
 	    };
 	
 	    if (typeof models.settings.delay !== 'undefined') delay = models.settings.delay;else delay = 0;
@@ -2173,8 +2170,22 @@
 	    clearTimeout(sent_http_request);
 	    sent_http_request = setTimeout(function_for_setTimeout, delay);
 	  },
+	      is_error = function is_error(status) {
+	    return status !== 'success';
+	  },
+	      set_response = function set_response(JSON_response, status) {
+	    if (is_error(status)) {
+	      models.set_state_error(true);
+	      models.set_state_response(false);
+	      return false;
+	    }
+	
+	    models.set_state_error(false);
+	    models.set_state_response(true);
+	  },
 	      send = function send(post_data) {
-	    window.APP.http_request(models.settings.action, post_data, function () {});
+	    models.set_state_response(false);
+	    window.APP.http_request(models.settings.action, post_data, set_response);
 	    show_changes();
 	  };
 	}; /**
@@ -2234,6 +2245,27 @@
 	  load_settings();
 	
 	  /////////////////////////
+	
+	  var state = {
+	    response: false,
+	    error: false
+	  };
+	
+	  this.get_state_response = function () {
+	    if (state.response) return true;else return false;
+	  };
+	
+	  this.set_state_response = function (setter) {
+	    if (setter) state.response = true;else state.response = false;
+	  };
+	
+	  this.get_state_error = function () {
+	    if (state.error) return true;else return false;
+	  };
+	
+	  this.set_state_error = function (setter) {
+	    if (setter) state.error = true;else state.error = false;
+	  };
 	};
 
 /***/ },

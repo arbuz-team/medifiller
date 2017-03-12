@@ -46,4 +46,41 @@ export let Auto_Form_Models = function(config)
 
 /////////////////////////
 
+  let state = {
+    response: false,
+    error: false,
+  };
+
+  this.get_state_response = function()
+  {
+    if(state.response)
+      return true;
+    else
+      return false;
+  };
+
+  this.set_state_response = function(setter)
+  {
+    if(setter)
+      state.response = true;
+    else
+      state.response = false;
+  };
+
+  this.get_state_error = function()
+  {
+    if(state.error)
+      return true;
+    else
+      return false;
+  };
+
+  this.set_state_error = function(setter)
+  {
+    if(setter)
+      state.error = true;
+    else
+      state.error = false;
+  };
+
 };

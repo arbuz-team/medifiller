@@ -171,8 +171,6 @@ export let Auto_Form_Views = function(config)
       post_data['__'+ models.settings.origin +'__'] = $field.data('name');
       post_data['value'] = $field.val();
 
-      models.settings.delay = 0;
-
       send(post_data);
     }
   };
@@ -183,14 +181,6 @@ export let Auto_Form_Views = function(config)
    */
 
   let
-    is_error = function(JSON_response, status)
-    {
-      if(status !== 'success')
-        return true;
-
-      return false;
-    },
-
 
     show_changes = function()
     {
@@ -199,18 +189,25 @@ export let Auto_Form_Views = function(config)
 
         function_for_setTimeout = function()
         {
-          APP.DATA.delay = delay;
-
-          if(models.settings.redirect)
+          if(models.get_state_response() && models.get_state_error() === false)
           {
-            APP.DATA.redirect = models.settings.redirect;
+            APP.DATA.delay = delay;
 
-            APP.throw_event(window.EVENTS.redirect);
+            if(models.settings.redirect)
+            {
+              APP.DATA.redirect = models.settings.redirect;
+
+              APP.throw_event(window.EVENTS.redirect);
+            }
+            else if(models.settings.reload)
+            {
+              APP.throw_event(window.EVENTS.plugins['reload_'+ models.settings.reload]);
+            }
           }
-          else if(models.settings.reload)
-          {
-            APP.throw_event(window.EVENTS.plugins['reload_'+ models.settings.reload]);
-          }
+          else if(models.get_state_error())
+            return false;
+          else
+            sent_http_request = setTimeout(function_for_setTimeout, 100);
         };
 
 
@@ -225,9 +222,30 @@ export let Auto_Form_Views = function(config)
     },
 
 
+    is_error = function(status)
+    {
+        return status !== 'success';
+    },
+
+
+    set_response = function(JSON_response, status)
+    {
+      if(is_error(status))
+      {
+        models.set_state_error(true);
+        models.set_state_response(false);
+        return false;
+      }
+
+      models.set_state_error(false);
+      models.set_state_response(true);
+    },
+
+
     send = function(post_data)
     {
-      window.APP.http_request(models.settings.action, post_data, () => {});
+      models.set_state_response(false);
+      window.APP.http_request(models.settings.action, post_data, set_response);
       show_changes();
     };
 

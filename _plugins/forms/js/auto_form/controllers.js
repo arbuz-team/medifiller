@@ -23,19 +23,24 @@ let
 
       else if($field.is(':text'))
       {
-        if($field.hasClass('always'))
+        if($field.hasClass('only_enter'))
           $field
-            .keyup(auto_form_views.send_if_number_only);
+            .keydown(auto_form_views.send_on_enter);
+        else
+        {
+          if($field.hasClass('always'))
+            $field
+              .keyup(auto_form_views.send_if_number_only);
 
-        if($field.hasClass('only_number_3'))
+          if($field.hasClass('only_number_3'))
+            $field
+              .keydown(auto_form_views.try_press_number_max_3);
+
           $field
-            .keydown(auto_form_views.try_press_number_max_3);
-
-        $field
-          .change(auto_form_views.send_default)
-          .keydown(auto_form_views.send_on_enter);
+            .change(auto_form_views.send_default)
+            .keydown(auto_form_views.send_on_enter);
+        }
       }
-
 
       else
         $field.change(auto_form_views.send_default);
