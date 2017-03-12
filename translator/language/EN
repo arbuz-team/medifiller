@@ -1,30 +1,30 @@
 Select or create product brand
 Select or create product purpose
-Details product in english
-Details product in polish
-Details product in germany
-Where display product
+Product details in English
+Product details in Polish
+Product details in German
+Where to display product
 Add image to product
 It's done!
 Append new recommended product
-First, recommended product must exist in list product. To add recommended product you have to search product and click `Recommend` button in details product.
-Price in {0} have to greater than zero.
-stock have to greater than zero.
-English details is required.
-Displays is required.
-Product brand name is required.
+First recommended product must exist in list product. To add recommended product you have to search product and click `Recommend` button in product details.
+Price in {0} have to be greater than zero.
+Stock have to be greater than zero.
+English details are required.
 
-Product image is required.
+Product's brand name is required.
+
+Product's image is required.
 Keywords
 Name
 Description
 Please select or create new filter.
-Select exist or create new filter. Not both.
+Select existing filter or create new one. Not both.
 Sign in
 Sign out
 Company details
 Map references
-Users payments
+Users' payments
 Root does not exist.
 Wrong password.
 Wrong password. Try again.
@@ -39,7 +39,7 @@ Account
 Email
 Password
 User with this email does not exist.
-User with this email is not approved. Check your mailbox.
+Your account is not confirmed. Check your mailbox.
 Wrong password. Try again.
 Username
 Password
@@ -52,22 +52,22 @@ State / Province / Region
 ZIP / Postal Code
 Country
 User with this email does not exist.
-User with this email is not approved. Check your mailbox.
+Your account is not confirmed. Check your mailbox.
 Email
 Password
 Account details
-User addresses
+Your addresses
 My shopping
 Favorite products
 Shopping cart
-Doctor number
-Product may have only one image. May you should remove URL link?
+Doctor's number
+Product can have only one image. Choice one option: paste URL or select image from disk.
 Please select image.
-It's not image.
-It's not image.
+It's not an image.
+It's not an image.
 Name
 Unauthorized access
-The dialog is reserved for logged-in user or root.
+The dialog is reserved for logged-in user's or root.
 Title
 Your name
 Email
@@ -82,7 +82,7 @@ Question about product availability
 Comment on the website
 Other questions
 Password
-Password is wrong
+Wrong password
 Edit email address
 Edit username
 Edit password
@@ -90,11 +90,11 @@ New email address
 New username
 New password
 First field is required
-Edit content tab
+Edit content
 The dialog is not valid in this URL address.
 Header
 Paragraph
-Paste image address URL
+Paste image URL
 Delete product
 Are you sure you want to remove the product?
 Clear cart
@@ -107,9 +107,9 @@ invoice.pdf
 Delete address
 Are you sure you want to remove the address?
 Delete brand
-Are you sure you want to remove the brand? Number products pined to the brand: {0}
+Are you sure you want to remove the brand? Number of products pinned to the brand: {0}
 Delete purpose
-Are you sure you want to remove the purpose? Number products pined to the purpose: {0}
+Are you sure you want to remove the purpose? Number of products pinned to the purpose: {0}
 arbuz
 cart
 dialog
@@ -133,8 +133,8 @@ Get invoice
 Close
 Clear filters
 Social media
-Transport settings
-Who made icons
+Shipment settings
+Credits
 Icons made by <a href="http://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a>, <a href="http://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> and <a href="http://www.flaticon.com/authors/bogdan-rosu" title="Bogdan Rosu">Bogdan Rosu</a> <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
 Phone
 Email
