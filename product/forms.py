@@ -236,4 +236,4 @@ class Form_Purpose(Abstract_Form):
 
         for purpose in purposes:
             self.fields['purpose_{0}'.format(purpose.pk)] = \
-                forms.BooleanField(required=False)
+                forms.BooleanField(required=False, label=purpose.name)

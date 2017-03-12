@@ -76,17 +76,13 @@ class Product_Elements(Dynamic_Event_Manager):
 
     def Save_Purposes(self, product):
         purposes = self.request.session['product_purpose']
-        Purpose_For_Product.objects.filter(product=product).delete()
+        product.purpose.clear()
 
         for name in purposes:
 
             if purposes[name]:
                 pk = int(name.replace('purpose_', ''))
-
-                Purpose_For_Product(
-                    purpose=Purpose.objects.get(pk=pk),
-                    product=product
-                ).save()
+                product.purpose.add(Purpose.objects.get(pk=pk))
 
     def Manage_Form_Purpose(self):
         purposes = Form_Purpose(self.request, self.request.POST)
@@ -247,12 +243,9 @@ class Edit_Product(Product_Elements):
         for purpose in purposes:
             session_value['purpose_{0}'.format(purpose.pk)] = False
 
-        product_purposes = Purpose_For_Product.\
-            objects.filter(product=product)
-
         # set selected box
-        for item in product_purposes:
-            session_value['purpose_{0}'.format(item.purpose.pk)] = True
+        for purpose in product.purpose.all():
+            session_value['purpose_{0}'.format(purpose.pk)] = True
 
         return session_value
 

@@ -69,22 +69,13 @@ class Product(Abstract_Model):
 
     where_display = models.ForeignKey(Where_Display)
     brand = models.ForeignKey(Brand)
+    purpose = models.ManyToManyField(Purpose)
 
     def Set_Variables(self):
         self.image_dir = '/_static/img/product/'
 
     def __str__(self):
         return self.details_en.name
-
-
-
-class Purpose_For_Product(Abstract_Model):
-
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.product.details_en.name
 
 
 

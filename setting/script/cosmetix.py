@@ -111,7 +111,8 @@ class Manager:
         with open('{0}products.data'.format(SCRIPT_DIR), 'wb') as plik:
             pickle.dump(self.products, plik, pickle.HIGHEST_PROTOCOL)
 
-    def Create_Details(self, product):
+    @staticmethod
+    def Create_Details(product):
         title = product['title'].title().replace('Ml', 'ml')
 
         details = {
@@ -138,7 +139,8 @@ class Manager:
 
         return details
 
-    def Create_Brand(self, name):
+    @staticmethod
+    def Create_Brand(name):
         name = name.title()
         brand = Brand.objects.filter(name=name).first()
 
@@ -148,7 +150,8 @@ class Manager:
 
         return brand
 
-    def Create_Purpose(self, name):
+    @staticmethod
+    def Create_Purpose(name):
         name = name.title()
         purpose = Purpose.objects.filter(name=name).first()
 
@@ -188,15 +191,15 @@ class Manager:
             new_product.save()
 
             for purpose in filters['purposes']:
-                Purpose_For_Product(purpose=purpose, product=new_product).save()
+                new_product.purpose.add(purpose)
 
             image = Dynamic_Base.Save_Image_From_URL(product['image'])
             new_product.Save_Image(image)
 
-    def Delete_Problematic_Data(self):
+    @staticmethod
+    def Delete_Problematic_Data():
         product = Product.objects.get(details_en__name='NEAUVIA ORGANIC STIMULATE'.title())
-        model = Purpose_For_Product.objects.filter(product=product).values_list('purpose__pk')
-        Purpose.objects.filter(pk__in=model).delete()
+        product.purpose.all().delete()
 
     def Launch(self):
 

@@ -90,8 +90,8 @@ class Search_Engine:
                     get_keywords(product.keywords) +
 
                     product.brand.name +
-                    ' '.join([e.purpose.name for e in Purpose_For_Product.
-                             objects.filter(product=product)])
+                    ' '.join([str(purpose.name)
+                        for purpose in product.purpose.all()])
 
                 ).lower()
             )
@@ -157,16 +157,11 @@ class Search_Engine:
 
         self.result = result
 
-    def Sort_Result_Filters_Purpose(self, purposes, product):
-
-        purpose_for_product = Purpose_For_Product. \
-            objects.filter(product=product)
-
-        product_purposes = Purpose.objects.filter(
-            pk__in=purpose_for_product.values_list('purpose__pk'))
+    @staticmethod
+    def Sort_Result_Filters_Purpose(purposes, product):
 
         for purpose in purposes:
-            if purpose in str(product_purposes):
+            if purpose in str(product.purpose):
                 return True
 
         return False
