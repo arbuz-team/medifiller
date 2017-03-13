@@ -1,26 +1,28 @@
-from django import forms
+from arbuz.forms import *
 
 
-class Form_Dotpay(forms.Form):
+class Form_Dotpay(Abstract_Form):
 
-    # payment details
-    amount = forms.CharField(widget=forms.HiddenInput())
-    currency = forms.CharField(widget=forms.HiddenInput())
-    description = forms.CharField(widget=forms.HiddenInput())
+    def Create_Fields(self):
 
-    # user details
-    id = forms.CharField(widget=forms.HiddenInput())
-    control = forms.CharField(widget=forms.HiddenInput())
+        # payment details
+        self.fields['amount'] = forms.CharField(widget=forms.HiddenInput())
+        self.fields['currency'] = forms.CharField(widget=forms.HiddenInput())
+        self.fields['description'] = forms.CharField(widget=forms.HiddenInput())
 
-    # service details
-    ch_lock = forms.CharField(widget=forms.HiddenInput())
-    channel = forms.CharField(widget=forms.HiddenInput())
-    type = forms.CharField(widget=forms.HiddenInput())
-    lang = forms.CharField(widget=forms.HiddenInput())
+        # user details
+        self.fields['id'] = forms.CharField(widget=forms.HiddenInput())
+        self.fields['control'] = forms.CharField(widget=forms.HiddenInput())
 
-    # URLS
-    URL = forms.CharField(widget=forms.HiddenInput())
-    URLC = forms.CharField(widget=forms.HiddenInput())
+        # service details
+        self.fields['ch_lock'] = forms.CharField(widget=forms.HiddenInput())
+        self.fields['channel'] = forms.CharField(widget=forms.HiddenInput())
+        self.fields['type'] = forms.CharField(widget=forms.HiddenInput())
+        self.fields['lang'] = forms.CharField(widget=forms.HiddenInput())
+
+        # URLS
+        self.fields['URL'] = forms.CharField(widget=forms.HiddenInput())
+        self.fields['URLC'] = forms.CharField(widget=forms.HiddenInput())
 
 # Details about dotpay POST
 # Page: 8/44
@@ -28,24 +30,25 @@ class Form_Dotpay(forms.Form):
 
 
 
-class Form_PayPal(forms.Form):
+class Form_PayPal(Abstract_Form):
 
-    # payment details
-    amount = forms.CharField(widget=forms.HiddenInput())
-    currency_code = forms.CharField(widget=forms.HiddenInput())
-    item_name = forms.CharField(widget=forms.HiddenInput())
+    def Create_Fields(self):
 
-    # user details
-    business = forms.CharField(widget=forms.HiddenInput())
-    custom = forms.CharField(widget=forms.HiddenInput())
+        # payment details
+        self.fields['amount'] = forms.CharField(widget=forms.HiddenInput())
+        self.fields['currency_code'] = forms.CharField(widget=forms.HiddenInput())
+        self.fields['item_name'] = forms.CharField(widget=forms.HiddenInput())
 
-    # service details
-    cmd = forms.ChoiceField(widget=forms.HiddenInput(), initial='_xclick')
-    charset = forms.CharField(widget=forms.HiddenInput(), initial='utf-8')
-    no_shipping = forms.ChoiceField(widget=forms.HiddenInput(), initial='1')
+        # user details
+        self.fields['business'] = forms.CharField(widget=forms.HiddenInput())
+        self.fields['custom'] = forms.CharField(widget=forms.HiddenInput())
 
-    # URLS
-    notify_url = forms.CharField(widget=forms.HiddenInput())
-    cancel_return = forms.CharField(widget=forms.HiddenInput())
-    return_url = forms.CharField(widget=forms.HiddenInput(attrs={'name': 'return'}))
+        # service details
+        self.fields['cmd'] = forms.CharField(widget=forms.HiddenInput(), initial='_xclick')
+        self.fields['charset'] = forms.CharField(widget=forms.HiddenInput(), initial='utf-8')
+        self.fields['no_shipping'] = forms.CharField(widget=forms.HiddenInput(), initial='1')
 
+        # URLS
+        self.fields['notify_url'] = forms.CharField(widget=forms.HiddenInput())
+        self.fields['cancel_return'] = forms.CharField(widget=forms.HiddenInput())
+        self.fields['return'] = forms.CharField(widget=forms.HiddenInput())
