@@ -4,45 +4,48 @@ from payment.base import *
 from sender.views import *
 
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 from django.contrib.sites.models import Site
 
 from paypal.standard.forms import PayPalPaymentsForm
 from paypal.standard.models import ST_PP_COMPLETED
 from paypal.standard.ipn.signals import valid_ipn_received
 from paypal.standard.ipn.signals import invalid_ipn_received
-from requests import post
 
 
 class Payment_System(Dynamic_Base):
 
-    @staticmethod
-    def Send_Confirm(request, payment):
+    def Send_Confirm(self):
 
+        email = self.payment.user.email
         content = {
-            'payment':              payment,
-            'selected_products':    Selected_Product.
-                objects.filter(payment=payment)
+            'payment': self.payment,
+            'selected_products': Selected_Product.
+                objects.filter(payment=self.payment)
         }
 
-        email = payment.user.email
-        pdf = Generator_PDF(request).Invoice(payment.pk)
-        Sender(request).Send_Payment_Approved(content, email, pdf)
+        if self.valid:
+
+            pdf = Generator_PDF(self.request).Invoice(self.payment.pk)
+            Sender(self.request).Send_Payment_Approved(content, email, pdf)
+
+        else: Sender(self.request).Send_Payment_Failure(content, email)
+
+    def Get_Status(self):
+        return 'OK' if self.valid else 'NOK'
+
+    def __init__(self, request):
+        Dynamic_Base.__init__(self, request)
+        Check_Session(request)
+
+        self.payment = None
+        self.valid = False
 
 
+
+# from paypal.standard.ipn.views import *
 
 class PayPal(Payment_System):
-
-    @staticmethod
-    @csrf_exempt
-    def Generate_Mail(request):
-
-        Check_Session(request)
-        if request.method == 'POST':
-            payment = Payment.objects.get(pk=request.POST['pk'])
-            PayPal.Send_Confirm(request, payment)
-            return HttpResponse('OK')
-
-        return HttpResponse('It is not for you.')
 
     @staticmethod
     def Valid_PayPal(sender, **kwargs):
@@ -67,11 +70,6 @@ class PayPal(Payment_System):
             payment.service = 'PayPal'
             payment.save()
 
-            # redirect to self.Generate_Mail()
-            current_site = Site.objects.get_current()
-            url = '{0}://{1}/payment/paypal/'.format(PROTOCOL, current_site)
-            post(url, data={'pk': payment.pk})
-
     def Create_PayPal_From(self):
 
         paypal_dict = \
@@ -89,6 +87,17 @@ class PayPal(Payment_System):
 
         return PayPalPaymentsForm(initial=paypal_dict)
 
+    @staticmethod
+    @csrf_exempt
+    @require_POST
+    def Service(request):
+        paypal = PayPal(request)
+        paypal.Display_Status()
+
+        # payment = Payment.objects.get(pk=request.POST['pk'])
+        # PayPal.Send_Confirm(request, payment)
+        return HttpResponse('OKAY')
+
 valid_ipn_received.connect(PayPal.Valid_PayPal)
 invalid_ipn_received.connect(PayPal.Valid_PayPal)
 
@@ -96,32 +105,25 @@ invalid_ipn_received.connect(PayPal.Valid_PayPal)
 
 class DotPay(Payment_System):
 
-    @staticmethod
-    @csrf_exempt
-    def Valid_DotPay(request):
+    def Valid_DotPay(self):
 
-        Check_Session(request)
-        if request.method == 'POST':
-            if request.POST['operation_status'] == 'completed':
-                payment = Payment.objects.get(pk=request.POST['control'])
+        if self.request.POST['operation_status'] == 'completed':
+            payment = Payment.objects.get(pk=self.request.POST['control'])
 
-                if request.POST['id'] != DOTPAY_RECEIVER_ID:
-                    return HttpResponse('NOK')
+            if self.request.POST['id'] != DOTPAY_RECEIVER_ID:
+                return
 
-                if request.POST['operation_currency'] != payment.currency:
-                    return HttpResponse('NOK')
+            if self.request.POST['operation_currency'] != payment.currency:
+                return
 
-                if request.POST['operation_amount'] != payment.total_price:
-                    return HttpResponse('NOK')
+            if self.request.POST['operation_amount'] != payment.total_price:
+                return
 
-                payment.approved = True
-                payment.service = 'DotPay'
-                payment.save()
+            payment.approved = True
+            payment.service = 'DotPay'
+            payment.save()
 
-                DotPay.Send_Confirm(request, payment)
-                return HttpResponse('OK')
-
-        return HttpResponse('It is not for you.')
+            self.valid = True
 
     def Create_DotPay_From(self):
 
@@ -143,6 +145,16 @@ class DotPay(Payment_System):
         }
 
         return Form_Dotpay(initial=dotpay_dict)
+
+    @staticmethod
+    @csrf_exempt
+    @require_POST
+    def Service(request):
+        dotpay = DotPay(request)
+        dotpay.Display_Status()
+        dotpay.Valid_DotPay()
+        dotpay.Send_Confirm()
+        return dotpay.VALID
 
 
 

@@ -43,6 +43,12 @@ class Sender(Dynamic_Base):
 
         self.Send_Email(title, content, recipient, html_file, pdf)
 
+    def Send_Payment_Failure(self, content, recipient):
+        title = Text(self.request, 151)
+        html_file = 'payment_failure.html'
+        recipient = [recipient, ROOT_EMAIL]
+        self.Send_Email(title, content, recipient, html_file)
+
     def Send_Contact_Question(self, title, content, recipient):
         html_file = 'contact_question.html'
         reply_to = [recipient]
