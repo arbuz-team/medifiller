@@ -1,10 +1,11 @@
+from arbuz.views import *
 from payment.models import *
 from root.models import *
 from translator.views import *
 from weasyprint import HTML
 
 
-class Generator_PDF(Dynamic_Base):
+class Generator_PDF(Dynamic_Event_Manager):
 
     def Invoice(self, pk):
 
@@ -36,5 +37,10 @@ class Generator_PDF(Dynamic_Base):
 
         return response
 
-    def __init__(self, request):
-        Dynamic_Base.__init__(self, request)
+    @staticmethod
+    def Launch_Invoice(request, pk):
+        return Generator_PDF(request).Invoice(pk)
+
+    @staticmethod
+    def Launch(request):
+        pass
