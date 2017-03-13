@@ -174,58 +174,15 @@ class Form_Image(Abstract_Image_Form):
 
 
 
-class Form_Filter(Abstract_Model_Form):
-
-    def Get_Filter(self):
-        new_element = self.data['name']
-        selected = self.data['exists']
-
-        if new_element:
-            element = self.save(commit=False)
-            element.save()
-            return element
-
-        if selected:
-            model = self.__class__.Meta.model
-            element = model.objects.get(pk=selected)
-            return element
-
-    def clean(self):
-        new_element = self.data['name']
-        selected = self.data['exists']
-
-        if not new_element and not selected:
-            raise forms.ValidationError(Text(self.request, 21))
-
-        if new_element and selected:
-            raise forms.ValidationError(Text(self.request, 22))
-
-    def Set_Widgets(self):
-
-        name_attrs = {
-            'placeholder': Text(self.request, 68),
-            'class': 'test',
-            'autofocus': 'true',
-        }
-
-        self.fields['name'] = forms.CharField(required=False)
-        self.fields['name'].widget = forms.TextInput(attrs=name_attrs)
-
-    class Meta:
-        exclude = '__all__'
-
-
-
-class Form_Brand(Form_Filter):
+class Form_Brand(Abstract_Form):
 
     def Create_Fields(self):
-        self.fields['exists'] = forms.ModelChoiceField(
-            required=False, queryset=Brand.objects.all())
 
-    class Meta:
-
-        model = Brand
-        fields = '__all__'
+        self.fields['brands'] = forms.ModelChoiceField(
+            required=False,
+            queryset=Brand.objects.all(),
+            widget=forms.RadioSelect()
+        )
 
 
 

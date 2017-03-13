@@ -45,6 +45,16 @@ class Product_Details(Dynamic_Event_Manager):
 
 class Product_Elements(Dynamic_Event_Manager):
 
+    def Save_Purposes(self, product):
+        purposes = self.request.session['product_purpose']
+        product.purpose.clear()
+
+        for name in purposes:
+
+            if purposes[name]:
+                pk = int(name.replace('purpose_', ''))
+                product.purpose.add(Purpose.objects.get(pk=pk))
+
     def Manage_Form_Where_Display(self):
 
         where_display = Form_Where_Display(
@@ -68,21 +78,11 @@ class Product_Elements(Dynamic_Event_Manager):
         brand = Form_Brand(self.request, self.request.POST)
 
         if brand.is_valid():
-            brand = brand.Get_Filter()
-            self.request.session['product_brand'] = brand
+            self.request.session['product_brand'] = \
+                brand.cleaned_data['brands']
 
             return Dialog_Prompt(self.request, self.app_name, apply=True).HTML
         return Dialog_Prompt(self.request, self.app_name, not_valid=True).HTML
-
-    def Save_Purposes(self, product):
-        purposes = self.request.session['product_purpose']
-        product.purpose.clear()
-
-        for name in purposes:
-
-            if purposes[name]:
-                pk = int(name.replace('purpose_', ''))
-                product.purpose.add(Purpose.objects.get(pk=pk))
 
     def Manage_Form_Purpose(self):
         purposes = Form_Purpose(self.request, self.request.POST)
@@ -168,11 +168,13 @@ class Product_Elements(Dynamic_Event_Manager):
 
     def Manage_Little_Form(self):
 
-        if self.request.POST['__little__'] == 'brand':
-            return self.Manage_Little_Form_Brand()
+        if self.request.POST['value']:
 
-        if self.request.POST['__little__'] == 'purpose':
-            return self.Manage_Little_Form_Purpose()
+            if self.request.POST['__little__'] == 'brand':
+                return self.Manage_Little_Form_Brand()
+
+            if self.request.POST['__little__'] == 'purpose':
+                return self.Manage_Little_Form_Purpose()
 
         return Dynamic_Event_Manager.Manage_Little_Form(self)
 

@@ -17,7 +17,7 @@
             {% for field in form %}
 
 
-                {% if field|fieldtype == 'CheckboxInput' %}
+                {% if field|is_checkbox %}
 
                     <div class="selecter checkbox">
                         {{ field }}
@@ -26,7 +26,7 @@
                     </div>
 
 
-                {% elif field|fieldtype == 'RadioInput' %}
+                {% elif field|is_radio %}
 
                     <div class="selecter radio">
                         {{ field }}
@@ -36,23 +36,28 @@
 
                 {% else %}
 
-                    <div>
+                        {% if field|is_fileinput %}
 
-                        {% if field|fieldtype == 'ClearableFileInput' %}
+                            <div class="file_shell">
 
-                            {{ field }}
-                            <button type="button">Select file</button>
-                            {{ field.errors }}
+                                {{ field }}
+                                <button type="button">Select file</button>
+                                {{ field.errors }}
+
+                                <div class="status"></div>
+                            </div>
 
                         {% else %}
 
-                            {{ field }}
-                            {{ field.errors }}
+                            <div>
+
+                                {{ field }}
+                                {{ field.errors }}
+
+                                <div class="status"></div>
+                            </div>
 
                         {% endif %}
-
-                        <div class="status"></div>
-                    </div>
 
                 {% endif %}
 

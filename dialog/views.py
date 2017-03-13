@@ -147,11 +147,9 @@ class Dialog_Prompt(Dialog):
 
     def Manage_Brand(self):
         initial = self.Get_Session_Variable()
-        initial = initial.pk if initial else None
-
         self.content['title'] = Text(self.request, 1)
         self.content['form'] = Form_Brand(self.request,
-            self.Get_POST(), initial={'exists': initial})
+            self.Get_POST(), initial={'brands': initial})
 
         return self.Render_Dialog('dialog/create_or_select.html',
                                   'brand', only_root=True)

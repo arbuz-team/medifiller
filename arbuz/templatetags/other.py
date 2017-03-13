@@ -5,10 +5,6 @@ from arbuz.templatetags.base import *
 
 class Other_Manager(Base_Tag_Manager):
 
-    def Get_Field_Type(self):
-        field = self.values['field']
-        return field.field.widget.__class__.__name__
-
     def Get_Path_Or_Url(self):
         name = self.values['name']
         full = self.values['full']
@@ -41,14 +37,6 @@ class Other_Manager(Base_Tag_Manager):
         return Text(self.request, pk).replace('.', ' ').title()
 
 
-
-@register.filter('fieldtype')
-def fieldtype(field):
-
-    task = 'Get_Field_Type'
-    values = {'field': field}
-
-    return Other_Manager(task, values).OUT
 
 @register.simple_tag(takes_context=True)
 def url(context, name=None, full=False, *args, **kwargs):

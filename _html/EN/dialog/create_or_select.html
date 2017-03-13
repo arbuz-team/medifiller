@@ -27,7 +27,7 @@
                 {% for field in form %}
 
 
-                    {% if field|fieldtype == 'CheckboxInput' %}
+                    {% if field|is_checkbox %}
 
                         <div class="selecter checkbox">
                             {{ field }}
@@ -36,13 +36,13 @@
                         </div>
 
 
-                    {% elif field|fieldtype == 'RadioInput' %}
+                    {% elif field|is_radio %}
 
-                        <div class="selecter radio">
+                        <!--<div class="selecter radio">-->
                             {{ field }}
-                            <label for="id_{{ field.name }}" class="selecter-field"></label>
-                            <label for="id_{{ field.name }}" class="selecter-text">{{ field.label }}</label>
-                        </div>
+                            <!--<label for="id_{{ field.name }}" class="selecter-field"></label>-->
+                            <!--<label for="id_{{ field.name }}" class="selecter-text">{{ field.label }}</label>-->
+                        <!--</div>-->
 
                     {% endif %}
 
