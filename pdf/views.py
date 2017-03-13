@@ -6,16 +6,14 @@ from weasyprint import HTML
 
 class Generator_PDF(Dynamic_Base):
 
-    @staticmethod
-    def Invoice(request, pk):
+    def Invoice(self, pk):
 
         payment = Payment.objects.get(pk=pk)
         address = Invoice_Address.objects.get(payment=payment)
         products = Selected_Product.objects.filter(payment=payment)
         seller = Root_Address.objects.first()
 
-        generator = Generator_PDF(request)
-        generator.content['invoice'] = {
+        self.content['invoice'] = {
             'unique':           payment.pk,
             'date':             payment.date,
             'seller':           seller,
@@ -25,11 +23,11 @@ class Generator_PDF(Dynamic_Base):
 
         }
 
-        return generator.Generate()
-
-    def Generate(self):
-
         html = self.Render_HTML('pdf/invoice.html')
+        return self.Generate(html)
+
+    def Generate(self, html):
+
         pdf = HTML(string=html.content.decode()).write_png()
 
         response = HttpResponse(pdf, content_type='application/pdf')
