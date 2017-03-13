@@ -158,10 +158,10 @@ class Search_Engine:
         self.result = result
 
     @staticmethod
-    def Sort_Result_Filters_Purpose(purposes, product):
+    def Any_Purposes_Contain_In_Product(purposes, product):
 
-        for purpose in purposes:
-            if purpose in str(product.purpose):
+        for purpose in product.purpose.all().values('name'):
+            if purpose['name'] in purposes:
                 return True
 
         return False
@@ -183,7 +183,7 @@ class Search_Engine:
         self.result = result[:]
         if purposes: # user chose filter
             for product in self.result:
-                if not self.Sort_Result_Filters_Purpose(purposes, product):
+                if not self.Any_Purposes_Contain_In_Product(purposes, product):
                     result.remove(product)
 
         self.result = result
