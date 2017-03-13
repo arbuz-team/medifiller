@@ -1,11 +1,5 @@
-from arbuz.views import *
 from payment.forms import *
-from payment.base import *
 from sender.views import *
-
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
-from django.contrib.sites.models import Site
 
 
 class Payment_System(Dynamic_Base):
@@ -26,9 +20,6 @@ class Payment_System(Dynamic_Base):
 
         else: Sender(self.request).Send_Payment_Failure(content, email)
 
-    def Get_Status(self):
-        return 'OK' if self.valid else 'NOK'
-
     def __init__(self, request):
         Dynamic_Base.__init__(self, request)
         Check_Session(request)
@@ -46,23 +37,23 @@ class PayPal(Payment_System):
         post = self.request.POST
 
         if post['payment_status'] == 'Completed':
-            payment = Payment.objects.get(pk=post['custom'])
+            self.payment = Payment.objects.get(pk=post['custom'])
 
             # check receiver
             if post['receiver_email'] != PAYPAL_RECEIVER_EMAIL:
                 return
 
             # check amount paid
-            if str(post['mc_gross']) != payment.total_price:
+            if str(post['mc_gross']) != self.payment.total_price:
                 return
 
             # check currency
-            if post['mc_currency'] != payment.currency:
+            if post['mc_currency'] != self.payment.currency:
                 return
 
-            payment.approved = True
-            payment.service = 'PayPal'
-            payment.save()
+            self.payment.approved = True
+            self.payment.service = 'PayPal'
+            self.payment.save()
 
             self.valid = True
 
@@ -150,7 +141,7 @@ class DotPay(Payment_System):
         dotpay.Display_Status()
         dotpay.Valid_DotPay()
         dotpay.Send_Confirm()
-        return dotpay.Get_Status()
+        return HttpResponse('OK')
 
 
 

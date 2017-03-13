@@ -3,6 +3,8 @@ from django.core.urlresolvers import reverse, resolve
 from django.http import JsonResponse, HttpResponse
 from django.utils.timezone import datetime, timedelta
 from django.contrib.auth.hashers import make_password
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 
 from arbuz.settings import *
 from PIL import Image
