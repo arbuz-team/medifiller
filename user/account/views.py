@@ -247,6 +247,7 @@ class My_Shopping(Dynamic_Event_Manager):
         self.Create_Payment_Structure()
         self.content['date_from'] = self.request.session['user_my_shopping_date_from']
         self.content['date_to'] = self.request.session['user_my_shopping_date_to']
+        self.content['button_address_name'] = 'user_address'
         return self.Render_HTML('user/account/my_shopping.html')
 
     def Manage_Filter(self):

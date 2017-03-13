@@ -66,11 +66,17 @@ class Dialog_Alert(Dialog):
         self.content['text'] = Text(self.request, 10)
         return self.Render_Dialog('dialog/alert.html', only_root=True)
 
-    def Manage_Address(self):
+    def Manage_Root_Address(self):
         payment = Payment.objects.get(pk=self.request.POST['dialog_value'])
         self.content['invoice'] = Invoice_Address.objects.get(payment=payment)
         self.content['delivery'] = Delivery_Address.objects.get(payment=payment)
         return self.Render_Dialog('dialog/address.html', only_root=True)
+
+    def Manage_User_Address(self):
+        payment = Payment.objects.get(pk=self.request.POST['dialog_value'])
+        self.content['invoice'] = Invoice_Address.objects.get(payment=payment)
+        self.content['delivery'] = Delivery_Address.objects.get(payment=payment)
+        return self.Render_Dialog('dialog/address.html', authorization=True)
 
     def Manage_Icons(self):
         self.content['title'] = Text(self.request, 137)

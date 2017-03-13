@@ -6,7 +6,6 @@ urlpatterns = [
     url(r'^zaloguj/$', views.Sign_In.Launch, name='root.sign_in'),
     url(r'^wyloguj/$', views.Sign_Out.Launch, name='root.sign_out'),
     url(r'^dane_firmy/$', views.Company_Details_Manager.Launch, name='root.company_details'),
-    url(r'^mapa_adresow/$', views.Map_References.Launch, name='root.map_references'),
     url(r'^platnosci_uzytkownikow/$', views.Users_Payments.Launch, name='root.users_payments'),
     url(r'^media_spolecznosciowe/$', views.Social_Media_Manager.Launch, name='root.social_media'),
     url(r'^ustawienia_transportu/$', views.Transport_Settings.Launch, name='root.transport_settings'),

@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMultiAlternatives
 from email.mime.image import MIMEImage
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from translator.views import *
 from pdf.views import *
 
 
@@ -17,7 +14,7 @@ class Sender(Dynamic_Base):
         img.add_header('Content-Id', '<{0}>'.format(image_name))
         img.add_header("Content-Disposition", "inline", filename=image_name)
 
-        self.email_html.attach(img)
+        self.email.attach(img)
 
     def Send_Forgot_Password_Link(self, content, recipient):
         title = Text(self.request, 32)
@@ -38,7 +35,7 @@ class Sender(Dynamic_Base):
 
         pdf = {
             'name': Text(self.request, 106),
-            'file': pdf,
+            'file': pdf.content,
         }
 
         self.Send_Email(title, content, recipient, html_file, pdf)
@@ -59,27 +56,21 @@ class Sender(Dynamic_Base):
                    html_file, reply_to=None, pdf=None):
 
         self.content = content
-
         html = self.Render_HTML('sender/' + html_file)
-        body = MIMEText(html.content.decode(), _subtype='html')
-        self.email_html.attach(body)
 
-        self.Attach_Image('/_static/img/logo.png', 'logo')
-
-        email = EmailMessage(
+        self.email = EmailMultiAlternatives(
             subject=title,
-            body='',
+            body=html.content.decode(),
             from_email='Spa Sungate <sender@arbuz.team>',
             to=recipient,
             reply_to=reply_to
         )
 
-        if pdf:
-            email.attach(pdf['name'], pdf['file'], 'application/pdf')
-
-        email.attach(self.email_html)
-        email.send()
+        if pdf: self.email.attach(pdf['name'], pdf['file'], 'application/pdf')
+        self.email.attach_alternative(html.content.decode(), 'text/html')
+        self.Attach_Image('/_static/img/logo.png', 'logo')
+        self.email.send()
 
     def __init__(self, request):
         Dynamic_Base.__init__(self, request)
-        self.email_html = MIMEMultipart(_subtype='related')
+        self.email = None

@@ -121,7 +121,7 @@ class Company_Details_Manager(Dynamic_Event_Manager):
             self.content['form'].save() # save change of address_user
 
             return self.Render_HTML('root/company_details.html', 'root_address')
-        return self.Render_HTML('root/company_details.html')
+        return self.Render_HTML('root/company_details.html', 'root_address')
 
     def Manage_Form(self):
 
@@ -133,17 +133,6 @@ class Company_Details_Manager(Dynamic_Event_Manager):
     @staticmethod
     def Launch(request):
         return Company_Details_Manager(request, only_root=True).HTML
-
-
-
-class Map_References(Dynamic_Event_Manager):
-
-    def Manage_Content_Ground(self):
-        return self.Render_HTML('root/map_references.html')
-
-    @staticmethod
-    def Launch(request):
-        return Map_References(request, only_root=True).HTML
 
 
 
@@ -180,6 +169,7 @@ class Users_Payments(Dynamic_Event_Manager):
         self.Create_Payment_Structure()
         self.content['date_from'] = self.request.session['root_users_payments_date_from']
         self.content['date_to'] = self.request.session['root_users_payments_date_to']
+        self.content['button_address_name'] = 'root_address'
         return self.Render_HTML('root/users_payments.html')
 
     def Manage_Button(self):
