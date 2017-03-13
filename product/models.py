@@ -68,7 +68,7 @@ class Product(Abstract_Model):
     stock = models.IntegerField(blank=True)
 
     where_display = models.ForeignKey(Where_Display)
-    brand = models.ForeignKey(Brand)
+    brand = models.ForeignKey(Brand, null=True, on_delete=models.SET_NULL)
     purpose = models.ManyToManyField(Purpose)
 
     def Set_Variables(self):

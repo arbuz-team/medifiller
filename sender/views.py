@@ -45,7 +45,7 @@ class Sender(Dynamic_Base):
 
     def Send_Contact_Question(self, title, content, recipient):
         html_file = 'contact_question.html'
-        reply_to = recipient
+        reply_to = [recipient]
         recipient = [recipient, ROOT_EMAIL]
         self.Send_Email(title, content, recipient, html_file, reply_to)
 

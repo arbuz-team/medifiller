@@ -9,11 +9,6 @@ class Start_App(Dynamic_Event_Manager):
 
         self.content['apps'] = [
             {
-                'name': Text(self.request, 23),
-                'url':  self.Get_Path('root.sign_in', current_language=True),
-                'icon': '/_static/img/icons/128/dark/padlock_open.png',
-            },
-            {
                 'name': Text(self.request, 24),
                 'url': self.Get_Path('root.sign_out', current_language=True),
                 'icon': '/_static/img/icons/128/dark/logout.png',
@@ -22,11 +17,6 @@ class Start_App(Dynamic_Event_Manager):
                 'name': Text(self.request, 25),
                 'url': self.Get_Path('root.company_details', current_language=True),
                 'icon': '/_static/img/icons/128/dark/moustache.png',
-            },
-            {
-                'name': Text(self.request, 26),
-                'url': self.Get_Path('root.map_references', current_language=True),
-                'icon': '/_static/img/icons/128/dark/list_options.png',
             },
             {
                 'name': Text(self.request, 27),
@@ -66,6 +56,7 @@ class Sign_In(Dynamic_Event_Manager):
 
         if self.content['form'].is_valid():
             self.request.session['root_login'] = True
+            self.request.session['main_number_product_on_page'] = 9
 
             self.content['form'] = None  # message of correct
             return self.Render_HTML('root/sign_in.html')
@@ -95,6 +86,7 @@ class Sign_Out(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         self.request.session['root_login'] = False
+        self.request.session['main_number_product_on_page'] = 10
         return self.Render_HTML('root/sign_out.html')
 
     def Check_Authorization(self):

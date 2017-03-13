@@ -58,7 +58,7 @@ class Search_Engine:
 
     def Sort_Result_Order_By_Hits(self):
 
-        get_name = lambda details: details.name if details else ''
+        get_name = lambda model: model.name if model else ''
         get_description = lambda details: details.description if details else ''
         get_keywords = lambda keywords: keywords if keywords else ''
 
@@ -89,7 +89,7 @@ class Search_Engine:
                     get_keywords(product.keywords) +
                     get_keywords(product.keywords) +
 
-                    product.brand.name +
+                    get_name(product.brand) +
                     ' '.join([str(purpose.name)
                         for purpose in product.purpose.all()])
 
