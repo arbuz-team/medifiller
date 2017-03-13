@@ -108,20 +108,23 @@ class DotPay(Payment_System):
     def Valid_DotPay(self):
 
         if self.request.POST['operation_status'] == 'completed':
-            payment = Payment.objects.get(pk=self.request.POST['control'])
 
-            if self.request.POST['id'] != DOTPAY_RECEIVER_ID:
+            post = self.request.POST
+            self.payment = Payment.objects.get(
+                pk=self.request.POST['control'])
+
+            if post['id'] != DOTPAY_RECEIVER_ID:
                 return
 
-            if self.request.POST['operation_currency'] != payment.currency:
+            if post['operation_currency'] != self.payment.currency:
                 return
 
-            if self.request.POST['operation_amount'] != payment.total_price:
+            if post['operation_amount'] != self.payment.total_price:
                 return
 
-            payment.approved = True
-            payment.service = 'DotPay'
-            payment.save()
+            self.payment.approved = True
+            self.payment.service = 'DotPay'
+            self.payment.save()
 
             self.valid = True
 
