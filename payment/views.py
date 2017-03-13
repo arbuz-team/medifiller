@@ -7,11 +7,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.contrib.sites.models import Site
 
-from paypal.standard.forms import PayPalPaymentsForm
-from paypal.standard.models import ST_PP_COMPLETED
-from paypal.standard.ipn.signals import valid_ipn_received
-from paypal.standard.ipn.signals import invalid_ipn_received
-
 
 class Payment_System(Dynamic_Base):
 
@@ -47,28 +42,29 @@ class Payment_System(Dynamic_Base):
 
 class PayPal(Payment_System):
 
-    @staticmethod
-    def Valid_PayPal(sender, **kwargs):
-        ipn = sender
+    def Valid_PayPal(self):
+        post = self.request.POST
 
-        if ipn.payment_status == ST_PP_COMPLETED:
-            payment = Payment.objects.get(pk=ipn.custom)
+        if post['payment_status'] == 'Completed':
+            payment = Payment.objects.get(pk=post['custom'])
 
             # check receiver
-            if ipn.receiver_email != PAYPAL_RECEIVER_EMAIL:
+            if post['receiver_email'] != PAYPAL_RECEIVER_EMAIL:
                 return
 
             # check amount paid
-            if str(ipn.mc_gross) != payment.total_price:
+            if str(post['mc_gross']) != payment.total_price:
                 return
 
             # check currency
-            if ipn.mc_currency != payment.currency:
+            if post['mc_currency'] != payment.currency:
                 return
 
             payment.approved = True
             payment.service = 'PayPal'
             payment.save()
+
+            self.valid = True
 
     def Create_PayPal_From(self):
 
@@ -85,7 +81,7 @@ class PayPal(Payment_System):
             'cancel_return':    self.Get_Urls('payment.cancel', current_language=True),
         }
 
-        return PayPalPaymentsForm(initial=paypal_dict)
+        return Form_PayPal(initial=paypal_dict)
 
     @staticmethod
     @csrf_exempt
@@ -93,32 +89,29 @@ class PayPal(Payment_System):
     def Service(request):
         paypal = PayPal(request)
         paypal.Display_Status()
-
-        # payment = Payment.objects.get(pk=request.POST['pk'])
-        # PayPal.Send_Confirm(request, payment)
+        paypal.Valid_PayPal()
+        paypal.Send_Confirm()
         return HttpResponse('OKAY')
-
-valid_ipn_received.connect(PayPal.Valid_PayPal)
-invalid_ipn_received.connect(PayPal.Valid_PayPal)
 
 
 
 class DotPay(Payment_System):
 
     def Valid_DotPay(self):
+        post = self.request.POST
 
-        if self.request.POST['operation_status'] == 'completed':
+        if post['operation_status'] == 'completed':
+            self.payment = Payment.objects.get(pk=post['control'])
 
-            post = self.request.POST
-            self.payment = Payment.objects.get(
-                pk=self.request.POST['control'])
-
+            # check receiver
             if post['id'] != DOTPAY_RECEIVER_ID:
                 return
 
+            # check amount paid
             if post['operation_currency'] != self.payment.currency:
                 return
 
+            # check currency
             if post['operation_amount'] != self.payment.total_price:
                 return
 
@@ -157,7 +150,7 @@ class DotPay(Payment_System):
         dotpay.Display_Status()
         dotpay.Valid_DotPay()
         dotpay.Send_Confirm()
-        return dotpay.VALID
+        return dotpay.Get_Status()
 
 
 
