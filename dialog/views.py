@@ -67,7 +67,7 @@ class Dialog_Alert(Dialog):
         return self.Render_Dialog('dialog/alert.html', only_root=True)
 
     def Manage_Address(self):
-        payment = Payment.objects.get(pk=self.request.POST['value'])
+        payment = Payment.objects.get(pk=self.request.POST['dialog_value'])
         self.content['invoice'] = Invoice_Address.objects.get(payment=payment)
         self.content['delivery'] = Delivery_Address.objects.get(payment=payment)
         return self.Render_Dialog('dialog/address.html', only_root=True)
