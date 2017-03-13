@@ -80,7 +80,7 @@ class PayPal(Payment_System):
             'custom':           self.content['payment'],
             'currency_code':    self.request.session['translator_currency'],
 
-            'notify_url':       self.Get_Urls('paypal-ipn', current_language=True),
+            'notify_url':       self.Get_Urls('payment.paypal', current_language=True),
             'return':           self.Get_Urls('payment.apply', current_language=True),
             'cancel_return':    self.Get_Urls('payment.cancel', current_language=True),
         }

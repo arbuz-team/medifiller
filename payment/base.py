@@ -16,7 +16,7 @@ class Payment_Models_Manager:
 
             total += product_price * selected.number
 
-        return total
+        return format(total, '.2f')
 
     def Update_Total_Price(self):
         self.payment.total_price = self.Count_Total_Price()
