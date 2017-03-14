@@ -29,6 +29,9 @@ class Generator_PDF(Dynamic_Event_Manager):
 
     def Generate(self, html):
 
+        if not self.Check_Authorization():
+            return HttpResponse('Its not for you')
+
         pdf = HTML(string=html.content.decode()).write_png()
 
         response = HttpResponse(pdf, content_type='application/pdf')
@@ -37,9 +40,23 @@ class Generator_PDF(Dynamic_Event_Manager):
 
         return response
 
+    def Check_Authorization(self):
+
+        if self.request.session['root_login']:
+            return True
+
+        if not self.request.session['user_login']:
+            return False
+
+        payment = Payment.objects.get(pk=self.other_value)
+        if self.request.session['user_unique'] == payment.user.unique:
+            return True
+
+        return False
+
     @staticmethod
     def Launch_Invoice(request, pk):
-        return Generator_PDF(request).Invoice(pk)
+        return Generator_PDF(request, other_value=pk).Invoice(pk)
 
     @staticmethod
     def Launch(request):

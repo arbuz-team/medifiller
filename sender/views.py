@@ -38,7 +38,7 @@ class Sender(Dynamic_Base):
             'file': pdf.content,
         }
 
-        self.Send_Email(title, content, recipient, html_file, pdf)
+        self.Send_Email(title, content, recipient, html_file, pdf=pdf)
 
     def Send_Payment_Failure(self, content, recipient):
         title = Text(self.request, 151)
