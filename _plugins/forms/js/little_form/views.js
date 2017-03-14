@@ -2,126 +2,23 @@
  * Created by mrskull on 18.12.16.
  */
 
-import {Post_Button_Models} from './models'
+import {Little_Form_Models} from './models'
 
 
-export let Post_Button_Views = function(config)
+export let Little_Form_Views = function(form_config)
 {
   let
-    models = new Post_Button_Models(config),
+    models = new Little_Form_Models(form_config);
+
+  this.models = models;
 
 
-    set_text = {
-
-      insert: function(text)
-      {
-        if(set_text.if_is_not_text())
-          return false;
-
-        if($(models.settings.button).children('span').length > 0)
-          $(models.settings.button).children('span').html(text);
-        else
-          $(models.settings.button).html(text);
-      },
-
-      if_is_not_text: function()
-      {
-        return $(models.settings.button).children('i').length > 0;
-      },
-
-
-
-      sending: function()
-      {
-        if(set_text.if_is_not_text())
-          return false;
-
-        clearTimeout(set_text.set_waiting);
-        clearTimeout(set_text.set_standard);
-
-        set_text.insert(models.settings.text_sending);
-      },
-
-
-      set_waiting: undefined,
-      waiting: function()
-      {
-        if(set_text.if_is_not_text())
-          return false;
-
-        set_text.set_waiting = setTimeout(function(){
-          set_text.insert(models.settings.text_waiting);
-        }, models.settings.delay_text_waiting);
-      },
-
-
-      done: function()
-      {
-        if(set_text.if_is_not_text())
-          return false;
-
-        clearTimeout(set_text.set_waiting);
-        set_text.insert(models.settings.text_done);
-      },
-
-
-      set_standard: undefined,
-      standard: function()
-      {
-        if(set_text.if_is_not_text())
-          return false;
-
-        set_text.set_standard = setTimeout(function(){
-          set_text.insert(models.settings.text_standard);
-        }, models.settings.delay_text_standard);
-      },
-
-
-      error: function()
-      {
-        if(set_text.if_is_not_text())
-          return false;
-
-        clearTimeout(set_text.set_waiting);
-        clearTimeout(set_text.set_standard);
-
-        set_text.insert(models.settings.text_error);
-      },
-    },
-
-
-    start_loading = function()
-    {
-      models.state.is_loading = true;
-      set_text.sending();
-      set_text.waiting();
-    },
-
-
-    is_error = function(JSON_response, status)
-    {
-      if(status !== 'success')
-      {
-        set_text.error();
-        return true;
-      }
-
-      let response = JSON.parse(JSON_response);
-
-      if (response.__button__ !== 'true')
-      {
-        set_text.error();
-        return true;
-      }
-
-      return false;
-    },
-
+  let
 
     reload_plugins = function()
     {
       let
-        plugins = models.settings.button_reload,
+        plugins = models.settings.reload,
         plugins_array, array_length;
 
       if(!plugins || typeof plugins !== 'string')
@@ -134,6 +31,7 @@ export let Post_Button_Views = function(config)
         if(plugins_array[i])
         {
           window.APP.DATA.delay = 0;
+          console.log('reload_'+ plugins_array[i]);
           window.APP.throw_event(window.EVENTS.plugins['reload_'+ plugins_array[i]]);
         }
     },
@@ -142,7 +40,7 @@ export let Post_Button_Views = function(config)
     redirect_ground = function()
     {
       let
-        url = models.settings.button_redirect;
+        url = models.settings.redirect;
 
       if(!url || typeof url !== 'string')
         return false;
@@ -156,7 +54,7 @@ export let Post_Button_Views = function(config)
     launch_event = function()
     {
       let
-        event = models.settings.button_event,
+        event = models.settings.event,
         split_event,
         ready_event = window.EVENTS;
 
@@ -178,30 +76,30 @@ export let Post_Button_Views = function(config)
 
     end_loading = function(JSON_response, status)
     {
-      models.state.is_loading = false;
+      models.set_state_loading(false);
 
-      if(is_error(JSON_response, status))
+      if(models.is_error(JSON_response, status))
+      {
+        models.set_state_error(true);
+        console.error('Little form error: response is wrong.');
         return false;
-
-      set_text.done();
+      }
 
       reload_plugins();
       redirect_ground();
       launch_event();
-
-      set_text.standard();
     };
 
 
-  this.start = function()
+  this.start = function(value)
   {
-    if(models.is_loading())
+    if(models.get_state_loading())
       return false;
 
-    start_loading();
+    models.set_state_loading(true);
+
+    models.settings.value = value;
     models.send_post(end_loading);
   };
-
-  this.models = models;
 
 };

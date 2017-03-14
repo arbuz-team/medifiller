@@ -2,12 +2,12 @@
  * Created by mrskull on 17.12.16.
  */
 
-import {Post_Button_Views} from './views'
+import {Little_Form_Views} from './views'
 
 
-export let Post_Button_Controllers = function(config)
+export let Little_Form_Controllers = function(form_config)
 {
-  if(typeof config === 'undefined' && typeof config.container === 'undefined')
+  if(typeof form_config === 'undefined' && typeof form_config.container === 'undefined')
   {
     console.error('Exeption error: invalid container.');
     return {};
@@ -15,55 +15,50 @@ export let Post_Button_Controllers = function(config)
 
 
   let
-    buttons_views = {},
+    little_form_views = {},
 
 
-    manage_buttons = function(event)
+    manage_form = function(event)
     {
       event.preventDefault();
       event.stopPropagation();
 
       let
-        button_name = $(this).data('name');
+        form_name = $(this).parent().find('input').data('name'),
+        value = $(this).parent().find('input').val();
 
-      if(buttons_views[button_name])
-        buttons_views[button_name].start();
+      if(little_form_views[form_name])
+        little_form_views[form_name].start(value);
       else
-        console.error('Button "'+ button_name +'" doesn\'t exsist');
+        console.error('Form "'+ form_name +'" doesn\'t exsist');
     },
 
 
-    create_button_views = function()
+    create_form_views = function()
     {
-      let
-        button_name = $(this).data('name');
-      config.button = this;
+      form_config.this = this;
 
-      config.button_name = button_name;
-      config.button_action = $(this).data('action');
-      config.button_value = $(this).data('value');
-      config.button_reload = $(this).data('reload');
-      config.button_redirect = $(this).data('redirect');
-      config.button_event = $(this).data('event');
-      config.button_url = $(this).data('url');
+      form_config.action = $(this).data('action');
+      form_config.origin = $(this).data('origin');
+      form_config.name = $(this).find('input').data('name');
+      form_config.value = $(this).find('input').val();
 
-      if($(this).find('span, i').length)
-        config.button_html = $(this).find('span').html();
-      else
-        config.button_html = $(this).html();
+      form_config.reload = $(this).data('reload');
+      form_config.redirect = $(this).data('redirect');
+      form_config.event = $(this).data('event');
 
-      buttons_views[button_name] = new Post_Button_Views(config);
+      little_form_views[form_config.name] = new Little_Form_Views(form_config);
     };
 
 
   this.define = function()
   {
-    let $post_buttons = $('.post_button', config.container);
+    let $form = $('.little_form', form_config.container);
 
-    $post_buttons
-      .each(create_button_views);
+    $form
+      .each(create_form_views);
 
-    $post_buttons
-      .click(manage_buttons);
+    $form.find('button')
+      .click(manage_form);
   };
 };

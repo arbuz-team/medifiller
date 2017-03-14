@@ -8,7 +8,7 @@ import {selectors as dialog_selectors} from '../models'
 
 let
 
-  config_loader = {
+  dialog_loader_controllers = new Plugins_Loader_Controllers({
     name: 'dialog',
 
     container: '#DIALOG > .dialog',
@@ -17,9 +17,7 @@ let
       show: 0,
       hide: 0,
     },
-  },
-
-  dialog_loader_controllers = new Plugins_Loader_Controllers(config_loader);
+  });
 
 
 ///////////////////////////////////////
@@ -28,37 +26,50 @@ export let
 
   selectors = {
     container: dialog_selectors.content,
-    buttons: dialog_selectors.content +' button.dialog-content-button',
+    buttons: dialog_selectors.content +' .dialog-content-button',
   },
 
-  variables = {
-    button_type: '',
-    button_name: '',
-    button_url: '',
-    button_value: '',
-    post_data: undefined,
-  },
+  variables = {},
 
-
-  prepare_post_data = function(post_data)
+  reset_variables = (function()
   {
-    if(!post_data)
+    let define = function()
+    {
+      variables = {
+        type: '',
+        name: '',
+        value: '',
+        post_data: undefined,
+      };
+    };
+    define();
+
+    return define;
+  })(),
+
+
+  prepare_post_data = function()
+  {
+    if(!variables.post_data)
       variables.post_data = {};
-    else
-      variables.post_data = post_data;
 
-    variables.post_data.type = variables.button_type;
-    variables.post_data.dialog_name = variables.button_name;
+    variables.post_data['dialog_type'] = variables.type;
+    variables.post_data['dialog_name'] = variables.name;
 
-    if(variables.button_value)
-      variables.post_data.value = variables.button_value;
+    if(variables.value)
+      variables.post_data['dialog_value'] = variables.value;
   },
 
 
-  load = function(url, post_data, callback)
+  load = function(callback)
   {
-    prepare_post_data(post_data);
+    prepare_post_data();
 
-    dialog_loader_controllers.load(url, variables.post_data, callback);
-    variables = {};
+    dialog_loader_controllers.load(undefined, variables.post_data, callback);
+  },
+
+
+  reload = function(callback)
+  {
+    dialog_loader_controllers.load(undefined, variables.post_data, callback);
   };

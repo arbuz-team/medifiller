@@ -18,6 +18,7 @@ window.EVENTS = {
     close: new Event('plugins_close'),
     close_cart: new Event('cart_close'),
     close_navigation: new Event('navigation_close'),
+    close_dialog: new Event('dialog_close'),
 
     reload_root_sign_in: new Event('reload_root_sign_in'),
     reload_user_sign_in: new Event('reload_user_sign_in'),
@@ -26,7 +27,6 @@ window.EVENTS = {
     reload_cart: new Event('cart_reload'),
     reload_searcher: new Event('searcher_reload'),
     reload_ground: new Event('ground_reload'),
+    reload_dialog: new Event('dialog_reload'),
   },
-
-  dialog_close: new Event('dialog_close'),
 };

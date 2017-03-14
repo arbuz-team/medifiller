@@ -3,84 +3,111 @@
  */
 
 
-export let Post_Button_Models = function(config)
+export let Little_Form_Models = function(form_config)
 {
   let
-    that = this,
-    dictionary = window.APP.dictionary;
+    that = this;
 
   this.settings = {
-    container:          undefined,
-    button:             undefined,
+    container:    undefined,
+    this:         undefined,
 
-    button_name:        undefined,
-    button_action:      undefined,
-    button_value:       undefined,
-    button_reload:      undefined,
-    button_redirect:    undefined,
-    button_event:       undefined,
-    button_url:         undefined,
+    action:       undefined,
+    origin:       undefined,
+    name:         undefined,
+    value:        undefined,
 
-    callback:           undefined,
-
-    text_sending:       dictionary.get_word('Sending...'),
-    text_waiting:       dictionary.get_word('Waiting...'),
-    text_done:          dictionary.get_word("It's done!"),
-    text_error:         dictionary.get_word('Error / Resend'),
-    text_standard:      undefined,
-
-    delay_text_waiting: 500,
-    delay_text_standard: 1000,
+    reload:       undefined,
+    redirect:     undefined,
+    event:        undefined,
   };
 
-  let load_settings = function()
+
+  (function load_settings()
   {
-    if(typeof config !== 'undefined')
-    {
-      window.APP.add_if_isset(config, that.settings, 'container');
+    window.APP.add_if_isset(form_config, that.settings, 'container');
+    window.APP.add_if_isset(form_config, that.settings, 'this');
 
-      window.APP.add_if_isset(config, that.settings, 'callback');
+    window.APP.add_if_isset(form_config, that.settings, 'action');
+    window.APP.add_if_isset(form_config, that.settings, 'origin');
+    window.APP.add_if_isset(form_config, that.settings, 'name');
+    window.APP.add_if_isset(form_config, that.settings, 'value');
 
-      window.APP.add_if_isset(config, that.settings, 'button');
-
-      window.APP.add_if_isset(config, that.settings, 'button_name');
-      window.APP.add_if_isset(config, that.settings, 'button_action');
-      window.APP.add_if_isset(config, that.settings, 'button_value');
-      window.APP.add_if_isset(config, that.settings, 'button_reload');
-      window.APP.add_if_isset(config, that.settings, 'button_redirect');
-      window.APP.add_if_isset(config, that.settings, 'button_event');
-      window.APP.add_if_isset(config, that.settings, 'button_url');
-
-      window.APP.add_if_isset(config, that.settings, 'button_html', 'text_standard');
-    }
-  };
-
-  load_settings();
+    window.APP.add_if_isset(form_config, that.settings, 'reload');
+    window.APP.add_if_isset(form_config, that.settings, 'redirect');
+    window.APP.add_if_isset(form_config, that.settings, 'event');
+  })();
 
 
 /////////////////////////
 
-  this.state = {
-    is_loading: false,
+  let state = {
+    loading: false,
+    error: false,
   };
 
-
-  this.is_loading = function()
+  this.get_state_loading = function()
   {
-    return that.state.is_loading;
+    if(state.response)
+      return true;
+    else
+      return false;
+  };
+
+  this.set_state_loading = function(setter)
+  {
+    if(setter)
+      state.response = true;
+    else
+      state.response = false;
+  };
+
+  this.get_state_error = function()
+  {
+    if(state.error)
+      return true;
+    else
+      return false;
+  };
+
+  this.set_state_error = function(setter)
+  {
+    if(setter)
+      state.error = true;
+    else
+      state.error = false;
   };
 
 
 /////////////////////////
 
-  let prepare_post_data = function(action, value)
+  let prepare_post_data = function(name, value)
   {
-    let obj = {__button__: action};
+    let post_data = {};
+
+    if(that.settings.origin && typeof that.settings.origin === 'string')
+      post_data['__'+that.settings.origin +'__'] = name;
 
     if(value)
-      obj.value = value;
+      post_data.value = value;
+    else
+      post_data.value = '';
 
-    return obj;
+    return post_data;
+  };
+
+
+  this.is_error = function(JSON_response, status)
+  {
+    let response = JSON.parse(JSON_response);
+
+    if(status !== 'success')
+      return true;
+
+    if(response['__'+ that.settings.origin +'__'] !== 'true')
+      return true;
+
+    return false;
   };
 
 
@@ -89,12 +116,12 @@ export let Post_Button_Models = function(config)
     setTimeout(function()
     {
       let
-        url = that.settings.button_url,
-        action = that.settings.button_action,
-        value = that.settings.button_value,
-        post_data = prepare_post_data(action, value);
+        name = that.settings.name,
+        action = that.settings.action,
+        value = that.settings.value,
+        post_data = prepare_post_data(name, value);
 
-      window.APP.http_request(url, post_data, callback);
+      window.APP.http_request(action, post_data, callback);
     }, 200);
   };
 

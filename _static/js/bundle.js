@@ -362,6 +362,7 @@
 	    close: new Event('plugins_close'),
 	    close_cart: new Event('cart_close'),
 	    close_navigation: new Event('navigation_close'),
+	    close_dialog: new Event('dialog_close'),
 	
 	    reload_root_sign_in: new Event('reload_root_sign_in'),
 	    reload_user_sign_in: new Event('reload_user_sign_in'),
@@ -369,10 +370,9 @@
 	    reload_navigation: new Event('navigation_reload'),
 	    reload_cart: new Event('cart_reload'),
 	    reload_searcher: new Event('searcher_reload'),
-	    reload_ground: new Event('ground_reload')
-	  },
-	
-	  dialog_close: new Event('dialog_close')
+	    reload_ground: new Event('ground_reload'),
+	    reload_dialog: new Event('dialog_reload')
+	  }
 	};
 
 /***/ },
@@ -406,7 +406,7 @@
 	
 	var dialog_controllers = _interopRequireWildcard(_controllers5);
 	
-	var _controllers6 = __webpack_require__(50);
+	var _controllers6 = __webpack_require__(53);
 	
 	var ground_controllers = _interopRequireWildcard(_controllers6);
 	
@@ -3144,7 +3144,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.close = exports.open = exports.define = undefined;
+	exports.close = exports.reload = exports.open = exports.define = undefined;
 	
 	var _views = __webpack_require__(45);
 	
@@ -3173,6 +3173,7 @@
 	  $(selectors.external_buttons).click(open);
 	
 	  window.APP.add_own_event('dialog_close', close_with_delay);
+	  window.APP.add_own_event('dialog_reload', reload);
 	
 	  interior_dialog_controllers.define();
 	};
@@ -3202,13 +3203,12 @@
 	
 	var open = exports.open = function open() {
 	  var $button = $(this),
-	      button_data = {
+	      dialog_data = {
 	    type: $button.data('type'),
 	    name: $button.data('name'),
-	    url: $button.data('url'),
 	    value: $button.data('value')
 	  },
-	      dialog_data = {
+	      additional_data = {
 	    post_button_name: $button.data('dialog-name'),
 	    post_button_action: $button.data('dialog-action'),
 	    post_button_value: $button.data('dialog-value'),
@@ -3218,7 +3218,10 @@
 	    post_button_url: $button.data('dialog-url')
 	  };
 	
-	  dialog_views.open(button_data, dialog_data);
+	  dialog_views.open(dialog_data, additional_data);
+	},
+	    reload = exports.reload = function reload() {
+	  dialog_views.reload();
 	},
 	    close = exports.close = dialog_views.close;
 
@@ -3231,7 +3234,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.close = exports.open = exports.selectors = undefined;
+	exports.close = exports.reload = exports.open = exports.selectors = undefined;
 	
 	var _models = __webpack_require__(46);
 	
@@ -3267,38 +3270,35 @@
 	    hide = function hide() {
 	  $(selectors.container).fadeOut(200);
 	},
-	    clear_data = function clear_data() {
-	  $(selectors.header).html('Loading...');
-	
-	  $(selectors.content).html('Loading...');
+	    dim = function dim(callback) {
+	  $(selectors.container).animate({ opacity: .4 }, 200, callback);
 	},
-	    save_type_and_name = function save_type_and_name(button_data) {
-	  var type = button_data.type,
-	      name = button_data.name,
-	      value = button_data.value,
-	      result_type = void 0,
-	      result_name = void 0,
-	      default_type = 'alert',
-	      default_name = 'default';
-	
-	  if (type) result_type = type;else result_type = default_type;
-	
-	  if (name) result_name = name;else result_name = default_name;
-	
-	  dialog_models.variables.type = result_type;
-	  dialog_models.variables.name = result_name;
-	
-	  interior_dialog_models.variables.button_type = result_type;
-	  interior_dialog_models.variables.button_name = result_name;
-	  interior_dialog_models.variables.button_value = value;
+	    lighten = function lighten() {
+	  $(selectors.container).animate({ opacity: 1 }, 200);
 	},
-	    prepare_post_data = function prepare_post_data(dialog_data) {
+	    save_type_and_name = function save_type_and_name(dialog_data) {
+	  var type = dialog_data.type,
+	      name = dialog_data.name,
+	      value = dialog_data.value;
+	
+	  if (!type || !name) {
+	    console.error('Dialog error: Type or name is invalid.');
+	    return false;
+	  }
+	
+	  interior_dialog_models.reset_variables();
+	
+	  interior_dialog_models.variables.type = type;
+	  interior_dialog_models.variables.name = name;
+	  interior_dialog_models.variables.value = value;
+	},
+	    prepare_post_data = function prepare_post_data(additional_data) {
 	  var post_data = {},
 	      isset = 0;
 	
-	  if (dialog_models.variables.type === 'confirm') for (var data in dialog_data) {
-	    if (dialog_data.hasOwnProperty(data)) if (dialog_data[data]) {
-	      post_data[data] = dialog_data[data];
+	  if (interior_dialog_models.variables.type === 'confirm') for (var data in additional_data) {
+	    if (additional_data.hasOwnProperty(data)) if (additional_data[data]) {
+	      post_data[data] = additional_data[data];
 	      ++isset;
 	    } else {
 	      post_data[data] = '';
@@ -3306,16 +3306,24 @@
 	    }
 	  }
 	
-	  if (isset > 0) dialog_models.variables.post_data = post_data;else dialog_models.variables.post_data = undefined;
+	  if (isset > 0) interior_dialog_models.variables.post_data = post_data;else interior_dialog_models.variables.post_data = undefined;
 	};
 	
 	///////////////////////////////////////
 	
-	var open = exports.open = function open(button_data, dialog_data) {
-	  save_type_and_name(button_data);
-	  prepare_post_data(dialog_data);
+	var open = exports.open = function open(dialog_data, additional_data) {
+	  if (save_type_and_name(dialog_data) === false) return false;
 	
-	  interior_dialog_controllers.load(button_data.url, dialog_models.variables.post_data, show);
+	  if (prepare_post_data(additional_data) === false) return false;
+	
+	  console.log(interior_dialog_models.variables);
+	  interior_dialog_controllers.load(show);
+	},
+	    reload = exports.reload = function reload() {
+	  console.log(interior_dialog_models.variables);
+	  dim(function () {
+	    interior_dialog_controllers.reload(lighten);
+	  });
 	},
 	    close = exports.close = function close() {
 	  hide();
@@ -3334,16 +3342,7 @@
 	 * Created by mrskull on 29.12.16.
 	 */
 	
-	var settings = exports.settings = {
-	  url: '/dialog/'
-	},
-	    variables = exports.variables = {
-	  type: '',
-	  name: '',
-	  content: '',
-	  post_data: {}
-	},
-	    selectors = exports.selectors = {
+	var selectors = exports.selectors = {
 	  container: '#DIALOG'
 	};
 	
@@ -3361,7 +3360,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.define = exports.recognize_button = exports.load = undefined;
+	exports.define = exports.recognize_button = exports.reload = exports.load = undefined;
 	
 	var _views = __webpack_require__(48);
 	
@@ -3373,19 +3372,23 @@
 	
 	var _controllers3 = __webpack_require__(35);
 	
+	var _controllers4 = __webpack_require__(50);
+	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	/////////////////////////////
 	
-	/**
-	 * Created by mrskull on 21.01.17.
-	 */
+	var load = exports.load = interior_dialog_views.load,
+	    reload = exports.reload = interior_dialog_views.reload; /**
+	                                                             * Created by mrskull on 21.01.17.
+	                                                             */
 	
-	var load = exports.load = interior_dialog_views.load;
-	
-	var selectors = interior_dialog_views.selectors,
-	    variables = interior_dialog_views.variables,
+	var selectors = interior_dialog_views.models.selectors,
+	    variables = interior_dialog_views.models.variables,
 	    post_button_controllers = new _controllers3.Post_Button_Controllers({
+	  container: '#DIALOG > .dialog'
+	}),
+	    little_form_controllers = new _controllers4.Little_Form_Controllers({
 	  container: '#DIALOG > .dialog'
 	}),
 	    dialog_form_controllers = new _controllers2.Form_Controllers(interior_dialog_views);
@@ -3393,9 +3396,11 @@
 	var recognize_button = exports.recognize_button = function recognize_button() {
 	  var $button = $(this);
 	
-	  variables.button_name = $button.data('dialog-button');
+	  interior_dialog_views.models.reset_variables();
 	
-	  switch (variables.button_name) {
+	  variables.name = $button.data('dialog-button');
+	
+	  switch (variables.name) {
 	    case 'cancel':
 	      (0, _controllers.close)();
 	      break;
@@ -3412,6 +3417,7 @@
 	  $(selectors.buttons).click(recognize_button);
 	
 	  post_button_controllers.define();
+	  little_form_controllers.define();
 	  dialog_form_controllers.define();
 	};
 
@@ -3424,7 +3430,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.load = exports.container = exports.variables = exports.selectors = undefined;
+	exports.reload = exports.load = exports.container = exports.models = undefined;
 	
 	var _models = __webpack_require__(49);
 	
@@ -3432,12 +3438,12 @@
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
-	var selectors = exports.selectors = interior_dialog_models.selectors,
-	    variables = exports.variables = interior_dialog_models.variables,
-	    container = exports.container = selectors.container,
-	    load = exports.load = interior_dialog_models.load; /**
-	                                                        * Created by mrskull on 21.01.17.
-	                                                        */
+	var models = exports.models = interior_dialog_models,
+	    container = exports.container = models.selectors.container,
+	    load = exports.load = interior_dialog_models.load,
+	    reload = exports.reload = interior_dialog_models.load; /**
+	                                                            * Created by mrskull on 21.01.17.
+	                                                            */
 
 /***/ },
 /* 49 */
@@ -3448,7 +3454,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.load = exports.prepare_post_data = exports.variables = exports.selectors = undefined;
+	exports.reload = exports.load = exports.prepare_post_data = exports.reset_variables = exports.variables = exports.selectors = undefined;
 	
 	var _controllers = __webpack_require__(13);
 	
@@ -3458,7 +3464,7 @@
 	 * Created by mrskull on 21.01.17.
 	 */
 	
-	var config_loader = {
+	var dialog_loader_controllers = new _controllers.Plugins_Loader_Controllers({
 	  name: 'dialog',
 	
 	  container: '#DIALOG > .dialog',
@@ -3467,39 +3473,290 @@
 	    show: 0,
 	    hide: 0
 	  }
-	},
-	    dialog_loader_controllers = new _controllers.Plugins_Loader_Controllers(config_loader);
+	});
 	
 	///////////////////////////////////////
 	
 	var selectors = exports.selectors = {
 	  container: _models.selectors.content,
-	  buttons: _models.selectors.content + ' button.dialog-content-button'
+	  buttons: _models.selectors.content + ' .dialog-content-button'
 	},
-	    variables = exports.variables = {
-	  button_type: '',
-	  button_name: '',
-	  button_url: '',
-	  button_value: '',
-	  post_data: undefined
+	    variables = exports.variables = {},
+	    reset_variables = exports.reset_variables = function () {
+	  var define = function define() {
+	    exports.variables = variables = {
+	      type: '',
+	      name: '',
+	      value: '',
+	      post_data: undefined
+	    };
+	  };
+	  define();
+	
+	  return define;
+	}(),
+	    prepare_post_data = exports.prepare_post_data = function prepare_post_data() {
+	  if (!variables.post_data) variables.post_data = {};
+	
+	  variables.post_data['dialog_type'] = variables.type;
+	  variables.post_data['dialog_name'] = variables.name;
+	
+	  if (variables.value) variables.post_data['dialog_value'] = variables.value;
 	},
-	    prepare_post_data = exports.prepare_post_data = function prepare_post_data(post_data) {
-	  if (!post_data) variables.post_data = {};else variables.post_data = post_data;
+	    load = exports.load = function load(callback) {
+	  prepare_post_data();
 	
-	  variables.post_data.type = variables.button_type;
-	  variables.post_data.dialog_name = variables.button_name;
-	
-	  if (variables.button_value) variables.post_data.value = variables.button_value;
+	  dialog_loader_controllers.load(undefined, variables.post_data, callback);
 	},
-	    load = exports.load = function load(url, post_data, callback) {
-	  prepare_post_data(post_data);
-	
-	  dialog_loader_controllers.load(url, variables.post_data, callback);
-	  exports.variables = variables = {};
+	    reload = exports.reload = function reload(callback) {
+	  dialog_loader_controllers.load(undefined, variables.post_data, callback);
 	};
 
 /***/ },
 /* 50 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Little_Form_Controllers = undefined;
+	
+	var _views = __webpack_require__(51);
+	
+	var Little_Form_Controllers = exports.Little_Form_Controllers = function Little_Form_Controllers(form_config) {
+	  if (typeof form_config === 'undefined' && typeof form_config.container === 'undefined') {
+	    console.error('Exeption error: invalid container.');
+	    return {};
+	  }
+	
+	  var little_form_views = {},
+	      manage_form = function manage_form(event) {
+	    event.preventDefault();
+	    event.stopPropagation();
+	
+	    var form_name = $(this).parent().find('input').data('name'),
+	        value = $(this).parent().find('input').val();
+	
+	    if (little_form_views[form_name]) little_form_views[form_name].start(value);else console.error('Form "' + form_name + '" doesn\'t exsist');
+	  },
+	      create_form_views = function create_form_views() {
+	    form_config.this = this;
+	
+	    form_config.action = $(this).data('action');
+	    form_config.origin = $(this).data('origin');
+	    form_config.name = $(this).find('input').data('name');
+	    form_config.value = $(this).find('input').val();
+	
+	    form_config.reload = $(this).data('reload');
+	    form_config.redirect = $(this).data('redirect');
+	    form_config.event = $(this).data('event');
+	
+	    little_form_views[form_config.name] = new _views.Little_Form_Views(form_config);
+	  };
+	
+	  this.define = function () {
+	    var $form = $('.little_form', form_config.container);
+	
+	    $form.each(create_form_views);
+	
+	    $form.find('button').click(manage_form);
+	  };
+	}; /**
+	    * Created by mrskull on 17.12.16.
+	    */
+
+/***/ },
+/* 51 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Little_Form_Views = undefined;
+	
+	var _models = __webpack_require__(52);
+	
+	var Little_Form_Views = exports.Little_Form_Views = function Little_Form_Views(form_config) {
+	  var models = new _models.Little_Form_Models(form_config);
+	
+	  this.models = models;
+	
+	  var reload_plugins = function reload_plugins() {
+	    var plugins = models.settings.reload,
+	        plugins_array = void 0,
+	        array_length = void 0;
+	
+	    if (!plugins || typeof plugins !== 'string') return false;
+	
+	    plugins_array = plugins.split(' ');
+	    array_length = plugins_array.length;
+	
+	    for (var i = 0; i < array_length; ++i) {
+	      if (plugins_array[i]) {
+	        window.APP.DATA.delay = 0;
+	        console.log('reload_' + plugins_array[i]);
+	        window.APP.throw_event(window.EVENTS.plugins['reload_' + plugins_array[i]]);
+	      }
+	    }
+	  },
+	      redirect_ground = function redirect_ground() {
+	    var url = models.settings.redirect;
+	
+	    if (!url || typeof url !== 'string') return false;
+	
+	    window.APP.DATA.redirect = url;
+	    window.APP.DATA.delay = 100;
+	    window.APP.throw_event(window.EVENTS.redirect);
+	  },
+	      launch_event = function launch_event() {
+	    var event = models.settings.event,
+	        split_event = void 0,
+	        ready_event = window.EVENTS;
+	
+	    if (!event || typeof event !== 'string') return false;
+	
+	    split_event = event.split('.');
+	
+	    for (var i = 0; split_event.length > i; ++i) {
+	      ready_event = ready_event[split_event[i]];
+	    }if (ready_event.constructor === Event) {
+	      window.APP.DATA.delay = 100;
+	      window.APP.throw_event(ready_event); // example plugins.close_cart
+	    }
+	  },
+	      end_loading = function end_loading(JSON_response, status) {
+	    models.set_state_loading(false);
+	
+	    if (models.is_error(JSON_response, status)) {
+	      models.set_state_error(true);
+	      console.error('Little form error: response is wrong.');
+	      return false;
+	    }
+	
+	    reload_plugins();
+	    redirect_ground();
+	    launch_event();
+	  };
+	
+	  this.start = function (value) {
+	    if (models.get_state_loading()) return false;
+	
+	    models.set_state_loading(true);
+	
+	    models.settings.value = value;
+	    models.send_post(end_loading);
+	  };
+	}; /**
+	    * Created by mrskull on 18.12.16.
+	    */
+
+/***/ },
+/* 52 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	 * Created by mrskull on 31.01.17.
+	 */
+	
+	var Little_Form_Models = exports.Little_Form_Models = function Little_Form_Models(form_config) {
+	  var that = this;
+	
+	  this.settings = {
+	    container: undefined,
+	    this: undefined,
+	
+	    action: undefined,
+	    origin: undefined,
+	    name: undefined,
+	    value: undefined,
+	
+	    reload: undefined,
+	    redirect: undefined,
+	    event: undefined
+	  };
+	
+	  (function load_settings() {
+	    window.APP.add_if_isset(form_config, that.settings, 'container');
+	    window.APP.add_if_isset(form_config, that.settings, 'this');
+	
+	    window.APP.add_if_isset(form_config, that.settings, 'action');
+	    window.APP.add_if_isset(form_config, that.settings, 'origin');
+	    window.APP.add_if_isset(form_config, that.settings, 'name');
+	    window.APP.add_if_isset(form_config, that.settings, 'value');
+	
+	    window.APP.add_if_isset(form_config, that.settings, 'reload');
+	    window.APP.add_if_isset(form_config, that.settings, 'redirect');
+	    window.APP.add_if_isset(form_config, that.settings, 'event');
+	  })();
+	
+	  /////////////////////////
+	
+	  var state = {
+	    loading: false,
+	    error: false
+	  };
+	
+	  this.get_state_loading = function () {
+	    if (state.response) return true;else return false;
+	  };
+	
+	  this.set_state_loading = function (setter) {
+	    if (setter) state.response = true;else state.response = false;
+	  };
+	
+	  this.get_state_error = function () {
+	    if (state.error) return true;else return false;
+	  };
+	
+	  this.set_state_error = function (setter) {
+	    if (setter) state.error = true;else state.error = false;
+	  };
+	
+	  /////////////////////////
+	
+	  var prepare_post_data = function prepare_post_data(name, value) {
+	    var post_data = {};
+	
+	    if (that.settings.origin && typeof that.settings.origin === 'string') post_data['__' + that.settings.origin + '__'] = name;
+	
+	    if (value) post_data.value = value;else post_data.value = '';
+	
+	    return post_data;
+	  };
+	
+	  this.is_error = function (JSON_response, status) {
+	    var response = JSON.parse(JSON_response);
+	
+	    if (status !== 'success') return true;
+	
+	    if (response['__' + that.settings.origin + '__'] !== 'true') return true;
+	
+	    return false;
+	  };
+	
+	  this.send_post = function (callback) {
+	    setTimeout(function () {
+	      var name = that.settings.name,
+	          action = that.settings.action,
+	          value = that.settings.value,
+	          post_data = prepare_post_data(name, value);
+	
+	      window.APP.http_request(action, post_data, callback);
+	    }, 200);
+	  };
+	};
+
+/***/ },
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

@@ -5,19 +5,6 @@
 
 export let
 
-  settings = {
-    url: '/dialog/'
-  },
-
-
-  variables = {
-    type: '',
-    name: '',
-    content: '',
-    post_data: {},
-  },
-
-
   selectors = {
     container: '#DIALOG',
   };

@@ -23,6 +23,7 @@ import * as interior_dialog_controllers from './interior/controllers'
       $(selectors.external_buttons).click(open);
 
       window.APP.add_own_event('dialog_close', close_with_delay);
+      window.APP.add_own_event('dialog_reload', reload);
 
       interior_dialog_controllers.define();
     };
@@ -70,13 +71,14 @@ export let
   {
     let
       $button = $(this),
-      button_data = {
+
+      dialog_data = {
         type:   $button.data('type'),
         name:   $button.data('name'),
-        url:    $button.data('url'),
         value:  $button.data('value'),
       },
-      dialog_data = {
+
+      additional_data = {
         post_button_name:   $button.data('dialog-name'),
         post_button_action:    $button.data('dialog-action'),
         post_button_value:    $button.data('dialog-value'),
@@ -86,7 +88,13 @@ export let
         post_button_url:    $button.data('dialog-url'),
       };
 
-    dialog_views.open(button_data, dialog_data)
+    dialog_views.open(dialog_data, additional_data)
+  },
+
+
+  reload = function()
+  {
+    dialog_views.reload();
   },
 
 

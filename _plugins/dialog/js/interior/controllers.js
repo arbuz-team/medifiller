@@ -6,21 +6,27 @@ import * as interior_dialog_views   from './views'
 import {close as dialog_close}      from '../controllers'
 import {Form_Controllers}           from '../../../forms/js/controllers'
 import {Post_Button_Controllers}    from '../../../forms/js/post_button/controllers'
+import {Little_Form_Controllers}    from '../../../forms/js/little_form/controllers'
 
 
 /////////////////////////////
 
 export let
 
-  load = interior_dialog_views.load;
+  load = interior_dialog_views.load,
+  reload = interior_dialog_views.reload;
 
 
 let
 
-  selectors = interior_dialog_views.selectors,
-  variables = interior_dialog_views.variables,
+  selectors = interior_dialog_views.models.selectors,
+  variables = interior_dialog_views.models.variables,
 
   post_button_controllers = new Post_Button_Controllers({
+    container: '#DIALOG > .dialog'
+  }),
+
+  little_form_controllers = new Little_Form_Controllers({
     container: '#DIALOG > .dialog'
   }),
 
@@ -34,9 +40,11 @@ export let
     let
       $button = $(this);
 
-    variables.button_name = $button.data('dialog-button');
+    interior_dialog_views.models.reset_variables();
 
-    switch(variables.button_name)
+    variables.name = $button.data('dialog-button');
+
+    switch(variables.name)
     {
       case 'cancel': dialog_close();
         break;
@@ -54,5 +62,6 @@ export let
     $(selectors.buttons).click(recognize_button);
 
     post_button_controllers.define();
+    little_form_controllers.define();
     dialog_form_controllers.define();
   };

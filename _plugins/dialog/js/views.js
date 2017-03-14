@@ -34,60 +34,54 @@ let
   },
 
 
-  clear_data = function()
+  dim = function(callback)
   {
-    $(selectors.header)
-      .html('Loading...');
-
-    $(selectors.content)
-      .html('Loading...');
+    $(selectors.container)
+      .animate({ opacity: .4 }, 200, callback);
   },
 
 
-  save_type_and_name = function(button_data)
+  lighten = function()
+  {
+    $(selectors.container)
+      .animate({ opacity: 1 }, 200);
+  },
+
+
+  save_type_and_name = function(dialog_data)
   {
     let
-      type = button_data.type,
-      name = button_data.name,
-      value = button_data.value,
-      result_type,
-      result_name,
-      default_type = 'alert',
-      default_name = 'default';
+      type = dialog_data.type,
+      name = dialog_data.name,
+      value = dialog_data.value;
 
-    if(type)
-      result_type = type;
-    else
-      result_type = default_type;
+    if(!type || !name)
+    {
+      console.error('Dialog error: Type or name is invalid.');
+      return false;
+    }
 
-    if(name)
-      result_name = name;
-    else
-      result_name = default_name;
+    interior_dialog_models.reset_variables();
 
-
-    dialog_models.variables.type = result_type;
-    dialog_models.variables.name = result_name;
-
-    interior_dialog_models.variables.button_type = result_type;
-    interior_dialog_models.variables.button_name = result_name;
-    interior_dialog_models.variables.button_value = value;
+    interior_dialog_models.variables.type = type;
+    interior_dialog_models.variables.name = name;
+    interior_dialog_models.variables.value = value;
   },
 
 
-  prepare_post_data = function(dialog_data)
+  prepare_post_data = function(additional_data)
   {
     let
       post_data = {},
       isset = 0;
 
-    if(dialog_models.variables.type === 'confirm')
-      for(let data in dialog_data)
+    if(interior_dialog_models.variables.type === 'confirm')
+      for(let data in additional_data)
       {
-        if(dialog_data.hasOwnProperty(data))
-          if(dialog_data[data])
+        if(additional_data.hasOwnProperty(data))
+          if(additional_data[data])
           {
-            post_data[data] = dialog_data[data];
+            post_data[data] = additional_data[data];
             ++isset;
           }
           else
@@ -98,9 +92,9 @@ let
       }
 
     if(isset > 0)
-      dialog_models.variables.post_data = post_data;
+      interior_dialog_models.variables.post_data = post_data;
     else
-      dialog_models.variables.post_data = undefined;
+      interior_dialog_models.variables.post_data = undefined;
   };
 
 
@@ -108,12 +102,26 @@ let
 
 export let
 
-  open = function(button_data, dialog_data)
+  open = function(dialog_data, additional_data)
   {
-    save_type_and_name(button_data);
-    prepare_post_data(dialog_data);
+    if(save_type_and_name(dialog_data) === false)
+      return false;
 
-    interior_dialog_controllers.load(button_data.url, dialog_models.variables.post_data, show);
+    if(prepare_post_data(additional_data) === false)
+      return false;
+
+
+    console.log(interior_dialog_models.variables);
+    interior_dialog_controllers.load(show);
+  },
+
+
+  reload = function()
+  {
+    console.log(interior_dialog_models.variables);
+    dim(function(){
+      interior_dialog_controllers.reload(lighten);
+    });
   },
 
 

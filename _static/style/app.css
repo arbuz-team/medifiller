@@ -1702,6 +1702,15 @@ img {
   .footer-author > a:hover {
     opacity: .9; }
 
+.container-part .scroll {
+  min-height: 80px;
+  max-height: 450px;
+  margin: 5px 5px;
+  padding: 5px 5px;
+  overflow: auto;
+  border-top: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8; }
+
 .ground-block.start > .block-background {
   background-color: #f2f2f2; }
 
