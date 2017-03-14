@@ -27,7 +27,7 @@ class Social_Media(Abstract_Model):
 
 
 
-class Transport(Abstract_Model):
+class Delivery(Abstract_Model):
 
     country = models.CharField(max_length=20)
     price_eur = models.IntegerField()

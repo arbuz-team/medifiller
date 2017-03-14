@@ -36,21 +36,23 @@ class Where_Display(models.Model):
 
 
 
-class Filter(models.Model):
+class Brand(models.Model):
 
     name = models.CharField(max_length=20)
-
-    class Meta:
-        abstract = True
 
     def __str__(self):
         return self.name
 
-class Brand(Filter):
-    pass
 
-class Purpose(Filter):
-    pass
+
+class Purpose(models.Model):
+
+    name_en = models.CharField(max_length=20)
+    name_pl = models.CharField(max_length=20)
+    name_de = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name_en
 
 
 

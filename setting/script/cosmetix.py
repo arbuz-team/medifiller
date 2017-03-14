@@ -153,10 +153,16 @@ class Manager:
     @staticmethod
     def Create_Purpose(name):
         name = name.title()
-        purpose = Purpose.objects.filter(name=name).first()
+        purpose = Purpose.objects.filter(name_en=name).first()
 
         if not purpose:
-            purpose = Purpose(name=name)
+
+            purpose = Purpose(
+                name_en=name,
+                name_pl=name,
+                name_de=name,
+            )
+
             purpose.save()
 
         return purpose
@@ -193,8 +199,10 @@ class Manager:
             for purpose in filters['purposes']:
                 new_product.purpose.add(purpose)
 
-            image = Dynamic_Base.Save_Image_From_URL(product['image'])
-            new_product.Save_Image(image)
+            # image = Dynamic_Base.Save_Image_From_URL(product['image'])
+            # new_product.Save_Image(image)
+            new_product.image = '/_static/img/product/{0}.jpeg'.format(new_product.pk)
+            new_product.save()
 
     @staticmethod
     def Delete_Problematic_Data():

@@ -67,12 +67,12 @@
                 <li class="checkbox">
                     <input type="checkbox" class="auto_field"
                            data-name="purpose"
-                           id="id_{{ purpose.name }}"
-                           name="{{ purpose.name }}" />
-                    <label for="id_{{ purpose.name }}" class="checkbox-field"></label>
-                    <label for="id_{{ purpose.name }}" class="checkbox-text">{{ purpose.name }}</label>
+                           id="id_{% purpose_name purpose %}"
+                           name="{% purpose_name purpose %}" />
+                    <label for="id_{% purpose_name purpose %}" class="checkbox-field"></label>
+                    <label for="id_{% purpose_name purpose %}" class="checkbox-text">{% purpose_name purpose %}</label>
                 </li>
-            <!--<li> <input name="{{ purpose.name }}" type="checkbox" class="auto_field" data-name="purpose" /> <label for>{{ purpose.name }}</label> </li>-->
+            <!--<li> <input name="{% purpose_name purpose %}" type="checkbox" class="auto_field" data-name="purpose" /> <label for>{% purpose_name purpose %}</label> </li>-->
 
             {% endfor %}
         </ul>

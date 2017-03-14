@@ -8,7 +8,7 @@ urlpatterns = [
     url(r'^company_details/$', views.Company_Details_Manager.Launch, name='root.company_details'),
     url(r'^users_payments/$', views.Users_Payments.Launch, name='root.users_payments'),
     url(r'^social_media/$', views.Social_Media_Manager.Launch, name='root.social_media'),
-    url(r'^transport_settings/$', views.Transport_Settings.Launch, name='root.transport_settings'),
+    url(r'^transport_settings/$', views.Delivery_Settings.Launch, name='root.delivery_settings'),
 
     url(r'^sign_in/redirect/(?P<url>.+)/$',
         views.Sign_In.Redirect, name='root.sign_in.redirect'),

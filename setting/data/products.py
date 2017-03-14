@@ -1,30 +1,7 @@
 from product.views import *
 
 def Load_Default_Filters():
-
-    Brand(
-        name='Excellent'
-    ).save()
-
-    Brand(
-        name='Juvederm'
-    ).save()
-
-    Brand(
-        name='Teosyal'
-    ).save()
-
-    Purpose(
-        name='Cellulite'
-    ).save()
-
-    Purpose(
-        name='Anti-aging'
-    ).save()
-
-    Purpose(
-        name='Baldness'
-    ).save()
+    pass
 
 def Load_Where_Display():
 

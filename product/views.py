@@ -163,7 +163,13 @@ class Product_Elements(Dynamic_Event_Manager):
         return JsonResponse({'__little__': 'true'})
 
     def Manage_Little_Form_Purpose(self):
-        Purpose(name=self.request.POST['value']).save()
+
+        Purpose(
+            name_en=self.request.POST['value'],
+            name_pl=self.request.POST['value'],
+            name_de=self.request.POST['value'],
+        ).save()
+
         return JsonResponse({'__little__': 'true'})
 
     def Manage_Little_Form(self):

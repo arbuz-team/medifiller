@@ -86,9 +86,9 @@
                     <input type="checkbox" class="auto_field"
                            data-name="purpose"
                            id="id_purpose_{{ purpose.pk }}"
-                           name="{{ purpose.name }}" />
+                           name="{% purpose_name purpose %}" />
                     <label for="id_purpose_{{ purpose.pk }}" class="selecter-field"></label>
-                    <label for="id_purpose_{{ purpose.pk }}" class="selecter-text">{% get_purpose_name purpose %}</label>
+                    <label for="id_purpose_{{ purpose.pk }}" class="selecter-text">{% purpose_name purpose %}</label>
 
                     {% if request.session.root_login %}
                         <button class="dialog_button icon" type="button"
@@ -103,7 +103,7 @@
                         </button>
                     {% endif %}
                 </li>
-            <!--<li> <input name="{{ purpose.name }}" type="checkbox" class="auto_field" data-name="purpose" /> <label for>{{ purpose.name }}</label> </li>-->
+            <!--<li> <input name="{% purpose_name purpose %}" type="checkbox" class="auto_field" data-name="purpose" /> <label for>{% purpose_name purpose %}</label> </li>-->
 
             {% endfor %}
         </ul>

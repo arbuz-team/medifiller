@@ -54,21 +54,19 @@ def Load_Default_Data():
         email='info@spasungate.pl'
     ).save()
 
-    Transport(
+    Delivery(
         country='Poland',
         price_eur=int(20000 / 4.31259388),
         price_pln=20000
     ).save()
 
-
-    Transport(
+    Delivery(
         country='Germany',
         price_eur=int(20000 / 4.31259388),
         price_pln=20000
     ).save()
 
-
-    Transport(
+    Delivery(
         country='United Kingdom',
         price_eur=int(20000 / 4.31259388),
         price_pln=20000

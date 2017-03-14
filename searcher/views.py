@@ -90,8 +90,8 @@ class Search_Engine:
                     get_keywords(product.keywords) +
 
                     get_name(product.brand) +
-                    ' '.join([str(purpose.name)
-                        for purpose in product.purpose.all()])
+                    ' '.join([str(purpose.name_en) + str(purpose.name_pl) + str(purpose.name_de)
+                              for purpose in product.purpose.all()])
 
                 ).lower()
             )
@@ -160,8 +160,16 @@ class Search_Engine:
     @staticmethod
     def Any_Purposes_Contain_In_Product(purposes, product):
 
-        for purpose in product.purpose.all().values('name'):
-            if purpose['name'] in purposes:
+        for purpose in product.purpose.all().values('name_en'):
+            if purpose['name_en'] in purposes:
+                return True
+
+        for purpose in product.purpose.all().values('name_pl'):
+            if purpose['name_pl'] in purposes:
+                return True
+
+        for purpose in product.purpose.all().values('name_de'):
+            if purpose['name_de'] in purposes:
                 return True
 
         return False

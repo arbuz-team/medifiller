@@ -30,7 +30,7 @@ class Start_App(Dynamic_Event_Manager):
             },
             {
                 'name': Text(self.request, 136),
-                'url': self.Get_Path('root.transport_settings', current_language=True),
+                'url': self.Get_Path('root.delivery_settings', current_language=True),
                 'icon': '/_static/img/icons/128/dark/transport.png',
             },
         ]
@@ -224,28 +224,28 @@ class Social_Media_Manager(Dynamic_Event_Manager):
 
 
 
-class Transport_Settings(Dynamic_Event_Manager):
+class Delivery_Settings(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
-        self.content['options'] = Transport.objects.all()
+        self.content['options'] = Delivery.objects.all()
         return self.Render_HTML('root/transport_settings.html')
 
     def Manage_Form(self):
 
         pk, currency = self.request.POST['__form__'].split(' ')
         price = self.request.POST['value']
-        transport = Transport.objects.get(pk=pk)
+        delivery = Delivery.objects.get(pk=pk)
 
         if currency == 'PLN':
-            transport.price_pln = price
+            delivery.price_pln = price
 
         if currency == 'EUR':
-            transport.price_eur = price
+            delivery.price_eur = price
 
-        transport.save()
+            delivery.save()
 
         return JsonResponse({'__form__': 'true'})
 
     @staticmethod
     def Launch(request):
-        return Transport_Settings(request, only_root=True).HTML
+        return Delivery_Settings(request, only_root=True).HTML

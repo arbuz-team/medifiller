@@ -37,21 +37,6 @@ class Other_Manager(Base_Tag_Manager):
         pk = Language_EN.objects.get(value=app_name).pk
         return Text(self.request, pk).replace('.', ' ').title()
 
-    def Get_Purpose_Name(self):
-        purpose = self.values['purpose'].name.lower()
-        name = Dynamic_Base.Convert_Polish_To_Ascii(purpose)
-
-        pks = {
-            'modelowanie ust':      145,
-            'zmarszczki glebokie':  146,
-            'zmarszczki plytkie':   147,
-            'zamarszczki srednie':  148,
-            'wolumetria':           149,
-            'okolice oczu':         150
-        }
-
-        return Text(self.request, pks[name])
-
 
 
 @register.simple_tag(takes_context=True)
@@ -99,12 +84,3 @@ def get_app_name(context):
     request = context['request']
 
     return Other_Manager(task, {}, request).OUT
-
-@register.simple_tag(takes_context=True)
-def get_purpose_name(context, purpose):
-
-    task = 'Get_Purpose_Name'
-    request = context['request']
-    values = {'purpose': purpose}
-
-    return Other_Manager(task, values, request).OUT
