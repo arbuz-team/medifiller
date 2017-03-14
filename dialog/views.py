@@ -27,9 +27,9 @@ class Dialog(Dynamic_Base):
     def Get_Dialog_Name(self):
         return self.request.POST['dialog_name']
 
-    def Apply_Message(self):
-        self.content['title'] = Text(self.request, 8)
-        return self.Render_HTML('dialog/apply.html')
+    @staticmethod
+    def Apply_Message():
+        return JsonResponse({'__form__': 'true'})
 
     def Unauthorized_Access(self):
         self.content['title'] = Text(self.request, 69)
