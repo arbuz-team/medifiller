@@ -29,7 +29,7 @@ class Dialog(Dynamic_Base):
 
     @staticmethod
     def Apply_Message():
-        return JsonResponse({'__form__': 'true'})
+        return HttpResponse('')
 
     def Unauthorized_Access(self):
         self.content['title'] = Text(self.request, 69)
