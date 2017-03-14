@@ -86,16 +86,16 @@ class Dynamic_Base:
         date_to = self.request.session[session_name_date_to]
 
         # valid if string convert to date
-        try: datetime.strptime(date_from, '%d.%m.%Y')
+        try: datetime.strptime(date_from, '%Y-%m-%d')
         except ValueError:
             self.request.session[session_name_date_from] = \
-                (datetime.today() - timedelta(days=7)).strftime('%d.%m.%Y')
+                (datetime.today() - timedelta(days=7)).strftime('%Y-%m-%d')
 
         # valid if string convert to date
-        try: datetime.strptime(date_to, '%d.%m.%Y')
+        try: datetime.strptime(date_to, '%Y-%m-%d')
         except ValueError:
             self.request.session[session_name_date_to] = \
-                datetime.today().strftime('%d.%m.%Y')
+                datetime.today().strftime('%Y-%m-%d')
 
         # valid period
         if date_from > date_to:
