@@ -1,4 +1,6 @@
 from django import forms
+from django_countries import countries
+from django_countries.fields import LazyTypedChoiceField
 from user.models import *
 from translator.views import *
 
@@ -139,6 +141,7 @@ class Abstract_Address_Form(Abstract_Model_Form):
 
     def Create_Fields(self):
         self.fields['address_line_2'].required = False
+        self.fields['country'] = LazyTypedChoiceField(choices=countries)
 
     def Set_Widgets(self):
 
@@ -177,11 +180,6 @@ class Abstract_Address_Form(Abstract_Model_Form):
             'class': 'test',
         }
 
-        country_attr = {
-            'placeholder': Text(self.request, 53),
-            'class': 'test',
-        }
-
         self.fields['full_name'].widget = forms.TextInput(attrs=full_name_attr)
         self.fields['doctor_number'].widget = forms.TextInput(attrs=doctor_number_attr)
         self.fields['address_line_1'].widget = forms.TextInput(attrs=address_line_1_attr)
@@ -189,7 +187,6 @@ class Abstract_Address_Form(Abstract_Model_Form):
         self.fields['city'].widget = forms.TextInput(attrs=city_attr)
         self.fields['region'].widget = forms.TextInput(attrs=region_attr)
         self.fields['postcode'].widget = forms.TextInput(attrs=postcode_attr)
-        self.fields['country'].widget = forms.TextInput(attrs=country_attr)
 
     def Exclude_Fields(self):
         if self.request.session['translator_language'] != 'PL':

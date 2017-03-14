@@ -23,9 +23,9 @@
                 <script>
 
                     // {% if request.session.arbuz_permissions == 'only_root' %}
-                        window.APP.DATA.redirect = "{% sign_in_redirect 'root' %}";
+                        window.APP.DATA.redirect = "{% redirect 'root.sign_in' %}";
                     // {% elif request.session.arbuz_permissions == 'authorization' %}
-                        window.APP.DATA.redirect = "{% sign_in_redirect 'user' %}";
+                        window.APP.DATA.redirect = "{% redirect 'user.sign_in' %}";
                     // {% endif %}
 
                     // {% if request.session.arbuz_permissions == 'only_root' or request.session.arbuz_permissions == 'authorization' %}

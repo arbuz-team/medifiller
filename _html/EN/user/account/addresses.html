@@ -15,10 +15,12 @@
 
         <div class="title"> Edit addresses </div>
 
-        <div class="form-accept">
-            <div>Please select your address of below list <wbr>for shipment and invoice.</div>
-            <a href="/payment/" class="button submit">Back to payment</a>
-        </div>
+        {% if go_back != '/' %}
+            <div class="form-accept">
+                <div>Please select your address of below list <wbr>for shipment and invoice.</div>
+                <div data-redirect="{{ go_back }}" data-name="go_back" class="button submit event_button">Go back</div>
+            </div>
+        {% endif %}
 
         {% for id_address, edit_form_address in edit_forms_address.items %}
 

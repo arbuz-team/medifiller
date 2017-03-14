@@ -17,15 +17,16 @@ class Other_Manager(Base_Tag_Manager):
         if not full:
             return self.Get_Path(name, kwargs, current_language=True)
 
-    def Create_Sign_In_Redirect_URL(self):
-        app = self.values['app']
-        name = self.values['name']
+    def Create_Redirect_URL(self):
+        url_name = self.values['url_name']
+        url_name = self.Get_Path(url_name, current_language=True)
         kwargs = self.values['kwargs']
 
-        redirect_url = self.Get_Path(name, kwargs, current_language=True)
+        redirect_url = self.values['redirect_url']
+        redirect_url = self.Get_Path(redirect_url, kwargs, current_language=True)
         redirect_url = b64encode(bytes(redirect_url, 'utf-8'))
         redirect_url = redirect_url.decode('utf-8')
-        return '/{0}/sign_in/redirect/{1}/'.format(app, redirect_url)
+        return '{0}redirect/{1}/'.format(url_name, redirect_url)
 
     def Get_Text_In_Current_Language(self):
         pk = self.values['pk']
@@ -53,13 +54,13 @@ def url(context, name=None, full=False, *args, **kwargs):
     return Other_Manager(task, values, request).OUT
 
 @register.simple_tag(takes_context=True)
-def sign_in_redirect(context, app, name=None, *args, **kwargs):
+def redirect(context, url_name, redirect_url=None, *args, **kwargs):
 
-    task = 'Create_Sign_In_Redirect_URL'
+    task = 'Create_Redirect_URL'
     request = context['request']
     values = {
-        'app': app,
-        'name': name,
+        'url_name': url_name,
+        'redirect_url': redirect_url,
         'kwargs': kwargs,
     }
 

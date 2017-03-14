@@ -43,7 +43,7 @@
                             Product price: {% get_price product %}
                         {% else %}
                             If you want buy a product you must login.
-                            <a href="{% sign_in_redirect 'user' %}">Sign in!</a>
+                            <a href="{% redirect 'user.sign_in' %}">Sign in!</a>
                         {% endif %}
                     </div>
 
@@ -132,7 +132,7 @@
 
                 <div class="product_details-section">
                     If you want buy a product you must login.
-                    <a href="{% sign_in_redirect 'user' %}">Sign in!</a>
+                    <a href="{% redirect 'user.sign_in' %}">Sign in!</a>
                 </div>
 
             {% endif %}
