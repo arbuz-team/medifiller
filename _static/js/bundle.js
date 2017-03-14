@@ -3315,8 +3315,7 @@
 	  if (save_type_and_name(dialog_data) === false) return false;
 	
 	  if (prepare_post_data(additional_data) === false) return false;
-	
-	  console.log(interior_dialog_models.variables);
+
 	  interior_dialog_controllers.load(show);
 	},
 	    reload = exports.reload = function reload() {

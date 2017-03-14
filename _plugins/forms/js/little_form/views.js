@@ -31,7 +31,6 @@ export let Little_Form_Views = function(form_config)
         if(plugins_array[i])
         {
           window.APP.DATA.delay = 0;
-          console.log('reload_'+ plugins_array[i]);
           window.APP.throw_event(window.EVENTS.plugins['reload_'+ plugins_array[i]]);
         }
     },

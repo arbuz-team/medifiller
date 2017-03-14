@@ -110,15 +110,12 @@ export let
     if(prepare_post_data(additional_data) === false)
       return false;
 
-
-    console.log(interior_dialog_models.variables);
     interior_dialog_controllers.load(show);
   },
 
 
   reload = function()
   {
-    console.log(interior_dialog_models.variables);
     dim(function(){
       interior_dialog_controllers.reload(lighten);
     });
