@@ -296,6 +296,9 @@ class Dynamic_Event_Manager(Manager, Checker, Updater, metaclass=ABCMeta):
                 self.HTML = self.Initialize()
                 self.Display_Status()
 
+                if not self.HTML:
+                    self.Display_Status(error=True)
+
             except Exception as exception:
 
                 self.Display_Status(error=True)

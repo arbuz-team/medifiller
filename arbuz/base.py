@@ -243,6 +243,9 @@ class Dynamic_Base:
 
         if DEBUG:
 
+            if not DISPLAY_STATUS and not error:
+                return
+
             message = '-' * 125 + '\n\n'
             message += self.Get_Text_Cell('Application: ')
             message += self.app_name

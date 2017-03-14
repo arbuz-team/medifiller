@@ -188,9 +188,22 @@ class Form_Brand(Abstract_Form):
 
 class Form_Purpose(Abstract_Form):
 
+    def Get_Purpose_Name(self, purpose):
+
+        names = {
+            'EN': purpose.name_en,
+            'PL': purpose.name_pl,
+            'DE': purpose.name_de
+        }
+
+        return names[self.request.session['translator_language']]
+
     def Create_Fields(self):
         purposes = Purpose.objects.all()
 
         for purpose in purposes:
-            self.fields['purpose_{0}'.format(purpose.pk)] = \
-                forms.BooleanField(required=False, label=purpose.name)
+            self.fields['_purpose_{0}'
+                .format(purpose.pk)] = forms.BooleanField(
+                    required=False,
+                    label=self.Get_Purpose_Name(purpose)
+                )
