@@ -3,8 +3,6 @@
  */
 
 import * as dialog_models from './models'
-import * as interior_dialog_controllers from './interior/controllers'
-import * as interior_dialog_models from './interior/models'
 
 
 /**
@@ -23,6 +21,7 @@ let
   show = function()
   {
     $(selectors.container)
+      .css('opacity', '')
       .fadeIn(200);
   },
 
@@ -37,64 +36,14 @@ let
   dim = function(callback)
   {
     $(selectors.container)
-      .animate({ opacity: .4 }, 200, callback);
+      .animate({ opacity: .8 }, 200, callback);
   },
 
 
   lighten = function()
   {
     $(selectors.container)
-      .animate({ opacity: 1 }, 200);
-  },
-
-
-  save_type_and_name = function(dialog_data)
-  {
-    let
-      type = dialog_data.type,
-      name = dialog_data.name,
-      value = dialog_data.value;
-
-    if(!type || !name)
-    {
-      console.error('Dialog error: Type or name is invalid.');
-      return false;
-    }
-
-    interior_dialog_models.reset_variables();
-
-    interior_dialog_models.variables.type = type;
-    interior_dialog_models.variables.name = name;
-    interior_dialog_models.variables.value = value;
-  },
-
-
-  prepare_post_data = function(additional_data)
-  {
-    let
-      post_data = {},
-      isset = 0;
-
-    if(interior_dialog_models.variables.type === 'confirm')
-      for(let data in additional_data)
-      {
-        if(additional_data.hasOwnProperty(data))
-          if(additional_data[data])
-          {
-            post_data[data] = additional_data[data];
-            ++isset;
-          }
-          else
-          {
-            post_data[data] = '';
-            ++isset;
-          }
-      }
-
-    if(isset > 0)
-      interior_dialog_models.variables.post_data = post_data;
-    else
-      interior_dialog_models.variables.post_data = undefined;
+      .animate({ opacity: 1 }, 300);
   };
 
 
@@ -104,20 +53,14 @@ export let
 
   open = function(dialog_data, additional_data)
   {
-    if(save_type_and_name(dialog_data) === false)
-      return false;
-
-    if(prepare_post_data(additional_data) === false)
-      return false;
-
-    interior_dialog_controllers.load(show);
+    dialog_models.open(dialog_data, additional_data, show);
   },
 
 
   reload = function()
   {
     dim(function(){
-      interior_dialog_controllers.reload(lighten);
+      dialog_models.reload(lighten);
     });
   },
 

@@ -3,7 +3,6 @@
  */
 
 import {Plugins_Loader_Controllers} from '../../../plugins_loader/controllers'
-import {selectors as dialog_selectors} from '../models'
 
 
 let
@@ -25,8 +24,8 @@ let
 export let
 
   selectors = {
-    container: dialog_selectors.content,
-    buttons: dialog_selectors.content +' .dialog-content-button',
+    container: '#DIALOG',
+    buttons: '#DIALOG .dialog-content-button',
   },
 
   variables = {},
@@ -48,24 +47,42 @@ export let
   })(),
 
 
-  prepare_post_data = function()
+  is_error = function(response, status)
   {
-    if(!variables.post_data)
-      variables.post_data = {};
+    if(status !== 'success')
+      return true;
 
-    variables.post_data['dialog_type'] = variables.type;
-    variables.post_data['dialog_name'] = variables.name;
+    if(response !== '{"__form__": "true"}')
+      return true;
 
-    if(variables.value)
-      variables.post_data['dialog_value'] = variables.value;
+    return false;
   },
 
 
-  load = function(callback)
+  prepare_post_data = function(post_data)
   {
-    prepare_post_data();
+    if(post_data) // if is form
+      variables.post_data = post_data;
 
-    dialog_loader_controllers.load(undefined, variables.post_data, callback);
+    else // if is normal dialog
+    {
+      if(!variables.post_data)
+        variables.post_data = {};
+
+      variables.post_data['dialog_type'] = variables.type;
+      variables.post_data['dialog_name'] = variables.name;
+
+      if(variables.value)
+        variables.post_data['dialog_value'] = variables.value;
+    }
+  },
+
+
+  load = function(url, post_data, callback)
+  {
+    prepare_post_data(post_data);
+
+    dialog_loader_controllers.load(url, variables.post_data, callback);
   },
 
 

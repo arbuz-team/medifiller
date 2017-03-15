@@ -691,7 +691,7 @@
 	        duration = models.settings.duration.show;
 	
 	    $(container).animate({ opacity: opacity }, duration, function () {
-	      if (external_callback) external_callback();
+	      if (external_callback) external_callback(response, status, code);
 	
 	      if (models.settings.load_with_page && window.APP.DATA) load_header_page(window.APP.DATA);
 	    });
@@ -2957,7 +2957,7 @@
 	    for (var i = 0; split_event.length > i; ++i) {
 	      ready_event = ready_event[split_event[i]];
 	    }if (ready_event.constructor === Event) {
-	      if (models.settings.button_delay) window.APP.DATA.delay = models.settings.button_delay;
+	      if (models.settings.button_delay >= 0) window.APP.DATA.delay = models.settings.button_delay;
 	
 	      window.APP.throw_event(ready_event); // example plugins.close_cart
 	    } else console.error('Event error: This event doesn\' exist');
@@ -3189,7 +3189,7 @@
 	    close_with_delay = function close_with_delay() {
 	  var delay = void 0;
 	
-	  if (window.APP.DATA.delay) delay = window.APP.DATA.delay;else delay = 2000;
+	  if (window.APP.DATA.delay >= 0) delay = window.APP.DATA.delay;else delay = 2000;
 	
 	  setTimeout(close, delay);
 	},
@@ -3240,14 +3240,6 @@
 	
 	var dialog_models = _interopRequireWildcard(_models);
 	
-	var _controllers = __webpack_require__(47);
-	
-	var interior_dialog_controllers = _interopRequireWildcard(_controllers);
-	
-	var _models2 = __webpack_require__(49);
-	
-	var interior_dialog_models = _interopRequireWildcard(_models2);
-	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	/**
@@ -3265,18 +3257,59 @@
 	 */
 	
 	var show = function show() {
-	  $(selectors.container).fadeIn(200);
+	  $(selectors.container).css('opacity', '').fadeIn(200);
 	},
 	    hide = function hide() {
 	  $(selectors.container).fadeOut(200);
 	},
 	    dim = function dim(callback) {
-	  $(selectors.container).animate({ opacity: .4 }, 200, callback);
+	  $(selectors.container).animate({ opacity: .8 }, 200, callback);
 	},
 	    lighten = function lighten() {
-	  $(selectors.container).animate({ opacity: 1 }, 200);
+	  $(selectors.container).animate({ opacity: 1 }, 300);
+	};
+	
+	///////////////////////////////////////
+	
+	var open = exports.open = function open(dialog_data, additional_data) {
+	  dialog_models.open(dialog_data, additional_data, show);
 	},
-	    save_type_and_name = function save_type_and_name(dialog_data) {
+	    reload = exports.reload = function reload() {
+	  dim(function () {
+	    dialog_models.reload(lighten);
+	  });
+	},
+	    close = exports.close = function close() {
+	  hide();
+	};
+
+/***/ },
+/* 46 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.reload = exports.open = exports.prepare_post_data = exports.save_type_and_name = exports.selectors = undefined;
+	
+	var _controllers = __webpack_require__(47);
+	
+	var interior_dialog_controllers = _interopRequireWildcard(_controllers);
+	
+	var _models = __webpack_require__(49);
+	
+	var interior_dialog_models = _interopRequireWildcard(_models);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	/**
+	 * Created by mrskull on 29.12.16.
+	 */
+	
+	var selectors = exports.selectors = interior_dialog_models.selectors,
+	    save_type_and_name = exports.save_type_and_name = function save_type_and_name(dialog_data) {
 	  var type = dialog_data.type,
 	      name = dialog_data.name,
 	      value = dialog_data.value;
@@ -3292,7 +3325,7 @@
 	  interior_dialog_models.variables.name = name;
 	  interior_dialog_models.variables.value = value;
 	},
-	    prepare_post_data = function prepare_post_data(additional_data) {
+	    prepare_post_data = exports.prepare_post_data = function prepare_post_data(additional_data) {
 	  var post_data = {},
 	      isset = 0;
 	
@@ -3307,42 +3340,16 @@
 	  }
 	
 	  if (isset > 0) interior_dialog_models.variables.post_data = post_data;else interior_dialog_models.variables.post_data = undefined;
-	};
-	
-	///////////////////////////////////////
-	
-	var open = exports.open = function open(dialog_data, additional_data) {
+	},
+	    open = exports.open = function open(dialog_data, additional_data, callback) {
 	  if (save_type_and_name(dialog_data) === false) return false;
 	
 	  if (prepare_post_data(additional_data) === false) return false;
-
-	  interior_dialog_controllers.load(show);
-	},
-	    reload = exports.reload = function reload() {
-	  console.log(interior_dialog_models.variables);
-	  dim(function () {
-	    interior_dialog_controllers.reload(lighten);
-	  });
-	},
-	    close = exports.close = function close() {
-	  hide();
-	};
-
-/***/ },
-/* 46 */
-/***/ function(module, exports) {
-
-	'use strict';
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	/**
-	 * Created by mrskull on 29.12.16.
-	 */
-	
-	var selectors = exports.selectors = {
-	  container: '#DIALOG'
+	  interior_dialog_controllers.load(undefined, undefined, callback);
+	},
+	    reload = exports.reload = function reload(callback) {
+	  interior_dialog_controllers.reload(callback);
 	};
 	
 	selectors.window = selectors.container + ' > .dialog';
@@ -3393,13 +3400,10 @@
 	    dialog_form_controllers = new _controllers2.Form_Controllers(interior_dialog_views);
 	
 	var recognize_button = exports.recognize_button = function recognize_button() {
-	  var $button = $(this);
+	  var $button = $(this),
+	      name = $button.data('dialog-button');
 	
-	  interior_dialog_views.models.reset_variables();
-	
-	  variables.name = $button.data('dialog-button');
-	
-	  switch (variables.name) {
+	  switch (name) {
 	    case 'cancel':
 	      (0, _controllers.close)();
 	      break;
@@ -3409,7 +3413,7 @@
 	      break;
 	
 	    default:
-	      console.error('Dialog error: Don\'t recognize button.');
+	      console.error('Dialog error: Don\'t recognize button "' + name + '".');
 	  }
 	},
 	    define = exports.define = function define() {
@@ -3437,12 +3441,20 @@
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
+	var hide_if_error = function hide_if_error(response, status) {
+	  if (interior_dialog_models.is_error(response, status) === false) $(interior_dialog_models.selectors.container).hide();
+	}; /**
+	    * Created by mrskull on 21.01.17.
+	    */
+	
 	var models = exports.models = interior_dialog_models,
 	    container = exports.container = models.selectors.container,
-	    load = exports.load = interior_dialog_models.load,
-	    reload = exports.reload = interior_dialog_models.load; /**
-	                                                            * Created by mrskull on 21.01.17.
-	                                                            */
+	    load = exports.load = function load(url, post_data, callback) {
+	  if (!callback) callback = hide_if_error;
+	
+	  interior_dialog_models.load(url, post_data, callback);
+	},
+	    reload = exports.reload = interior_dialog_models.reload;
 
 /***/ },
 /* 49 */
@@ -3453,15 +3465,9 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.reload = exports.load = exports.prepare_post_data = exports.reset_variables = exports.variables = exports.selectors = undefined;
+	exports.reload = exports.load = exports.prepare_post_data = exports.is_error = exports.reset_variables = exports.variables = exports.selectors = undefined;
 	
 	var _controllers = __webpack_require__(13);
-	
-	var _models = __webpack_require__(46);
-	
-	/**
-	 * Created by mrskull on 21.01.17.
-	 */
 	
 	var dialog_loader_controllers = new _controllers.Plugins_Loader_Controllers({
 	  name: 'dialog',
@@ -3476,9 +3482,13 @@
 	
 	///////////////////////////////////////
 	
+	/**
+	 * Created by mrskull on 21.01.17.
+	 */
+	
 	var selectors = exports.selectors = {
-	  container: _models.selectors.content,
-	  buttons: _models.selectors.content + ' .dialog-content-button'
+	  container: '#DIALOG',
+	  buttons: '#DIALOG .dialog-content-button'
 	},
 	    variables = exports.variables = {},
 	    reset_variables = exports.reset_variables = function () {
@@ -3494,18 +3504,29 @@
 	
 	  return define;
 	}(),
-	    prepare_post_data = exports.prepare_post_data = function prepare_post_data() {
-	  if (!variables.post_data) variables.post_data = {};
+	    is_error = exports.is_error = function is_error(response, status) {
+	  if (status !== 'success') return true;
 	
-	  variables.post_data['dialog_type'] = variables.type;
-	  variables.post_data['dialog_name'] = variables.name;
+	  if (response !== '{"__form__": "true"}') return true;
 	
-	  if (variables.value) variables.post_data['dialog_value'] = variables.value;
+	  return false;
 	},
-	    load = exports.load = function load(callback) {
-	  prepare_post_data();
+	    prepare_post_data = exports.prepare_post_data = function prepare_post_data(post_data) {
+	  if (post_data) // if is form
+	    variables.post_data = post_data;else // if is normal dialog
+	    {
+	      if (!variables.post_data) variables.post_data = {};
 	
-	  dialog_loader_controllers.load(undefined, variables.post_data, callback);
+	      variables.post_data['dialog_type'] = variables.type;
+	      variables.post_data['dialog_name'] = variables.name;
+	
+	      if (variables.value) variables.post_data['dialog_value'] = variables.value;
+	    }
+	},
+	    load = exports.load = function load(url, post_data, callback) {
+	  prepare_post_data(post_data);
+	
+	  dialog_loader_controllers.load(url, variables.post_data, callback);
 	},
 	    reload = exports.reload = function reload(callback) {
 	  dialog_loader_controllers.load(undefined, variables.post_data, callback);
@@ -3597,7 +3618,6 @@
 	    for (var i = 0; i < array_length; ++i) {
 	      if (plugins_array[i]) {
 	        window.APP.DATA.delay = 0;
-	        console.log('reload_' + plugins_array[i]);
 	        window.APP.throw_event(window.EVENTS.plugins['reload_' + plugins_array[i]]);
 	      }
 	    }

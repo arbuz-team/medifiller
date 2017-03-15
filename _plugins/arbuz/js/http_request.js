@@ -38,7 +38,7 @@ let
       let
         html = response.responseText,
         code = response.status;
-
+      
       callback(html, status, code);
     };
   };

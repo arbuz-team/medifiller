@@ -38,13 +38,10 @@ export let
   recognize_button = function()
   {
     let
-      $button = $(this);
+      $button = $(this),
+      name = $button.data('dialog-button');
 
-    interior_dialog_views.models.reset_variables();
-
-    variables.name = $button.data('dialog-button');
-
-    switch(variables.name)
+    switch(name)
     {
       case 'cancel': dialog_close();
         break;
@@ -52,7 +49,7 @@ export let
       case 'send': $('form', selectors.container).submit();
         break;
 
-      default: console.error('Dialog error: Don\'t recognize button.');
+      default: console.error('Dialog error: Don\'t recognize button "'+ name +'".');
     }
   },
 

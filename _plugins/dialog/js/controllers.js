@@ -46,7 +46,7 @@ import * as interior_dialog_controllers from './interior/controllers'
     {
       let delay;
 
-      if(window.APP.DATA.delay)
+      if(window.APP.DATA.delay >= 0)
         delay = window.APP.DATA.delay;
       else
         delay = 2000;

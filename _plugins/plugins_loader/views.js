@@ -96,7 +96,7 @@ export let Plugins_Loader_Views = function(config)
         .animate({opacity: opacity}, duration, function()
         {
           if(external_callback)
-            external_callback();
+            external_callback(response, status, code);
 
           if(models.settings.load_with_page && window.APP.DATA)
             load_header_page(window.APP.DATA);
