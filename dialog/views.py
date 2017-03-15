@@ -8,6 +8,25 @@ from inspect import getmembers, ismethod
 
 class Dialog(Dynamic_Base):
 
+    def Get_POST_Variable(self, name):
+
+        if name in self.request.POST:
+            return self.request.POST[name]
+
+        else: return ''
+
+    def Generate_Content(self):
+
+        self.content['additional'] = {
+            'name':     self.Get_POST_Variable('additional_name'),
+            'action':   self.Get_POST_Variable('additional_action'),
+            'value':    self.Get_POST_Variable('additional_value'),
+            'reload':   self.Get_POST_Variable('additional_reload'),
+            'redirect': self.Get_POST_Variable('additional_redirect'),
+            'url':      self.Get_POST_Variable('additional_url'),
+            'event':    self.Get_POST_Variable('additional_event'),
+        }
+
     def Render_Dialog(self, file_name, form_name = '',
                       authorization=False, only_root=False):
 
@@ -40,6 +59,9 @@ class Dialog(Dynamic_Base):
 
         if self.apply:
             return self.Apply_Message()
+
+        # content for buttons in dialogs
+        self.Generate_Content()
 
         methods = getmembers(self, predicate=ismethod)
         methods = [method[0] for method in methods]
@@ -91,34 +113,19 @@ class Dialog_Alert(Dialog):
 
 class Dialog_Confirm(Dialog):
 
-    def Generate_Content(self):
-
-        self.content['post_button'] = {
-            'name': self.request.POST['post_button_name'],
-            'action': self.request.POST['post_button_action'],
-            'value': self.request.POST['post_button_value'],
-            'reload': self.request.POST['post_button_reload'],
-            'redirect': self.request.POST['post_button_redirect'],
-            'url': self.request.POST['post_button_url'],
-            'event': self.request.POST['post_button_event'],
-        }
-
     def Manage_Delete_Product(self):
         self.content['title'] = Text(self.request, 98)
         self.content['text'] = Text(self.request, 99)
-        self.Generate_Content()
         return self.Render_Dialog('dialog/confirm.html', only_root=True)
 
     def Manage_Delete_Address(self):
         self.content['title'] = Text(self.request, 107)
         self.content['text'] = Text(self.request, 108)
-        self.Generate_Content()
         return self.Render_Dialog('dialog/confirm.html', authorization=True)
 
     def Manage_Delete_Brand(self):
         self.content['title'] = Text(self.request, 109)
         description = Text(self.request, 110)
-        self.Generate_Content()
 
         brand = Brand.objects.get(pk=self.request.POST['post_button_value'])
         products = Product.objects.filter(brand=brand)
@@ -129,7 +136,6 @@ class Dialog_Confirm(Dialog):
     def Manage_Delete_Purpose(self):
         self.content['title'] = Text(self.request, 111)
         description = Text(self.request, 112)
-        self.Generate_Content()
 
         purpose = Purpose.objects.get(pk=self.request.POST['post_button_value'])
         products = Product.objects.filter(purpose=purpose)
@@ -140,7 +146,6 @@ class Dialog_Confirm(Dialog):
     def Manage_Clear_Cart(self):
         self.content['title'] = Text(self.request, 100)
         self.content['text'] = Text(self.request, 101)
-        self.Generate_Content()
         return self.Render_Dialog('dialog/confirm.html', authorization=True)
 
     def __init__(self, request, app_name):
@@ -150,6 +155,15 @@ class Dialog_Confirm(Dialog):
 
 
 class Dialog_Prompt(Dialog):
+
+    def Generate_Content(self):
+
+        self.content['additional'] = {
+            'reload': self.request.POST['additional_reload'],
+            'redirect': self.request.POST['additional_redirect'],
+            'event': self.request.POST['additional_event'],
+        }
+
 
     def Manage_Brand(self):
         initial = self.Get_Session_Variable()
@@ -249,8 +263,8 @@ class Dialog_Prompt(Dialog):
 
 
     def Manage_Content_Tab(self):
-        content = self.Get_Session_Variable()
 
+        content = self.Get_Session_Variable()
         initial = {
             'header':       content.header,
             'paragraph':    content.paragraph,

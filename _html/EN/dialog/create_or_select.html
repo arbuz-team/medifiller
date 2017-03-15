@@ -38,11 +38,13 @@
 
                     {% elif field|is_radio %}
 
-                        <!--<div class="selecter radio">-->
-                            {{ field }}
-                            <!--<label for="id_{{ field.name }}" class="selecter-field"></label>-->
-                            <!--<label for="id_{{ field.name }}" class="selecter-text">{{ field.label }}</label>-->
-                        <!--</div>-->
+                        {% for selector in field %}
+                        <div class="selecter radio">
+                            {{ selector.tag }}
+                            <label for="{{ selector.id_for_label }}" class="selecter-field"></label>
+                            <label for="{{ selector.id_for_label }}" class="selecter-text">{{ selector.choice_label }}</label>
+                        </div>
+                        {% endfor %}
 
                     {% endif %}
 
