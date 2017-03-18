@@ -413,6 +413,7 @@ class Delete(Dynamic_Event_Manager):
 
         if self.other_value == 'product':
             Product.objects.get(pk=self.request.POST['value']).delete()
+            Search_Engine.Filter_Products(self.request)
 
         if self.other_value == 'brand':
             Brand.objects.get(pk=self.request.POST['value']).delete()

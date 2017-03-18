@@ -1,8 +1,32 @@
 from arbuz.views import *
+from product.base import *
 from product.models import *
 from django.db.models import Q
 from functools import reduce
 import operator
+
+
+class Search_Priorities:
+
+    def Get_Priorities(self, word):
+        word = word.lower()
+        accuracy = 0
+
+        accuracy += self.name.count(word) * 10
+        accuracy += self.keywords.count(word) * 5
+        accuracy += self.filters.count(word) * 3
+        accuracy += self.content.count(word)
+
+        return accuracy
+
+    def __init__(self, name, keywords='',
+                 filters='', content=''):
+
+        self.name = name.lower()
+        self.keywords = keywords.lower()
+        self.filters = filters.lower()
+        self.content = content.lower()
+
 
 
 class Search_Engine:
@@ -10,34 +34,37 @@ class Search_Engine:
     def Search_Products_EN(self):
 
         self.result = Product.objects.filter(
-            reduce(operator.or_, (Q(details_en__name__icontains=s) for s in self.phrase))           |
-            reduce(operator.or_, (Q(details_en__description__icontains=s) for s in self.phrase))    |
-            reduce(operator.or_, (Q(keywords__icontains=s) for s in self.phrase))                   |
-            reduce(operator.or_, (Q(brand__name__icontains=s) for s in self.phrase))                &
-            Q(where_display__display_en=True)
+            reduce(operator.or_, (Q(details_en__name__icontains=s)          for s in self.phrase)) |
+            reduce(operator.or_, (Q(details_en__description__icontains=s)   for s in self.phrase)) |
+            reduce(operator.or_, (Q(keywords__icontains=s)                  for s in self.phrase)) |
+            reduce(operator.or_, (Q(brand__name__icontains=s)               for s in self.phrase)) &
+                                  Q(where_display__display_en=True)
         )
 
     def Search_Products_PL(self):
 
         self.result = Product.objects.filter(
-            reduce(operator.or_, (Q(details_pl__name__icontains=s) for s in self.phrase))           |
-            reduce(operator.or_, (Q(details_pl__description__icontains=s) for s in self.phrase))    |
-            reduce(operator.or_, (Q(keywords__icontains=s) for s in self.phrase))                   |
-            reduce(operator.or_, (Q(brand__name__icontains=s) for s in self.phrase))                &
-            Q(where_display__display_pl=True)
+            reduce(operator.or_, (Q(details_pl__name__icontains=s)          for s in self.phrase)) |
+            reduce(operator.or_, (Q(details_pl__description__icontains=s)   for s in self.phrase)) |
+            reduce(operator.or_, (Q(keywords__icontains=s)                  for s in self.phrase)) |
+            reduce(operator.or_, (Q(brand__name__icontains=s)               for s in self.phrase)) &
+                                  Q(where_display__display_pl=True)
         )
 
     def Search_Products_DE(self):
 
         self.result = Product.objects.filter(
-            reduce(operator.or_, (Q(details_de__name__icontains=s) for s in self.phrase))           |
-            reduce(operator.or_, (Q(details_de__description__icontains=s) for s in self.phrase))    |
-            reduce(operator.or_, (Q(keywords__icontains=s) for s in self.phrase))                   |
-            reduce(operator.or_, (Q(brand__name__icontains=s) for s in self.phrase))                &
-            Q(where_display__display_de=True)
+            reduce(operator.or_, (Q(details_de__name__icontains=s)          for s in self.phrase)) |
+            reduce(operator.or_, (Q(details_de__description__icontains=s)   for s in self.phrase)) |
+            reduce(operator.or_, (Q(keywords__icontains=s)                  for s in self.phrase)) |
+            reduce(operator.or_, (Q(brand__name__icontains=s)               for s in self.phrase)) &
+                                  Q(where_display__display_de=True)
         )
 
     def Search_Products(self):
+
+        self.db = Dynamic_Base(self.request)
+        self.db.Timer_Start()
 
         if not self.phrase: # phrase is empty
             self.result = Product.objects.all()
@@ -53,109 +80,82 @@ class Search_Engine:
             if self.request.session['translator_language'] == 'DE':
                 self.Search_Products_DE()
 
+            self.db.Display_Status(message='SEARCH')
+
         self.Sort_Result()
+        self.db.Display_Status(message='SORT')
         return self.result
 
-    def Sort_Result_Order_By_Hits(self):
+    def Sort_Result_Order_By_Accuracy(self):
 
-        get_name = lambda model: model.name if model else ''
-        get_description = lambda details: details.description if details else ''
-        get_keywords = lambda keywords: keywords if keywords else ''
+        if not self.phrase:
+            return
 
         # convert product to string
         products_as_string = \
         [
             (
-                index, # repetitions set range
-                (
-                    product.details_en.name +
-                    product.details_en.name +
-                    product.details_en.name +
-                    product.details_en.description +
-
-                    get_name(product.details_pl) +
-                    get_name(product.details_pl) +
-                    get_name(product.details_pl) +
-                    get_description(product.details_pl) +
-
-                    get_name(product.details_de) +
-                    get_name(product.details_de) +
-                    get_name(product.details_de) +
-                    get_description(product.details_de) +
-
-                    get_keywords(product.keywords) +
-                    get_keywords(product.keywords) +
-                    get_keywords(product.keywords) +
-                    get_keywords(product.keywords) +
-                    get_keywords(product.keywords) +
-
-                    get_name(product.brand) +
-                    ' '.join([str(purpose.name_en) + str(purpose.name_pl) + str(purpose.name_de)
-                              for purpose in product.purpose.all()])
-
-                ).lower()
+                product.pk, # repetitions set range
+                Search_Priorities(
+                    name=self.product_models_manager.Get_Product_Name(product),
+                    content=self.product_models_manager.Get_Product_Description(product),
+                    filters=self.product_models_manager.Get_Purposes_Names(product) + product.brand.name,
+                    keywords=product.keywords
+                )
             )
-            for index, product in enumerate(self.result)
+            for product in self.result
         ]
 
         # tuple contains position of products
         positions = []
         for product in products_as_string:
 
-            number_of_hits = 0
+            accuracy = 0
             for word in self.phrase:
-                number_of_hits += product[1].count(word.lower())
+                accuracy += product[1].Get_Priorities(word)
 
-            positions.append((number_of_hits, product[0]))  # (hits, id)
-
-        self.Sort_Result_Apply(positions)
-
-    def Sort_Result_Order_By_Price(self):
-
-        # tuple contains position of products
-        positions = \
-        [
-            (
-                product.price_eur,
-                index
-            )
-            for index, product in enumerate(self.result)
-        ]  # (price, id)
-
-        self.Sort_Result_Apply(positions)
-
-    def Sort_Result_Order_By_Name(self):
-
-        get_name = lambda product: product.details_pl.name \
-            if self.request.session['translator_language'] == 'PL' else product.details_de.name \
-            if self.request.session['translator_language'] == 'DE' else product.details_en.name
-
-        # tuple contains position of products
-        positions = \
-        [
-            (
-                get_name(product),
-                index
-            )
-            for index, product in enumerate(self.result)
-        ]  # (name, id)
-
-        self.Sort_Result_Apply(positions)
-
-    def Sort_Result_Apply(self, positions):
+            positions.append((accuracy, product[0]))  # (hits, id)
 
         # sort positions by hits/price/name
-        if self.request.session['searcher_order_direction'] == 'descending':
+        direction = self.request.session['searcher_order_direction']
+        if direction == 'descending':
             positions.sort(reverse=True)
 
         else: positions.sort()
 
-        # create sorting list products
-        result = []
-        for position in positions:
-            result.append(self.result[position[1]])
+        # select ordered data from database
+        sorted_pks = [pos[1] for pos in positions]
+        ordering = ''
 
-        self.result = result
+        for to_pk, from_pk in enumerate(sorted_pks):
+            ordering += 'WHEN id={0} THEN {1} '.format(from_pk, to_pk)
+
+        ordering = 'CASE {0} END'.format(ordering)
+        self.result = Product.objects.filter(pk__in=self.result).extra(
+            select={'ordering': ordering}, order_by=['ordering'])
+
+    def Sort_Result_Order_By_Price(self):
+
+        direction = self.request.session['searcher_order_direction']
+        order_by = 'price_eur'
+
+        if direction == 'descending':
+            order_by = '-' + order_by
+
+        self.result = Product.objects.filter(
+            pk__in=self.result).order_by(order_by)
+
+    def Sort_Result_Order_By_Name(self):
+
+        direction = self.request.session['searcher_order_direction']
+        language = self.request.session['translator_language']
+        order_by = 'details_{0}__name'.format(language.lower())
+
+        if direction == 'descending':
+            order_by = '-' + order_by
+
+        self.result = Product.objects.filter(
+            pk__in=self.result).order_by(order_by)
 
     @staticmethod
     def Any_Purposes_Contain_In_Product(purposes, product):
@@ -178,36 +178,30 @@ class Search_Engine:
 
         brands = self.request.session['searcher_filter_brand']
         purposes = self.request.session['searcher_filter_purpose']
-        result = self.result[:]
 
         if not brands and not purposes:
             return
 
-        if brands: # user chose filter
-            for product in self.result:
-                if product.brand.name not in brands:
-                    result.remove(product)
+        get_brands = lambda pks: pks if pks else Brand.objects.values('pk')
+        get_purposes = lambda pks: pks if pks else Purpose.objects.values('pk')
 
-        self.result = result[:]
-        if purposes: # user chose filter
-            for product in self.result:
-                if not self.Any_Purposes_Contain_In_Product(purposes, product):
-                    result.remove(product)
-
-        self.result = result
+        self.result = Product.objects.filter(
+            Q(brand__in=get_brands(brands))         &
+            Q(purpose__in=get_purposes(purposes))   &
+            Q(pk__in=self.result.values('pk'))
+        ).distinct()
 
     def Sort_Result(self):
+        self.Sort_Result_Filters()
 
         if self.request.session['searcher_order_name'] == 'search_accuracy':
-            self.Sort_Result_Order_By_Hits()
+            self.Sort_Result_Order_By_Accuracy()
 
         if self.request.session['searcher_order_name'] == 'price':
             self.Sort_Result_Order_By_Price()
 
         if self.request.session['searcher_order_name'] == 'name_of_product':
             self.Sort_Result_Order_By_Name()
-
-        self.Sort_Result_Filters()
 
     def Remove_Empty_Word(self):
         self.phrase = \
@@ -235,6 +229,8 @@ class Search_Engine:
         self.result = []
         self.request = request
         self.phrase = phrase
+        self.product_models_manager = \
+            Product_Models_Manager(self.request)
 
         if self.phrase:
             self.phrase = phrase.split(' ')

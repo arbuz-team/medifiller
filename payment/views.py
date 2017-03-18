@@ -165,6 +165,7 @@ class Payment_Manager(Dynamic_Event_Manager, PayPal, DotPay):
         self.content['user'] = User.objects.get(unique=unique)
         self.content['cart'] = model_manager.Get_Selected_Products()
         self.content['total_price'] = model_manager.Count_Total_Price()
+        self.content['delivery'] = model_manager.Get_Payment().delivery_price
         self.content['address'] = User_Address.objects.filter(user=self.content['user'])
         self.Update_Payment()
 
@@ -199,6 +200,7 @@ class Payment_Manager(Dynamic_Event_Manager, PayPal, DotPay):
         self.Load_Payment_Details()
         return self.Render_HTML('payment/payment.html')
 
+
     def Manage_Form_Address_Payment(self):
 
         address_payment_pk = self.request.POST['shipment']
@@ -217,6 +219,31 @@ class Payment_Manager(Dynamic_Event_Manager, PayPal, DotPay):
             return self.Manage_Form_Address_Payment()
 
         return Dynamic_Event_Manager.Manage_Form(self)
+
+
+    def Manage_Get_Delivery(self):
+
+        address = User_Address.objects.get(pk=self.request.POST['value'])
+        delivery = Delivery.objects.get(country=address.country)
+        user = User.objects.get(unique=self.request.session['user_unique'])
+        payment = Payment.objects.get(user=user, approved=False)
+
+        payment.delivery_price = delivery
+        payment.save()
+
+        prices = {
+            'eur': delivery.price_eur,
+            'pln': delivery.price_pln,
+        }
+
+        return JsonResponse(prices)
+
+    def Manage_Get(self):
+
+        if self.request.POST['__get__'] == 'delivery':
+            self.Manage_Get_Delivery()
+
+        return Dynamic_Event_Manager.Manage_Get(self)
 
     @staticmethod
     def Launch(request):

@@ -47,6 +47,11 @@
                     {% endfor %}
 
                     <li class="cart-list-total_price">
+                        <div>Cost of delivery:</div>
+                        <div>{{ delivery }} {{ request.session.translator_currency }}</div>
+                    </li>
+
+                    <li class="cart-list-total_price">
                         <div>Total price:</div>
                         <div>{{ total_price }} {{ request.session.translator_currency }}</div>
                     </li>

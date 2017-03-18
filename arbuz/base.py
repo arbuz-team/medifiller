@@ -239,32 +239,32 @@ class Dynamic_Base:
         if DEBUG:
             self.start_time = time.time()
 
-    def Display_Status(self, error=False):
+    def Display_Status(self, message=None):
 
         if DEBUG:
 
-            if not DISPLAY_STATUS and not error:
+            if not DISPLAY_STATUS and not message:
                 return
 
-            message = '-' * 125 + '\n\n'
-            message += self.Get_Text_Cell('Application: ')
-            message += self.app_name
+            status = '-' * 125 + '\n\n'
+            status += self.Get_Text_Cell('Application: ')
+            status += self.app_name
 
-            if error: message += ' (ERROR) \n\n'
-            else: message += '\n\n'
+            if message: status += ' ({0}) \n\n'.format(message)
+            else: status += '\n\n'
 
             duration = time.time() - self.start_time
             duration = str(int(duration * 1000))
-            message += self.Get_Text_Cell('Duration: ', margin=2)
-            message += duration + ' ms\n'
+            status += self.Get_Text_Cell('Duration: ', margin=2)
+            status += duration + ' ms\n'
 
-            message += self.Get_Text_Cell('URL: ', margin=2)
-            message += self.Get_Path(current_language=True) + '\n'
+            status += self.Get_Text_Cell('URL: ', margin=2)
+            status += self.Get_Path(current_language=True) + '\n'
 
             if self.request.POST:
 
                 variables = []
-                message += self.Get_Text_Cell('POST: ', margin=2)
+                status += self.Get_Text_Cell('POST: ', margin=2)
 
                 for key in self.request.POST:
 
@@ -274,13 +274,13 @@ class Dynamic_Base:
                     )
 
                 separator = '\n' + self.Get_Text_Cell('')
-                message += separator.join(variables) + '\n'
+                status += separator.join(variables) + '\n'
 
             keys = self.request.session.keys()
             if any(key.startswith(self.app_name) for key in keys):
 
                 variables = []
-                message += self.Get_Text_Cell('Session: ', margin=2)
+                status += self.Get_Text_Cell('Session: ', margin=2)
 
                 for key in keys:
                     if key.startswith(self.app_name):
@@ -291,10 +291,10 @@ class Dynamic_Base:
                         )
 
                 separator = '\n' + self.Get_Text_Cell('')
-                message += separator.join(variables) + '\n'
+                status += separator.join(variables) + '\n'
 
-            message += '\n' + '-' * 125 + '\n'
-            print(message)
+            status += '\n' + '-' * 125 + '\n'
+            print(status)
 
     def __init__(self, request):
 

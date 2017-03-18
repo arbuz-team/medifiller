@@ -8,7 +8,8 @@ def Load_Default_Data():
     payment = Payment(
         user=user,
         date=date.today(),
-        total_price=300,
+        total_price='50.20',
+        delivery_price='12.00',
         currency='PLN',
         service='Dotpay',
         approved=True
@@ -57,7 +58,8 @@ def Load_Default_Data():
     payment = Payment(
         user=user,
         date=date.today(),
-        total_price=150,
+        total_price='50.20',
+        delivery_price='12.00',
         currency='EUR',
         service='PayPal',
         approved=True

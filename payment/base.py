@@ -3,7 +3,7 @@ from user.models import *
 from arbuz.base import *
 
 
-class Payment_Models_Manager:
+class Payment_Models_Manager(Dynamic_Base):
 
     def Count_Total_Price(self):
 
@@ -11,7 +11,7 @@ class Payment_Models_Manager:
         total = 0
 
         for selected in selected_products:
-            product_price = Dynamic_Base.Get_Price(
+            product_price = self.Get_Price(
                 self.request, selected.product, current_currency=True)
 
             total += product_price * selected.number
@@ -76,10 +76,15 @@ class Payment_Models_Manager:
 
         if not payments:
 
+            # delivery prices for first user address
+            address = User_Address.objects.first()
+            delivery = Delivery.objects.get(country=address.country)
+
             payment = Payment(
                 user=self.user,
                 date=date.today(),
-                total_price=0,
+                total_price='0.00',
+                delivery_price=delivery,
                 service='None',
                 currency=self.request.session['translator_currency']
             )
@@ -125,7 +130,7 @@ class Payment_Models_Manager:
         selected_product.save()
 
     def __init__(self, request):
-        self.request = request
+        Dynamic_Base.__init__(self, request)
         self.user = None
         self.payment = None
         self.Check_Payment()

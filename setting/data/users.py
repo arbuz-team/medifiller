@@ -25,7 +25,7 @@ def Load_Default_Data():
         city='Gdynia',
         region='Pomorskie',
         postcode='81-218',
-        country='Polska',
+        country='PL',
         user=User.objects.get(email='93.endo@gmail.com')
     ).save()
 
@@ -35,7 +35,7 @@ def Load_Default_Data():
         city='Gdynia',
         region='Pomorskie',
         postcode='81-218',
-        country='Polska',
+        country='PL',
         user=User.objects.get(email='dominik.betka@gmail.com')
     ).save()
 

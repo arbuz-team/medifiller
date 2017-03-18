@@ -53,7 +53,7 @@
                     <input type="checkbox" class="auto_field"
                            data-name="brand"
                            id="id_{{ brand.name }}"
-                           name="{{ brand.name }}" />
+                           name="{{ brand.pk }}" />
                     <label for="id_{{ brand.name }}" class="selecter-field"></label>
                     <label for="id_{{ brand.name }}" class="selecter-text">{{ brand.name }}</label>
 
@@ -86,7 +86,7 @@
                     <input type="checkbox" class="auto_field"
                            data-name="purpose"
                            id="id_purpose_{{ purpose.pk }}"
-                           name="{% purpose_name purpose %}" />
+                           name="{{ purpose.pk }}" />
                     <label for="id_purpose_{{ purpose.pk }}" class="selecter-field"></label>
                     <label for="id_purpose_{{ purpose.pk }}" class="selecter-text">{% purpose_name purpose %}</label>
 

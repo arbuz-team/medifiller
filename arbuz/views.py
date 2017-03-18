@@ -297,11 +297,11 @@ class Dynamic_Event_Manager(Manager, Checker, Updater, metaclass=ABCMeta):
                 self.Display_Status()
 
                 if not self.HTML:
-                    self.Display_Status(error=True)
+                    self.Display_Status(message='NOT HTML')
 
             except Exception as exception:
 
-                self.Display_Status(error=True)
+                self.Display_Status(message='INTERNAL')
                 raise exception
 
     @staticmethod

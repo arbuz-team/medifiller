@@ -1,6 +1,7 @@
 from django.db import models
 from user.models import User, Abstract_Address
 from product.models import Product
+from root.models import Delivery
 
 
 class Payment(models.Model):
@@ -8,6 +9,7 @@ class Payment(models.Model):
     user = models.ForeignKey(User)
     date = models.DateField()
     total_price = models.CharField(max_length=10)
+    delivery_price = models.ForeignKey(Delivery)
     currency = models.CharField(max_length=3)
     service = models.CharField(max_length=10)
     approved = models.BooleanField(default=False)

@@ -55,19 +55,19 @@ def Load_Default_Data():
     ).save()
 
     Delivery(
-        country='Poland',
+        country='PL',
         price_eur=int(20000 / 4.31259388),
         price_pln=20000
     ).save()
 
     Delivery(
-        country='Germany',
+        country='DE',
         price_eur=int(20000 / 4.31259388),
         price_pln=20000
     ).save()
 
     Delivery(
-        country='United Kingdom',
+        country='GB',
         price_eur=int(20000 / 4.31259388),
         price_pln=20000
     ).save()
