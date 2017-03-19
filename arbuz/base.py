@@ -122,24 +122,6 @@ class Dynamic_Base:
         return password
 
     @staticmethod
-    def Get_Price(request, product, currency=None,
-                  current_currency=False):
-
-        prices = \
-        {
-            'EUR': product.price_eur / 100,
-            'PLN': product.price_pln / 100
-        }
-
-        if currency:
-            return prices[currency]
-
-        if current_currency:
-            return prices[request.session['translator_currency']]
-
-        return prices
-
-    @staticmethod
     def Convert_Polish_To_Ascii(text):
 
         characters = {

@@ -1,3 +1,5 @@
+{% load tags %}
+
 <script>
   window.APP.DATA = {
     title : 'Price for delivery',
@@ -25,12 +27,12 @@
                            id="{{ item.country }}_EUR"
                            class="auto_field"
                            data-name="{{ item.pk }} EUR"
-                           value="{{ item.price_eur }}" />&nbsp;EUR&nbsp;
+                           value="{{ item.price_eur|to_price }}" />&nbsp;EUR&nbsp;
                     <input name="{{ item.country }}_PLN" type="text"
                            id="{{ item.country }}_PLN"
                            class="auto_field"
                            data-name="{{ item.pk }} PLN"
-                           value="{{ item.price_pln }}" />&nbsp;PLN&nbsp;
+                           value="{{ item.price_pln|to_price }}" />&nbsp;PLN&nbsp;
                 </div>
 
             {% endfor %}

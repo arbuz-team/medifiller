@@ -10,13 +10,13 @@ class Finance_Manager(Base_Tag_Manager):
         if not currency:
 
             currency = self.request.session['translator_currency']
-            selected_price = self.Get_Price(
-                self.request, product, current_currency=True)
+            selected_price = Product_Models_Manager(self.request)\
+                .Get_Product_Price(product, current_currency=True)
 
         else:
 
-            selected_price = self.Get_Price(
-                self.request, product, currency=currency)
+            selected_price = Product_Models_Manager(self.request)\
+                .Get_Product_Price(product, currency=currency)
 
         selected_price = '{0:.2f}'.format(selected_price)
         return '{0} {1}'.format(selected_price, currency)
@@ -27,8 +27,8 @@ class Finance_Manager(Base_Tag_Manager):
         rate = self.values['rate']
 
         if product:
-            price = self.Get_Price(
-                self.request, product, current_currency=True)
+            price = Product_Models_Manager(self.request)\
+                .Get_Product_Price(product, current_currency=True)
 
         return format((price * 100) / (100 + rate), '.2f')
 
@@ -49,7 +49,20 @@ class Finance_Manager(Base_Tag_Manager):
 
         return vats[variant]
 
+    def Get_Delivery_Price(self):
+        delivery = self.values['delivery']
+        currency = self.request.session['translator_currency']
 
+        price = Product_Models_Manager(self.request)\
+                .Get_Delivery_Price(delivery, current_currency=True)
+
+        return '{0:.2f} {1}'.format(price, currency)
+
+
+
+@register.filter
+def to_price(value):
+    return format(value / 100, '.2f')
 
 @register.simple_tag(takes_context=True)
 def get_price(context, product, currency=None):
@@ -98,3 +111,12 @@ def vat(price, rate, variant='netto'):
     }
 
     return Finance_Manager(task, values).OUT
+
+@register.simple_tag(takes_context=True)
+def delivery_price(context, delivery):
+
+    task = 'Get_Delivery_Price'
+    request = context['request']
+    values = {'delivery': delivery}
+
+    return Finance_Manager(task, values, request).OUT

@@ -1,6 +1,6 @@
 from payment.models import *
 from user.models import *
-from arbuz.base import *
+from product.base import *
 
 
 class Payment_Models_Manager(Dynamic_Base):
@@ -8,11 +8,13 @@ class Payment_Models_Manager(Dynamic_Base):
     def Count_Total_Price(self):
 
         selected_products = self.Get_Selected_Products()
-        total = 0
+        delivery = self.Get_Payment().delivery_price
+        total = self.product_models_manager\
+            .Get_Delivery_Price(delivery, current_currency=True)
 
         for selected in selected_products:
-            product_price = self.Get_Price(
-                self.request, selected.product, current_currency=True)
+            product_price = self.product_models_manager\
+                .Get_Product_Price(selected.product, current_currency=True)
 
             total += product_price * selected.number
 
@@ -131,6 +133,10 @@ class Payment_Models_Manager(Dynamic_Base):
 
     def __init__(self, request):
         Dynamic_Base.__init__(self, request)
+
         self.user = None
         self.payment = None
+        self.product_models_manager = \
+            Product_Models_Manager(self.request)
+
         self.Check_Payment()

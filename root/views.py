@@ -228,12 +228,12 @@ class Delivery_Settings(Dynamic_Event_Manager):
 
     def Manage_Content_Ground(self):
         self.content['options'] = Delivery.objects.all()
-        return self.Render_HTML('root/transport_settings.html')
+        return self.Render_HTML('root/delivery_settings.html')
 
     def Manage_Form(self):
 
         pk, currency = self.request.POST['__form__'].split(' ')
-        price = self.request.POST['value']
+        price = float(self.request.POST['value']) * 100
         delivery = Delivery.objects.get(pk=pk)
 
         if currency == 'PLN':
@@ -242,8 +242,7 @@ class Delivery_Settings(Dynamic_Event_Manager):
         if currency == 'EUR':
             delivery.price_eur = price
 
-            delivery.save()
-
+        delivery.save()
         return JsonResponse({'__form__': 'true'})
 
     @staticmethod

@@ -17,11 +17,11 @@ class Generator_PDF(Dynamic_Event_Manager):
         self.content['invoice'] = {
             'unique':           payment.pk,
             'date':             payment.date,
+            'delivery':         payment.delivery_price,
             'seller':           seller,
             'client':           address,
             'products':         products,
             'brutto_price':     float(payment.total_price),
-
         }
 
         html = self.Render_HTML('pdf/invoice.html')

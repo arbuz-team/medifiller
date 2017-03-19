@@ -63,9 +63,6 @@ class Search_Engine:
 
     def Search_Products(self):
 
-        self.db = Dynamic_Base(self.request)
-        self.db.Timer_Start()
-
         if not self.phrase: # phrase is empty
             self.result = Product.objects.all()
 
@@ -80,10 +77,7 @@ class Search_Engine:
             if self.request.session['translator_language'] == 'DE':
                 self.Search_Products_DE()
 
-            self.db.Display_Status(message='SEARCH')
-
         self.Sort_Result()
-        self.db.Display_Status(message='SORT')
         return self.result
 
     def Sort_Result_Order_By_Accuracy(self):

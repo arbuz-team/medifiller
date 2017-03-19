@@ -25,6 +25,17 @@ class Product_Models_Manager(Dynamic_Base):
         if self.request.session['translator_language'] == 'DE':
             return product.details_de.description
 
+    def Get_Purpose_Name(self, purpose):
+
+        if self.request.session['translator_language'] == 'EN':
+            return purpose.name_en
+
+        if self.request.session['translator_language'] == 'PL':
+            return purpose.name_pl
+
+        if self.request.session['translator_language'] == 'DE':
+            return purpose.name_de
+
     def Get_Purposes_Names(self, product):
 
         if self.request.session['translator_language'] == 'EN':
@@ -35,6 +46,40 @@ class Product_Models_Manager(Dynamic_Base):
 
         if self.request.session['translator_language'] == 'DE':
             return ' '.join(product.purpose.all().values_list('name_de', flat=True))
+
+    def Get_Product_Price(self, product, currency=None,
+                          current_currency=False):
+
+        prices = \
+        {
+            'EUR': product.price_eur / 100,
+            'PLN': product.price_pln / 100
+        }
+
+        if currency:
+            return prices[currency]
+
+        if current_currency:
+            return prices[self.request.session['translator_currency']]
+
+        return prices
+
+    def Get_Delivery_Price(self, delivery, currency=None,
+                           current_currency=False):
+
+        prices = \
+        {
+            'EUR': delivery.price_eur / 100,
+            'PLN': delivery.price_pln / 100
+        }
+
+        if currency:
+            return prices[currency]
+
+        if current_currency:
+            return prices[self.request.session['translator_currency']]
+
+        return prices
 
     def __init__(self, request):
         Dynamic_Base.__init__(self, request)

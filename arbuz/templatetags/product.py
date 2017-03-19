@@ -11,43 +11,27 @@ class Product_Manager(Base_Tag_Manager):
 
     def Get_Product_Name(self):
         product = self.values['product']
-        language = self.request.session['translator_language']
-
-        names = {
-            'EN': product.details_en.name,
-            'PL': product.details_pl.name,
-            'DE': product.details_de.name,
-        }
+        name = Product_Models_Manager(self.request)\
+            .Get_Product_Name(product)
 
         if 'to_url' in self.values:
-            return self.Convert_Text_To_URL(names[language])
+            return self.Convert_Text_To_URL(name)
 
-        return names[language]
+        return name
 
     def Get_Product_Description(self):
         product = self.values['product']
+        description = Product_Models_Manager(self.request)\
+            .Get_Product_Description(product)
 
-        descriptions = {
-            'EN': product.details_en.description,
-            'PL': product.details_pl.description,
-            'DE': product.details_de.description,
-        }
-
-        language = self.request.session['translator_language']
-        selected = descriptions[language]
-        return mark_safe(selected.replace('\n', '<br>'))
+        return mark_safe(description.replace('\n', '<br>'))
 
     def Get_Purpose_Name(self):
         purpose = self.values['purpose']
-        language = self.request.session['translator_language']
+        name = Product_Models_Manager(self.request)\
+            .Get_Purpose_Name(purpose)
 
-        names = {
-            'EN': purpose.name_en,
-            'PL': purpose.name_pl,
-            'DE': purpose.name_de,
-        }
-
-        return names[language]
+        return name
 
 
 
