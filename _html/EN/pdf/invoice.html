@@ -111,7 +111,7 @@
                     VAT:                    8%
                 {% endfor %}<br><br>
 
-                Cost of delivery: {% delivery_price delivery %} <br>
+                Cost of delivery: {% delivery_price invoice.delivery %} <br>
                 Total netto: {% netto invoice.brutto_price %}<br>
                 Total brutto: {{ invoice.brutto_price  }}<br>
 
