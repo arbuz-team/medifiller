@@ -29,30 +29,6 @@ class Translator:
         return getattr(Translator, method)(pk)
 
     @staticmethod
-    def Load_Languages():
-
-        # load EN language
-        file = open(BASE_DIR + '/translator/language/EN', encoding='utf-8')
-        lines = file.read().splitlines()
-        file.close()
-        for line in lines:
-            Language_EN(value=line).save()
-
-        # load PL language
-        file = open(BASE_DIR + '/translator/language/PL', encoding='utf-8')
-        lines = file.read().splitlines()
-        file.close()
-        for line in lines:
-            Language_PL(value=line).save()
-
-        # load DE language
-        file = open(BASE_DIR + '/translator/language/DE', encoding='utf-8')
-        lines = file.read().splitlines()
-        file.close()
-        for line in lines:
-            Language_DE(value=line).save()
-
-    @staticmethod
     def Set_Subdomain_Language(request):
 
         url = request.get_host()

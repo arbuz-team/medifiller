@@ -3,13 +3,6 @@ from user.models import *
 from root.models import *
 import os
 
-from setting.data import main
-from setting.data import setting
-from setting.data import products
-from setting.data import users
-from setting.data import payment
-from setting.data import root
-
 from setting.script import cosmetix
 
 
@@ -18,7 +11,8 @@ class Control_Panel(Dynamic_Event_Manager):
     def Manage_Content_Ground(self):
         return self.Render_HTML('setting/control_panel.html')
 
-    def Manage_Button_Reset_Database(self):
+    @staticmethod
+    def Manage_Button_Reset_Database():
         os.system(BASE_DIR + '/reset.sh')
         return JsonResponse({'__button__': 'true'})
 
@@ -27,7 +21,8 @@ class Control_Panel(Dynamic_Event_Manager):
         cosmetix.Start()
         return JsonResponse({'__button__': 'true'})
 
-    def Manage_Button_Reset_Passwords(self):
+    @staticmethod
+    def Manage_Button_Reset_Passwords():
         user = User.objects.get(username='Drego31')
         user.password = Dynamic_Base.Encrypt('kaktus88')
         user.save()
@@ -48,16 +43,6 @@ class Control_Panel(Dynamic_Event_Manager):
             return self.Manage_Button_Reset_Passwords()
 
         return Dynamic_Event_Manager.Manage_Button(self)
-
-    @staticmethod
-    def Load_Default_Data(request):
-        main.Load_Default_Data()
-        setting.Load_Default_Data()
-        products.Load_Default_Data()
-        users.Load_Default_Data()
-        root.Load_Default_Data()
-        # payment.Load_Default_Data()
-        return JsonResponse({})
 
     @staticmethod
     def Launch(request):
