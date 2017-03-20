@@ -114,18 +114,21 @@ class DotPay(Payment_System):
             self.valid = True
 
     def Create_DotPay_From(self):
+        payment = Payment.objects.get(pk=self.content['payment'])
+        address = User_Address.objects.get(user=payment.user)
 
         dotpay_dict = \
         {
+            'id':           DOTPAY_RECEIVER_ID,
             'amount':       self.content['total_price'],
             'currency':     self.request.session['translator_currency'],
-            'description':  'Opis produktu',
-            'control':      self.content['payment'],
+            'description':  Text(self.request, 152),
 
-            'ch_lock':      0,
-            'channel':      0,
-            'type':         3,
-            'id':           DOTPAY_RECEIVER_ID,
+            'control':      self.content['payment'],
+            'firstname':    address.full_name.split(' ')[0],
+            'lastname':     address.full_name.split(' ')[1],
+            'email':        payment.user.email,
+
             'lang':         self.request.session['translator_language'].lower(),
 
             'URL':          self.Get_Urls('payment.apply', current_language=True),
