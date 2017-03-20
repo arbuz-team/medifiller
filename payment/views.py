@@ -15,7 +15,8 @@ class Payment_System(Dynamic_Base):
 
         if self.valid:
 
-            pdf = Generator_PDF(self.request).Invoice(self.payment.pk)
+            generator = Generator_PDF(self.request, authorization=True)
+            pdf = generator.Invoice(self.payment.pk)
             Sender(self.request).Send_Payment_Approved(content, email, pdf)
 
         else: Sender(self.request).Send_Payment_Failure(content, email)

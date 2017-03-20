@@ -42,6 +42,9 @@ class Generator_PDF(Dynamic_Event_Manager):
 
     def Check_Authorization(self):
 
+        if self.authorization:
+            return True
+
         if self.request.session['root_login']:
             return True
 
