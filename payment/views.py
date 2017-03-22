@@ -115,7 +115,7 @@ class DotPay(Payment_System):
 
     def Create_DotPay_From(self):
         payment = Payment.objects.get(pk=self.content['payment'])
-        address = User_Address.objects.get(user=payment.user)
+        address = User_Address.objects.filter(user=payment.user)[0]
 
         dotpay_dict = \
         {
