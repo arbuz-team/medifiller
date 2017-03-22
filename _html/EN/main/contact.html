@@ -23,12 +23,7 @@
             </div>
 
             <div class="paragraph">
-                {{ request.session.root_address.address_line_1 }}<br>
-
-                {% if request.session.root_address.address_line_2 %}
-                    {{ request.session.root_address.address_line_2 }}<br>
-                {% endif %}
-
+                {{ request.session.root_address.address_line }}<br>
                 {{ request.session.root_address.postcode }} {{ request.session.root_address.city }}<br>
                 {{ request.session.root_address.region }} {{ request.session.root_address.country }}<br>
 

@@ -63,7 +63,7 @@ class PayPal(Payment_System):
         paypal_dict = \
         {
             'business':         PAYPAL_RECEIVER_EMAIL,
-            'item_name':        'sungate',
+            'item_name':        'medifiller',
             'amount':           self.content['total_price'],
             'custom':           self.content['payment'],
             'currency_code':    self.request.session['translator_currency'],
@@ -192,8 +192,7 @@ class Payment_Manager(Dynamic_Event_Manager, PayPal, DotPay):
             address = Invoice_Address.objects.get(payment=payment)
 
         address.full_name = user_address.full_name
-        address.address_line_1 = user_address.address_line_1
-        address.address_line_2 = user_address.address_line_2
+        address.address_line = user_address.address_line
         address.city = user_address.city
         address.region = user_address.region
         address.postcode = user_address.postcode

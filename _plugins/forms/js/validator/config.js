@@ -14,7 +14,7 @@ list_configs.login = {
 
 list_configs.user_address = {
   full_name:        'full_name',
-  address_line_1:   'no_empty',
+  address_line:     'no_empty',
   city:             'proper_name',
   region:           'proper_name',
   postcode:         'no_empty',
@@ -23,7 +23,7 @@ list_configs.user_address = {
 
 list_configs.root_address = {
   full_name:        'full_name',
-  address_line_1:   'no_empty',
+  address_line:     'no_empty',
   city:             'proper_name',
   region:           'proper_name',
   postcode:         'no_empty',

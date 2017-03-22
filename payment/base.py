@@ -35,8 +35,7 @@ class Payment_Models_Manager(Dynamic_Base):
         if not payments_address:
             Delivery_Address(
                 full_name='',
-                address_line_1='',
-                address_line_2='',
+                address_line='',
                 city='',
                 region='',
                 postcode='',
@@ -55,8 +54,7 @@ class Payment_Models_Manager(Dynamic_Base):
         if not invoice_address:
             Invoice_Address(
                 full_name='',
-                address_line_1='',
-                address_line_2='',
+                address_line='',
                 city='',
                 region='',
                 postcode='',
