@@ -61,7 +61,7 @@ class Sender(Dynamic_Base):
         self.email = EmailMultiAlternatives(
             subject=title,
             body=html.content.decode(),
-            from_email='Spa Sungate <sender@arbuz.team>',
+            from_email='Medifiller <sender@arbuz.team>',
             to=recipient,
             reply_to=reply_to
         )
