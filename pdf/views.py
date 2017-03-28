@@ -32,7 +32,7 @@ class Generator_PDF(Dynamic_Event_Manager):
         if not self.Check_Authorization():
             return HttpResponse('Its not for you')
 
-        pdf = HTML(string=html.content.decode()).write_png()
+        pdf = HTML(string=html.content.decode()).write_pdf()
 
         response = HttpResponse(pdf, content_type='application/pdf')
         response['Content-Disposition'] = 'attachment; filename="{0}"'\
