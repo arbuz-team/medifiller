@@ -83,7 +83,7 @@ export let Plugins_Motion_Controllers = function(config)
         window_width,
         set_window_width = function()
         {
-          window_width = $(window).width();
+          window_width = window.innerWidth;
         };
 
       set_window_width();
@@ -91,7 +91,7 @@ export let Plugins_Motion_Controllers = function(config)
       return function()
       {
         let
-          new_window_width = $(window).width();
+          new_window_width = window.innerWidth;
 
         if(window_width != new_window_width)
         {

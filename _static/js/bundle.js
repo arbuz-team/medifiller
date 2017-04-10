@@ -1000,13 +1000,13 @@
 	      if_horizontal_resize = function if_horizontal_resize(callback) {
 	    var window_width = void 0,
 	        set_window_width = function set_window_width() {
-	      window_width = $(window).width();
+	      window_width = window.innerWidth;
 	    };
 	
 	    set_window_width();
 	
 	    return function () {
-	      var new_window_width = $(window).width();
+	      var new_window_width = window.innerWidth;
 	
 	      if (window_width != new_window_width) {
 	        set_window_width();
