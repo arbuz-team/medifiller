@@ -38,21 +38,16 @@ export let
       post_data = {},
       isset = 0;
 
-    if(interior_dialog_models.variables.type === 'confirm')
-      for(let data in additional_data)
-      {
-        if(additional_data.hasOwnProperty(data))
-          if(additional_data[data])
-          {
-            post_data[data] = additional_data[data];
-            ++isset;
-          }
-          else
-          {
-            post_data[data] = '';
-            ++isset;
-          }
-      }
+    for(let data in additional_data)
+    {
+      if(additional_data.hasOwnProperty(data))
+        if(additional_data[data])
+          post_data[data] = additional_data[data];
+        else
+          post_data[data] = '';
+
+      ++isset;
+    }
 
     if(isset > 0)
       interior_dialog_models.variables.post_data = post_data;
@@ -79,7 +74,7 @@ export let
   };
 
 
-selectors.window =            selectors.container +' > .dialog';
-selectors.header =            selectors.window +' > .dialog-header';
-selectors.content =           selectors.window +' > .dialog-content';
-selectors.external_buttons =  '.dialog_button';
+selectors.window =              selectors.container +   ' > .dialog';
+selectors.header =              selectors.window +      ' > .dialog-header';
+selectors.content =             selectors.window +      ' > .dialog-content';
+selectors.external_buttons =                            '.dialog_button';

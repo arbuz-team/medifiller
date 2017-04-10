@@ -3209,13 +3209,13 @@
 	    value: $button.data('value')
 	  },
 	      additional_data = {
-	    post_button_name: $button.data('dialog-name'),
-	    post_button_action: $button.data('dialog-action'),
-	    post_button_value: $button.data('dialog-value'),
-	    post_button_reload: $button.data('dialog-reload'),
-	    post_button_redirect: $button.data('dialog-redirect'),
-	    post_button_event: $button.data('dialog-event'),
-	    post_button_url: $button.data('dialog-url')
+	    additional_name: $button.data('dialog-name'),
+	    additional_action: $button.data('dialog-action'),
+	    additional_value: $button.data('dialog-value'),
+	    additional_reload: $button.data('dialog-reload'),
+	    additional_redirect: $button.data('dialog-redirect'),
+	    additional_event: $button.data('dialog-event'),
+	    additional_url: $button.data('dialog-url')
 	  };
 	
 	  dialog_views.open(dialog_data, additional_data);
@@ -3243,7 +3243,7 @@
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	/**
-	 *    Defining public functions
+	 *    Defining public variables
 	 */
 	
 	var selectors = exports.selectors = dialog_models.selectors;
@@ -3269,7 +3269,9 @@
 	  $(selectors.container).animate({ opacity: 1 }, 300);
 	};
 	
-	///////////////////////////////////////
+	/**
+	 *    Defining public functions
+	 */
 	
 	var open = exports.open = function open(dialog_data, additional_data) {
 	  dialog_models.open(dialog_data, additional_data, show);
@@ -3329,14 +3331,10 @@
 	  var post_data = {},
 	      isset = 0;
 	
-	  if (interior_dialog_models.variables.type === 'confirm') for (var data in additional_data) {
-	    if (additional_data.hasOwnProperty(data)) if (additional_data[data]) {
-	      post_data[data] = additional_data[data];
-	      ++isset;
-	    } else {
-	      post_data[data] = '';
-	      ++isset;
-	    }
+	  for (var data in additional_data) {
+	    if (additional_data.hasOwnProperty(data)) if (additional_data[data]) post_data[data] = additional_data[data];else post_data[data] = '';
+	
+	    ++isset;
 	  }
 	
 	  if (isset > 0) interior_dialog_models.variables.post_data = post_data;else interior_dialog_models.variables.post_data = undefined;

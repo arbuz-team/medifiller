@@ -73,19 +73,19 @@ export let
       $button = $(this),
 
       dialog_data = {
-        type:   $button.data('type'),
-        name:   $button.data('name'),
-        value:  $button.data('value'),
+        type:     $button.data('type'),
+        name:     $button.data('name'),
+        value:    $button.data('value'),
       },
 
       additional_data = {
-        post_button_name:   $button.data('dialog-name'),
-        post_button_action:    $button.data('dialog-action'),
-        post_button_value:    $button.data('dialog-value'),
-        post_button_reload:    $button.data('dialog-reload'),
-        post_button_redirect:    $button.data('dialog-redirect'),
-        post_button_event:    $button.data('dialog-event'),
-        post_button_url:    $button.data('dialog-url'),
+        additional_name:       $button.data('dialog-name'),
+        additional_action:     $button.data('dialog-action'),
+        additional_value:      $button.data('dialog-value'),
+        additional_reload:     $button.data('dialog-reload'),
+        additional_redirect:   $button.data('dialog-redirect'),
+        additional_event:      $button.data('dialog-event'),
+        additional_url:        $button.data('dialog-url'),
       };
 
     dialog_views.open(dialog_data, additional_data)

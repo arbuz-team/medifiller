@@ -6,7 +6,7 @@ import * as dialog_models from './models'
 
 
 /**
- *    Defining public functions
+ *    Defining public variables
  */
 
 export let
@@ -47,7 +47,9 @@ let
   };
 
 
-///////////////////////////////////////
+/**
+ *    Defining public functions
+ */
 
 export let
 
