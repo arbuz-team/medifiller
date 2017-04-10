@@ -77,6 +77,31 @@ export let Plugins_Motion_Controllers = function(config)
     },
 
 
+    if_horizontal_resize = function(callback)
+    {
+      let
+        window_width,
+        set_window_width = function()
+        {
+          window_width = $(window).width();
+        };
+
+      set_window_width();
+
+      return function()
+      {
+        let
+          new_window_width = $(window).width();
+
+        if(window_width != new_window_width)
+        {
+          set_window_width();
+          callback();
+        }
+      }
+    },
+
+
     stop_propagation = function(event)
     {
       event.stopPropagation();
@@ -124,9 +149,8 @@ export let Plugins_Motion_Controllers = function(config)
         set_start_position();
 
 
-
-    $window.resize(set_start_position);
-    $window.resize(plugin_motion_views.plugin_close);
+    $window.resize(if_horizontal_resize(set_start_position));
+    $window.resize(if_horizontal_resize(plugin_motion_views.plugin_close));
 
     window.APP.add_own_event('plugins_close', pre_plugin_close);
     window.APP.throw_event(window.EVENTS.plugins.close);

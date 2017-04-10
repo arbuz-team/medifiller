@@ -997,6 +997,23 @@
 	
 	    if (position) $($container).css(direction_close, position);
 	  },
+	      if_horizontal_resize = function if_horizontal_resize(callback) {
+	    var window_width = void 0,
+	        set_window_width = function set_window_width() {
+	      window_width = $(window).width();
+	    };
+	
+	    set_window_width();
+	
+	    return function () {
+	      var new_window_width = $(window).width();
+	
+	      if (window_width != new_window_width) {
+	        set_window_width();
+	        callback();
+	      }
+	    };
+	  },
 	      stop_propagation = function stop_propagation(event) {
 	    event.stopPropagation();
 	  };
@@ -1031,8 +1048,8 @@
 	      set_start_position();
 	    } else if ($container.outerWidth() === $window.width()) set_start_position();
 	
-	    $window.resize(set_start_position);
-	    $window.resize(plugin_motion_views.plugin_close);
+	    $window.resize(if_horizontal_resize(set_start_position));
+	    $window.resize(if_horizontal_resize(plugin_motion_views.plugin_close));
 	
 	    window.APP.add_own_event('plugins_close', pre_plugin_close);
 	    window.APP.throw_event(window.EVENTS.plugins.close);
