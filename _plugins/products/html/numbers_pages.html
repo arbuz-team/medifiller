@@ -4,7 +4,7 @@
     <div class="block-content-numbers_pages field_shell">
 
 
-        <form class="numbers_pages-filters auto_form" action="" data-origin="button" data-target="ground">
+        <form class="numbers_pages-filters auto_form" action="" data-origin="button" data-reload="ground">
 
             <div class="numbers_pages-one_step">
                 <button class="post_button" type="button"
@@ -19,7 +19,11 @@
 
             {% if number_of_pages > 20 %}
 
-                <input name="number_input" placeholder="Number" type="text" class="auto_field only_number_3" data-name="number_page" value="{{ request.session.main_page }}" />
+                <input name="number_input" placeholder="Number"
+                       type="text"
+                       class="auto_field only_number_3"
+                       data-name="number_page"
+                       value="{{ request.session.main_page }}" />
 
             {% else %}
 
