@@ -666,11 +666,11 @@ div:hover > .buttons_to_action {
     display: block;
     width: 220px;
     height: 40px;
-    margin: 10px 15px;
-    padding: 0;
-    background-color: transparent;
-    color: inherit;
-    border: none; }
+    margin: 10px 15px !important;
+    padding: 0 !important;
+    background-color: transparent !important;
+    color: inherit !important;
+    border: none !important; }
     .searcher .field_shell select > option, .searcher .field_shell input[type=text] > option {
       background-color: #ffffff;
       color: #382B1B; }
