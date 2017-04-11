@@ -127,7 +127,7 @@ class Dialog_Confirm(Dialog):
         self.content['title'] = Text(self.request, 109)
         description = Text(self.request, 110)
 
-        brand = Brand.objects.get(pk=self.request.POST['post_button_value'])
+        brand = Brand.objects.get(pk=self.request.POST['additional_value'])
         products = Product.objects.filter(brand=brand)
         self.content['text'] = description.format(len(products))
 
@@ -137,7 +137,7 @@ class Dialog_Confirm(Dialog):
         self.content['title'] = Text(self.request, 111)
         description = Text(self.request, 112)
 
-        purpose = Purpose.objects.get(pk=self.request.POST['post_button_value'])
+        purpose = Purpose.objects.get(pk=self.request.POST['additional_value'])
         products = Product.objects.filter(purpose=purpose)
         self.content['text'] = description.format(len(products))
 
