@@ -72,6 +72,7 @@
 
 
   .social-dot >div
+    display: none
     width: 24px
     height: 24px
     margin: 0 auto
@@ -80,6 +81,11 @@
     border-radius: 50%
 
     opacity: .2
+
+    //.footer-social
+  @media (min-width: $G-SIZE-1)
+    .social-dot >div
+      display: block
 
 .social-1
   background-image: url(/_static/img/icons/64/dark/facebook.png)

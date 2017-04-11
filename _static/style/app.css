@@ -1617,12 +1617,16 @@ img {
   .footer-social > a.social-element:hover {
     opacity: .9; }
   .footer-social .social-dot > div {
+    display: none;
     width: 24px;
     height: 24px;
     margin: 0 auto;
     background-color: #382B1B;
     border-radius: 50%;
     opacity: .2; }
+  @media (min-width: 500px) {
+    .footer-social .social-dot > div {
+      display: block; } }
 
 .social-1 {
   background-image: url(/_static/img/icons/64/dark/facebook.png); }
